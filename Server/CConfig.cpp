@@ -62,7 +62,7 @@ void	CConfig::LoadConfig()
 		delete[] fileContent;
 	}
 	else {
-		g_CCore->GetLog()->AddNormalLog("[Error] Cofig file failed to load\n");
+		g_CCore->GetLog()->AddNormalLog("[Error] Server configuration could not be loaded!\n");
 	}
 }
 

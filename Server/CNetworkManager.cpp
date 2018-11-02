@@ -405,7 +405,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 					for (int i = 0; i < m_pServerMaxPlayers; i++)
 					{
 						if (slot[i].isUsed == true)
-							peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, slot[i].sa, false);
+							peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_CHAT, slot[i].sa, false);
 					}
 				}
 				delete[] buff;
@@ -498,6 +498,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			if (player != NULL)
 			{
 				player->OnAddWeapon(wepID, wepLoaded, wepHidden);
+				player->SetCurrentWeapon(wepID);
 			}
 		}
 		break;
@@ -528,6 +529,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
 			if (player != NULL)
 			{
+				player->SetCurrentWeapon(wepID);
 				player->OnSwitchWeapon(wepID);
 			}
 		}
@@ -550,7 +552,6 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 				player->SetCurrentWeapon(weapon);
 				player->OnPlayerShoot(position);
 			}
-
 		}
 		break;
 		case LHMP_PLAYER_THROWGRANADE:
@@ -565,7 +566,6 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			{
 				player->OnPlayerThrowGranade(position);
 			}
-
 		}
 			break;
 		case LHMP_PLAYER_DEATH:
@@ -586,7 +586,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write(ID);
 			bsOut.Write(reason);
 			bsOut.Write(part);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 
 			CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
 			
@@ -604,6 +604,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 					}
 				}
 			}
+			//g_CCore->GetScripts()->onPlayerDeath(ID, attackerID);
 		}
 		break;
 		case LHMP_PLAYER_DEATH_END:
@@ -615,7 +616,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((MessageID)LHMP_PLAYER_DEATH_END);
 			bsOut.Write(ID);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 
 		}
 			break;
@@ -655,7 +656,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((RakNet::MessageID)LHMP_VEHICLE_CREATE);
 			bsOut.Write(vehicle_data);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0,UNASSIGNED_RAKNET_GUID, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP,UNASSIGNED_RAKNET_GUID, true);
 		}
 		break;
 		case LHMP_VEHICLE_SYNC:
@@ -676,19 +677,20 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 				veh->SetTimeStamp(timestamp);
 				veh->SetFuel(syncData.fuel);
 
-				for (int i = 0; i < 4; i++)
-				{
-					if (veh->GetSeat(i) != -1)
-					{
-						CPlayer* play = g_CCore->GetPlayerPool()->Return(veh->GetSeat(i));
-						if (play != NULL)
-						{
-							play->SetPosition(syncData.position);
-							play->SetTimeStamp(timestamp);
-						}
-					}
-				}
+				//for (int i = 0; i < 4; i++)
+				//{
+				//	if (veh->GetSeat(i) != -1)
+				//	{
+				//		CPlayer* play = g_CCore->GetPlayerPool()->Return(veh->GetSeat(i));
+				//		if (play != NULL)
+				//		{
+				//			play->SetPosition(syncData.position);
+				//			play->SetTimeStamp(timestamp);
+				//		}
+				//	}
+				//}
 			}
+			//g_CCore->GetScripts()->onVehicleSync(syncData.ID);
 		}
 		break;
 		case LHMP_PLAYER_ENTERED_VEHICLE:
@@ -704,9 +706,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write(GetIDFromSystemAddress(packet->systemAddress));
 			bsOut.Write(vehID);
 			bsOut.Write(seatID);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 			//std::cout << "EnterVeh" << GetIDFromSystemAddress(packet->systemAddress) << " - " << vehID << std::endl;
-
 			g_CCore->GetScripts()->onPlayerEnterVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID, seatID);
 		}
 		break;
@@ -721,8 +722,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((MessageID)LHMP_PLAYER_EXIT_VEHICLE);
 			bsOut.Write(GetIDFromSystemAddress(packet->systemAddress));
 			bsOut.Write(vehID);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
-
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 			g_CCore->GetScripts()->onPlayerExitVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID);
 			//std::cout << "ExitVeh" << GetIDFromSystemAddress(packet->systemAddress) << " - " << vehID << std::endl;
 		}
@@ -733,8 +733,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((MessageID)LHMP_PLAYER_EXIT_VEHICLE_FINISH);
 			bsOut.Write(GetIDFromSystemAddress(packet->systemAddress));
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
-
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 			g_CCore->GetScripts()->onPlayerExitVehicleFinish(GetIDFromSystemAddress(packet->systemAddress));
 			//std::cout << "ExitVehFinish" << GetIDFromSystemAddress(packet->systemAddress) << std::endl;
 		}
@@ -756,8 +755,9 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write(GetIDFromSystemAddress(packet->systemAddress));
 			bsOut.Write(vehID);
 			bsOut.Write(seatID);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 			//std::cout << "JackVeh" << GetIDFromSystemAddress(packet->systemAddress) << " - " << vehID << seatID <<std::endl;
+			g_CCore->GetScripts()->onVehicleJacked(vehID, seatID);
 		}
 		break;
 
@@ -788,8 +788,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_ENGINE);
 			bsOut.Write(vehID);
 			bsOut.Write((bool)state);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
-
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
+			g_CCore->GetScripts()->onVehicleEngineChange(vehID, state);
 		}
 		break;
 
@@ -808,7 +808,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((MessageID)LHMP_VEHICLE_DELETE);
 			bsOut.Write(vehID);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 		}
 			break;
 		case LHMP_VEHICLE_DAMAGE:
@@ -827,7 +827,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 				bsOut.Write((MessageID)LHMP_VEHICLE_DAMAGE);
 				bsOut.Write(vehID);
 				bsOut.Write(damage);
-				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
+				//g_CCore->GetScripts()->onVehicleDamage(vehID, damage);
 			}
 		}
 			break;
@@ -847,7 +848,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 				bsOut.Write((MessageID)LHMP_VEHICLE_SHOTDAMAGE);
 				bsOut.Write(vehID);
 				bsOut.Write(damage);
-				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
+				//g_CCore->GetScripts()->onVehicleShot(vehID, damage);
 			}
 		}
 			break;
@@ -868,7 +870,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 					bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 					bsOut.Write((MessageID)LHMP_VEHICLE_ON_EXPLODED);
 					bsOut.Write(vehID);
-					peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+					peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
+					g_CCore->GetScripts()->onVehicleExploded(vehID);
 				}
 			}
 		}
@@ -891,7 +894,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsOut.Write(name);
 			bsOut.Write(stateOut);
 			bsOut.Write(facing);
-			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
+			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
+			g_CCore->GetScripts()->onDoorSetState(this->GetIDFromSystemAddress(packet->systemAddress), stateOut, facing, (const char*)name);
 		}
 			break;
 		case LHMP_SCRIPT_ON_KEY_PRESSED:
@@ -919,7 +923,7 @@ void CNetworkManager::SendSYNC()
 	{
 		CPlayer* player = g_CCore->GetPlayerPool()->Return(i);
 		if(player == NULL) continue;
-		if (player->GetCurrentCar() == NO_CAR)
+		if(player->GetCurrentCar() == NO_CAR)
 		{
 			if (player->ShouldUpdate())
 			{
@@ -931,7 +935,7 @@ void CNetworkManager::SendSYNC()
 					syncData.ID					= i;
 					syncData.position			= player->GetPosition();
 					syncData.rotation			= (unsigned short) (player->GetFloatRotation()*MAX_USHORT / 360);
-					syncData.animStatus				= player->GetStatus();
+					syncData.animStatus			= player->GetStatus();
 					syncData.health				= (unsigned short) player->GetHealth();
 
 					CBitArray states;
@@ -946,7 +950,7 @@ void CNetworkManager::SendSYNC()
 					bsOut.Write((MessageID) ID_GAME_LHMP_PACKET);
 					bsOut.Write((MessageID) LHMP_PLAYER_SENT_SYNC_ON_FOOT);
 					bsOut.Write(syncData);
-					peer->Send(&bsOut,LOW_PRIORITY,UNRELIABLE,0,slot[i].sa,true);
+					peer->Send(&bsOut, MEDIUM_PRIORITY, UNRELIABLE, LHMP_NETCHAN_FOOTSYNC,slot[i].sa,true);
 					player->SetShouldUpdate(false);	// wait till next update
 				}
 			}
@@ -962,7 +966,7 @@ void CNetworkManager::SendSYNC()
 			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((MessageID)LHMP_PLAYER_SENT_CAR_UPDATE);
 			bsOut.Write(syncData);
-			peer->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, 0, slot[i].sa, true);
+			peer->Send(&bsOut, MEDIUM_PRIORITY, UNRELIABLE, LHMP_NETCHAN_VEHSYNC, slot[i].sa, true);
 			// in car sync
 
 		}
@@ -990,8 +994,8 @@ void CNetworkManager::SendMessageToAll(char * message)
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_PLAYER_CHAT_MESSAGE);
 	bsOut.Write((unsigned short)strlen(message));
-	bsOut.Write(message);
-	peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED,0,RakNet::UNASSIGNED_RAKNET_GUID,true);
+	bsOut.Write(message); 
+	peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED, LHMP_NETCHAN_CHAT,RakNet::UNASSIGNED_RAKNET_GUID,true);
 }
 
 void CNetworkManager::SendHimOthers(int he)
@@ -1017,7 +1021,7 @@ void CNetworkManager::SendHimOthers(int he)
 			bsOut.Write(player->GetNickColor());
 			//bsOut.Write(actual->nickname);
 			//bsOut.Write(actual->skinID);
-			peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED,0,sa,false);
+			peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED, 0,sa,false);
 
 			//Send weapon info
 			for(int i = 0; i < 8;i++)
@@ -1031,7 +1035,7 @@ void CNetworkManager::SendHimOthers(int he)
 				bsOut.Write(wep->wepID);
 				bsOut.Write(wep->wepLoaded);
 				bsOut.Write(wep->wepHidden);
-				peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED,0,sa,false);
+				peer->Send(&bsOut,IMMEDIATE_PRIORITY,RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE,sa,false);
 			}
 			count++;
 		}
@@ -1071,7 +1075,7 @@ void CNetworkManager::SendPingUpdate()
 				bsOut.Write((MessageID)LHMP_PLAYER_PING);
 				bsOut.Write(i);
 				bsOut.Write(peer->GetLastPing(sa));
-				peer->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, UNASSIGNED_RAKNET_GUID, true);
+				peer->Send(&bsOut, MEDIUM_PRIORITY, UNRELIABLE, 0, UNASSIGNED_RAKNET_GUID, true);
 				peer->Ping(sa);
 			}
 		}

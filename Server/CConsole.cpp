@@ -5,15 +5,15 @@
 
 #include "../shared/tools.h"
 #ifndef _WIN32
-#include <pthread.h>
-extern pthread_t tid;
+//#include <pthread.h>
+//extern pthread_t tid;
 #endif // _WIN32
 extern CCore *g_CCore;
 
 #ifdef _WIN32
 void ConsoleThread(){
 #else
-void* ConsoleThread(void *arg){
+//void* ConsoleThread(void *arg){
 #endif // _WIN32
 	while (1)
 	{
@@ -27,7 +27,7 @@ void CConsole::Init()
     #ifdef _WIN32
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)&ConsoleThread, 0, NULL, NULL);
 	#else
-	pthread_create(&tid,NULL,&ConsoleThread,NULL);
+	//pthread_create(&tid,NULL,&ConsoleThread,NULL);
 	#endif
 }
 

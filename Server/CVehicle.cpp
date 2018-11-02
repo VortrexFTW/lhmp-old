@@ -78,6 +78,7 @@ void CVehicle::PlayerEnter(int pID, int seatID)
 		player->SetCurrentCar(g_CCore->GetVehiclePool()->ReturnId(this));
 	}
 }
+
 void CVehicle::PlayerExit(int pID)
 {
 	if (pID == 0)
@@ -107,7 +108,8 @@ void CVehicle::SendSync()
 			this->Respawn();
 		}
 	}
-	else {
+	else 
+	{
 		VEH::SYNC syncData;
 		syncData.ID = g_CCore->GetVehiclePool()->ReturnId(this);
 		syncData.position = this->GetPosition();
@@ -127,10 +129,13 @@ void CVehicle::SendSync()
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_SYNC);
 		bsOut.Write(syncData);
-		if (Seat[0] == -1)
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, 0, UNASSIGNED_RAKNET_GUID, true);
-		else
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(Seat[0]), true);
+		if (Seat[0] == -1) {
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, LHMP_NETCHAN_VEHSYNC, UNASSIGNED_RAKNET_GUID, true);
+		}
+		else 
+		{
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, LHMP_NETCHAN_VEHSYNC, g_CCore->GetNetworkManager()->GetSystemAddressFromID(Seat[0]), true);
+		}
 	}
 }
 
@@ -298,7 +303,7 @@ void	CVehicle::Respawn()
 	bsOut.Write(g_CCore->GetVehiclePool()->ReturnId(this));
 	bsOut.Write(this->position);
 	bsOut.Write(this->rotation);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_RAKNET_GUID, true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_RAKNET_GUID, true);
 
 	this->SetIsSpawned(true);
 }

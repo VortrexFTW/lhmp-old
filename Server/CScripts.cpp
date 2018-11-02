@@ -229,7 +229,7 @@ bool CScripts::onPlayerText(int playerId, const char *text)
 	}
 	return ret;
 }
-void CScripts::onPlayerCommand(int playerId, const char *text,const char* params)
+void CScripts::onPlayerCommand(int playerId, const char *text, const char* params)
 {
 	bool ret = true;
 	for (int i = 0; i < MAX_SCRIPTS; i++) {
@@ -410,6 +410,7 @@ void CScripts::onServerTickSecond(int ticks)
 		}
 	}
 }
+
 void CScripts::onPlayerDisconnect(int playerID)
 {
 	bool ret = true;
@@ -455,6 +456,7 @@ void CScripts::onPlayerDisconnect(int playerID)
 		}
 	}
 }
+
 void CScripts::onPlayerEnterVehicle(int playerID, int vehID, int seatID)
 {
 	bool ret = true;
@@ -502,6 +504,7 @@ void CScripts::onPlayerEnterVehicle(int playerID, int vehID, int seatID)
 		}
 	}
 }
+
 void CScripts::onPlayerExitVehicle(int playerID, int vehID)
 {
 	bool ret = true;
@@ -635,7 +638,7 @@ void CScripts::onPlayerSpawn(int playerID)
 	}
 }
 
-void CScripts::onPlayerIsKilled(int playerID,int killerID,int reason, int hitbox)
+void CScripts::onPlayerIsKilled(int playerID, int killerID, int reason, int hitbox)
 {
 	bool ret = true;
 	for (int i = 0; i < MAX_SCRIPTS; i++) {
@@ -687,7 +690,89 @@ void CScripts::onPlayerIsKilled(int playerID,int killerID,int reason, int hitbox
 	}
 }
 
-void CScripts::onPlayerKeyPressed(int ID,int key)
+void CScripts::onVehicleJacked(int vehicleID, int seat)
+{
+	bool ret = true;
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onVehicleJacked", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				sq_pushinteger(pVM, vehicleID);
+
+				sq_pushinteger(pVM, seat);
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 5, false, true)))
+				{
+					/*SQBool result;
+					sq_getbool(pVM, sq_gettop(pVM), &result);
+					if (result == false) ret = false;*/
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+void CScripts::onVehicleEngineChange(int vehicleID, bool state)
+{
+	bool ret = true;
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onVehicleEngineChange", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				sq_pushinteger(pVM, vehicleID);
+
+				sq_pushbool(pVM, state);
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 5, false, true)))
+				{
+					/*SQBool result;
+					sq_getbool(pVM, sq_gettop(pVM), &result);
+					if (result == false) ret = false;*/
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+void CScripts::onPlayerKeyPressed(int ID, int key)
 {
 	for (int i = 0; i < MAX_SCRIPTS; i++) {
 		if (m_pScripts[i]) {
@@ -715,6 +800,84 @@ void CScripts::onPlayerKeyPressed(int ID,int key)
 
 				// Call the function
 				if (!SQ_FAILED(sq_call(pVM, 3, false, true)))
+				{
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+void CScripts::onVehicleExploded(int ID)
+{
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onVehicleExploded", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				// Push the player id onto the stack
+
+				sq_pushinteger(pVM, ID);
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 2, false, true)))
+				{
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+
+void CScripts::onDoorSetState(int ID, int state, bool facing, const char* name)
+{
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onDoorSetState", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				// Push the player id onto the stack
+
+				sq_pushinteger(pVM, ID);
+				sq_pushinteger(pVM, state);
+				sq_pushbool(pVM, facing);
+				sq_pushstring(pVM, name, sizeof(name));
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 5, false, true)))
 				{
 				}
 			}
@@ -753,6 +916,46 @@ void CScripts::onPlayerShoot(int ID, int weaponID)
 
 				// Call the function
 				if (!SQ_FAILED(sq_call(pVM, 3, false, true)))
+				{
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+void CScripts::onVehicleShot(int vehID, int playerID, int damage, int wepID)
+{
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onVehicleShot", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				// Push the player id onto the stack
+
+				sq_pushinteger(pVM, vehID);
+				sq_pushinteger(pVM, playerID);
+				sq_pushinteger(pVM, wepID);
+				sq_pushinteger(pVM, damage);
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 5, false, true)))
 				{
 				}
 			}
@@ -838,7 +1041,6 @@ void CScripts::onPickupTaken(int pickupID, int playerID)
 		}
 	}
 }
-
 
 void CScripts::callServerFunc(int playerID, BitStream* bsIn)
 {

@@ -45,6 +45,13 @@ public:
 	void onServerTick(int);
 	void onServerTickSecond(int);
 	void onPlayerKeyPressed(int,int);
+	void onDoorSetState(int, int, bool, const char *);
+	void onVehicleExploded(int);
+	void onVehicleJacked(int, int);
+	void onVehicleEngineChange(int, bool);
+	void onVehicleDamage(int, float);
+	//void onVehicleShot(int, int, int, int);
+	//void onVehicleShot(int, int, byte, int);
 
 	void onPlayerShoot(int, int);
 	void onPlayerHit(int,int);

@@ -32,7 +32,7 @@ void CMasterList::AddServerToMaster()
 	if (client == NULL)
 		client = new UDPWrapper;
 	// set connection details to master server 
-	client->StartClient("master.lh-mp.eu", 50000);
+	client->StartClient("52.28.46.54", 50000);
 
 	// master server message consists of LHMPcPP where PP is port casted to unsigned short,
 	// thus 2 bytes long
@@ -121,12 +121,12 @@ void CMasterList::HandleMasterResponse(int reason)
 		g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
 		break;
 	case MASTERLIST_FAILED:
-		g_CCore->GetLog()->AddNormalLog("[Error] Masterlist cound't connect this server from the internet ");
+		g_CCore->GetLog()->AddNormalLog("[Error] Masterlist couldn't connect this server from the internet ");
 		g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
-		g_CCore->GetLog()->AddNormalLog("        Make sure you have public IP & ports are open and forwarded !");
+		g_CCore->GetLog()->AddNormalLog("        Make sure you have public IP & ports open and forwarded !");
 		break;
 	case MASTERLIST_OK:
-		g_CCore->GetLog()->AddNormalLog("[Master] Server's been successfully added to the masterlist !");
+		g_CCore->GetLog()->AddNormalLog("[Master] Server has been successfully added to the masterlist !");
 		break;
 	}
 

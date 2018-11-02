@@ -300,7 +300,7 @@ void	CPlayer::OnChangeSkin(int skin)
 	bsOut.Write((MessageID)LHMP_PLAYER_CHANGESKIN);
 	bsOut.Write(g_CCore->GetPlayerPool()->GetID(this));
 	bsOut.Write(skin);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, LHMP_NETCHAN_PLAYERPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 }
 
 void	CPlayer::OnRespawn()
@@ -317,7 +317,7 @@ void	CPlayer::OnRespawn()
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_PLAYER_RESPAWN);
 	bsOut.Write(ID);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);
 	g_CCore->GetScripts()->onPlayerSpawn(ID);
 }
 
@@ -335,25 +335,26 @@ void	CPlayer::OnAddWeapon(int wepID, int ammoA, int ammoB, bool shouldSendHim)
 	bsOut.Write(ammoA);
 	bsOut.Write(ammoB);
 	if (shouldSendHim)
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS,true);	// send this message everybody including this player - when using Squirrel
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS,true);	// send this message everybody including this player - when using Squirrel
 	else 
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
 }
 
 void	CPlayer::OnDeleteWeapon(int wepID, bool shouldSendHim)
 {
 	int ID = g_CCore->GetPlayerPool()->GetID(this);
-	this->DeleteWeapon(wepID);
-
+	
 	BitStream bsOut;
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_PLAYER_DELETEWEAPON);
 	bsOut.Write(ID);
 	bsOut.Write(wepID);
 	if (shouldSendHim)
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
 	else
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+
+	this->DeleteWeapon(wepID);
 }
 
 void	CPlayer::OnSwitchWeapon(int wepID, bool shouldSendHim)
@@ -367,9 +368,9 @@ void	CPlayer::OnSwitchWeapon(int wepID, bool shouldSendHim)
 	bsOut.Write(ID);
 	bsOut.Write(wepID);
 	if (shouldSendHim)
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
 	else
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, LHMP_NETCHAN_STATECHANGE, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
 }
 
 void	CPlayer::OnPlayerShoot(Vector3D position, bool shouldSendHim)
@@ -383,10 +384,10 @@ void	CPlayer::OnPlayerShoot(Vector3D position, bool shouldSendHim)
 	bsOut.Write(position);
 	bsOut.Write(this->GetCurrentWeapon());
 	if (shouldSendHim)
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_SHOOT, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
 	else
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
-	g_CCore->GetScripts()->onPlayerShoot(ID, this->GetCurrentWeapon());
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_SHOOT, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		g_CCore->GetScripts()->onPlayerShoot(ID, this->GetCurrentWeapon());
 }
 
 void	CPlayer::OnPlayerThrowGranade(Vector3D position, bool shouldSendHim)
@@ -400,12 +401,13 @@ void	CPlayer::OnPlayerThrowGranade(Vector3D position, bool shouldSendHim)
 	bsOut.Write(ID);
 	bsOut.Write(position);
 	if (shouldSendHim)
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, LHMP_NETCHAN_SHOOT, UNASSIGNED_SYSTEM_ADDRESS, true);	// send this message everybody including this player - when using Squirrel
 	else
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE, LHMP_NETCHAN_SHOOT, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), true);	// else, when it arrives from player
+		//g_CCore->GetScripts()->onPlayerThrowGranade(ID, this->GetCurrentWeapon());
 	
 	this->OnThrowGranade();
-	g_CCore->GetScripts()->onPlayerShoot(ID, this->GetCurrentWeapon());
+	
 }
 
 
