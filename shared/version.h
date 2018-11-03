@@ -3,11 +3,11 @@
 #define _DEBUG
 
 #define LHMP_VERSION_MAJOR	0
-#define LHMP_VERSION_MINOR	2
+#define LHMP_VERSION_MINOR	4
 #define LHMP_VERSION_TYPE	VERSION_PUBLIC
 
 // when LHMP is compiled as test version
-#define LHMP_VERSION_TEST_HASH "BUILD_VORTREX_24APR2018"
+#define LHMP_VERSION_TEST_HASH "BUILD_VORTREX_03NOV2018"
 
 // protocol version (byte) 0-255
 #define LHMP_QUERY_PROTOCOL	0

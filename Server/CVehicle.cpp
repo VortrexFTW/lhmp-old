@@ -36,9 +36,19 @@ void CVehicle::ToggleRoof(byte state)
 	this->roofState = state;
 }
 
+void CVehicle::ToggleLights(bool lights)
+{
+	this->lightState = lights;
+}
+
 byte CVehicle::GetRoofState()
 {
 	return this->roofState;
+}
+
+byte CVehicle::GetLightState()
+{
+	return this->lightState;
 }
 
 void CVehicle::ToggleEngine(byte state)
@@ -284,10 +294,10 @@ void		CVehicle::SetExplodeTime(unsigned int time)
 void	CVehicle::Respawn()
 {
 	g_CCore->GetLog()->AddNormalLog("Car respawn");
-	this->rotation = this->GetRespawnRotation();
-	this->position = this->GetRespawnPosition();
+	this->Rotation = this->GetRespawnRotation();
+	this->Position = this->GetRespawnPosition();
 	this->secondRot = this->GetRespawnRotationSecond();
-	this->health = 100.0f;
+	this->Health = 100.0f;
 	this->damage = 100.0f;
 	this->shotdamage = 10;
 	this->isExploded = false;
@@ -301,9 +311,17 @@ void	CVehicle::Respawn()
 	bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((RakNet::MessageID)LHMP_VEHICLE_RESPAWN);
 	bsOut.Write(g_CCore->GetVehiclePool()->ReturnId(this));
-	bsOut.Write(this->position);
-	bsOut.Write(this->rotation);
+	bsOut.Write(this->Position);
+	bsOut.Write(this->Rotation);
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_RAKNET_GUID, true);
 
 	this->SetIsSpawned(true);
+}
+
+bool GetCarLights() {
+
+}
+
+void SetCarLights(bool lights) {
+	
 }

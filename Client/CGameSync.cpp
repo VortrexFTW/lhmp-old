@@ -18,7 +18,6 @@ void CGameSync::Engine_onPlayerTakeWeapon(DWORD wepId, DWORD wepLoaded, DWORD we
 	bsOut.Write(wepHidden);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When local player swap his weapon 
 void CGameSync::Engine_onChangeWeapon(DWORD wepId)
 {
@@ -29,7 +28,6 @@ void CGameSync::Engine_onChangeWeapon(DWORD wepId)
 	bsOut.Write(wepId);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When local player shoot
 void CGameSync::Engine_onShoot(Vector3D position, DWORD weaponID)
 {
@@ -41,7 +39,6 @@ void CGameSync::Engine_onShoot(Vector3D position, DWORD weaponID)
 	bsOut.Write(weaponID);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When local player is shot by another player
 void CGameSync::Engine_onPlayerGetHit(CPed* attacker)
 {
@@ -56,7 +53,6 @@ void CGameSync::Engine_onPlayerGetHit(CPed* attacker)
 	bsOut.Write(playerID);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When local player is killed by enemy
 void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 {
@@ -72,7 +68,6 @@ void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 	bsOut.Write(hitbox);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When local player enters a car
 void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 {
@@ -93,7 +88,6 @@ void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 		// TODO: report error
 	}
 }
-
 // When local player exits a car
 void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 {
@@ -113,7 +107,6 @@ void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 		// TODO: report error
 	}
 }
-
 // When local player jacks someone from a car
 void CGameSync::Engine_onPlayerCarjack(CVehicle* vehicle, int seatId)
 {
@@ -134,7 +127,6 @@ void CGameSync::Engine_onPlayerCarjack(CVehicle* vehicle, int seatId)
 		// TODO: report error
 	}
 }
-
 // When local player throws a granade/molotov
 void CGameSync::Engine_onPlayerThrowGranade(Vector3D position)
 {
@@ -144,8 +136,7 @@ void CGameSync::Engine_onPlayerThrowGranade(Vector3D position)
 	bsOut.Write(position);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
-// When local player throws a granade/molotov
+// When a door opens and closes
 void CGameSync::Engine_onDoorStateChange(char* doorName, int state, bool facing)
 {
 	RakNet::BitStream bsOut;
@@ -156,7 +147,6 @@ void CGameSync::Engine_onDoorStateChange(char* doorName, int state, bool facing)
 	bsOut.Write(facing);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When a car explodes
 void CGameSync::Engine_onExplodeCar(CVehicle* vehicle)
 {
@@ -176,7 +166,6 @@ void CGameSync::Engine_onExplodeCar(CVehicle* vehicle)
 		// report error
 	}
 }
-
 // When player died and the game is about to reload
 void CGameSync::Engine_onMapRespawn()
 {
@@ -185,7 +174,6 @@ void CGameSync::Engine_onMapRespawn()
 	bsOut.Write((RakNet::MessageID)LHMP_PLAYER_DEATH_END);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
-
 // When vehicle's engine changes
 void CGameSync::Engine_onVehicleEngineStateChange(CVehicle* vehicle, BYTE state)
 {
@@ -700,7 +688,7 @@ void CGameSync::onPlayerPositionChange(RakNet::BitStream* bitInput)
 void CGameSync::onPlayerHealthChange(RakNet::BitStream* bitInput)
 {
 	int ID;
-	int Health;
+	float Health;
 	bitInput->Read(ID);
 	bitInput->Read(Health);
 	char buff[255];
@@ -919,9 +907,29 @@ void CGameSync::onVehicleEngineStateChange(RakNet::BitStream* bitInput)
 	{
 		veh->ToggleEngine(state);
 		char buff[255];
-		sprintf(buff, "[Nm] TOGGLE ENGINE %d STATE: %d", ID, state);
+		sprintf(buff, "[Nm] TOGGLE ENGINE %d STATE: %d", ID, (int)state);
 		g_CCore->GetLog()->AddLog(buff);
 	}
+}
+
+void CGameSync::onVehicleLightStateChange(RakNet::BitStream* bitInput)
+{
+	int ID;
+	int state;
+
+	bitInput->Read(ID);
+	bitInput->Read(state);
+
+	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
+
+	if (veh != NULL)
+	{
+		veh->ToggleLights(state);
+	}
+
+	char buff[255];
+	sprintf(buff, "[Nm] TOGGLE LIGHTS %d STATE: %d", ID, state);
+	g_CCore->GetLog()->AddLog(buff);
 }
 
 
@@ -1268,6 +1276,18 @@ void CGameSync::onMapChange(RakNet::BitStream* bitInput)
 
 }
 
+void CGameSync::onTrafficStateChange(RakNet::BitStream* bitInput)
+{
+	int traffic;
+	bitInput->Read(traffic);
+
+	g_CCore->GetGame()->SetTrafficVisible((bool)traffic);
+	char buff[250];
+	sprintf(buff, "[Nm] SET traffic %d", traffic);
+	g_CCore->GetLog()->AddLog(buff);
+
+}
+
 void CGameSync::onPickupIsCreated(RakNet::BitStream* bitInput)
 {
 	g_CCore->GetLog()->AddLog("[NM] Pickup create");
@@ -1447,6 +1467,9 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 	case LHMP_VEHICLE_TOGGLE_ENGINE:
 		this->onVehicleEngineStateChange(&bsIn);
 		break;
+	case LHMP_VEHICLE_TOGGLE_LIGHTS:
+		this->onVehicleLightStateChange(&bsIn);
+		break;
 	case LHMP_VEHICLE_TOGGLE_ROOF:
 		this->onVehicleRoofIsChanged(&bsIn);
 		break;
@@ -1500,6 +1523,9 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		break;
 	case LHMP_SCRIPT_CHANGE_MAP:
 		this->onMapChange(&bsIn);
+		break;
+	case LHMP_TOGGLE_TRAFFIC:
+		this->onTrafficStateChange(&bsIn);
 		break;
 
 		/*ok, not sure*/
