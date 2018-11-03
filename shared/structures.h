@@ -26,14 +26,14 @@ typedef unsigned char byte;
 
 struct Vector2D
 {
-	int x,y;
+	int x, y;
 };
 
-struct Vector3D{
+struct Vector3D {
 	float x;
 	float y;
 	float z;
-	Vector3D(float _x = 0.0f,float _y = 0.0f, float _z = 0.0f)
+	Vector3D(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f)
 	{
 		x = _x;
 		y = _y;
@@ -41,7 +41,7 @@ struct Vector3D{
 	}
 	Vector3D operator+(const Vector3D& a) const
 	{
-		return Vector3D(a.x + x, a.y + y,a.z+z);
+		return Vector3D(a.x + x, a.y + y, a.z + z);
 	}
 
 	Vector3D& operator=(const Vector3D&a)
@@ -54,7 +54,7 @@ struct Vector3D{
 
 };
 
-struct Vector4D{
+struct Vector4D {
 	float x;
 	float y;
 	float z;
@@ -68,7 +68,7 @@ struct Vector4D{
 	}
 };
 
-struct _Player{
+struct _Player {
 	Vector3D playerPos;
 	int iPlayerID;
 	char sName[80];
@@ -84,7 +84,7 @@ struct _Player{
 	bool isAim;
 };
 
-struct _Server{
+struct _Server {
 	int playerid;
 	int max_players;
 	int server_port;
@@ -96,11 +96,11 @@ enum GameMessages
 {
 	// sends client after connection accept
 	ID_INITLHMP = ID_USER_PACKET_ENUM + 1,
-	ID_GAME_SKUSKA = ID_USER_PACKET_ENUM+2,
-	ID_GAME_SYNC = ID_USER_PACKET_ENUM+3,
-	ID_GAME_PID = ID_USER_PACKET_ENUM+4,
-	ID_GAME_IP = ID_USER_PACKET_ENUM+5,
-	ID_GAME_ALIVE = ID_USER_PACKET_ENUM+6,
+	ID_GAME_SKUSKA = ID_USER_PACKET_ENUM + 2,
+	ID_GAME_SYNC = ID_USER_PACKET_ENUM + 3,
+	ID_GAME_PID = ID_USER_PACKET_ENUM + 4,
+	ID_GAME_IP = ID_USER_PACKET_ENUM + 5,
+	ID_GAME_ALIVE = ID_USER_PACKET_ENUM + 6,
 	ID_GAME_LHMP_PACKET,
 	ID_GAME_BAD_VERSION,
 	// when whole server-client connecting is finished and client is finaly ready to play
@@ -192,10 +192,11 @@ enum LHMPNetMessages
 	LHMP_VEHICLE_SET_SPEED,
 	LHMP_VEHICLE_SET_FUEL,
 	LHMP_VEHICLE_TOGGLE_ROOF,
+	LHMP_VEHICLE_TOGGLE_LIGHTS,
 	LHMP_VEHICLE_TOGGLE_ENGINE,
 	LHMP_VEHICLE_TOGGLE_SIREN,
 	LHMP_VEHICLE_ON_EXPLODED,
-	LHMP_VEHICLE_RESPAWN, 
+	LHMP_VEHICLE_RESPAWN,
 
 	// door
 	LHMP_DOOR_SET_STATE,
@@ -209,7 +210,10 @@ enum LHMPNetMessages
 	// pickup
 	LHMP_PICKUP_CREATE,
 	LHMP_PICKUP_DELETE,
-	LHMP_PICKUP_SETVISIBLE
+	LHMP_PICKUP_SETVISIBLE,
+
+	// World
+	LHMP_TOGGLE_TRAFFIC,
 };
 
 // Reasons why player died
@@ -248,7 +252,7 @@ enum LHMPPlayerParts
 };
 
 
-struct vect{
+struct vect {
 	float x;
 	float y;
 	float z;
@@ -320,7 +324,7 @@ namespace VEH
 	struct CREATE
 	{
 		bool		isSpawned;
-		int			ID,skinID;
+		int			ID, skinID;
 		Vector3D	position;
 		Vector3D	rotation;
 		int			seat[4];
@@ -399,14 +403,14 @@ namespace ENGINE_STACK
 {
 	struct PLAYER_ADDWEAPON
 	{
-		PLAYER_ADDWEAPON(int _ID, int _wepID,int _wepLoaded, int _wepHidden)
+		PLAYER_ADDWEAPON(int _ID, int _wepID, int _wepLoaded, int _wepHidden)
 		{
 			this->ID = _ID;
 			this->wepID = _wepID;
 			this->wepLoaded = _wepLoaded;
 			this->wepHidden = _wepHidden;
 		}
-		int ID,wepID,wepLoaded,wepHidden;
+		int ID, wepID, wepLoaded, wepHidden;
 	};
 	struct PLAYER_DELETEWEAPON
 	{
@@ -435,7 +439,7 @@ namespace ENGINE_STACK
 		}
 		int ID;
 		Vector3D pos;
-	};	
+	};
 	struct PLAYER_THROWGRANADE
 	{
 		PLAYER_THROWGRANADE(int _ID, Vector3D _pos)
@@ -500,7 +504,7 @@ namespace ENGINE_STACK
 			this->vehID = _vehID;
 			this->seatID = _seatID;
 		}
-		int pID, vehID,seatID;
+		int pID, vehID, seatID;
 	};
 
 	struct CAMERA_SET
@@ -549,7 +553,7 @@ namespace ENGINE_STACK
 
 	struct PLAYER_SETPOS
 	{
-		PLAYER_SETPOS(int _ID,Vector3D _pos)
+		PLAYER_SETPOS(int _ID, Vector3D _pos)
 		{
 			this->ID = _ID;
 			this->pos = _pos;
@@ -561,7 +565,7 @@ namespace ENGINE_STACK
 
 struct SWeapon
 {
-	int wepID, wepLoaded,wepHidden;
+	int wepID, wepLoaded, wepHidden;
 };
 
 enum SCRIPT_KEYBOARD {

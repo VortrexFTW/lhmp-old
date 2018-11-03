@@ -164,6 +164,8 @@ private:
 	// on vehicle engine state change -> when engine is started / switched off
 	void onVehicleEngineStateChange(RakNet::BitStream* bitInput);
 
+	void onVehicleLightStateChange(RakNet::BitStream* bitInput);
+
 	// when vehicle roof is hidden or shown
 	void onVehicleRoofIsChanged(RakNet::BitStream* bitInput);
 
@@ -213,6 +215,8 @@ private:
 
 	// on map change
 	void onMapChange(RakNet::BitStream* bitInput);
+
+	void onTrafficStateChange(RakNet::BitStream* bitInput);
 
 	///////////////////////////////////////////////////////////////////////////
 	// Pickups Sync

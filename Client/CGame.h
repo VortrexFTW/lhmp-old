@@ -59,7 +59,9 @@ typedef struct _VEHICLE {
 	Vector3D	rotationSecond;		//	0D40-0D4C
 	_pad(__unk10, 0x1230);
 	Vector3D	speed;				//	1F7C-1F88
-	_pad(__unk11, 0x10C);
+	_pad(__unk11, 0x8C);
+	bool		bLights;			//	2014-2015
+	_pad(__unk12, 0x7F);
 	int			engineShotDamage;	//	2094-2098
 } VEHICLE;
 

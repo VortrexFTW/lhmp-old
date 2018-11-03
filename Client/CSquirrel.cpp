@@ -1412,10 +1412,10 @@ void CSquirrel::PrepareMachine(SQVM* pVM)
 	RegisterFunction(pVM, "getTextWidth", (SQFUNCTION)sq_getFontWidthOfText, 3, ".sp");
 
 	// Returns RGB color as DWORD (useful for all Color params, drawtext/fillbox)
-	RegisterFunction(pVM, "ColorRGB", (SQFUNCTION)sq_ColorRGB, 4, ".nnn");
+	RegisterFunction(pVM, "colorRGB", (SQFUNCTION)sq_ColorRGB, 4, ".nnn");
 
 	// Returns RGB color as DWORD (useful for all Color params, drawtext/fillbox)
-	RegisterFunction(pVM, "ColorARGB", (SQFUNCTION)sq_ColorARGB, 4, ".nnnn");
+	RegisterFunction(pVM, "colorARGB", (SQFUNCTION)sq_ColorARGB, 4, ".nnnn");
 
 	//Create 3D sound at specific coordinates	
 	RegisterFunction(pVM, "create3DSound", (SQFUNCTION)sq_Play3DSound, 7, ".sfffff");
