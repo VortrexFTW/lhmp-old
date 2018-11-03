@@ -14,11 +14,12 @@ extern CCore *g_CCore;
 void ConsoleThread(){
 #else
 //void* ConsoleThread(void *arg){
+void ConsoleThread() {
 #endif // _WIN32
 	while (1)
 	{
 		g_CCore->GetConsole()->Tick();
-		RakSleep(200);
+		RakSleep(50);
 	}
 }
 void CConsole::Init()

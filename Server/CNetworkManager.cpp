@@ -263,6 +263,9 @@ void	CNetworkManager::OnPlayerDisconnect(RakNet::Packet* packet)
 
 void CNetworkManager::Pulse()
 {
+	CNetworkManager::SendSYNC();
+	CNetworkManager::SendCarSYNC();
+
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive())
 	{
 		RakNet::TimeMS TS = NULL;
@@ -318,7 +321,7 @@ void CNetworkManager::Pulse()
 			player->SetIsActive(1);
 			player->SetIsSpawned(1);
 			player->SetSkin(0);
-			player->SetFieldOfView(FOV);
+			player->SetFOV(FOV);
 
 			RakNet::BitStream bsOut;
 			bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
@@ -364,8 +367,10 @@ void CNetworkManager::Pulse()
 			break;
 		}
 	}
-	CNetworkManager::SendSYNC();
-	CNetworkManager::SendCarSYNC();
+
+	// Moved to top of function - Vortrex
+	//CNetworkManager::SendSYNC();
+	//CNetworkManager::SendCarSYNC();
 }
 
 void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
@@ -436,7 +441,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
 			SYNC::ON_FOOT_SYNC	syncData;
 			bsIn.Read(syncData);
-			player->OnFootUpdate(syncData, timestamp);
+			player->OnSync(syncData, timestamp);
 		}
 	}
 	break;
@@ -450,7 +455,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
 			SYNC::IN_CAR	syncData;
 			bsIn.Read(syncData);
-			player->OnVehicleUpdate(syncData);
+			player->OnCarUpdate(syncData);
 		}
 	}
 	break;
@@ -512,7 +517,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
 		if (player != NULL)
 		{
-			player->OnDropWeapon(wepID);
+			player->OnDeleteWeapon(wepID);
 		}
 	}
 	break;
@@ -563,7 +568,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
 		if (player != NULL)
 		{
-			player->OnPlayerThrowGrenade(position);
+			player->OnPlayerThrowGranade(position);
 		}
 
 	}
@@ -923,7 +928,7 @@ void CNetworkManager::SendSYNC()
 		if (player == NULL) continue;
 		if (player->GetCurrentCar() == NO_CAR)
 		{
-			if (player->GetShouldUpdate())
+			if (player->ShouldUpdate())
 			{
 				//strPlayer* actual = &g_CCore->GetPlayers()[i];
 				//if(actual->isSpawned)
@@ -978,7 +983,7 @@ void CNetworkManager::SendCarSYNC()
 		if (veh != NULL)
 		{
 			//if ()
-			if (veh->GetSeat(0) == -1 || veh->GetShouldUpdate())
+			if (veh->GetSeat(0) == -1 || veh->ShouldUpdate())
 			{
 				veh->SendSync();
 				veh->SetShouldUpdate(false);	// wait till next update

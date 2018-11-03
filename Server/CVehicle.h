@@ -22,9 +22,12 @@ private:
 	float			fuel;
 	byte			shotdamage;
 
+	float			health;
+
 	bool			onGas;
 	byte            roofState;    
 	byte            engineState;
+	bool			lightState;
 
 	bool			isExploded;
 
@@ -76,11 +79,16 @@ public:
 	void        ToggleEngine(byte);
 	byte        GetEngineState();
 
+	bool		GetLightState();
+	void		ToggleLights(bool);
+
 	bool		IsOnGas();
 	void		SetOnGas(bool);
 
 	bool		IsExploded();
 	void		SetExploded(bool);
+
+
 
 	void		SetRespawnPosition(Vector3D);
 	Vector3D	GetRespawnPosition();

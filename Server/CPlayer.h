@@ -37,7 +37,7 @@ public:
 	int		GetCurrentCar();
 
 	void	SetNickColor(unsigned int);
-	unsigned int GetNickColor();
+	unsigned int GetNicknameColour();
 
 	// Weapon actions
 	void AddWeapon(int,int,int);

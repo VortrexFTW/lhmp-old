@@ -50,8 +50,6 @@ public:
 	void onVehicleJacked(int, int);
 	void onVehicleEngineChange(int, bool);
 	void onVehicleDamage(int, float);
-	//void onVehicleShot(int, int, int, int);
-	//void onVehicleShot(int, int, byte, int);
 
 	void onPlayerShoot(int, int);
 	void onPlayerHit(int,int);

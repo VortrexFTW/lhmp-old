@@ -77,8 +77,10 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "vehicleSetRotation", (SQFUNCTION)sq_vehicleSetRotation, 5, ".nfff");
 	RegisterFunction(vM, "vehicleToggleRoof", (SQFUNCTION)sq_vehicleToggleRoof, 3, ".nn");
 	RegisterFunction(vM, "vehicleToggleSiren", (SQFUNCTION)sq_vehicleToggleSiren, 3, ".nb");
+	RegisterFunction(vM, "vehicleToggleLights", (SQFUNCTION)sq_vehicleToggleSiren, 3, ".nb");
 	RegisterFunction(vM, "vehicleGetSirenState", (SQFUNCTION)sq_vehicleGetSirenState, 2, ".n");
 	RegisterFunction(vM, "vehicleGetRoofState", (SQFUNCTION)sq_vehicleGetRoofState, 2, ".n");
+	RegisterFunction(vM, "vehicleGetLightState", (SQFUNCTION)sq_vehicleGetSirenState, 2, ".n");
 	RegisterFunction(vM, "vehicleExplode", (SQFUNCTION)sq_vehicleExplode, 2, ".n");
 	RegisterFunction(vM, "vehicleExists", (SQFUNCTION)sq_vehicleExists, 2, ".n");
 

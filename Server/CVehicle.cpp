@@ -19,9 +19,10 @@ CVehicle::CVehicle()
 	this->SetRespawnRotation(secondRot);
 	damage = 100.0f;
 	shotdamage = 10;
-	onGas = 0; 
+	onGas = 0;
 	roofState = 0;
 	engineState = 0;
+	lightState = false;
 	siren = 0;
 	isExploded = false;
 }
@@ -41,14 +42,14 @@ void CVehicle::ToggleLights(bool lights)
 	this->lightState = lights;
 }
 
+bool CVehicle::GetLightState()
+{
+	return this->lightState;
+}
+
 byte CVehicle::GetRoofState()
 {
 	return this->roofState;
-}
-
-byte CVehicle::GetLightState()
-{
-	return this->lightState;
 }
 
 void CVehicle::ToggleEngine(byte state)
@@ -74,6 +75,7 @@ void CVehicle::SetSpeed(Vector3D speed)
 {
 	this->speed = speed;
 }
+
 Vector3D CVehicle::GetSpeed()
 {
 	return this->speed;
@@ -98,7 +100,7 @@ void CVehicle::PlayerExit(int pID)
 		this->SetSpeed(speed);
 		this->onGas = false;
 	}
-	for (int i = 0; i < 4;i++)
+	for (int i = 0; i < 4; i++)
 		if (Seat[i] == pID)
 			Seat[i] = -1;
 	CPlayer* player = g_CCore->GetPlayerPool()->Return(pID);
@@ -118,7 +120,7 @@ void CVehicle::SendSync()
 			this->Respawn();
 		}
 	}
-	else 
+	else
 	{
 		VEH::SYNC syncData;
 		syncData.ID = g_CCore->GetVehiclePool()->ReturnId(this);
@@ -142,7 +144,7 @@ void CVehicle::SendSync()
 		if (Seat[0] == -1) {
 			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, LHMP_NETCHAN_VEHSYNC, UNASSIGNED_RAKNET_GUID, true);
 		}
-		else 
+		else
 		{
 			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, LOW_PRIORITY, UNRELIABLE, LHMP_NETCHAN_VEHSYNC, g_CCore->GetNetworkManager()->GetSystemAddressFromID(Seat[0]), true);
 		}
@@ -294,10 +296,10 @@ void		CVehicle::SetExplodeTime(unsigned int time)
 void	CVehicle::Respawn()
 {
 	g_CCore->GetLog()->AddNormalLog("Car respawn");
-	this->Rotation = this->GetRespawnRotation();
-	this->Position = this->GetRespawnPosition();
+	this->respawnRotation = this->GetRespawnRotation();
+	this->respawnPosition = this->GetRespawnPosition();
 	this->secondRot = this->GetRespawnRotationSecond();
-	this->Health = 100.0f;
+	this->health = 100.0f;
 	this->damage = 100.0f;
 	this->shotdamage = 10;
 	this->isExploded = false;
@@ -311,8 +313,8 @@ void	CVehicle::Respawn()
 	bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((RakNet::MessageID)LHMP_VEHICLE_RESPAWN);
 	bsOut.Write(g_CCore->GetVehiclePool()->ReturnId(this));
-	bsOut.Write(this->Position);
-	bsOut.Write(this->Rotation);
+	bsOut.Write(this->respawnPosition);
+	bsOut.Write(this->respawnRotation);
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_RAKNET_GUID, true);
 
 	this->SetIsSpawned(true);
@@ -323,5 +325,5 @@ bool GetCarLights() {
 }
 
 void SetCarLights(bool lights) {
-	
+
 }

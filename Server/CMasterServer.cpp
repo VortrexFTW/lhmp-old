@@ -13,6 +13,7 @@ CMasterList::CMasterList()
 	this->lastMasterPost = 0;
 	this->isVisible = false;
 	this->timestampStart = NULL;
+	this->initialResponseOutput = false;
 }
 
 CMasterList::~CMasterList()
@@ -114,20 +115,23 @@ void CMasterList::Pulse()
 // handles the results of pending request
 void CMasterList::HandleMasterResponse(int reason)
 {
-	switch (reason)
-	{
-	case MASTERLIST_CONNECTIONFAILED:
-		g_CCore->GetLog()->AddNormalLog("[Error] Master server is down ! Retrying in %u minute(s)",MASTERSERVER_UPDATE_INTERVAL/1000); 
-		g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
-		break;
-	case MASTERLIST_FAILED:
-		g_CCore->GetLog()->AddNormalLog("[Error] Masterlist couldn't connect this server from the internet ");
-		g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
-		g_CCore->GetLog()->AddNormalLog("        Make sure you have public IP & ports open and forwarded !");
-		break;
-	case MASTERLIST_OK:
-		g_CCore->GetLog()->AddNormalLog("[Master] Server has been successfully added to the masterlist !");
-		break;
+	switch (reason) {
+		case MASTERLIST_CONNECTIONFAILED:
+			g_CCore->GetLog()->AddNormalLog("[Error] Master server is down ! Retrying in %u minute(s)", MASTERSERVER_UPDATE_INTERVAL / 1000);
+			g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
+			break;
+		case MASTERLIST_FAILED:
+			g_CCore->GetLog()->AddNormalLog("[Error] Masterlist couldn't connect this server from the internet ");
+			g_CCore->GetLog()->AddNormalLog("        This server won't be visible in server list !");
+			g_CCore->GetLog()->AddNormalLog("        Make sure you have public IP & ports open and forwarded !");
+			break;
+		case MASTERLIST_OK:
+			// To prevent spamming with the message over time.
+			if (!this->initialResponseOutput) { 
+				g_CCore->GetLog()->AddNormalLog("[Master] Server has been successfully added to the masterlist !");
+				this->initialResponseOutput = true;
+			}
+			break;
 	}
 
 	this->lastMasterPost = RakNet::GetTimeMS();

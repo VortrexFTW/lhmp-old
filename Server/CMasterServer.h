@@ -44,6 +44,9 @@ private:
 	// should we be announced in the master query 
 	bool isVisible;
 
+	// To prevent spamming "connected to master list" over time.
+	bool initialResponseOutput;
+
 	// handles the results of pending request
 	void HandleMasterResponse(int reason);
 };

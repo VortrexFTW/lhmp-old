@@ -926,46 +926,6 @@ void CScripts::onPlayerShoot(int ID, int weaponID)
 	}
 }
 
-void CScripts::onVehicleShot(int vehID, int playerID, int damage, int wepID)
-{
-	for (int i = 0; i < MAX_SCRIPTS; i++) {
-		if (m_pScripts[i]) {
-			// get the script vm pointer
-			SQVM * pVM = m_pScripts[i]->GetVM();
-
-			// Get the stack top
-			int iTop = sq_gettop(pVM);
-
-			// Push the root table onto the stack
-			sq_pushroottable(pVM);
-
-			// Push the function name onto the stack
-			sq_pushstring(pVM, "onVehicleShot", -1);
-
-			// Get the closure for the function
-			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
-				// Push the root table onto the stack
-				sq_pushroottable(pVM);
-
-				// Push the player id onto the stack
-
-				sq_pushinteger(pVM, vehID);
-				sq_pushinteger(pVM, playerID);
-				sq_pushinteger(pVM, wepID);
-				sq_pushinteger(pVM, damage);
-
-				// Call the function
-				if (!SQ_FAILED(sq_call(pVM, 5, false, true)))
-				{
-				}
-			}
-
-			// Restore the stack top
-			sq_settop(pVM, iTop);
-		}
-	}
-}
-
 void CScripts::onPlayerHit(int ID,int attackerID)
 {
 	for (int i = 0; i < MAX_SCRIPTS; i++) {

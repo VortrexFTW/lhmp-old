@@ -254,7 +254,7 @@ void	CPlayer::SetNickColor(unsigned int color)
 {
 	this->nickColor = color;
 }
-unsigned int CPlayer::GetNickColor()
+unsigned int CPlayer::GetNicknameColour()
 {
 	return this->nickColor;
 }

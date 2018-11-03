@@ -983,7 +983,7 @@ SQInteger sq_vehicleToggleRoof(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_ROOF);
 		bsOut.Write(ID);
 		bsOut.Write(state);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true); return 1;
 	}
 	sq_pushbool(vm, false);
@@ -1009,7 +1009,33 @@ SQInteger sq_vehicleToggleSiren(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_SIREN);
 		bsOut.Write(ID);
 		bsOut.Write(state);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
+		sq_pushbool(vm, true); return 1;
+	}
+	sq_pushbool(vm, false);
+	return 1;
+}
+
+SQInteger sq_vehicleToggleLights(SQVM *vm)
+{
+	SQInteger ID;
+	SQBool state;
+
+	sq_getinteger(vm, -2, &ID);
+	sq_getbool(vm, -1, &state);
+
+	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
+
+
+	if (veh != NULL)
+	{
+		veh->ToggleLights((state == SQTrue));
+		BitStream bsOut;
+		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
+		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_LIGHTS);
+		bsOut.Write(ID);
+		bsOut.Write(state);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true); return 1;
 	}
 	sq_pushbool(vm, false);
@@ -1026,6 +1052,24 @@ SQInteger sq_vehicleGetSirenState(SQVM *vm)
 	if (vehicle != NULL)
 	{
 		bool state = vehicle->GetSirenState();
+
+		sq_pushbool(vm, state);
+		return 1;
+	}
+	sq_pushnull(vm);
+	return 1;
+}
+
+SQInteger sq_vehicleGetLightState(SQVM *vm)
+{
+	SQInteger ID;
+	sq_getinteger(vm, -1, &ID);
+
+	CVehicle* vehicle = g_CCore->GetVehiclePool()->Return(ID);
+
+	if (vehicle != NULL)
+	{
+		bool state = vehicle->GetLightState();
 
 		sq_pushbool(vm, state);
 		return 1;
