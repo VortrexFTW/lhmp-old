@@ -56,7 +56,7 @@ public:
 	void GetConnectInfo();
 	void ValidateIP();
 	void Pulse();
-	void SendServerMessage(RakNet::BitStream*,PacketPriority ,PacketReliability);
+	void SendServerMessage(RakNet::BitStream*, PacketPriority, PacketReliability, char = 0);
 	RakNet::RakPeerInterface* GetPeer();
 	char* GetNick();
 	RakNet::RakPeerInterface* ReturnPeer();

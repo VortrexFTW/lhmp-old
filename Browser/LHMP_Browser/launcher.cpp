@@ -327,7 +327,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
             if (launcherVersion != version) {
                 QMessageBox::StandardButton reply;
-                reply = QMessageBox::question(this, "New update available", "There is a new update available!<br/><br/>Do you want to download it and update your installation?", QMessageBox::Yes|QMessageBox::No);
+                reply = QMessageBox::question(this, "New update available", "There is a new launcher update available!<br/><br/>Do you want to download it and update your installation?", QMessageBox::Yes|QMessageBox::No);
 
                 if (reply == QMessageBox::Yes) {
                     // Self update
@@ -443,7 +443,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
                 exit(0);
             } else if (fileName == "Game.exe") {
-                if (!QFile(QString("%1/%2.bk").arg(mafiaPath).arg(fileName)).exists()) {
+                if (!QFile(QString("%1/%2.bak").arg(mafiaPath).arg(fileName)).exists()) {
                     if (allowPatch == -1) {
                         AskPatchPermission();
                     }
@@ -544,7 +544,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
             }
         }
     } else {
-        ui->label_3->setText("Could not contact the update server, visit lh-mp.eu for support.");
+        ui->label_3->setText("Could not contact the update server, please contact Vortrex for support.");
 
         updated = true;
 
@@ -781,7 +781,7 @@ void Launcher::mouseMoveEvent( QMouseEvent *e ) {
 
 void Launcher::on_pushButton_4_clicked()
 {
-    QDesktopServices::openUrl(QUrl("http://lh-mp.eu/forum/"));
+    QDesktopServices::openUrl(QUrl("http://vortrex.info/lhmp"));
 }
 
 void Launcher::on_btnPlay_clicked()

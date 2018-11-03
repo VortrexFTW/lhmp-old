@@ -28,7 +28,7 @@ void printfunc(HSQUIRRELVM v, const SQChar *s, ...)
 	char endbuff[500] = "MP  ";
 	va_list args;
 	va_start(args, s);
-	vsprintf(endbuff+4, s, args);
+	vsprintf(endbuff + 4, s, args);
 	va_end(args);
 	//g_CCore->GetLog()->AddLog(endbuff);
 	g_CCore->GetChat()->AddMessage(endbuff);
@@ -83,7 +83,7 @@ static void squirrel_print_function(HSQUIRRELVM sqvm, const SQChar *format, ...)
 	//vfprintf(stdout, format, args);
 	//printfunc(sqvm, format, args);
 	//g_CCore->GetChat()->AddMessage("PRINTF");
-	
+
 	vsprintf(endbuff, format, args);
 	g_CCore->GetChat()->AddMessage(endbuff);
 	va_end(args);
@@ -98,7 +98,7 @@ static void squirrel_error_function(HSQUIRRELVM sqvm, const SQChar *format, ...)
 	vsprintf(endbuff, format, args);
 	g_CCore->GetChat()->AddMessage(endbuff);
 	va_end(args);
-	
+
 }
 
 void CSquirrel::LoadClientScript(char* scriptname)
@@ -125,32 +125,32 @@ void CSquirrel::LoadClientScript(char* scriptname)
 	sq_newclosure(sqvm, squirrel_runtime_error, 0); // NEW!
 	sq_seterrorhandler(sqvm); // NEW!
 
-	//const SQChar *program = "::print(\"Hello World, I'm back!\\n\");::print(\"Fuck this\");";
-	//const SQChar *program = "function onRender(){ drawText(\"This text is rendered with Squirrel :)\", 300, 300, COLOR_RED);}";
-	//const SQChar *program = "function onRender(){ ::print(\"This text is rendered with Squirrel :)\");}";
-	/*if (SQ_FAILED(sq_compilebuffer(sqvm, program,
-		sizeof(SQChar)* strlen(program),
-		"program", SQTrue))) {
-		return;
-	}*/
-	
+							  //const SQChar *program = "::print(\"Hello World, I'm back!\\n\");::print(\"Fuck this\");";
+							  //const SQChar *program = "function onRender(){ drawText(\"This text is rendered with Squirrel :)\", 300, 300, COLOR_RED);}";
+							  //const SQChar *program = "function onRender(){ ::print(\"This text is rendered with Squirrel :)\");}";
+							  /*if (SQ_FAILED(sq_compilebuffer(sqvm, program,
+							  sizeof(SQChar)* strlen(program),
+							  "program", SQTrue))) {
+							  return;
+							  }*/
+
 
 	sq_pushroottable(sqvm);
 
 	/* ------------------ Additional libs */
-	
+
 	sqstd_register_stringlib(sqvm);
 	sqstd_register_mathlib(sqvm);
 	sqstd_register_systemlib(sqvm);
 	sqstd_register_iolib(sqvm);
-	
+
 	/* ------------------ Register our natives */
 	this->PrepareMachine(sqvm);
 
 	/*if (SQ_FAILED(sq_call(sqvm, 1, SQFalse, SQTrue))) {
 
-		g_CCore->GetChat()->AddMessage("Compile failed");
-		return;
+	g_CCore->GetChat()->AddMessage("Compile failed");
+	return;
 	}*/
 	if (SQ_FAILED(sqstd_dofile(pVM, szScriptPath, SQFalse, SQTrue))) {
 		// script compilation failed
@@ -189,9 +189,9 @@ void CSquirrel::LoadClientScript(char* scriptname)
 	sq_pushstring(this->p_VM, "onRender", -1);
 	// Get the closure for the function
 	if (SQ_SUCCEEDED(sq_get(this->p_VM, -2))) {
-		// Push the root table onto the stack
-		sq_pushroottable(this->p_VM);
-		sq_call(this->p_VM, 1, true, true);
+	// Push the root table onto the stack
+	sq_pushroottable(this->p_VM);
+	sq_call(this->p_VM, 1, true, true);
 	}
 	sq_settop(this->p_VM, iTop);*/
 
@@ -201,101 +201,101 @@ void CSquirrel::LoadClientScript(char* scriptname)
 /*---
 void CSquirrel::LoadClientScript(char* scriptname)
 {
-	g_CCore->GetChat()->AddMessage(scriptname);
-	// Need to get the correct filename as all client files 
-	// from server are stored with their MD5 checksum as name
-	char* realName = g_CCore->GetFileSystem()->GetFileAliasFromName(scriptname);
-	
-	char szScriptPath[512];
-	sprintf(szScriptPath, "lhmp/files/%s", realName);
+g_CCore->GetChat()->AddMessage(scriptname);
+// Need to get the correct filename as all client files
+// from server are stored with their MD5 checksum as name
+char* realName = g_CCore->GetFileSystem()->GetFileAliasFromName(scriptname);
 
-	g_CCore->GetChat()->AddMessage(szScriptPath);
+char szScriptPath[512];
+sprintf(szScriptPath, "lhmp/files/%s", realName);
 
-	// make sure the script exists
-	FILE * fp = fopen(szScriptPath, "rb");
-	if (!fp) {
-		g_CCore->GetChat()->AddMessage("[Err] Failed to run script: SCRIPT_NOT_FOUND");
-		return;
-	}
-	fclose(fp);
-	// create the squirrel VM with an initial stack size of 1024 bytes
-	HSQUIRRELVM hVM=  sq_open(1024);
+g_CCore->GetChat()->AddMessage(szScriptPath);
 
-	// get the script vm pointer
-	SQVM * pVM = hVM;
+// make sure the script exists
+FILE * fp = fopen(szScriptPath, "rb");
+if (!fp) {
+g_CCore->GetChat()->AddMessage("[Err] Failed to run script: SCRIPT_NOT_FOUND");
+return;
+}
+fclose(fp);
+// create the squirrel VM with an initial stack size of 1024 bytes
+HSQUIRRELVM hVM=  sq_open(1024);
 
-	// register the default error handlers
-	//sqstd_seterrorhandlers(pVM);
+// get the script vm pointer
+SQVM * pVM = hVM;
 
-	// set the print and error functions
-	//sq_setprintfunc(pVM, printfunc, printfunc);
+// register the default error handlers
+//sqstd_seterrorhandlers(pVM);
 
-	// push the root table onto the stack
-	//sq_pushroottable(pVM);
+// set the print and error functions
+//sq_setprintfunc(pVM, printfunc, printfunc);
 
-	/* ------------------ Additional libs */
-	/*
-	sqstd_register_stringlib(pVM);
-	sqstd_register_mathlib(pVM);
-	sqstd_register_systemlib(pVM);
-	*/
-	/* ------------------ Register our natives */
-	//this->PrepareMachine(pVM);
-	
-	/*// load and compile the script
-	if (SQ_FAILED(sqstd_dofile(pVM, szScriptPath, SQFalse, SQTrue))) {
-		// script compilation failed
-		g_CCore->GetChat()->AddMessage("[Err] Failed to run script: SQUIRREL_LOADING_FAILED");
-		return;
-	}
-	// pop the root table from the stack
-	sq_pop(pVM, 1);
+// push the root table onto the stack
+//sq_pushroottable(pVM);
 
-	printfunc(pVM, "Virtual-Machine: %x", pVM);
+/* ------------------ Additional libs */
+/*
+sqstd_register_stringlib(pVM);
+sqstd_register_mathlib(pVM);
+sqstd_register_systemlib(pVM);
+*/
+/* ------------------ Register our natives */
+//this->PrepareMachine(pVM);
 
-	// add script into pool
-	this->p_scriptPool.push_back(CScript(pVM));
+/*// load and compile the script
+if (SQ_FAILED(sqstd_dofile(pVM, szScriptPath, SQFalse, SQTrue))) {
+// script compilation failed
+g_CCore->GetChat()->AddMessage("[Err] Failed to run script: SQUIRREL_LOADING_FAILED");
+return;
+}
+// pop the root table from the stack
+sq_pop(pVM, 1);
 
-	printfunc(pVM, "Virtual-Machine: %x", this->p_scriptPool.rbegin()->GetVirtualMachine());
-	*/
-	//--------------------------------------
+printfunc(pVM, "Virtual-Machine: %x", pVM);
+
+// add script into pool
+this->p_scriptPool.push_back(CScript(pVM));
+
+printfunc(pVM, "Virtual-Machine: %x", this->p_scriptPool.rbegin()->GetVirtualMachine());
+*/
+//--------------------------------------
 /*---
-	sq_setprintfunc(pVM, printfunc, printfunc);
+sq_setprintfunc(pVM, printfunc, printfunc);
 
-	const SQChar *program = "print(\"Hi, suckerr\");function onRender(){drawText(\"This text is rendered with Squirrel :)\", 300, 300, COLOR_RED);}\");";
+const SQChar *program = "print(\"Hi, suckerr\");function onRender(){drawText(\"This text is rendered with Squirrel :)\", 300, 300, COLOR_RED);}\");";
 
-	if (SQ_FAILED(sq_compilebuffer(pVM, program,
-		sizeof(SQChar)* strlen(program),
-		"program", SQTrue))) {
-		return;
-	}
+if (SQ_FAILED(sq_compilebuffer(pVM, program,
+sizeof(SQChar)* strlen(program),
+"program", SQTrue))) {
+return;
+}
 
-	sq_pushroottable(pVM);
-	if (SQ_FAILED(sq_call(pVM, 1, SQFalse, SQTrue))) {
-		return;
-	}
+sq_pushroottable(pVM);
+if (SQ_FAILED(sq_call(pVM, 1, SQFalse, SQTrue))) {
+return;
+}
 
 
-	//--------------------------------------
+//--------------------------------------
 
-	// test
-	int iTop = sq_gettop(pVM);
-	sq_pushroottable(pVM);
+// test
+int iTop = sq_gettop(pVM);
+sq_pushroottable(pVM);
 
-	// Push the function name onto the stack
-	sq_pushstring(pVM, "onRender", -1);
-	// Get the closure for the function
-	if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
-		// Push the root table onto the stack
-		sq_pushroottable(pVM);
-		sq_call(pVM, 1, true, true);
-	}
-	sq_settop(pVM, iTop);
-	
-	//g_CCore->GetSquirrel()->onRender();
+// Push the function name onto the stack
+sq_pushstring(pVM, "onRender", -1);
+// Get the closure for the function
+if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+// Push the root table onto the stack
+sq_pushroottable(pVM);
+sq_call(pVM, 1, true, true);
+}
+sq_settop(pVM, iTop);
 
-	// script loaded successfully
-	return;
+//g_CCore->GetSquirrel()->onRender();
+
+// script loaded successfully
+return;
 }
 */
 
@@ -345,44 +345,44 @@ void CSquirrel::onRender()
 	//g_CCore->GetChat()->AddMessage("renderSTART");
 	/*unsigned int size = this->p_scriptPool.size();
 	for (int i = 0; i < size; i++) {
-			SQVM * pVM = this->p_scriptPool[i].GetVirtualMachine();
-			if (pVM == NULL)
-				continue;
-			int iTop = sq_gettop(pVM);
-			sq_pushroottable(pVM);
+	SQVM * pVM = this->p_scriptPool[i].GetVirtualMachine();
+	if (pVM == NULL)
+	continue;
+	int iTop = sq_gettop(pVM);
+	sq_pushroottable(pVM);
 
-			// Push the function name onto the stack
-			g_CCore->GetChat()->AddMessage("rendering...");
-			sq_pushstring(pVM, "onRender", -1);
-			// Get the closure for the function
-			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
-				// Push the root table onto the stack
-				sq_pushroottable(pVM);
-				sq_call(pVM, 1, true, true);
-			}
-			sq_settop(pVM, iTop);
+	// Push the function name onto the stack
+	g_CCore->GetChat()->AddMessage("rendering...");
+	sq_pushstring(pVM, "onRender", -1);
+	// Get the closure for the function
+	if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+	// Push the root table onto the stack
+	sq_pushroottable(pVM);
+	sq_call(pVM, 1, true, true);
+	}
+	sq_settop(pVM, iTop);
 
 
-			char buff[100];
-			sprintf(buff, "NEXT: %p", pVM);
-			g_CCore->GetLog()->AddLog(buff);
-		}*/
-		
+	char buff[100];
+	sprintf(buff, "NEXT: %p", pVM);
+	g_CCore->GetLog()->AddLog(buff);
+	}*/
+
 	/*if (this->p_VM != NULL)
 	{
-		int iTop = sq_gettop(this->p_VM);
-		sq_pushroottable(this->p_VM);
+	int iTop = sq_gettop(this->p_VM);
+	sq_pushroottable(this->p_VM);
 
-		// Push the function name onto the stack
-		g_CCore->GetChat()->AddMessage("rendering...");
-		sq_pushstring(this->p_VM, "onRender", -1);
-		// Get the closure for the function
-		if (SQ_SUCCEEDED(sq_get(this->p_VM, -2))) {
-			// Push the root table onto the stack
-			sq_pushroottable(this->p_VM);
-			sq_call(this->p_VM, 1, true, true);
-		}
-		sq_settop(this->p_VM, iTop);
+	// Push the function name onto the stack
+	g_CCore->GetChat()->AddMessage("rendering...");
+	sq_pushstring(this->p_VM, "onRender", -1);
+	// Get the closure for the function
+	if (SQ_SUCCEEDED(sq_get(this->p_VM, -2))) {
+	// Push the root table onto the stack
+	sq_pushroottable(this->p_VM);
+	sq_call(this->p_VM, 1, true, true);
+	}
+	sq_settop(this->p_VM, iTop);
 	}*/
 
 
@@ -497,7 +497,7 @@ void CSquirrel::callClientFunc(char* scriptname, char* scriptfunc, BitStream* me
 		message->Read(type);
 
 		int len;
-		
+
 		int iTop = sq_gettop(pointer->GetVirtualMachine());
 		sq_pushroottable(pointer->GetVirtualMachine());
 
@@ -684,13 +684,13 @@ SQInteger sq_cameraLookAtFrom(SQVM *vm)
 	rotation.y = lookAtPoint.y - cameraPos.y;
 	rotation.z = lookAtPoint.z - cameraPos.z;
 
-	int ratio = (int) sqrtf(rotation.x*rotation.x + rotation.y*rotation.y + rotation.z*rotation.z);
+	int ratio = (int)sqrtf(rotation.x*rotation.x + rotation.y*rotation.y + rotation.z*rotation.z);
 
 	rotation.x /= ratio;
 	rotation.y /= ratio;
 	rotation.z /= ratio;
 
-	g_CCore->GetGame()->SetCameraPos(cameraPos,rotation.x,rotation.y,rotation.z, 0.0f);
+	g_CCore->GetGame()->SetCameraPos(cameraPos, rotation.x, rotation.y, rotation.z, 0.0f);
 	return 1;
 }
 
@@ -811,11 +811,11 @@ SQInteger sq_createTexture(SQVM *vm)
 	CSQImage* image = g_CCore->GetSquirrelImages()->createTexture((char*)szScriptPath);
 	/*if (image != NULL)
 	{
-		// on success, returns the handle to image(texture)
-		sq_pushuserpointer(vm, image);
+	// on success, returns the handle to image(texture)
+	sq_pushuserpointer(vm, image);
 	}
 	else {
-		sq_pushbool(vm, false);
+	sq_pushbool(vm, false);
 	}*/
 	// on success, it returns handle, otherwise NULL
 	sq_pushuserpointer(vm, image);
@@ -829,7 +829,7 @@ SQInteger sq_getTextureSize(SQVM *vm)
 
 	D3DSURFACE_DESC descript;
 	image->GetTexture()->GetLevelDesc(0, &descript);
-	
+
 	sq_newarray(vm, 0);
 	sq_pushinteger(vm, descript.Width);
 	sq_arrayappend(vm, -2);
@@ -846,7 +846,7 @@ SQInteger sq_drawTexture(SQVM* vm)
 	D3DXVECTOR2		position;
 	D3DXVECTOR2		scaling;
 
-	sq_getuserpointer(vm, -5, (SQUserPointer*) &image);
+	sq_getuserpointer(vm, -5, (SQUserPointer*)&image);
 	if (image != NULL)
 	{
 		sq_getfloat(vm, -4, &position.x);
@@ -854,7 +854,7 @@ SQInteger sq_drawTexture(SQVM* vm)
 		sq_getfloat(vm, -2, &scaling.x);
 		sq_getfloat(vm, -1, &scaling.y);
 
-		g_CCore->GetGraphics()->GetSprite()->Draw(image->GetTexture(), NULL,&scaling,NULL,0.0f, &position, 0xFFFFFFFF);
+		g_CCore->GetGraphics()->GetSprite()->Draw(image->GetTexture(), NULL, &scaling, NULL, 0.0f, &position, 0xFFFFFFFF);
 	}
 	else {
 		g_CCore->GetChat()->AddMessage("[Err] drawImage - image doesn't exists");
@@ -967,8 +967,8 @@ SQInteger sq_createFont(SQVM *vm)
 	sq_getstring(vm, -2, &name_font);
 	sq_getinteger(vm, -1, &size);
 
-	CSQFont* font = g_CCore->GetSquirrelFonts()->createFont((char*)name_font,size);
-	
+	CSQFont* font = g_CCore->GetSquirrelFonts()->createFont((char*)name_font, size);
+
 	/*char buff[500];
 	sprintf(buff, "createFont: %p", font);
 	g_CCore->GetChat()->AddMessage(buff);
@@ -988,7 +988,7 @@ SQInteger sq_drawFontText(SQVM *vm)
 	sq_getinteger(vm, -4, &x);
 	sq_getinteger(vm, -3, &y);
 	sq_getinteger(vm, -2, &color);
-	sq_getuserpointer(vm, -1,(SQUserPointer*) &font);
+	sq_getuserpointer(vm, -1, (SQUserPointer*)&font);
 
 	if (font)
 	{
@@ -1048,7 +1048,7 @@ SQInteger sq_ColorRGB(SQVM *vm)
 }
 SQInteger sq_ColorARGB(SQVM *vm)
 {
-	int a,r, g, b;
+	int a, r, g, b;
 
 	sq_getinteger(vm, -4, &a);
 	sq_getinteger(vm, -3, &r);
@@ -1077,7 +1077,7 @@ SQInteger sq_ColorARGB(SQVM *vm)
 	return 1;
 }
 
-SQInteger sq_playAnimation(SQVM *vm) 
+SQInteger sq_playAnimation(SQVM *vm)
 {
 	SQInteger anim;
 	sq_getinteger(vm, -1, &anim);
@@ -1230,6 +1230,54 @@ SQInteger sq_TimerGetInterval(SQVM* vm)
 	return 1;
 }
 
+SQInteger sq_worldPosToScreen(SQVM* vm)
+{
+
+	Vector3D position;
+	Vector3D screen;
+
+	sq_getfloat(vm, -1, &position.z);
+	sq_getfloat(vm, -2, &position.y);
+	sq_getfloat(vm, -3, &position.x);
+
+	g_CCore->GetGraphics()->CalcScreenPosition(position, &screen);
+
+	sq_newarray(vm, 0);
+	sq_pushinteger(vm, (int)screen.x);
+	sq_arrayappend(vm, -2);
+	sq_pushinteger(vm, (int)screen.y);
+	sq_arrayappend(vm, -2);
+	sq_push(vm, -1);
+
+	sq_pushnull(vm);
+	return 1;
+}
+
+/*
+SQInteger sq_screenPosToWorld(SQVM* vm)
+{
+
+	Vector3D position;
+	Vector3D screen;
+
+	sq_getfloat(vm, -1, &position.z);
+	sq_getfloat(vm, -2, &position.y);
+	sq_getfloat(vm, -3, &position.x);
+
+	g_CCore->GetGraphics()->CalcScreenPosition(position, &screen);
+
+	sq_newarray(vm, 0);
+	sq_pushinteger(vm, (int)screen.x);
+	sq_arrayappend(vm, -2);
+	sq_pushinteger(vm, (int)screen.y);
+	sq_arrayappend(vm, -2);
+	sq_push(vm, -1);
+
+	sq_pushnull(vm);
+	return 1;
+}
+*/
+
 /*------------------------- /Natives ------------------------------- */
 // Register all native functions and constants
 void CSquirrel::PrepareMachine(SQVM* pVM)
@@ -1296,9 +1344,9 @@ void CSquirrel::PrepareMachine(SQVM* pVM)
 	// functions
 
 	RegisterFunction(pVM, "timerOff", (SQFUNCTION)sq_TimerOff, 1, ".");
-	
+
 	RegisterFunction(pVM, "timerOn", (SQFUNCTION)sq_TimerOn, 5, ".nnnn");
-	
+
 	RegisterFunction(pVM, "timerSetInterval", (SQFUNCTION)sq_TimerSetInterval, 2, ".f");
 
 	RegisterFunction(pVM, "timerGetInterval", (SQFUNCTION)sq_TimerGetInterval, 1, ".");
@@ -1407,4 +1455,5 @@ void CSquirrel::PrepareMachine(SQVM* pVM)
 
 	RegisterFunction(pVM, "getDistanceBetween2DPoints", (SQFUNCTION)sq_getDistanceBetween2DPoints, 5, ".ffff");
 
+	RegisterFunction(pVM, "worldPosToScreen", (SQFUNCTION)sq_worldPosToScreen, 5, ".fff");
 }

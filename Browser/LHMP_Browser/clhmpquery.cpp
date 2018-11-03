@@ -261,7 +261,7 @@ void CLHMPQuery::ProcessOverall(unsigned int taskID, char* data, unsigned int le
 
         // Process given data
         unsigned int ping = GetTickCount() - taskPool[taskID]->timeStamp;
-        OverallPacket* packet = new OverallPacket(taskPool[taskID]->ID, serverName, serverMode, players, maxPlayers, ping, serverMap,serverWeb,hasPassword);
+        OverallPacket* packet = new OverallPacket(taskPool[taskID]->ID, serverName, serverMode, players, maxPlayers, ping, serverMap, serverWeb, hasPassword);
         (*this->p_userCallback)(taskPool[taskID]->ID, packet, (unsigned char)QUERY_OVERALL);
         delete packet;
     }

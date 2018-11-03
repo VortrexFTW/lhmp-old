@@ -260,6 +260,9 @@ void CEngineStack::DoMessage()
 				ENGINE_STACK::PLAYER_DELETEWEAPON* pw = (ENGINE_STACK::PLAYER_DELETEWEAPON*) start->data;
 				if(pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 				{
+					//0x0055B636 - From CHooks.cpp
+					//0x006F9464 - Original from this file
+
 					DWORD adr = *(DWORD*) (*(DWORD*)(0x006F9464)+0xE4);
 					g_CCore->GetGame()->DeleteWeapon(adr,pw->wepID);
 					g_CCore->GetLocalPlayer()->ServerUpdateWeapon();

@@ -1,0 +1,155 @@
+﻿  CNetwork.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  main.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CLocalPlayer.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CVehiclePool.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CVehicle.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CSquirrel.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CSQImages.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CSQFonts.cpp
+  CPickupPool.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CPickup.cpp
+  CPedPool.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CPed.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CNametags.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CLog.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CKeyboard.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CInterpolation.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CIngameMenu.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CHooks.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CGraphics.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CGameSync.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  Generating Code...
+  Compiling...
+  CGame.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CFont.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CFileTransfer.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CEntity.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CEngineStack.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CCrashHandler.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CCore.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CColoredText.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  CChat.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\client\csquirrel.h(8): fatal error C1083: Cannot open include file: 'squirrel.h': No such file or directory
+  AntiCheat.cpp
+  _FindFirst.cpp
+  WSAStartupSingleton.cpp
+  VitaIncludes.cpp
+  VariadicSQLParser.cpp
+  VariableListDeltaTracker.cpp
+  VariableDeltaSerializer.cpp
+  UDPProxyServer.cpp
+  UDPProxyCoordinator.cpp
+  UDPProxyClient.cpp
+  UDPForwarder.cpp
+  Generating Code...
+  Compiling...
+  TwoWayAuthentication.cpp
+  ThreadsafePacketLogger.cpp
+  TelnetTransport.cpp
+  TeamManager.cpp
+  TeamBalancer.cpp
+  TCPInterface.cpp
+  TableSerializer.cpp
+  SuperFastHash.cpp
+  StringTable.cpp
+  StringCompressor.cpp
+  StatisticsHistory.cpp
+  SocketLayer.cpp
+  SimpleMutex.cpp
+  SignaledEvent.cpp
+  SendToThread.cpp
+  SecureHandshake.cpp
+  RPC4Plugin.cpp
+  Router2.cpp
+  ReplicaManager3.cpp
+  ReliabilityLayer.cpp
+  Generating Code...
+  Compiling...
+  RelayPlugin.cpp
+  ReadyEvent.cpp
+  RandSync.cpp
+  Rand.cpp
+  RakWString.cpp
+  RakThread.cpp
+  RakString.cpp
+  RakSleep.cpp
+  RakPeer.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\rakpeer.cpp(421): warning C4018: '<' : signed/unsigned mismatch
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\rakpeer.cpp(569): warning C4018: '<' : signed/unsigned mismatch
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\rakpeer.cpp(614): warning C4018: '<' : signed/unsigned mismatch
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\rakpeer.cpp(720): warning C4018: '<' : signed/unsigned mismatch
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\rakpeer.cpp(725): warning C4018: '<' : signed/unsigned mismatch
+  RakNetTypes.cpp
+  RakNetTransport2.cpp
+  RakNetStatistics.cpp
+  RakNetSocket2_Windows_Linux_360.cpp
+  RakNetSocket2_Windows_Linux.cpp
+  RakNetSocket2_WindowsStore8.cpp
+  RakNetSocket2_Vita.cpp
+  RakNetSocket2_PS4.cpp
+  RakNetSocket2_PS3_PS4.cpp
+  RakNetSocket2_NativeClient.cpp
+  RakNetSocket2_Berkley_NativeClient.cpp
+  Generating Code...
+  Compiling...
+  RakNetSocket2_Berkley.cpp
+  RakNetSocket2_360_720.cpp
+  RakNetSocket2.cpp
+  RakNetSocket.cpp
+  RakNetCommandParser.cpp
+  RakMemoryOverride.cpp
+  Rackspace.cpp
+  PS4Includes.cpp
+  PluginInterface2.cpp
+  PacketOutputWindowLogger.cpp
+  PacketLogger.cpp
+  PacketizedTCP.cpp
+  PacketFileLogger.cpp
+  PacketConsoleLogger.cpp
+  NetworkIDObject.cpp
+  NetworkIDManager.cpp
+  NatTypeDetectionServer.cpp
+  NatTypeDetectionCommon.cpp
+  NatTypeDetectionClient.cpp
+  NatPunchthroughServer.cpp
+e:\abram\dev\game\lhmp\source\lhmp-reboot\sdks\raknet\natpunchthroughserver.cpp(236): warning C4018: '<' : signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  NatPunchthroughClient.cpp
+  MessageFilter.cpp
+  LogCommandParser.cpp
+  LocklessTypes.cpp
+  LinuxStrings.cpp
+  Itoa.cpp
+  IncrementalReadInterface.cpp
+  HTTPConnection2.cpp
+  HTTPConnection.cpp
+  GridSectorizer.cpp
+  gettimeofday.cpp
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppCommon.targets(341,5): warning MSB4220: Waiting for the currently executing task "CL" to cancel.

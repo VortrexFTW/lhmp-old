@@ -116,6 +116,8 @@ private:
 	// when player rotation is forced by server (teleport,  etc)
 	void onPlayerRotationChange(RakNet::BitStream* bitInput);
 
+	void onPlayerHealthChange(RakNet::BitStream* bitInput);
+
 	///////////////////////////////////////////////////////////////////////////
 	// Set of camera functions
 	///////////////////////////////////////////////////////////////////////////

@@ -6,39 +6,39 @@
 extern CCore *g_CCore;
 
 CInterpolation::CInterpolation() {
-	InterPosition.x				= -1985.966675f;
-	InterPosition.y				= 5.037054f;
-	InterPosition.z				= 4.284860f;
+	InterPosition.x = -1985.966675f;
+	InterPosition.y = 5.037054f;
+	InterPosition.z = 4.284860f;
 
-	InterRotation.x				= 0.0f;
-	InterRotation.y				= 0.0f;
+	InterRotation.x = 0.0f;
+	InterRotation.y = 0.0f;
 
-	timestamp					= RakNet::TimeMS();
-	timeLastMessage				= RakNet::TimeMS();
-	timeDiff					= RakNet::TimeMS();
-	interpolationTick			= RakNet::TimeMS();
+	timestamp = RakNet::TimeMS();
+	timeLastMessage = RakNet::TimeMS();
+	timeDiff = RakNet::TimeMS();
+	interpolationTick = RakNet::TimeMS();
 
-	actualPos					= Tools::NullVect(); 
-	previousPos					= Tools::NullVect();
+	actualPos = Tools::NullVect();
+	previousPos = Tools::NullVect();
 
-	actualRot					= Tools::NullVect();
-	previousRot					= Tools::NullVect();
+	actualRot = Tools::NullVect();
+	previousRot = Tools::NullVect();
 }
 
 void CInterpolation::SetUpInterpolation(Vector3D position) {
 	/*RakNet::TimeMS difference = (this->timestamp) - (this->timeLastMessage);
 
 	if (difference > 1) {
-		this->timeDiff = difference;
-		this->timeLastMessage = this->timestamp;
-		this->interpolationTick = RakNet::GetTimeMS();
+	this->timeDiff = difference;
+	this->timeLastMessage = this->timestamp;
+	this->interpolationTick = RakNet::GetTimeMS();
 
-		this->previousPos = this->actualPos;
+	this->previousPos = this->actualPos;
 
-		// Rounding lessens jittery bouncing
-		this->actualPos.x = roundf(position.x * 100) / 100;
-		this->actualPos.y = roundf(position.y * 100) / 100;
-		this->actualPos.z = roundf(position.z * 100) / 100;
+	// Rounding lessens jittery bouncing
+	this->actualPos.x = roundf(position.x * 100) / 100;
+	this->actualPos.y = roundf(position.y * 100) / 100;
+	this->actualPos.z = roundf(position.z * 100) / 100;
 	}*/
 
 	this->timeDiff = (this->timestamp) - (this->timeLastMessage);
@@ -50,9 +50,9 @@ void CInterpolation::SetUpInterpolation(Vector3D position) {
 	this->previousPos = this->actualPos;
 
 	// Rounding lessens jittery bouncing
-	this->actualPos.x = roundf(position.x * 100) / 100;
-	this->actualPos.y = roundf(position.y * 100) / 100;
-	this->actualPos.z = roundf(position.z * 100) / 100;
+	this->actualPos.x = roundf(position.x * 1000) / 1000;
+	this->actualPos.y = roundf(position.y * 1000) / 1000;
+	this->actualPos.z = roundf(position.z * 1000) / 1000;
 }
 
 void CInterpolation::SetUpInterpolationRot(Vector3D rotation) {
@@ -63,9 +63,9 @@ void CInterpolation::SetUpInterpolationRot(Vector3D rotation) {
 	this->previousRot = this->actualRot;
 
 	// Rounding lessens jittery bouncing
-	/*this->actualRot.x = roundf(rotation.x * 100) / 100;
-	this->actualRot.y = roundf(rotation.y * 100) / 100;
-	this->actualRot.z = roundf(rotation.z * 100) / 100;*/
+	this->actualRot.x = roundf(rotation.x * 1000) / 1000;
+	this->actualRot.y = roundf(rotation.y * 1000) / 1000;
+	this->actualRot.z = roundf(rotation.z * 1000) / 1000;
 
 	this->actualRot = rotation;
 }
@@ -79,13 +79,13 @@ void CInterpolation::SetUpInterpolationRotVehicle(Vector3D rotation, Vector3D ro
 	this->previousRot2 = this->actualRot2;
 
 	// Rounding lessens jittery bouncing
-	this->actualRot.x = roundf(rotation.x * 100) / 100;
-	this->actualRot.y = roundf(rotation.y * 100) / 100;
-	this->actualRot.z = roundf(rotation.z * 100) / 100;
+	this->actualRot.x = roundf(rotation.x * 1000) / 1000;
+	this->actualRot.y = roundf(rotation.y * 1000) / 1000;
+	this->actualRot.z = roundf(rotation.z * 1000) / 1000;
 
-	this->actualRot2.x = roundf(rotation2.x * 100) / 100;
-	this->actualRot2.y = roundf(rotation2.y * 100) / 100;
-	this->actualRot2.z = roundf(rotation2.z * 100) / 100;
+	this->actualRot2.x = roundf(rotation2.x * 1000) / 1000;
+	this->actualRot2.y = roundf(rotation2.y * 1000) / 1000;
+	this->actualRot2.z = roundf(rotation2.z * 1000) / 1000;
 
 	this->actualRot = rotation;
 	this->actualRot2 = rotation2;

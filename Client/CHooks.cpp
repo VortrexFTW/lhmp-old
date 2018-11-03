@@ -56,6 +56,7 @@ __declspec(naked) void MainThreadTick()
 	_asm mov eax, dword ptr ds : [0x6F9528];
 	_asm ret;
 }
+
 __declspec(naked) void SetIsLoaded(){
 	*(byte*)(0x101C16AD) = 1;		// game will run after alt tab
 	g_CCore->SetLoaded(true);
@@ -69,6 +70,7 @@ __declspec(naked) void SetIsLoaded(){
 	
 	_asm ret;
 }
+
 __declspec(naked) void Freeride_ChangeCarSpawn(){
 	_asm {
 		mov DWORD PTR DS : [eax], 0x0			//posX
@@ -78,6 +80,7 @@ __declspec(naked) void Freeride_ChangeCarSpawn(){
 			ret
 	}
 }
+
 __declspec(naked) void Hook_respawn()
 {
 	_asm pushad;
@@ -88,6 +91,7 @@ __declspec(naked) void Hook_respawn()
 			ret
 	}
 }
+
 _declspec(naked) void Respawn()
 {
 	_asm pushad
@@ -100,6 +104,7 @@ _declspec(naked) void Respawn()
 			ret
 	}
 }
+
 _declspec(naked) void AfterRespawn()
 {
 	_asm pushad
@@ -121,11 +126,12 @@ _declspec(naked) void Hook_ThrowAwayWeapon()
 	_asm
 	{
 		popad
-			MOV WORD PTR DS : [ESI], 0;  odhodi zbran
+			MOV WORD PTR DS : [ESI], 0;  odhodi zbran // departures collected
 			push 0x0055B636
 			ret
 	}
 }
+
 void TakeWeapon(DWORD wepId, DWORD wepLoaded, DWORD wepHidden)
 {
 	char buff[255];
@@ -133,6 +139,7 @@ void TakeWeapon(DWORD wepId, DWORD wepLoaded, DWORD wepHidden)
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGameSync()->Engine_onPlayerTakeWeapon(wepId, wepLoaded, wepHidden);
 }
+
 _declspec(naked) void Hook_TakeWeaponFirst()
 {
 	_asm
@@ -154,6 +161,7 @@ _declspec(naked) void Hook_TakeWeaponFirst()
 		ret
 	}
 }
+
 _declspec(naked) void Hook_TakeWeaponSecond()
 {
 	_asm
@@ -175,6 +183,7 @@ _declspec(naked) void Hook_TakeWeaponSecond()
 		ret
 	}
 }
+
 _declspec(naked) void Hook_TakeWeaponThird()
 {
 	_asm
@@ -196,6 +205,7 @@ _declspec(naked) void Hook_TakeWeaponThird()
 			ret
 	}
 }
+
 void ChangeWeapon(DWORD testPed,DWORD wepId)
 {
 	if ((g_CCore->GetLocalPlayer()->GetBase() + 0x4A0) == testPed)
@@ -206,6 +216,7 @@ void ChangeWeapon(DWORD testPed,DWORD wepId)
 		g_CCore->GetGameSync()->Engine_onChangeWeapon(wepId);
 	}
 }
+
 _declspec(naked) void Hook_ChangeWep()
 {
 	_asm {
@@ -224,6 +235,7 @@ _declspec(naked) void Hook_ChangeWep()
 			ret
 	}
 }
+
 _declspec(naked) void Hook_ChangeWep2()
 {
 	_asm {
@@ -242,6 +254,7 @@ _declspec(naked) void Hook_ChangeWep2()
 			ret
 	}
 }
+
 _declspec(naked) void Hook_ChangeWep3()
 {
 	_asm {
@@ -319,7 +332,7 @@ _declspec(naked) void Hook_OnShoot()
 {
 	_asm {
 		MOV EAX, 0x004A4B70
-			CALL EAX; Game.004A4B70;  samotny vystrel
+			CALL EAX; Game.004A4B70;  samotny vystrel //he shot himself
 			cmp edx, 0x1
 			jz goodCode
 			cmp eax, 0x133
@@ -499,6 +512,7 @@ _declspec(naked) void Hook_OnDeath4()
 		ret
 	}
 }
+
 void PlayerEnteredVehicle(DWORD vehicle, DWORD seatID)
 {
 	char buff[255];
@@ -517,6 +531,7 @@ void PlayerEnteredVehicle(DWORD vehicle, DWORD seatID)
 		g_CCore->GetGame()->ConsoleAddText("You are entering an unsynced vehicle !", 0xFFFFFFFF);
 	}
 }
+
 _declspec(naked) void Hook_OnPlayerEnteredVehicle()
 {
 	_asm
@@ -634,6 +649,7 @@ _declspec(naked) void Hook_OnPlayerExitVehicleFinish()
 			ret
 	}
 }
+
 _declspec(naked) void Hook_VehicleDisableMove()
 {
 	_asm{
@@ -667,6 +683,7 @@ _declspec(naked) void Hook_VehicleDisableMove()
 
 	}
 }
+
 void OnCarJack(int carBase, int seatId)
 {
 	int carId = -1;
@@ -688,7 +705,6 @@ void OnCarJack(int carBase, int seatId)
 		}
 		g_CCore->GetGameSync()->Engine_onPlayerCarjack(veh, seatId);
 	}
-	
 }
 
 _declspec(naked) void Hook_OnCarJack()
@@ -757,6 +773,7 @@ _declspec(naked) void Hook_PreventCarandPedsSpawn()
 			ret
 	}
 }
+
 _declspec(naked) void Hook_PEDSpawnCorrectPos()
 {
 	_asm
@@ -806,6 +823,7 @@ _declspec(naked) void Hook_CollisionDamage()
 		ret
 	}
 }
+
 _declspec(naked) void Hook_CarShot()
 {
 	_asm

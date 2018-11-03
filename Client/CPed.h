@@ -5,7 +5,7 @@
 #include "CEntity.h"
 #include "../shared/structures.h"
 #include <d3d8.h>
-class CPed: public CEntity
+class CPed : public CEntity
 {
 private:
 	bool		isOnFoot;
@@ -21,7 +21,7 @@ private:
 	int			ping;
 	unsigned int nickColor;
 	// interpolation
-	Vector3D			actual,previous;
+	Vector3D			actual, previous;
 	// weapons
 	int				currentWep;
 	SWeapon			weapon[8];
@@ -34,7 +34,7 @@ public:
 
 	void		SetIsOnFoot(bool);
 	bool		IsOnFoot();
-	
+
 	void		UpdateGameObject();
 	void		SetName(char[]);
 	void		SetDucking(byte);
@@ -45,16 +45,19 @@ public:
 	bool		IsCarAnim();
 
 	bool		IsActive();
+	void		SetSkinId(int id);
+	int			GetSkin();
 	int			GetPing();
 	char*		GetName();
 	byte		IsDucking();
-	
+
 	void		SetAnim(int);
 	int			GetAnim();
 	void		SetUpInterpolation();
 	void		Interpolate();
 
 	virtual Vector3D GetPosition();
+	bool		HasBase();
 	Vector3D	GetPEDFramePosition();
 
 	void		SetNickColor(unsigned int);
@@ -64,7 +67,7 @@ public:
 	SWeapon* GetWeapon(int);
 	int	 GetCurrentWeapon();
 	void SetCurrentWeapon(int);
-	void AddWeapon(int,int,int);
+	void AddWeapon(int, int, int);
 	void DeleteWeapon(int);
 	void SwitchWeapon(int);
 	void OnShoot();

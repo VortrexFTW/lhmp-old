@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace CrashHandler
 {
@@ -27,15 +28,9 @@ namespace CrashHandler
         public Form1(string input)
         {
             data = input;
-            try
-            {
-                nick = ReadAllText(@"lhmp\nickname.txt");
-            }
-            catch
-            {
-                nick = "Unknown";
-            }
-            
+
+            nick = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Lost Heaven Multiplayer\\Launcher", "nickname", "UnknownPlayer");
+
             InitializeComponent();
         }
 
@@ -49,7 +44,7 @@ namespace CrashHandler
                  + " EDX: " + data.Split('|')[1].Split('@')[2]
                   + " EBX: " + data.Split('|')[1].Split('@')[3] + "\n"
                    + " ESP: " + data.Split('|')[1].Split('@')[4]
-                    + "EBP: " + data.Split('|')[1].Split('@')[5]
+                    + " EBP: " + data.Split('|')[1].Split('@')[5]
                      + " ESI: " + data.Split('|')[1].Split('@')[6]
                       + " EDI: " + data.Split('|')[1].Split('@')[7]);
             textBox2.Focus();
@@ -76,8 +71,10 @@ namespace CrashHandler
                 var d = new NameValueCollection();
                 d["data"] = send;
                // ASCIIEncoding a = new ASCIIEncoding();
-                var response = wb.UploadValues(new Uri("http://www.lh-mp.eu/query/crash.php"), "POST", d);
+                var response = wb.UploadValues(new Uri("http://34.197.22.87/lhmp/crash.php"), "POST", d);
                 //MessageBox.Show(a.GetString((byte[])response.GetValue(0),0,response.Length));
+                button1.Visible = false;
+                button2.Visible = false;
                 panel1.Visible = true;
                 timer1.Start();
             }
@@ -97,5 +94,33 @@ namespace CrashHandler
         {
 
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    internal class HRESULT
+    {
+    }
+
+    internal class HKEY
+    {
     }
 }

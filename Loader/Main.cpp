@@ -198,4 +198,6 @@ bool IsGameRunning()
 	{
 	return false;
 	}
+
+	return false;
 }

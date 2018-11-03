@@ -286,7 +286,6 @@ void CGraphics::RenderLoadingScreen()
 	/*char buff[10];
 	sprintf(buff, "%.0f%%", g_CCore->GetGame()->loadingStatus * 100);
 	g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, resolution.x / 2, (int)(resolution.y*0.90f) - 40, 0xffffffff, false);*/
-
 }
 
 void CGraphics::RenderNametags()
@@ -470,16 +469,19 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,LP
 	}
 	font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, color);
 }
+
 void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow)
 {
 	DrawText(text,x,y,color,ifShadow,m_chatfont);
 }
+
 int		CGraphics::GetLetterWidth(char c)
 {
 	char buf[2];
 	sprintf(buf,"%c",c);
 	return this->GetFontWidth(buf);
 }
+
 std::string	CGraphics::GetLastColorInText(char* text,int maxlen)
 {
 	for (int i = maxlen; i > 0; i--)
@@ -512,7 +514,8 @@ std::string	CGraphics::GetLastColorInText(char* text,int maxlen)
 	}
 	return "";
 }
-int		CGraphics::GetStrlenForWidth(int width, char* text)
+
+int	CGraphics::GetStrlenForWidth(int width, char* text)
 {
 	int size = 0;
 	int len = strlen(text);
@@ -550,6 +553,7 @@ int		CGraphics::GetStrlenForWidth(int width, char* text)
 	}
 	return len;
 }
+
 int	CGraphics::GetColoredTextWidth(char text[])
 {
 	/*if (Tools::IsEmptyString(text) == true)
@@ -852,8 +856,6 @@ void CGraphics::FillARGB(int x, int y,float z,  int w, int h, D3DCOLOR color)
 
 	//Now we're drawing a Triangle Strip, 4 vertices to draw 2 triangles.
 	this->GetDevice()->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
-
 }
 
 // Render texture with precalculated position
@@ -1178,6 +1180,7 @@ void CGraphics::ToggleInGameHud(bool b)
 	else
 		(*(byte*)0x006613D4) &= ~(1 << 0);
 }
+
 bool CGraphics::IsInGameHudVisible()
 {
 	return (((*(byte*)0x006613D4) & 1 << 0) == 0);
@@ -1222,6 +1225,7 @@ __declspec(noinline) void CGraphics::OnLostDevice()
 
 	g_CCore->GetSquirrelImages()->OnLostDevice();
 }
+
 void CGraphics::OnResetDevice()
 {
 	if (m_chatfont)
@@ -1257,7 +1261,6 @@ void CGraphics::OnResetDevice()
 	g_CCore->GetSquirrelImages()->OnResetDevice();
 }
 
-
 ID3DXSprite*	CGraphics::GetSprite()
 {
 	return m_sprite;
@@ -1272,6 +1275,7 @@ bool	CGraphics::IsShowNameTags()
 {
 	return this->m_bShowNameTags;
 }
+
 void	CGraphics::SetShowNameTags(bool nm)
 {
 	this->m_bShowNameTags = nm;
@@ -1287,8 +1291,6 @@ void	CGraphics::DrawColoredText(CColoredText* text, int x, int y, bool ifShadow)
 		drawn += strr->width;
 	}
 }
-
-
 
 CFont*	CGraphics::GetFont()
 {

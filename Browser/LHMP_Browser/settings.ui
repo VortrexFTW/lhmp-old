@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>321</width>
-    <height>292</height>
+    <height>394</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -227,6 +227,8 @@ border: 0;</string>
       </widget>
      </widget>
     </widget>
+    <zorder>frame_6</zorder>
+    <zorder>frame_5</zorder>
    </widget>
    <widget class="QFrame" name="frame_5">
     <property name="geometry">

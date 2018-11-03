@@ -49,3 +49,10 @@ C:\Users\David\Documents\lost-heaven-mp-lhmp\Others\browser\obj\Release\browser.
 C:\Users\David\Documents\lost-heaven-mp-lhmp\Others\browser\obj\Release\browser.csproj.GenerateResource.Cache
 C:\Users\David\Documents\lost-heaven-mp-lhmp\Others\browser\obj\Release\browser.exe
 C:\Users\David\Documents\lost-heaven-mp-lhmp\Others\browser\obj\Release\browser.pdb
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.csprojResolveAssemblyReference.cache
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.InternetServersForm.resources
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.IntroNewsForm.resources
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.Properties.Resources.resources
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.csproj.GenerateResource.Cache
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.exe
+E:\abram\dev\git\lhmp-old\Others\browser\obj\Release\browser.pdb

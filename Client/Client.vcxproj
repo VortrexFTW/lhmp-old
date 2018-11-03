@@ -19,6 +19,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>lhmpcore</RootNamespace>
     <ProjectName>client</ProjectName>
+    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

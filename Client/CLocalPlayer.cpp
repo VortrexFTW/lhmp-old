@@ -183,7 +183,7 @@ void CLocalPlayer::Pulse()
 			bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((RakNet::MessageID)LHMP_PLAYER_SENT_SYNC_ON_FOOT);
 			bsOut.Write(syncData);
-			g_CCore->GetNetwork()->SendServerMessage(&bsOut, LOW_PRIORITY, UNRELIABLE);
+			g_CCore->GetNetwork()->SendServerMessage(&bsOut, MEDIUM_PRIORITY, UNRELIABLE);
 
 		}
 		else
@@ -205,7 +205,7 @@ void CLocalPlayer::Pulse()
 			bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 			bsOut.Write((RakNet::MessageID)LHMP_PLAYER_SENT_CAR_UPDATE);
 			bsOut.Write(syncData);
-			g_CCore->GetNetwork()->SendServerMessage(&bsOut, LOW_PRIORITY, UNRELIABLE);
+			g_CCore->GetNetwork()->SendServerMessage(&bsOut, MEDIUM_PRIORITY, UNRELIABLE);
 
 		}
 	}

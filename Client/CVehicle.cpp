@@ -80,13 +80,13 @@ void CVehicle::UpdateGameObject()
 {
 	/*if (this->GetEntity() != NULL)
 	{
-		if (Seat[0] != g_CCore->GetLocalPlayer()->GetOurID())
-		{
-			//g_CCore->GetLog()->AddLog("VehicleUpdate");
-			//g_CCore->GetGame()->SetCarPosition(this->GetEntity(), this->GetPosition());
-			//g_CCore->GetGame()->SetCarRotation(this->GetEntity(), interpolation.InterpolateRotVehicle());
-			
-		}
+	if (Seat[0] != g_CCore->GetLocalPlayer()->GetOurID())
+	{
+	//g_CCore->GetLog()->AddLog("VehicleUpdate");
+	//g_CCore->GetGame()->SetCarPosition(this->GetEntity(), this->GetPosition());
+	//g_CCore->GetGame()->SetCarRotation(this->GetEntity(), interpolation.InterpolateRotVehicle());
+
+	}
 	}
 	/*if (this->EntityBase == 0) return;
 	if (this->fHealth == 0) return;
@@ -136,30 +136,30 @@ void CVehicle::Interpolate()
 
 		// TODO - test if it's neccessary
 		// Fix so you can get out of car if its stationary
-		/*if (abs(speed.x + speed.y) < 1) {
+		if (abs(speed.x + speed.y) < 1) {
 			// After 2 secs of idle, turn off engine
 			if (idleStartTime - RakNet::GetTimeMS() > 2000) {
 				g_CCore->GetGame()->ToggleVehicleEngine(this->GetEntity(), 0);
 
 				idleStartTime = RakNet::GetTimeMS();
 			}
-		} else {
+		}
+		else {
 			g_CCore->GetGame()->ToggleVehicleEngine(this->GetEntity(), 1);
 		}
-		*/
 		/*_asm
 		{
-			pushad
-			mov EDX,entity
-			mov EAX, x
-			MOV DWORD PTR DS : [EDX+0x1F7C], EAX
-			mov EAX, y
-			MOV DWORD PTR DS : [EDX+0x1F80], EAX
-			mov EAX, z
-			MOV DWORD PTR DS : [EDX+0x1F84], EAX
-			popad
+		pushad
+		mov EDX,entity
+		mov EAX, x
+		MOV DWORD PTR DS : [EDX+0x1F7C], EAX
+		mov EAX, y
+		MOV DWORD PTR DS : [EDX+0x1F80], EAX
+		mov EAX, z
+		MOV DWORD PTR DS : [EDX+0x1F84], EAX
+		popad
 		}*/
-		
+
 		if (hasDriver == false)
 		{
 			return;
@@ -167,83 +167,83 @@ void CVehicle::Interpolate()
 			//if (*(byte*)(entity + 0x2100) == 15)
 			//{
 			//if ((*(float*)(entity + 0x40C) - this->playerPos.x) > 0.3 || (*(float*)(entity + 0x410) - this->playerPos.y) > 0.3 || (*(float*)(entity + 0x414) - this->playerPos.z) > 0.3)
-		//	{
-				g_CCore->GetGame()->CarUpdate(this->GetEntity(), this->playerPos, this->rotation);
-				
-				// Shut down engine if no driver so people can get out
-				//g_CCore->GetGame()->ToggleVehicleEngine(this->GetEntity(), 0);
+			//	{
+			g_CCore->GetGame()->CarUpdate(this->GetEntity(), this->playerPos, this->rotation);
 
-				/*(float*)(entity + 0x40C) = this->playerPos.x;
-				*(float*)(entity + 0x410) = this->playerPos.y;
-				*(float*)(entity + 0x414) = this->playerPos.z;
+			// Shut down engine if no driver so people can get out
+			//g_CCore->GetGame()->ToggleVehicleEngine(this->GetEntity(), 0);
 
-				*(float*)(entity + 0xD28) = this->rotation.x;
-				*(float*)(entity + 0xD2C) = this->rotation.y;
-				*(float*)(entity + 0xD30) = this->rotation.z;
-				*/
-				*(float*)(entity + 0xD40) = this->secondRot.x;
-				*(float*)(entity + 0xD44) = this->secondRot.y;
-				*(float*)(entity + 0xD48) = this->secondRot.z;
+			/*(float*)(entity + 0x40C) = this->playerPos.x;
+			*(float*)(entity + 0x410) = this->playerPos.y;
+			*(float*)(entity + 0x414) = this->playerPos.z;
+
+			*(float*)(entity + 0xD28) = this->rotation.x;
+			*(float*)(entity + 0xD2C) = this->rotation.y;
+			*(float*)(entity + 0xD30) = this->rotation.z;
+			*/
+			*(float*)(entity + 0xD40) = this->secondRot.x;
+			*(float*)(entity + 0xD44) = this->secondRot.y;
+			*(float*)(entity + 0xD48) = this->secondRot.z;
 			//}
 
-					// takmer dokonale
-					/*_asm
-					{
+			// takmer dokonale
+			/*_asm
+			{
 
-					//MOV EAX, 0x0
-					MOV EAX, 0x3DA9FBE8
-					PUSH EAX; / Arg3 = 00000000
-					PUSH EAX; | Arg2	0
-					//MOV EAX, 0x3DA9FBE8
-					PUSH EAX; | Arg1   	0x3DA9FBE8
-					MOV ESI, entity
-					ADD ESI, 0x70
-					MOV ECX, ESI; | base + 0x70
-					MOV EAX, 0x0052E6D0
-					CALL EAX; game.0052E6D0; \game.0052E6D0
-					}*/
-					/*_asm {
-						MOV ESI, entity
-						PUSH 0x10; / Arg1 = 00000010
-						LEA ECX, DWORD PTR DS : [ESI + 0x70]; |
-						MOV EAX, 0x0052C3B0
-						CALL EAX; Game.0052C3B0; \Game.0052C3B0
-
-
-						}*/
-					/*_asm {
-						MOV ESI, entity
-						MOV ECX, ESI
-						MOV EAX, DWORD PTR DS : [ESI]
-						PUSH 0x31
-						CALL DWORD PTR DS : [EAX + 0x34]
+			//MOV EAX, 0x0
+			MOV EAX, 0x3DA9FBE8
+			PUSH EAX; / Arg3 = 00000000
+			PUSH EAX; | Arg2	0
+			//MOV EAX, 0x3DA9FBE8
+			PUSH EAX; | Arg1   	0x3DA9FBE8
+			MOV ESI, entity
+			ADD ESI, 0x70
+			MOV ECX, ESI; | base + 0x70
+			MOV EAX, 0x0052E6D0
+			CALL EAX; game.0052E6D0; \game.0052E6D0
+			}*/
+			/*_asm {
+			MOV ESI, entity
+			PUSH 0x10; / Arg1 = 00000010
+			LEA ECX, DWORD PTR DS : [ESI + 0x70]; |
+			MOV EAX, 0x0052C3B0
+			CALL EAX; Game.0052C3B0; \Game.0052C3B0
 
 
-						}*/
-					//}
-					// car_calm func
-					/*_asm
-					{
-						PUSH 0x1
-							MOV ECX, entity
-							MOV EAX, 0x00470D30
-							CALL EAX; Game.00470D30
-							TEST AL, AL
-							JE end
-							PUSH 0x14; / Arg1 = 00000014
-							MOV ECX, entity
-							ADD ECX, 0x70; |
-							MOV EAX, 0x0051A920
-							CALL EAX; Game.0051A920; \Game.0051A920
-						end:
+			}*/
+			/*_asm {
+			MOV ESI, entity
+			MOV ECX, ESI
+			MOV EAX, DWORD PTR DS : [ESI]
+			PUSH 0x31
+			CALL DWORD PTR DS : [EAX + 0x34]
 
 
-					}
-					*/
-					//g_CCore->GetGame()->LockCarDoor(entity, 1, true);
-				//}
+			}*/
 			//}
-		
+			// car_calm func
+			/*_asm
+			{
+			PUSH 0x1
+			MOV ECX, entity
+			MOV EAX, 0x00470D30
+			CALL EAX; Game.00470D30
+			TEST AL, AL
+			JE end
+			PUSH 0x14; / Arg1 = 00000014
+			MOV ECX, entity
+			ADD ECX, 0x70; |
+			MOV EAX, 0x0051A920
+			CALL EAX; Game.0051A920; \Game.0051A920
+			end:
+
+
+			}
+			*/
+			//g_CCore->GetGame()->LockCarDoor(entity, 1, true);
+			//}
+			//}
+
 		}
 		else
 		{
@@ -265,19 +265,19 @@ void CVehicle::Interpolate()
 		*(float*)(entity + 0xD48) = this->secondRot.z;*/
 
 		*(INT16*)(entity + 0x6A6) = 0;			// zabrzdene kolesa - int16 lebo to ma velkost WORD
-		
+
 		*(byte*)(this->GetEntity() + 0x51C) = this->GetHornState();
-		*(float*)(this->GetEntity() + 0x490) = (this->IsOnGas() ? 1.0f: 0.0f);
+		*(float*)(this->GetEntity() + 0x490) = (this->IsOnGas() ? 1.0f : 0.0f);
 	}
 }
 
 
 void CVehicle::SendSync()
 {
-	if (Seat[0] == g_CCore->GetLocalPlayer()->GetOurID() && this->GetEntity())	
-	// we are allow to stream only vehicle which is driven by us
+	if (Seat[0] == g_CCore->GetLocalPlayer()->GetOurID() && this->GetEntity())
+		// we are allow to stream only vehicle which is driven by us
 	{
-		VEHICLE* veh = (VEHICLE*) this->GetEntity();
+		VEHICLE* veh = (VEHICLE*)this->GetEntity();
 		Vector3D pos, rot, speed;
 		pos = veh->position;
 		/*pos.x = *(float*)(this->GetEntity() + 0x40C);
@@ -302,7 +302,7 @@ void CVehicle::SendSync()
 
 		wheels = veh->wheelRotation;
 		//this->wheels  = *(float*)(this->GetEntity() + 0x710);
-		
+
 		onGas = (veh->gasState == 1.0f);
 		//this->onGas = (*(float*)(this->GetEntity() + 0x490) == 1.0f);
 
@@ -335,7 +335,7 @@ void CVehicle::SendSync()
 		bsOut.Write((RakNet::MessageID)LHMP_VEHICLE_SYNC);
 		bsOut.Write(syncData);
 
-		g_CCore->GetNetwork()->SendServerMessage(&bsOut, LOW_PRIORITY, UNRELIABLE);
+		g_CCore->GetNetwork()->SendServerMessage(&bsOut, HIGH_PRIORITY, UNRELIABLE);
 		//g_CCore->GetLog()->AddLog("vehicle stream");
 	}
 
@@ -350,10 +350,10 @@ void CVehicle::PlayerEnter(int ID, int seat)
 }
 void CVehicle::PlayerExit(int ID)
 {
-	for (int i = 0; i < 4;i++)
+	for (int i = 0; i < 4; i++)
 		if (this->Seat[i] == ID)
 			this->SetSeat(i, -1);
-			//this->Seat[i] = -1;
+	//this->Seat[i] = -1;
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
 		g_CCore->GetLocalPlayer()->IDinCar = -1;
 }
@@ -366,7 +366,7 @@ void CVehicle::SetSpeed(Vector3D sp)
 		*(float*)(this->GetEntity() + 0x1F7C) = this->speed.x;
 		*(float*)(this->GetEntity() + 0x1F80) = this->speed.y;
 		*(float*)(this->GetEntity() + 0x1F84) = this->speed.z;
-	}	
+	}
 }
 Vector3D CVehicle::GetSpeed()
 {

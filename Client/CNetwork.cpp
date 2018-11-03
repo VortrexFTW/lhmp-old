@@ -252,9 +252,9 @@ void CNetworkManager::Pulse()
 	}
 }
 
-void CNetworkManager::SendServerMessage(RakNet::BitStream* bsOut,PacketPriority PP = MEDIUM_PRIORITY,PacketReliability PR = RELIABLE_ORDERED)
+void CNetworkManager::SendServerMessage(RakNet::BitStream* bsOut, PacketPriority PP = MEDIUM_PRIORITY, PacketReliability PR = RELIABLE_ORDERED, char chan)
 {
-	peer->Send(bsOut,PP,PR,0,RakNet::UNASSIGNED_RAKNET_GUID,true);
+	peer->Send(bsOut,PP,PR,chan,RakNet::UNASSIGNED_RAKNET_GUID,true);
 }
 
 void CNetworkManager::GetConnectInfo()

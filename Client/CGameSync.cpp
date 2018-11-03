@@ -18,6 +18,7 @@ void CGameSync::Engine_onPlayerTakeWeapon(DWORD wepId, DWORD wepLoaded, DWORD we
 	bsOut.Write(wepHidden);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player swap his weapon 
 void CGameSync::Engine_onChangeWeapon(DWORD wepId)
 {
@@ -28,6 +29,7 @@ void CGameSync::Engine_onChangeWeapon(DWORD wepId)
 	bsOut.Write(wepId);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player shoot
 void CGameSync::Engine_onShoot(Vector3D position, DWORD weaponID)
 {
@@ -39,6 +41,7 @@ void CGameSync::Engine_onShoot(Vector3D position, DWORD weaponID)
 	bsOut.Write(weaponID);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player is shot by another player
 void CGameSync::Engine_onPlayerGetHit(CPed* attacker)
 {
@@ -53,6 +56,7 @@ void CGameSync::Engine_onPlayerGetHit(CPed* attacker)
 	bsOut.Write(playerID);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player is killed by enemy
 void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 {
@@ -68,6 +72,7 @@ void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 	bsOut.Write(hitbox);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player enters a car
 void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 {
@@ -88,6 +93,7 @@ void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 		// TODO: report error
 	}
 }
+
 // When local player exits a car
 void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 {
@@ -102,10 +108,12 @@ void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 		bsOut.Write((RakNet::MessageID)LHMP_PLAYER_EXIT_VEHICLE);
 		bsOut.Write(vehID);
 		g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
-	} else {
+	}
+	else {
 		// TODO: report error
 	}
 }
+
 // When local player jacks someone from a car
 void CGameSync::Engine_onPlayerCarjack(CVehicle* vehicle, int seatId)
 {
@@ -126,6 +134,7 @@ void CGameSync::Engine_onPlayerCarjack(CVehicle* vehicle, int seatId)
 		// TODO: report error
 	}
 }
+
 // When local player throws a granade/molotov
 void CGameSync::Engine_onPlayerThrowGranade(Vector3D position)
 {
@@ -135,6 +144,7 @@ void CGameSync::Engine_onPlayerThrowGranade(Vector3D position)
 	bsOut.Write(position);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When local player throws a granade/molotov
 void CGameSync::Engine_onDoorStateChange(char* doorName, int state, bool facing)
 {
@@ -146,6 +156,7 @@ void CGameSync::Engine_onDoorStateChange(char* doorName, int state, bool facing)
 	bsOut.Write(facing);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When a car explodes
 void CGameSync::Engine_onExplodeCar(CVehicle* vehicle)
 {
@@ -165,6 +176,7 @@ void CGameSync::Engine_onExplodeCar(CVehicle* vehicle)
 		// report error
 	}
 }
+
 // When player died and the game is about to reload
 void CGameSync::Engine_onMapRespawn()
 {
@@ -173,6 +185,7 @@ void CGameSync::Engine_onMapRespawn()
 	bsOut.Write((RakNet::MessageID)LHMP_PLAYER_DEATH_END);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED);
 }
+
 // When vehicle's engine changes
 void CGameSync::Engine_onVehicleEngineStateChange(CVehicle* vehicle, BYTE state)
 {
@@ -197,7 +210,7 @@ void CGameSync::Engine_onVehicleEngineStateChange(CVehicle* vehicle, BYTE state)
 
 
 /******************************************************************************
-							Server side events 
+Server side events
 *******************************************************************************/
 
 void CGameSync::onTextMessage(RakNet::BitStream* bitInput)
@@ -215,7 +228,7 @@ void CGameSync::onTextMessage(RakNet::BitStream* bitInput)
 }
 
 //TODO: skip health in regular updates, sync it via hit events
-void CGameSync::onPlayerUpdateOnFoot(RakNet::BitStream* bitInput,RakNet::TimeMS timestamp)
+void CGameSync::onPlayerUpdateOnFoot(RakNet::BitStream* bitInput, RakNet::TimeMS timestamp)
 {
 	SYNC::ON_FOOT_SYNC syncData;
 	bitInput->Read(syncData);
@@ -287,7 +300,7 @@ void CGameSync::onPlayerConnect(RakNet::BitStream* bitInput)
 
 	bitInput->Read(PlayerID);
 	bitInput->Read(sz_nickname); // nickname
-	bitInput->Read(skinId); 
+	bitInput->Read(skinId);
 	bitInput->Read(color);
 
 	// creates new instance
@@ -344,7 +357,7 @@ void CGameSync::onPlayerChangeSkin(RakNet::BitStream* bitInput)
 	else
 	{
 		CPed* ped = g_CCore->GetPedPool()->Return(ID);
-		if (ped == 0)
+		if (ped != 0)
 		{
 			ped->SetSkinId(skinID);
 			g_CCore->GetEngineStack()->AddMessage(ES_CHANGESKIN, ID);
@@ -366,60 +379,63 @@ void CGameSync::onPlayerPlayAnimation(RakNet::BitStream* bitInput)
 
 void CGameSync::onPlayerRespawn(RakNet::BitStream* bitInput)
 {
-		int ID;
-		bitInput->Read(ID);
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
-		if (ped)
+	int ID;
+	bitInput->Read(ID);
+	CPed* ped = g_CCore->GetPedPool()->Return(ID);
+	if (ped)
+	{
+		// TODO: incar
+		if (ped->InCar != -1)
 		{
-			// TODO: incar
-			if (ped->InCar != -1)
+			/*
+			CVehicle* veh = g_CCore->GetVehiclePool()->Return(ped->InCar);
+
+			if (veh != NULL)
 			{
-				CVehicle* veh = g_CCore->GetVehiclePool()->Return(ped->InCar);
-				if (veh != NULL)
-				{
-					for (int i = 0; i < 4; i++)
-					{
-						if (veh->GetSeat(i) == ID)
-							veh->SetSeat(i, 0);
-					}
-				}
-				// TODO incar set
-				ped->InCar = -1;
-				veh->PlayerExit(ID);
-				ped->SetIsOnFoot(true);
+			for (int i = 0; i < 4; i++)
+			{
+			if (veh->GetSeat(i) == ID)
+			veh->SetSeat(i, 0);
 			}
-			ped->ClearWeapons();
-			g_CCore->GetEngineStack()->AddMessage(ES_CREATEPLAYER, ID);
+			}
+			*/
+			// TODO incar set
+			ped->InCar = -1;
+			//veh->PlayerExit(ID);
+			ped->SetIsOnFoot(true);
 		}
+		ped->ClearWeapons();
+		g_CCore->GetEngineStack()->AddMessage(ES_CREATEPLAYER, ID);
+	}
 }
 
 void CGameSync::playSound(RakNet::BitStream* bitInput)
 {
-		// WARNING: theoretically, dangerous (buffer overflow)
-		char sound[255];
-		bitInput->Read(sound);
-		ENGINE_STACK::PLAYER_PLAYSOUND* pw = new ENGINE_STACK::PLAYER_PLAYSOUND(sound);
-		g_CCore->GetEngineStack()->AddMessage(ES_PLAYSOUND_STRING, (DWORD)pw);
+	// WARNING: theoretically, dangerous (buffer overflow)
+	char sound[255];
+	bitInput->Read(sound);
+	ENGINE_STACK::PLAYER_PLAYSOUND* pw = new ENGINE_STACK::PLAYER_PLAYSOUND(sound);
+	g_CCore->GetEngineStack()->AddMessage(ES_PLAYSOUND_STRING, (DWORD)pw);
 }
 
 
 void CGameSync::onPlayerPingArrives(RakNet::BitStream* bitInput)
 {
-		int ID, ping;
-		bitInput->Read(ID);
-		bitInput->Read(ping);
-		if (ID == g_CCore->GetLocalPlayer()->GetOurID())
+	int ID, ping;
+	bitInput->Read(ID);
+	bitInput->Read(ping);
+	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
+	{
+		g_CCore->GetLocalPlayer()->SetPing(ping);
+	}
+	else
+	{
+		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		if (ped)
 		{
-			g_CCore->GetLocalPlayer()->SetPing(ping);
+			ped->SetPing(ping);
 		}
-		else
-		{
-			CPed* ped = g_CCore->GetPedPool()->Return(ID);
-			if (ped)
-			{
-				ped->SetPing(ping);
-			}
-		}
+	}
 }
 
 
@@ -450,7 +466,7 @@ void CGameSync::onPlayerAddWeapon(RakNet::BitStream* bitInput)
 	g_CCore->GetLog()->AddLog(buff);
 }
 
-// when player is taken the weapon
+// when player has thrown his weapon
 void CGameSync::onPlayerDeleteWeapon(RakNet::BitStream* bitInput)
 {
 	int ID, wepID;
@@ -527,7 +543,7 @@ void CGameSync::onPlayerDie(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(reason);
 	bitInput->Read(part);
-	
+
 	char buff[255];
 	sprintf(buff, "[NM] PlayerDeath %i", ID);
 	g_CCore->GetLog()->AddLog(buff);
@@ -538,14 +554,14 @@ void CGameSync::onPlayerDie(RakNet::BitStream* bitInput)
 
 void CGameSync::onPlayerDieEnd(RakNet::BitStream* bitInput)
 {
-		int ID;// reason, part;
-		bitInput->Read(ID);
+	int ID;// reason, part;
+	bitInput->Read(ID);
 
-		char buff[500];
-		sprintf(buff, "[NM] PlayerDeathEND %i", ID);
-		g_CCore->GetLog()->AddLog(buff);
+	char buff[500];
+	sprintf(buff, "[NM] PlayerDeathEND %i", ID);
+	g_CCore->GetLog()->AddLog(buff);
 
-		g_CCore->GetEngineStack()->AddMessage(ES_PLAYERDEATH_END, ID);
+	g_CCore->GetEngineStack()->AddMessage(ES_PLAYERDEATH_END, ID);
 }
 
 
@@ -555,11 +571,11 @@ void CGameSync::onPlayerIsPutToCar(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(carID);
 	bitInput->Read(seatID);
-	
+
 	char buff[255];
 	sprintf(buff, "[Nm] PUT TO VEH %d %d %d", ID, carID, seatID);
 	g_CCore->GetLog()->AddLog(buff);
-	
+
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(carID);
 	if (veh)
 	{
@@ -589,7 +605,7 @@ void CGameSync::onPlayerIsKickedFromCar(RakNet::BitStream* bitInput)
 	int ID, carID;
 	bitInput->Read(ID);
 	bitInput->Read(carID);
-	
+
 	char buff[255];
 	sprintf(buff, "[Nm] KICK OUT VEH %d %d", ID, carID);
 	g_CCore->GetLog()->AddLog(buff);
@@ -622,13 +638,13 @@ void CGameSync::onPlayerIsKickedFromCar(RakNet::BitStream* bitInput)
 
 void CGameSync::onGUIMoneyChange(RakNet::BitStream* bitInput)
 {
-		int money;
-		bitInput->Read(money);
+	int money;
+	bitInput->Read(money);
 
-		char buff[255];
-		sprintf(buff, "[Nm] SET MONEY %d", money);
-		g_CCore->GetLog()->AddLog(buff);
-		g_CCore->GetLocalPlayer()->SetMoney(money);
+	char buff[255];
+	sprintf(buff, "[Nm] SET MONEY %d", money);
+	g_CCore->GetLog()->AddLog(buff);
+	g_CCore->GetLocalPlayer()->SetMoney(money);
 }
 
 void CGameSync::onGUIEnableChange(RakNet::BitStream* bitInput)
@@ -640,14 +656,14 @@ void CGameSync::onGUIEnableChange(RakNet::BitStream* bitInput)
 	sprintf(buff, "[Nm] ENABLE MONEY %d", enable);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetLocalPlayer()->EnableMoney(enable);
-	
+
 }
 
 void CGameSync::onGUIEnableNametags(RakNet::BitStream* bitInput)
 {
 	bool status;
 	bitInput->Read(status);
-	
+
 	char buff[255];
 	sprintf(buff, "[Nm] SET NAMETAG %d", status);
 	g_CCore->GetLog()->AddLog(buff);
@@ -676,6 +692,31 @@ void CGameSync::onPlayerPositionChange(RakNet::BitStream* bitInput)
 		{
 			ped->SetPosition(pos);
 			g_CCore->GetGame()->SetPlayerPosition(ped->GetEntity(), pos);
+		}
+
+	}
+}
+
+void CGameSync::onPlayerHealthChange(RakNet::BitStream* bitInput)
+{
+	int ID;
+	int Health;
+	bitInput->Read(ID);
+	bitInput->Read(Health);
+	char buff[255];
+	//sprintf(buff, "[Nm] SET HEALTH %d to %d", ID, Health);
+	g_CCore->GetLog()->AddLog(buff);
+
+	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
+	{
+		g_CCore->GetLocalPlayer()->SetHealth(Health);
+	}
+	else
+	{
+		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		if (ped != NULL)
+		{
+			ped->SetHealth(Health);
 		}
 
 	}
@@ -837,6 +878,7 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 		veh->SetTimeStamp(timestamp);
 		veh->SetUpInterpolation();
 		veh->SetDamage(vehicle.damage);
+		veh->SetShotDamage(vehicle.shotdamage);
 		veh->ToggleRoof(vehicle.roofState);
 		veh->SetSirenState(vehicle.siren);
 		for (int i = 0; i < 4; i++)
@@ -992,15 +1034,24 @@ void CGameSync::onVehicleSyncArrives(RakNet::BitStream* bitInput, RakNet::TimeMS
 		if (timestamp - veh->GetTimeStamp() > 0)
 		{
 
-			//veh->SetVehiclePosition(syncData.position);
+			veh->SetVehiclePosition(syncData.position);
+			veh->SetPosition(syncData.position);
 			veh->SetRotation(syncData.rotation);
+			veh->SetSecondRot(syncData.secondRot);
 			veh->SetWheelsAngle(syncData.wheels);
 			veh->SetSpeed(syncData.speed);
 			veh->SetHornState(syncData.horn);
 			veh->SetTimeStamp(timestamp);
-			veh->SetSecondRot(syncData.secondRot);
-			veh->SetPosition(syncData.position);
+
 			veh->SetIsOnGas(syncData.gasOn);
+
+
+			// Vortrex's attempt to use vehicle acceleration to interpolate, instead of positions.
+			// First Tests: Kept going to black screen.
+			// Second Tests: Not completed yet.
+			// int timeDiff = (timestamp) - (RakNet::GetTimeMS());
+			// veh->SetSpeed((Tools::GetDistanceBetween3DPoints(veh->GetPosition(), syncData.position) / timeDiff)*2.0);
+
 			veh->SetUpInterpolation();
 		}
 	}
@@ -1214,7 +1265,7 @@ void CGameSync::onMapChange(RakNet::BitStream* bitInput)
 	char buff[250];
 	sprintf(buff, "[Nm] SET map %s", name);
 	g_CCore->GetLog()->AddLog(buff);
-	
+
 }
 
 void CGameSync::onPickupIsCreated(RakNet::BitStream* bitInput)
@@ -1296,10 +1347,10 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		break;
 	case LHMP_PLAYER_DISCONNECT:
 		this->onPlayerDisconnect(&bsIn);
-	break;
+		break;
 
-	// ASAP, it's obsolete & unsupported
-	// TODO: it has been replaced with PLAYANIM_STRING (for custom anims)
+		// ASAP, it's obsolete & unsupported
+		// TODO: it has been replaced with PLAYANIM_STRING (for custom anims)
 	case LHMP_PLAYER_PLAYANIM:
 		break;
 	case LHMP_PLAYER_PLAYANIM_STRING:
@@ -1319,8 +1370,9 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		break;
 	case LHMP_PLAYER_DELETEWEAPON:
 		this->onPlayerDeleteWeapon(&bsIn);
+		break;
 	case LHMP_PLAYER_SWITCHWEAPON:
-		this->onPlayerDeleteWeapon(&bsIn);
+		this->onPlayerChangeWeapon(&bsIn);
 		break;
 	case LHMP_PLAYER_SHOOT:
 		this->onPlayerShoot(&bsIn);
@@ -1341,7 +1393,7 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		this->onPlayerIsKickedFromCar(&bsIn);
 		break;
 	case LHMP_PLAYER_SET_HEALTH:
-		this->onPlayerIsKickedFromCar(&bsIn);
+		//this->onPlayerSetHealth(&bsIn);
 		break;
 	case LHMP_PLAYER_SET_MONEY:
 		this->onGUIMoneyChange(&bsIn);
@@ -1357,102 +1409,101 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		break;
 	case LHMP_PLAYER_SET_ROTATION:
 		this->onPlayerRotationChange(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_CAMERA:
 		this->onCameraIsSet(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_CAMERA_DEFAULT:
 		this->onCameraReturn(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_CAMERA_SWING:
 		this->onCameraSetSwing(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_CAMERA_FOV:
 		this->onCameraSetFOV(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_TOGGLE_CITY_MUSIC:
 		this->onMusicIsTurnedOff(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_WEATHER_PARAM:
 		this->onWeatherIsChanged(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_SET_OBJECTIVE:
 		this->onObjectivesAreSet(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_CLEAR_OBJECTIVE:
 		this->onObjectivesAreCleared(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_ADD_CONSOLE_TEXT:
 		this->onConsoleTextIsAdded(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_LOCK_CONTROLS:
 		this->onPlayerControlsAreLocked(&bsIn);
-	break;
-	/*STOP here*/
+		break;
+		/*STOP here*/
 	case LHMP_VEHICLE_CREATE:
-		this->onVehicleIsSpawned(&bsIn,timestamp);
-	break;
+		this->onVehicleIsSpawned(&bsIn, timestamp);
+		break;
 	case LHMP_VEHICLE_TOGGLE_ENGINE:
 		this->onVehicleEngineStateChange(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_TOGGLE_ROOF:
 		this->onVehicleRoofIsChanged(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_TOGGLE_SIREN:
 		this->onVehicleSirenIsSet(&bsIn);
-	break;
-
+		break;
 	case LHMP_VEHICLE_SET_FUEL:
 		this->onVehicleFuelIsSet(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_ENTERED_VEHICLE:
 		this->onVehicleIsEntered(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_EXIT_VEHICLE:
 		this->onVehicleIsExited(&bsIn);
-	break;
+		break;
 	case LHMP_PLAYER_EXIT_VEHICLE_FINISH:
-		this->onVehicleIsEntered(&bsIn);
-	break;
+		//this->onVehicleIsExitedFinish(&bsIn);
+		break;
 	case LHMP_VEHICLE_SYNC:
 		this->onVehicleSyncArrives(&bsIn, timestamp);
-	break;
+		break;
 	case LHMP_VEHICLE_JACK:
 		this->onVehicleIsJacked(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_DELETE:
 		this->onVehicleIsDeleted(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_DAMAGE:
 		this->onVehicleIsDamaged(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_SHOTDAMAGE:
 		this->onVehicleIsDamagedByShot(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_SET_POSITION:
 		this->onVehiclePositionIsSet(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_SET_ROTATION:
 		this->onVehicleRotationIsSet(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_SET_SPEED:
 		this->onVehicleSpeedIsSet(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_ON_EXPLODED:
 		this->onVehicleExploded(&bsIn);
-	break;
+		break;
 	case LHMP_VEHICLE_RESPAWN:
 		this->onVehicleRespawned(&bsIn);
-	break;
+		break;
 	case LHMP_DOOR_SET_STATE:
 		this->onDoorStateChange(&bsIn);
-	break;
+		break;
 	case LHMP_SCRIPT_CHANGE_MAP:
 		this->onMapChange(&bsIn);
-	break;
+		break;
 
-	/*ok, not sure*/
-	//TODO - move to CNetwork
+		/*ok, not sure*/
+		//TODO - move to CNetwork
 	case LHMP_FILE_SEND:
 	{
 		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
@@ -1482,12 +1533,12 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 
 	case LHMP_PICKUP_CREATE:
 		this->onPickupIsCreated(&bsIn);
-	break;
+		break;
 	case LHMP_PICKUP_DELETE:
 		this->onPickupIsDeleted(&bsIn);
-	break;
+		break;
 	case LHMP_PICKUP_SETVISIBLE:
 		this->onPickupIsHidden(&bsIn);
-	break;
+		break;
 	}
 }

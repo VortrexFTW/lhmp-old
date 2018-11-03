@@ -7,3 +7,13 @@ Release/
 *.VC.db
 LHMP.opensdf
 LHMP.sdf
+.vs/
+*.db-shm
+*.suo
+_Old/server/gamemodes/default/resources.txt
+_Old/testers/testserverbuild/gamemodes/default/default.nut
+_Old/testers/testserverbuild/config.txt
+_Old/testers/testserverbuild/gamemodes/default/resources.txt
+_Old/testers/testserverbuild/server.exe
+_Old/server/gamemodes/default/resources.txt
+*.ipch

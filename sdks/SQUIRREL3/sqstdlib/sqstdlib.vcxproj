@@ -18,6 +18,7 @@
     <SccProjectName />
     <SccLocalPath>..</SccLocalPath>
     <ProjectGuid>{7A4CB95A-95AD-4668-83FF-1F1C585E36B4}</ProjectGuid>
+    <ProjectName>SquirrelStandardLibrary</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">

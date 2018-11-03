@@ -14,10 +14,10 @@ IDI_ICON1 ICON DISCARDABLE "icon.ico"
 #define VER_LEGALCOPYRIGHT_STR      "Lost Heaven Multiplayer"
 #define VER_LEGALTRADEMARKS1_STR    "All Rights Reserved"
 #define VER_LEGALTRADEMARKS2_STR    VER_LEGALTRADEMARKS1_STR
-#define VER_ORIGINALFILENAME_STR    "lhmp_browser.exe"
+#define VER_ORIGINALFILENAME_STR    "LHMP_Launcher.exe"
 #define VER_PRODUCTNAME_STR         "Lost Heaven Multiplayer"
 
-#define VER_COMPANYDOMAIN_STR       "http://lh-mp.eu"
+#define VER_COMPANYDOMAIN_STR       "http://vortrex.info/lhmp/"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION     VER_FILEVERSION

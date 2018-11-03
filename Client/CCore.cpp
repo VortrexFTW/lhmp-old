@@ -7,13 +7,13 @@
 
 CCore::CCore()
 {
-	pIsRunning			= false;
-	pIsGameLoaded		= false;
-	m_bIsGameLoaded		= false;
-	m_bIsRespawning		= false;
+	pIsRunning = false;
+	pIsGameLoaded = false;
+	m_bIsGameLoaded = false;
+	m_bIsRespawning = false;
 
 	testStop = false;
-//	m_pKeyboard = false;
+	//	m_pKeyboard = false;
 	//CNetworkManager m_cNetwork;
 
 }
@@ -26,7 +26,7 @@ CCore::~CCore()
 void CCore::Run()
 {
 	byte nopEndGame[] = "\x90\x90\x90\x90\x90\x90";
-	
+
 	byte cave2[] = "\xC7\x05\x9E\xAF\x63\x00\x01\x00\x00\x00\xE8\x0F\x5F\xF2\xFF\xE9\x1E\xF0\xFB\xFF"; // writes 1 to 0063AF9E after freeride loads - fixed
 	byte skipmenu[] = "\xE9\xBA\x0A\x00\x00\x90";
 	byte skipmenuNew[] = "\xBE\xB0\x1F\x67\x00\xB8\x10\x00\x00\x00\x90\x90\x90\x90\x90\x90\x90\x90\x90";
@@ -36,7 +36,7 @@ void CCore::Run()
 
 	byte disableScriptAddWeapon[] = "\xE9\x30\xAA\x00\x00";//      JMP game.005C76DA  at 005BCCA
 	byte disableScriptAddScore[] = "\xE9\x77\x0D\x00\x00";//		JMP 005C76DA at 005C695E   
-	
+
 	byte disableMissionObj[] = "\xE9\x63\x67\x00\x00";//      JMP game.005C76DA  at 005BCCA
 
 	byte disableCarBreakScore[] = "\xEB\x0F";
@@ -44,9 +44,9 @@ void CCore::Run()
 
 	byte carChangePosFix[] = "\xE9\xF1\x00\x00\x00\x90";//   
 	byte disableCheats[] = "\xEB\x5F";	// JMP SHORT 0x005F96B0 at 005F964F
-	
-	//0054FD56     /E9 BC300000   JMP Game.00552E17
-	//0054FD5B | 90            NOP
+
+										//0054FD56     /E9 BC300000   JMP Game.00552E17
+										//0054FD5B | 90            NOP
 	byte disableRadar[] = "\xE9\xBC\x30\x00\x00\x90";	// 00491D97
 
 	byte disableImmortalModeWhenLockedControls[] = "\xEB\x13";
@@ -69,7 +69,7 @@ void CCore::Run()
 
 	//1006A1F7
 	byte preventALTTABfocusloosing[] = "\xEB\x69";
-//-----------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------
 	// Fix lost of focus when ALT-Tabing game
 	// it just blocks case of switch at WinMessage procedure, which
 	// processes WM_ACTIVATE message
@@ -80,7 +80,7 @@ void CCore::Run()
 	// TODO - probably unneeded since we are using DirectInput to block input
 	//PatchBytes(0x004CBC1B, disableImmortalModeWhenLockedControls);
 
-/*------ Is game loaded -> hook some code in game load, call our naked func IsGameLoaded ---------*/
+	/*------ Is game loaded -> hook some code in game load, call our naked func IsGameLoaded ---------*/
 	// fix game end - probably
 	// TODO: seems to be useless as we have disabled ESC menu and any way to 
 	//PatchBytes(0x005FA171, nopEndGame);
@@ -110,35 +110,35 @@ void CCore::Run()
 	//******************************
 
 	//--------------------------- Skip intro
-	Tools::Nop(0x005FB249,4);			// 01
-	Tools::Nop(0x005FB2EC,4);			// 02
+	Tools::Nop(0x005FB249, 4);			// 01
+	Tools::Nop(0x005FB2EC, 4);			// 02
 
-	//--------------------------- Freeze PED movement / rotation  -- not needed now
+										//--------------------------- Freeze PED movement / rotation  -- not needed now
 
-	//Tools::Nop(0x004BAA0F,33);			// movement
-	
-	//test purposes
-	//Tools::Nop(0x0044DF12,2);			// rotation 1
-	//Tools::Nop(0x0044DF1D,3);			// rotation 2
-	//Tools::Nop(0x004BAA58,6);			// animation
+										//Tools::Nop(0x004BAA0F,33);			// movement
 
-	//--------------------------- Game enviroment
-	Tools::Nop(0x00560957,2);			// disable traffic/police/ped FIX - (WHEN player doesnt have unlocked Extreme ride)
+										//test purposes
+										//Tools::Nop(0x0044DF12,2);			// rotation 1
+										//Tools::Nop(0x0044DF1D,3);			// rotation 2
+										//Tools::Nop(0x004BAA58,6);			// animation
 
-	Tools::Nop(0x0056090F,17);			// disable traffic, peds, police 
-	/*Tools::Nop(0x0056090F,6);			// disable traffic
-	Tools::Nop(0x0056091A,6);			// disable police
-	*/
-	/*---------------------------Ped NO Panic (after shoot)*/
-	// PED wouldnt do panic after this
+										//--------------------------- Game enviroment
+	Tools::Nop(0x00560957, 2);			// disable traffic/police/ped FIX - (WHEN player doesnt have unlocked Extreme ride)
+
+	Tools::Nop(0x0056090F, 17);			// disable traffic, peds, police 
+										/*Tools::Nop(0x0056090F,6);			// disable traffic
+										Tools::Nop(0x0056091A,6);			// disable police
+										*/
+										/*---------------------------Ped NO Panic (after shoot)*/
+										// PED wouldnt do panic after this
 	PatchBytes(0x004BDE6D, nopanic);
 
 	// PED-gangsters wouldnt do panic after this
 	PatchBytes(0x004BD0F7, noMafiopanic);
-	
+
 	// addweapon script command disabled
 	PatchBytes(0x005BCCA5, disableScriptAddWeapon);
-	
+
 	// disable mission objectives - titles which appear on map start
 	PatchBytes(0x005C0F72, disableMissionObj);
 
@@ -146,7 +146,7 @@ void CCore::Run()
 	// fix car change position (on position / rot change)
 	// NOTE: thanks to this game recalculates car's physic when car has a driver, but standing at one place
 	PatchBytes(0x0052CD5A, carChangePosFix);
-	
+
 	//******************************************************************************************************************
 	// disable cheats (boxer,municak)
 	PatchBytes(0x005F964F, disableCheats);
@@ -169,10 +169,10 @@ void CCore::Run()
 
 
 	//-------------------------	Disable damage from collision
-	Tools::Nop(0x00518328, 23);
-	Tools::Nop(0x00534C51, 28);
-	Tools::Nop(0x00536723, 23);
-	Tools::Nop(0x00536BA1, 23);
+	//Tools::Nop(0x00518328, 23);
+	//Tools::Nop(0x00534C51, 28);
+	//Tools::Nop(0x00536723, 23);
+	//Tools::Nop(0x00536BA1, 23);
 	//-------------------------
 
 	// Fix in-car remote player weapon rotation (drive-by shooting)
@@ -194,42 +194,42 @@ void CCore::Run()
 	// 0x81 - the most important one for map reloading
 
 	//unsigned short whitelistID[] = { 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0x10, 0x11, 0x1F, 0x20, 0x4A,0x4D,0x4E, 0x7D, 0x7E,0x81,0x12D};
-	unsigned short whitelistID[] = { 0x1, 0x80,0x81, 0x133,0x186};
+	unsigned short whitelistID[] = { 0x1, 0x80,0x81, 0x133,0x186 };
 	int listLen = sizeof(whitelistID) / sizeof(*whitelistID);
 
 	DWORD* switchTable = (DWORD*)0x5C7700;
 	DWORD lpflOldProtect;
 
 	// unprotect the goal memory in order to avoid 'access violations'
-	VirtualProtect((void*)switchTable, 4*390, PAGE_EXECUTE_READWRITE, &lpflOldProtect);
+	VirtualProtect((void*)switchTable, 4 * 390, PAGE_EXECUTE_READWRITE, &lpflOldProtect);
 
 	for (int i = 1; i < listLen; i++)
 	{
-		for (int e = whitelistID[i-1] + 1; e < whitelistID[i]; e++)
+		for (int e = whitelistID[i - 1] + 1; e < whitelistID[i]; e++)
 		{
 			if (e > 0)
 				switchTable[e - 1] = 0x005C76DA;
 		}
 	}
-	
+
 	return;
 
 	/*int startID = 0;
 	DWORD copyStart = 0, copyLength = 0;
 	for (int i = 0; i < len; i++)
 	{
-		if (whitelistID[i] != startID )
-		{
-			copyStart = (DWORD) switchTable + ((startID-1) * 4);
-			copyLength = (whitelistID[i] - startID) * 4;
-			//memset((void*)copyStart, 0x005C76DA, copyLength);
-			for (int i = 0; i < copyLength; i = i + 4)
-			{
-				*(DWORD*)(copyStart + i) = 0x005C76DA;
-			}
-		}
-			
-		startID = whitelistID[i] + 1;
+	if (whitelistID[i] != startID )
+	{
+	copyStart = (DWORD) switchTable + ((startID-1) * 4);
+	copyLength = (whitelistID[i] - startID) * 4;
+	//memset((void*)copyStart, 0x005C76DA, copyLength);
+	for (int i = 0; i < copyLength; i = i + 4)
+	{
+	*(DWORD*)(copyStart + i) = 0x005C76DA;
+	}
+	}
+
+	startID = whitelistID[i] + 1;
 	}
 
 	// do the rest
@@ -238,7 +238,7 @@ void CCore::Run()
 	//memset((void*)copyStart, 0x005C76DA, copyLength);
 	for (int i = 0; i < copyLength; i = i + 4)
 	{
-		*(DWORD*)(copyStart + i) = 0x005C76DA;
+	*(DWORD*)(copyStart + i) = 0x005C76DA;
 	}
 
 	// restore old protection
@@ -262,11 +262,11 @@ void CCore::Start()
 void CCore::Pulse()
 {
 	m_cNetwork.Pulse();
-	
+
 }
 void CCore::PulseAfterSec()
 {
-	
+
 }
 bool CCore::IsRunning()
 {
@@ -324,7 +324,7 @@ CGraphics*		CCore::GetGraphics()
 }
 /*CPlayerSync*		CCore::GetPlayerSync()
 {
-	return &m_cPlayerSync;
+return &m_cPlayerSync;
 }*/
 
 CEngineStack*		CCore::GetEngineStack()

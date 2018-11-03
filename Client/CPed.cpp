@@ -10,28 +10,28 @@ CPed::CPed()
 	this->SetActive(true);
 	isActive = true;
 	this->SetIsOnFoot(true);
-	sprintf(sName,"Player");
+	sprintf(sName, "Player");
 	playerPos.x = -1985.97f;
 	playerPos.y = -5.03f;
 	playerPos.z = 4.28f;
 
 	actual = playerPos;
 	previous = playerPos;
-	isSpawned	= 0;
-	isDucking	= 0;
+	isSpawned = 0;
+	isDucking = 0;
 	//pedBase		= NULL;
 	//frame		= NULL;
 
-	fHealth		= 200.0f;
-	animId		= -1; // this mean that we dont use custom anim at the moment
-	ping		= -1;
-	skinId		= 0;
+	fHealth = 200.0f;
+	animId = -1; // this mean that we dont use custom anim at the moment
+	ping = -1;
+	skinId = 0;
 
 	//timeDiff = timeGetTime();
 	//timeLastMessage = timeDiff;
 
 	currentWep = 0;
-	for(int i = 0; i < 8;i++)
+	for (int i = 0; i < 8; i++)
 		this->weapon[i].wepID = 0;
 
 	this->InCar = -1;
@@ -75,29 +75,29 @@ void CPed::SetPing(int p)
 }
 /*void CPed::SetEntity(DWORD address)
 {
-	this->pedBase = address;
+this->pedBase = address;
 }
 void CPed::SetPosition(Vector3D vect)
 {
-	playerPos = vect;
+playerPos = vect;
 }*/
 void CPed::SetName(char* nm)
 {
-	sprintf(sName,"%s",nm);
+	sprintf(sName, "%s", nm);
 }
 /*void CPed::SetHealth(float ht)
 {
-	fHealth = ht;
+fHealth = ht;
 }
 void CPed::SetRotation(float f1,float f2,float f3)
 {
-	rotation1 = f1;
-	rotation2 = f2;
-	rotation3 = f3;
+rotation1 = f1;
+rotation2 = f2;
+rotation3 = f3;
 }
 void CPed::SetState(byte st)
 {
-	state = st;
+state = st;
 }*/
 char* CPed::GetName()
 {
@@ -106,11 +106,11 @@ char* CPed::GetName()
 /*
 float CPed::GetHealth()
 {
-	return fHealth;
+return fHealth;
 }
 byte CPed::GetState()
 {
-	return state;
+return state;
 }
 */
 void CPed::SetDucking(byte ducking)
@@ -125,17 +125,6 @@ byte CPed::IsDucking()
 {
 	return isDucking;
 }
-/*
-Vector3D CPed::GetPosition()
-{
-	return playerPos;
-}
-bool CPed::HasBase()
-{
-	if(this->pedBase == 0)
-		return false;
-	return true;
-}
 
 void CPed::SetSkinId(int id)
 {
@@ -144,7 +133,7 @@ void CPed::SetSkinId(int id)
 int CPed::GetSkin()
 {
 	return this->skinId;
-}*/
+}
 
 int CPed::GetPing()
 {
@@ -154,7 +143,7 @@ int CPed::GetPing()
 void CPed::UpdateGameObject()
 {
 	//return;
-	PED* ped = (PED*) this->GetEntity();
+	PED* ped = (PED*)this->GetEntity();
 	if (ped != NULL)
 	{
 		ped->isInAnimWithCar = this->IsCarAnim();
@@ -181,13 +170,13 @@ void CPed::UpdateGameObject()
 				/**(float*)(this->EntityBase + 0x644) = this->fHealth;
 				if (this->state != 163)
 				{
-					*(byte*)(this->EntityBase + 0x74) = this->state;
+				*(byte*)(this->EntityBase + 0x74) = this->state;
 				}
 				*(byte*)(this->EntityBase + 0x1E4) = this->isDucking;
 				if (currentWep != 0)
-					*(byte*)(this->EntityBase + 0x1E5) = this->isAiming;
+				*(byte*)(this->EntityBase + 0x1E5) = this->isAiming;
 				else
-					*(byte*)(this->EntityBase + 0x1E5) = 0;*/
+				*(byte*)(this->EntityBase + 0x1E5) = 0;*/
 
 			}
 		}
@@ -256,7 +245,7 @@ void CPed::Interpolate()
 
 	if (this->GetEntity() != 0)
 	{
-		PED* ped = (PED*) this->GetEntity();
+		PED* ped = (PED*)this->GetEntity();
 		//if (ped->object.isActive == 1)
 		//	return;
 		//RakNet::TimeMS actualtime = RakNet::GetTimeMS(), b = this->timestamp, c = this->timeDiff;
@@ -271,7 +260,7 @@ void CPed::Interpolate()
 			/*float coeficient = 0;
 			if (c != 0)
 			{
-				coeficient = (FLOAT)((FLOAT)(actualtime - interpolationTick) / (FLOAT)c);
+			coeficient = (FLOAT)((FLOAT)(actualtime - interpolationTick) / (FLOAT)c);
 			}
 			/*char buff[255];
 			sprintf(buff, "I: %f", coeficient);
@@ -284,7 +273,7 @@ void CPed::Interpolate()
 			/*char buff[255];
 			sprintf(buff, "I: %f %f %f", speedvector.x ,speedvector.y, speedvector.z);
 			g_CCore->GetLog()->AddLog(buff);*/
-			
+
 			// multiply speedvector by elapsed time
 			/*speedvector.x *= coeficient;
 			speedvector.y *= coeficient;
@@ -307,19 +296,19 @@ void CPed::Interpolate()
 			*(byte*)(this->EntityBase + 0x74) = this->state;
 			*(byte*)(this->EntityBase + 0x1E4) = this->isDucking;
 			if (currentWep != 0)
-				*(byte*)(this->EntityBase + 0x1E5) = this->isAiming;
+			*(byte*)(this->EntityBase + 0x1E5) = this->isAiming;
 			else
-				*(byte*)(this->EntityBase + 0x1E5) = 0;*/
-		//}
+			*(byte*)(this->EntityBase + 0x1E5) = 0;*/
+			//}
 			// write it to ped
 			/**(float*) (this->pedBase+0x24) = this->playerPos.x;
 			*(float*) (this->pedBase+0x28) = this->playerPos.y;
 			*(float*) (this->pedBase+0x2C) = this->playerPos.z;*/
 			//interpolationTick = actualtime;
-			PED* ped = (PED*) this->GetEntity();
+			PED* ped = (PED*)this->GetEntity();
 
 			//this->playerPos = interpolation.Interpolate();
-			
+
 			/*
 			Enable this if scripting commands break, caused some visual sync problems though
 			this->playerPos = interpolation.Interpolate();
@@ -381,15 +370,15 @@ void CPed::AddWeapon(int ID, int Loaded, int Hidden)
 
 void CPed::DeleteWeapon(int ID)
 {
-	if(currentWep == ID)
+	if (currentWep == ID)
 		currentWep = 0;
-	for(int i = 0; i < 8;i++)
+	for (int i = 0; i < 8; i++)
 	{
-		if(weapon[i].wepID == ID)
+		if (weapon[i].wepID == ID)
 		{
-			weapon[i].wepID			= 0;
-			weapon[i].wepLoaded		= 0;
-			weapon[i].wepHidden		= 0;
+			weapon[i].wepID = 0;
+			weapon[i].wepLoaded = 0;
+			weapon[i].wepHidden = 0;
 			break;
 		}
 	}
@@ -402,16 +391,17 @@ void CPed::SwitchWeapon(int ID)
 
 void CPed::OnShoot()
 {
-	for(int i = 0; i < 8;i++)
+	for (int i = 0; i < 8; i++)
 	{
-		if(weapon[i].wepID == currentWep)
+		if (weapon[i].wepID == currentWep)
 		{
-			if(weapon[i].wepLoaded == 0)
+			if (weapon[i].wepLoaded == 0)
 			{
 				// TODO: reload podla poctu nabojov v zasobniku
 				weapon[i].wepLoaded = weapon[i].wepHidden;
 				weapon[i].wepHidden = 0;
-			} else
+			}
+			else
 			{
 				weapon[i].wepLoaded--;
 			}
@@ -469,7 +459,7 @@ Vector3D	CPed::GetPEDFramePosition()
 void		CPed::SetNickColor(unsigned int color)
 {
 	this->nickColor = color;
-	if(this->nametag != NULL)
+	if (this->nametag != NULL)
 	{
 		this->nametag->Release();
 		this->nametag = NULL;
@@ -508,25 +498,25 @@ void CPed::ClearWeapons()
 
 void CPed::gCheckWeapons()
 {
-	PED* ped = (PED*) this->GetEntity();
+	PED* ped = (PED*)this->GetEntity();
 	if (ped)
 	{
 		//if (ped->health > 0.0f)
 		//{
-			if (ped->inventary.slot[0].weaponType != this->currentWep)
+		if (ped->inventary.slot[0].weaponType != this->currentWep)
+		{
+			if (ped->inventary.slot[0].weaponType == 0)
 			{
-				if (ped->inventary.slot[0].weaponType == 0)
-				{
-					g_CCore->GetGame()->AddWeapon(this->GetEntity(), this->currentWep, 1000, 0, 0);
-				}
-				else {
-					g_CCore->GetGame()->DeleteWeapon(this->GetEntity(), ped->inventary.slot[0].weaponType);
-					g_CCore->GetGame()->AddWeapon(this->GetEntity(), this->currentWep, 1000, 0, 0);
-				}
+				g_CCore->GetGame()->AddWeapon(this->GetEntity(), this->currentWep, 1000, 0, 0);
 			}
 			else {
-				ped->inventary.slot[0].ammoLoaded = 1000;
+				g_CCore->GetGame()->DeleteWeapon(this->GetEntity(), ped->inventary.slot[0].weaponType);
+				g_CCore->GetGame()->AddWeapon(this->GetEntity(), this->currentWep, 1000, 0, 0);
 			}
+		}
+		else {
+			ped->inventary.slot[0].ammoLoaded = 1000;
+		}
 		//}
 	}
 }

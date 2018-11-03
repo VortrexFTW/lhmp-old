@@ -21,16 +21,17 @@ void Request(char* data)
 
 void CIngameMenu::Init()
 {
-	g_CCore->GetNetwork()->httpRequest(NULL, "lh-mp.eu/lastnews.php", Request);
+	g_CCore->GetNetwork()->httpRequest(NULL, "http://vortrex.info/lhmp/news.php", Request);
 
 	D3DXCreateFont(g_CCore->GetGraphics()->GetDevice(), CreateFont(80, 0, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, 0, TEXT("arialbold")), &ahojmoj);
 	D3DXCreateFont(g_CCore->GetGraphics()->GetDevice(), CreateFont(40, 0, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, 0, TEXT("Arial")), &menuitem);
 	D3DXCreateFont(g_CCore->GetGraphics()->GetDevice(), CreateFont(25, 0, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, 0, TEXT("Arial")), &clock);
 }
+
 bool CIngameMenu::isActive()
 {
 	return this->m_bIsActive;
-} 
+}
 
 void CIngameMenu::setActive(bool b)
 {
@@ -68,7 +69,7 @@ void CIngameMenu::Render()
 	}
 	else
 		g_CCore->GetGraphics()->DrawTextA("Exit", 50, screen.y - 120, 0xffffffff, false, menuitem);
-		
+
 
 	// right corner
 	time_t rawtime;
@@ -85,7 +86,7 @@ void CIngameMenu::Render()
 	g_CCore->GetGraphics()->DrawTextA(this->ZeroFormat(timeinfo->tm_min, buff), screen.x - 100, 20, 0xffffffff, false, menuitem);
 	g_CCore->GetGraphics()->DrawTextA(sec, screen.x - 60, 32, 0xffffffff, false, clock);
 
-	char* pch,*start = newsBuff;
+	char* pch, *start = newsBuff;
 	int count = 0;
 	while (1 == 1)
 	{
@@ -95,7 +96,7 @@ void CIngameMenu::Render()
 			memcpy(buff, start, pch - start);
 			buff[pch - start] = 0x0;
 			if (count % 2 == 0)
-				g_CCore->GetGraphics()->DrawTextA(buff, 50, 50+(count*20), 0xffffffff, false);
+				g_CCore->GetGraphics()->DrawTextA(buff, 50, 50 + (count * 20), 0xffffffff, false);
 			else
 				g_CCore->GetGraphics()->DrawTextA(buff, 50, 50 + (count * 20), 0xffff0000, false);
 			start = ++pch;
@@ -109,11 +110,11 @@ void CIngameMenu::Render()
 
 }
 
-
 void	CIngameMenu::OnArrowUp()
 {
 	itemSelect = !itemSelect;
 }
+
 void	CIngameMenu::OnArrowDown()
 {
 	itemSelect = !itemSelect;
@@ -141,6 +142,7 @@ void	CIngameMenu::OnLostDevice()
 	if (clock)
 		clock->OnLostDevice();
 }
+
 void	CIngameMenu::OnResetDevice()
 {
 	if (ahojmoj)
@@ -151,8 +153,7 @@ void	CIngameMenu::OnResetDevice()
 		clock->OnResetDevice();
 }
 
-
-char*	CIngameMenu::ZeroFormat(int input,char* out)
+char*	CIngameMenu::ZeroFormat(int input, char* out)
 {
 	if (input > 9)
 		sprintf(out, "%d", input);

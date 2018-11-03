@@ -36,6 +36,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lpthread" />
+			<Add option="-ldl" />
 			<Add library="../sdks/SQUIRREL3/lib/libsqstdlib.a" />
 			<Add library="../sdks/SQUIRREL3/lib/libsquirrel.a" />
 		</Linker>
