@@ -3,7 +3,6 @@
 Client/Release/
 Client/Debug/
 *.o
-Release/
 *.VC.db
 LHMP.opensdf
 LHMP.sdf
@@ -18,5 +17,5 @@ _Old/testers/testserverbuild/server.exe
 _Old/server/gamemodes/default/resources.txt
 *.ipch
 _Old/*
-Release/*
-Debug/*
+Release/
+Debug/
