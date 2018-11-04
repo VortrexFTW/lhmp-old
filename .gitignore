@@ -17,3 +17,6 @@ _Old/testers/testserverbuild/gamemodes/default/resources.txt
 _Old/testers/testserverbuild/server.exe
 _Old/server/gamemodes/default/resources.txt
 *.ipch
+_Old/*
+Release/*
+Debug/*
