@@ -646,6 +646,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		veh->SetSkin(vehicle_data.skinID);
 		veh->ToggleRoof(vehicle_data.roofState);
 		veh->SetSirenState(vehicle_data.siren);
+		veh->SetLightState(vehicle_data.lights);
 
 		vehicle_data.damage = veh->GetDamage();
 		vehicle_data.shotdamage = veh->GetShotDamage();
@@ -653,6 +654,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		vehicle_data.engineState = (veh->GetEngineState() == 1);
 
 		vehicle_data.siren = veh->GetSirenState();
+		vehicle_data.siren = veh->GetLightState();
 		vehicle_data.ID = ID;
 		for (int i = 0; i < 4; i++)
 			vehicle_data.seat[i] = -1;
@@ -794,7 +796,35 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsOut.Write(vehID);
 		bsOut.Write((bool)state);
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
+	}
+	break;
 
+	case LHMP_VEHICLE_TOGGLE_LIGHTS:
+	{
+		int vehID;
+		bool state;
+
+		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
+		bsIn.Read(vehID);
+		bsIn.Read(state);
+
+		CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
+		if (veh != NULL)
+		{
+			if (veh->GetLightState() == state)
+			{
+				// if nothing has changed, stop streaming the message
+				break;
+			}
+			veh->SetLightState(state);
+		}
+
+		BitStream bsOut;
+		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
+		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_LIGHTS);
+		bsOut.Write(vehID);
+		bsOut.Write((bool)state);
+		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 	}
 	break;
 
@@ -1110,6 +1140,8 @@ void CNetworkManager::SendHimCars(int ID)
 				vehicle.shotdamage = veh->GetShotDamage();
 				vehicle.roofState = veh->GetRoofState();
 				vehicle.engineState = (veh->GetEngineState() == 1);
+				vehicle.siren = veh->GetSirenState();
+				vehicle.lights = veh->GetLightState();
 				//std::cout << "Damage: " << vehicle.damage << std::endl;
 				for (int i = 0; i < 4; i++)
 					vehicle.seat[i] = veh->GetSeat(i);

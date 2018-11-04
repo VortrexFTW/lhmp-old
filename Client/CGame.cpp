@@ -836,7 +836,7 @@ void CGame::AfterRespawn()
 				veh->ToggleRoof(veh->GetRoofState());
 				veh->SetSirenState(veh->GetSirenState());
 				veh->ToggleEngine(veh->GetEngineState());
-				veh->ToggleLights(veh->GetLightsState());
+				veh->SetLightState(veh->GetLightState());
 			}
 		}
 	}

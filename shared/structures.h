@@ -333,6 +333,7 @@ namespace VEH
 		byte        roofState;
 		bool        engineState;
 		bool        siren;
+		bool        lights;
 	};
 	struct SYNC
 	{

@@ -37,16 +37,6 @@ void CVehicle::ToggleRoof(byte state)
 	this->roofState = state;
 }
 
-void CVehicle::ToggleLights(bool lights)
-{
-	this->lightState = lights;
-}
-
-bool CVehicle::GetLightState()
-{
-	return this->lightState;
-}
-
 byte CVehicle::GetRoofState()
 {
 	return this->roofState;
@@ -202,6 +192,16 @@ bool CVehicle::GetSirenState()
 	return this->siren;
 }
 
+void CVehicle::SetLightState(bool b)
+{
+	this->lights = b;
+}
+
+bool CVehicle::GetLightState()
+{
+	return this->lights;
+}
+
 void CVehicle::SetFuel(float fuel)
 {
 	this->fuel = fuel;
@@ -318,12 +318,4 @@ void	CVehicle::Respawn()
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_RAKNET_GUID, true);
 
 	this->SetIsSpawned(true);
-}
-
-bool GetCarLights() {
-
-}
-
-void SetCarLights(bool lights) {
-
 }

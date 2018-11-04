@@ -27,7 +27,7 @@ private:
 	bool			onGas;
 	byte            roofState;    
 	byte            engineState;
-	bool			lightState;
+	byte			lightState;
 
 	bool			isExploded;
 
@@ -80,7 +80,7 @@ public:
 	byte        GetEngineState();
 
 	bool		GetLightState();
-	void		ToggleLights(bool);
+	void		SetLightState(bool);
 
 	bool		IsOnGas();
 	void		SetOnGas(bool);

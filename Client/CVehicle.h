@@ -101,10 +101,9 @@ public:
 	void        ToggleEngine(byte);
 	byte        GetEngineState();
 
-	byte        GetLightsState();
-
-	void        ToggleLights(bool);
-
+	void        SetLightState(bool);
+	bool        GetLightState();
+	
 	bool		IsOnGas();
 	void		SetIsOnGas(bool);
 

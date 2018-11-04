@@ -1026,10 +1026,9 @@ SQInteger sq_vehicleToggleLights(SQVM *vm)
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
 
-
 	if (veh != NULL)
 	{
-		veh->ToggleLights((state == SQTrue));
+		veh->SetLightState((state == SQTrue));
 		BitStream bsOut;
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_LIGHTS);

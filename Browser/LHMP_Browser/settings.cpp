@@ -82,7 +82,7 @@ Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings) {
     }
 }
 
-bool Settings::WriteConfig(int width, int height, int window, char version) {
+bool Settings::WriteConfig(int width, int height, int window) {
     // 22. fscreen or not
 
     HKEY key;
@@ -96,7 +96,6 @@ bool Settings::WriteConfig(int width, int height, int window, char version) {
         DWORD type = REG_BINARY;
 
         res = RegQueryValueEx(key, TEXT("LS3D_setup"), NULL, &type, (LPBYTE)&setup, &size);
-        res = RegQueryValueEx(key, TEXT("LHMP_Version"), NULL, &type, (CHAR)&version, &size);
 
         if (res == ERROR_SUCCESS) {
             DWORD width = setup[3];
@@ -129,7 +128,7 @@ void Settings::on_btnPlay_clicked()
     if (GetMafiaRegistryStructure(&data)) {
         // Overwrite data with 640x480 resolution values
         data.width = (int)ui->spinBox->value();
-        data.height = (int)ui->spinBox_2->value();
+        data.heigh = (int)ui->spinBox_2->value();
 
         if (ui->comboBox->currentIndex() == 0) {
             data.isFullscreenOn = true;
@@ -145,7 +144,6 @@ void Settings::on_btnPlay_clicked()
     QSettings settings("Lost Heaven Multiplayer", "Launcher");
 
     settings.setValue("screen", ui->comboBox->currentIndex());
-    settings.setValue("version", ui->comboBox_7->currentText();
 
     close();
 }
@@ -203,7 +201,7 @@ bool Settings::SetMafiaRegistryStructure(RegistryStruct* input)
         if (res == ERROR_SUCCESS) {
             // if registry buffer has been successfully filled, fill up our output with data
             memcpy(setup, input, sizeof(RegistryStruct));
-            res = RegSetValueEx(key, TEXT("LS3D_setup"), NULL,type, (LPBYTE)&setup, size);
+            res = RegSetValueEx(key, TEXT("LS3D_setup"), NULL,type, (LPBYTE)&setup,size);
             RegCloseKey(key);
             if (res == ERROR_SUCCESS)
                 return true;
@@ -226,9 +224,4 @@ void Settings::on_comboBox_currentIndexChanged(int index)
         ui->spinBox->setEnabled(true);
         ui->spinBox_2->setEnabled(true);
     }
-}
-
-void Settings::on_comboBox_7_currentIndexChanged(int index)
-{
-
 }

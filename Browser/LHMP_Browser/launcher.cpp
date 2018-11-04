@@ -327,7 +327,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
             if (launcherVersion != version) {
                 QMessageBox::StandardButton reply;
-                reply = QMessageBox::question(this, "New update available", "There is a new launcher update available!<br/><br/>Do you want to download it and update your installation?", QMessageBox::Yes|QMessageBox::No);
+                reply = QMessageBox::question(this, "New update available", "There is a new update available!<br/><br/>Do you want to download it and update your installation?", QMessageBox::Yes|QMessageBox::No);
 
                 if (reply == QMessageBox::Yes) {
                     // Self update
@@ -443,7 +443,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
                 exit(0);
             } else if (fileName == "Game.exe") {
-                if (!QFile(QString("%1/%2.bak").arg(mafiaPath).arg(fileName)).exists()) {
+                if (!QFile(QString("%1/%2.bk").arg(mafiaPath).arg(fileName)).exists()) {
                     if (allowPatch == -1) {
                         AskPatchPermission();
                     }
@@ -544,7 +544,7 @@ void Launcher::replyFinished(QNetworkReply *reply)
             }
         }
     } else {
-        ui->label_3->setText("Could not contact the update server, please contact Vortrex for support.");
+        ui->label_3->setText("Could not contact the update server, contact Vortrex for support.");
 
         updated = true;
 
@@ -574,7 +574,7 @@ bool Launcher::AskPatchPermission() {
     QMessageBox msg;
     msg.setWindowTitle("Lost Heaven Multiplayer");
     msg.setText("You must have Mafia version 1.0 installed in order to play Lost Heaven Multiplayer.");
-    msg.setInformativeText("Do you want to install the needed version? A backup of yoru original files will be kept.");
+    msg.setInformativeText("Do you want to install the needed version? A backup of your original files will be kept.");
     msg.setIcon(QMessageBox::Question);
     msg.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msg.setDefaultButton(QMessageBox::Ok);

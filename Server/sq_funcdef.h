@@ -69,6 +69,8 @@ SQInteger sq_vehicleToggleRoof(SQVM *vm);
 SQInteger sq_vehicleGetRoofState(SQVM *vm);
 SQInteger sq_vehicleToggleSiren(SQVM *vm);
 SQInteger sq_vehicleGetSirenState(SQVM *vm);
+SQInteger sq_vehicleToggleLights(SQVM *vm);
+SQInteger sq_vehicleGetLightState(SQVM *vm);
 SQInteger sq_vehicleExplode(SQVM *vm);
 SQInteger sq_vehicleExists(SQVM *vm);
 

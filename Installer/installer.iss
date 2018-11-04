@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Lost Heaven Multiplayer"
-#define MyAppVersion "1.0.9"
+#define MyAppVersion "1.0.10"
 #define MyAppPublisher "Lost Heaven Multiplayer"
-#define MyAppURL "http://vortrex.info/lhmp/"
+#define MyAppURL "https://vortrex.info/lhmp/"
 #define MyAppExeName "launcher.exe"
 
 [Setup]
@@ -21,9 +21,9 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputDir=F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\release
+OutputDir=D:\abram\dev\git\lhmp-old\Installer\release
 OutputBaseFilename=lhmp_setup
-SetupIconFile=F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\icon.ico
+SetupIconFile=D:\abram\dev\git\lhmp-old\Installer\icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardImageFile=left.bmp
@@ -36,15 +36,15 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
                                                 
 [Files]
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\launcher.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\icudt53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\icuin53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\icuuc53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Installer\bin\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\launcher.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\icudt53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\icuin53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\icuuc53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\abram\dev\git\lhmp-old\Installer\bin\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
