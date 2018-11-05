@@ -653,8 +653,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		vehicle_data.roofState = veh->GetRoofState();
 		vehicle_data.engineState = (veh->GetEngineState() == 1);
 
-		vehicle_data.siren = veh->GetSirenState();
-		vehicle_data.siren = veh->GetLightState();
+		//vehicle_data.siren = veh->GetSirenState();
+		//vehicle_data.lights = veh->GetLightState();
 		vehicle_data.ID = ID;
 		for (int i = 0; i < 4; i++)
 			vehicle_data.seat[i] = -1;
@@ -802,7 +802,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 	case LHMP_VEHICLE_TOGGLE_LIGHTS:
 	{
 		int vehID;
-		bool state;
+		int state;
 
 		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
 		bsIn.Read(vehID);
@@ -811,11 +811,6 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
 		if (veh != NULL)
 		{
-			if (veh->GetLightState() == state)
-			{
-				// if nothing has changed, stop streaming the message
-				break;
-			}
 			veh->SetLightState(state);
 		}
 
@@ -823,7 +818,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_LIGHTS);
 		bsOut.Write(vehID);
-		bsOut.Write((bool)state);
+		bsOut.Write(state);
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 	}
 	break;

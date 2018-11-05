@@ -499,9 +499,13 @@ void CVehicle::SetLightState(bool b)
 {
 	if (this->GetEntity() != NULL)
 	{
-		*(byte*)(this->GetEntity() + 0x2014) = (byte)b;
+		*(byte*)(this->GetEntity() + 0x2014) = b;
 	}
-	this->lightState = b;
+
+	this->lightState = (bool)b;
+	char buff[200];
+	sprintf(buff, "Toggle Lights  %d", b);
+	g_CCore->GetLog()->AddLog(buff);
 }
 
 bool CVehicle::GetLightState()

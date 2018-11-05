@@ -194,12 +194,12 @@ bool CVehicle::GetSirenState()
 
 void CVehicle::SetLightState(bool b)
 {
-	this->lights = b;
+	this->lightState = b;
 }
 
 bool CVehicle::GetLightState()
 {
-	return this->lights;
+	return this->lightState;
 }
 
 void CVehicle::SetFuel(float fuel)

@@ -869,7 +869,7 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 		veh->SetShotDamage(vehicle.shotdamage);
 		veh->ToggleRoof(vehicle.roofState);
 		veh->SetSirenState(vehicle.siren);
-		veh->SetLightState(vehicle.lights);
+		veh->SetLightState((int)vehicle.lights);
 		for (int i = 0; i < 4; i++)
 			veh->SetSeat(i, vehicle.seat[i]);
 		g_CCore->GetLog()->AddLog("LHMP_VEHICLE_CREATE");
@@ -916,7 +916,7 @@ void CGameSync::onVehicleEngineStateChange(RakNet::BitStream* bitInput)
 void CGameSync::onVehicleLightStateChange(RakNet::BitStream* bitInput)
 {
 	int ID;
-	bool state;
+	int state;
 
 	bitInput->Read(ID);
 	bitInput->Read(state);
@@ -929,7 +929,7 @@ void CGameSync::onVehicleLightStateChange(RakNet::BitStream* bitInput)
 	}
 
 	char buff[255];
-	sprintf(buff, "[Nm] TOGGLE LIGHTS %d STATE: %d", ID, (int)state);
+	sprintf(buff, "[Nm] TOGGLE LIGHTS %d STATE: %d", ID, state?1:0);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
