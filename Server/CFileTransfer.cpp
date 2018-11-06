@@ -84,7 +84,7 @@ CTransmission::CTransmission(RakNet::SystemAddress	receiver, std::vector <CFile*
 
 		//printf("CTransmission \n");
 	}
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, 0, this->receiver, false);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FILE, this->receiver, false);
 }
 
 void	CTransmission::SendData()
@@ -118,7 +118,7 @@ void	CTransmission::SendData()
 			out.Write(result);
 			for (int i = 0; i < (result); i++)
 				out.Write(data[i]);
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, 0, this->receiver, false);
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FILE, this->receiver, false);
 
 
 			if (result < 65537)
@@ -140,7 +140,7 @@ void	CTransmission::FinishIt()
 	out.Write((RakNet::MessageID)ID_FILETRANSFER);
 	out.Write((RakNet::MessageID)FILETRANSFER_FINISH);
 	out.Write(this->transferingID);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, 0, this->receiver, false);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&out, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FILE, this->receiver, false);
 }
 
 void	CTransmission::HandlePacket(RakNet::BitStream* pMsg)
@@ -216,6 +216,7 @@ void	CFileTransfer::AddFile(char* _sourcename, FILE* _file)
 	this->fileList.push_back(file);
 	this->ID++;
 }
+
 void	CFileTransfer::HandlePacket(RakNet::BitStream* message, RakNet::SystemAddress sa)
 {
 	for (unsigned int i = 0; i < clientList.size(); i++)
@@ -243,7 +244,6 @@ void	CFileTransfer::DeleteTransfer(CTransmission* tf, bool deleteIt)
 		}
 	}
 }
-
 
 void	CFileTransfer::Reset()
 {

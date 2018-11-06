@@ -1144,7 +1144,7 @@ void CNetworkManager::SendHimCars(int ID)
 				bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 				bsOut.Write((MessageID)LHMP_VEHICLE_CREATE);
 				bsOut.Write(vehicle);
-				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, GetSystemAddressFromID(ID), false);
+				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHADD, GetSystemAddressFromID(ID), false);
 			}
 		}
 	}

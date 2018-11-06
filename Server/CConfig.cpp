@@ -117,7 +117,6 @@ void	CConfig::AddItem(char* buff)
 	itemCount++;
 }
 
-
 ConfigItem*	CConfig::GetItemWithName(char* name)
 {
 	if (itemCount == 0)
@@ -145,6 +144,7 @@ int		CConfig::GetInt(char* name, int def)
 	}
 	return def;
 }
+
 bool	CConfig::GetBool(char* name, bool def)
 {
 	ConfigItem* item = this->GetItemWithName(name);
@@ -154,6 +154,7 @@ bool	CConfig::GetBool(char* name, bool def)
 	}
 	return def;
 }
+
 char*	CConfig::GetCString(char* name, char* def)
 {
 	ConfigItem* item = this->GetItemWithName(name);

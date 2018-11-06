@@ -15,7 +15,7 @@ CVehiclePool::~CVehiclePool()
 	delete[] & vehiclepool;
 }
 
-void	CVehiclePool::New(int vehicleID, int skinID, Vector3D position, Vector3D rotation,bool isSpawned)
+void	CVehiclePool::New(int vehicleID, int skinID, Vector3D position, Vector3D rotation, bool isSpawned)
 {
 	if (vehiclepool[vehicleID] == 0)
 	{
@@ -40,10 +40,6 @@ void	CVehiclePool::New(int vehicleID, int skinID, Vector3D position, Vector3D ro
 		{
 			if (isSpawned)
 				g_CCore->GetEngineStack()->AddMessage(ES_CREATECAR, vehicleID);
-		}
-		else
-		{
-			g_CCore->GetChat()->AddMessage("Allready done");
 		}
 		veh->SetActive(1);
 	}

@@ -691,9 +691,9 @@ void CGameSync::onPlayerHealthChange(RakNet::BitStream* bitInput)
 	float Health;
 	bitInput->Read(ID);
 	bitInput->Read(Health);
-	char buff[255];
+	//char buff[255];
 	//sprintf(buff, "[Nm] SET HEALTH %d to %d", ID, Health);
-	g_CCore->GetLog()->AddLog(buff);
+	//g_CCore->GetLog()->AddLog(buff);
 
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
 	{
@@ -851,11 +851,11 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 
 	// log it
 	char buff[255];
-	sprintf(buff, "LHMP_VEHICLE_CREATE %d %d %d %d %d %d", vehicle.ID, vehicle.seat[0], vehicle.seat[1], vehicle.seat[2], vehicle.seat[3], vehicle.siren);
+	sprintf(buff, "LHMP_VEHICLE_CREATE %d %d %d %d %d %d %d", vehicle.ID, vehicle.seat[0], vehicle.seat[1], vehicle.seat[2], vehicle.seat[3], vehicle.siren, vehicle.lights);
 	g_CCore->GetLog()->AddLog(buff);
 
 	// create a new instance in vehicle pool
-	g_CCore->GetVehiclePool()->New(vehicle.ID, vehicle.skinID, vehicle.position, vehicle.rotation, vehicle.isSpawned);
+	g_CCore->GetVehiclePool()->New(vehicle.ID, vehicle.skinID, vehicle.position, vehicle.rotation, false);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehicle.ID);
 	if (veh)
@@ -869,7 +869,7 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 		veh->SetShotDamage(vehicle.shotdamage);
 		veh->ToggleRoof(vehicle.roofState);
 		veh->SetSirenState(vehicle.siren);
-		veh->SetLightState((int)vehicle.lights);
+		veh->SetLightState(vehicle.lights);
 		for (int i = 0; i < 4; i++)
 			veh->SetSeat(i, vehicle.seat[i]);
 		g_CCore->GetLog()->AddLog("LHMP_VEHICLE_CREATE");
@@ -1414,7 +1414,7 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		this->onPlayerIsKickedFromCar(&bsIn);
 		break;
 	case LHMP_PLAYER_SET_HEALTH:
-		//this->onPlayerSetHealth(&bsIn);
+		this->onPlayerHealthChange(&bsIn);
 		break;
 	case LHMP_PLAYER_SET_MONEY:
 		this->onGUIMoneyChange(&bsIn);

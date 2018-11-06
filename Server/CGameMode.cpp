@@ -38,7 +38,11 @@ bool CGameMode::LoadGameMode(char* name)
 			fileContent[size] = 0x0;
 
 			char* pointer;
-			pointer = strtok(fileContent, "\r\n\0");
+			#ifdef _WIN32
+				pointer = strtok(fileContent, "\r\n\0");
+			#else
+				pointer = strtok(fileContent, "\n\0");
+			#endif
 			int lineNumber = 0;
 			while(pointer != NULL)
 			{
@@ -52,13 +56,14 @@ bool CGameMode::LoadGameMode(char* name)
 						delim = i;
 						break;
 					}
-
 				}
+
 				if (delim == -1)
 				{
 					g_CCore->GetLog()->AddNormalLog("[!] Failed to parse resources.txt at line: %d  %s",lineNumber, pointer + delim + 1);
 				}
-				else {
+				else 
+				{
 					pointer[delim] = 0x0;
 					if (strcmp(pointer, "SERVER") == 0)
 					{
@@ -85,8 +90,8 @@ bool CGameMode::LoadGameMode(char* name)
 						// generate compiled .nut file name and store it into newname
 						sprintf(newname, "gamemodes/%s/%s", name, pointer + delim + 1);
 						//sprintf(newname, "gamemodes/%s/%s.bak", name, pointer + delim + 1);	// .bak file, not used
-						// try to compile .nut file
 						
+						// try to compile .nut file
 						//int result = this->CompileGameMode(path, newname);
 						int result = 0; // SUCCESS
 						// now store new file path
@@ -238,7 +243,6 @@ int		CGameMode::CompileGameMode(char* in, char* out)
 	return 0;
 }
 
-
 void	CGameMode::AddClientScript(char* script)
 {
 
@@ -269,5 +273,5 @@ void CGameMode::SendClientScripts(RakNet::SystemAddress client)
 		bsOut.Write(pointer->name);
 		pointer = pointer->next;
 	}
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, client, false);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAT_FILE, client, false);
 }

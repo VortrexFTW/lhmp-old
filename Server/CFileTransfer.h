@@ -63,7 +63,7 @@ public:
 	** Adds new file with @sourcename into list of files, streamed by server to clients
 	** File has to be opened and file handled must be provided in @file
 	*/
-	void	AddFile(char* sourcename,FILE* file);
+	void	AddFile(char* sourcename, FILE* file);
 	/*
 	** Send all streamed files to @receiver (usually on connection)
 	*/

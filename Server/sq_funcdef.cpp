@@ -460,10 +460,15 @@ SQInteger sq_playerSetHealth(SQVM *vm)
 			bsOut.Write((MessageID)LHMP_PLAYER_SET_HEALTH);
 			bsOut.Write(ID);
 			bsOut.Write(health);
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_PLAYERPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 		}
 		else
 		{
+			if (player->GetCurrentCar() != NO_CAR)
+			{
+				g_CCore->GetVehiclePool()->Return(player->GetCurrentCar())->PlayerExit(ID);
+			}
+
 			//g_CCore->GetScripts()->onPlayerIsKilled(ID, ID,DEATH_FALL,0);
 			BitStream bsOut;
 			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
@@ -471,11 +476,8 @@ SQInteger sq_playerSetHealth(SQVM *vm)
 			bsOut.Write(ID); 
 			bsOut.Write((int)6);
 			bsOut.Write((int)0);
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
-			if (player->GetCurrentCar() != NO_CAR)
-			{
-				g_CCore->GetVehiclePool()->Return(player->GetCurrentCar())->PlayerExit(ID);
-			}
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);
+
 		}
 		sq_pushbool(vm, true);
 		return 1;
@@ -511,7 +513,7 @@ SQInteger sq_guiToggleNametag(SQVM *vm)
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_PLAYER_SET_NAMETAG);
 		bsOut.Write(status);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_PLAYERPROP, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -561,7 +563,7 @@ SQInteger sq_playerEnableMoney(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_PLAYER_ENABLE_MONEY);
 		bsOut.Write(enable);
 
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID),false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_PLAYERPROP, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID),false);
 
 		sq_pushbool(vm, true);
 		return 1;
@@ -587,7 +589,7 @@ SQInteger sq_playerSetRotation(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_PLAYER_SET_ROTATION);
 		bsOut.Write(ID);
 		bsOut.Write(newRotation);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FOOTSYNC, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -613,7 +615,7 @@ SQInteger sq_playerSetRotationVector(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_PLAYER_SET_ROTATION);
 		bsOut.Write(ID);
 		bsOut.Write(rot);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FOOTSYNC, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -630,6 +632,7 @@ SQInteger sq_playerGetIP(SQVM *vm)
 	sq_pushstring(vm, address, strlen(address));
 	return 1;
 }
+
 SQInteger sq_playerPutToVehicle(SQVM *vm)
 {
 	SQInteger	ID,carID,seatID;
@@ -655,7 +658,7 @@ SQInteger sq_playerPutToVehicle(SQVM *vm)
 				bsOut.Write(ID);
 				bsOut.Write(carID);
 				bsOut.Write(seatID);
-				g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+				g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);
 				sq_pushbool(vm, true);
 				return 1;
 			}
@@ -682,7 +685,7 @@ SQInteger sq_playerKickOutVehicle(SQVM *vm)
 			bsOut.Write((MessageID)LHMP_PLAYER_KICK_OUT_VEHICLE);
 			bsOut.Write(ID);
 			bsOut.Write(carID);
-			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+			g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);
 			sq_pushbool(vm, true);
 			return 1;
 		}
@@ -699,6 +702,7 @@ SQInteger sq_playerKick(SQVM *vm)
 	g_CCore->GetNetworkManager()->GetPeer()->CloseConnection(sa, true);
 	return 1;
 }
+
 SQInteger sq_playerGetPing(SQVM *vm)
 {
 	SQInteger	ID;
@@ -708,6 +712,7 @@ SQInteger sq_playerGetPing(SQVM *vm)
 	sq_pushinteger(vm, ping);
 	return 1;
 }
+
 SQInteger sq_playerGetName(SQVM *vm)
 {
 	SQInteger	ID;
@@ -745,11 +750,13 @@ SQInteger sq_serverGetName(SQVM *vm)
 	sq_pushstring(vm, g_CCore->GetNetworkManager()->GetServerName().c_str(), g_CCore->GetNetworkManager()->GetServerName().length());
 	return 1;
 }
+
 SQInteger sq_serverGetGamemodeName(SQVM *vm)
 {
 	sq_pushstring(vm, g_CCore->GetNetworkManager()->GetServerMode().c_str(), g_CCore->GetNetworkManager()->GetServerMode().length());
 	return 1;
 }
+
 SQInteger sq_serverSetGamemodeName(SQVM *vm)
 {
 	const SQChar* modename;
@@ -757,12 +764,13 @@ SQInteger sq_serverSetGamemodeName(SQVM *vm)
 	g_CCore->GetNetworkManager()->SetServerMode(modename);
 	return 1;
 }
+
 SQInteger sq_serverGetOnlinePlayers(SQVM *vm)
 {
-	
 	sq_pushinteger(vm, g_CCore->GetNetworkManager()->GetPeer()->NumberOfConnections());
 	return 1;
 }
+
 SQInteger sq_serverGetMaxPlayers(SQVM *vm)
 {
 	sq_pushinteger(vm, g_CCore->GetNetworkManager()->GetMaxServerPlayers());
@@ -779,7 +787,7 @@ SQInteger sq_serverSetDefaultMap(SQVM *vm)
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_SCRIPT_CHANGE_MAP);
 	bsOut.Write(map);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_MAIN, UNASSIGNED_SYSTEM_ADDRESS, true);
 	return 1;
 }
 
@@ -804,10 +812,11 @@ SQInteger sq_playerAddWeapon(SQVM *vm)
 		bsOut.Write(weaponID);
 		bsOut.Write(ammo);
 		bsOut.Write(ammoSecond);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_PLAYERPROP, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 	}
 	return 1;
 }
+
 SQInteger sq_playerDeleteWeapon(SQVM *vm)
 {
 	SQInteger ID, weaponID;
@@ -824,7 +833,7 @@ SQInteger sq_playerDeleteWeapon(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_PLAYER_DELETEWEAPON);
 		bsOut.Write(ID);
 		bsOut.Write(weaponID);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_PLAYERPROP, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 	}
 	return 1;
 }
@@ -932,7 +941,7 @@ SQInteger sq_vehicleSpawn(SQVM *vm)
 		bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((RakNet::MessageID)LHMP_VEHICLE_CREATE);
 		bsOut.Write(vehicle_data);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_RAKNET_GUID, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHADD, UNASSIGNED_RAKNET_GUID, true);
 
 		//sq_pushbool(vm, true);
 		sq_pushinteger(vm, ID);
@@ -943,6 +952,7 @@ SQInteger sq_vehicleSpawn(SQVM *vm)
 	}
 	return 1;
 }
+
 SQInteger sq_vehicleDelete(SQVM *vm)
 {
 	SQInteger ID;
@@ -954,7 +964,7 @@ SQInteger sq_vehicleDelete(SQVM *vm)
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_DELETE);
 		bsOut.Write(ID);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHADD, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -1112,7 +1122,7 @@ SQInteger sq_vehicleSetFuel(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_SET_FUEL);
 		bsOut.Write(ID);
 		bsOut.Write(fuel);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
 		return 1;
 	}
 	return 1;
@@ -1148,6 +1158,7 @@ SQInteger sq_vehicleGetDriverID(SQVM *vm)
 	sq_pushinteger(vm, -1);
 	return 1;
 }
+
 SQInteger sq_vehicleGetPlayerIDFromSeat(SQVM *vm)
 {
 	SQInteger ID,seatID;
@@ -1162,6 +1173,7 @@ SQInteger sq_vehicleGetPlayerIDFromSeat(SQVM *vm)
 	sq_pushinteger(vm, -1);
 	return 1;
 }
+
 SQInteger sq_vehicleGetPosition(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1184,6 +1196,7 @@ SQInteger sq_vehicleGetPosition(SQVM *vm)
 	sq_pushnull(vm);
 	return 1;
 }
+
 SQInteger sq_vehicleGetDamage(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1199,6 +1212,7 @@ SQInteger sq_vehicleGetDamage(SQVM *vm)
 	sq_pushnull(vm);
 	return 1;
 }
+
 SQInteger sq_vehicleGetRotation(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1221,6 +1235,7 @@ SQInteger sq_vehicleGetRotation(SQVM *vm)
 	sq_pushnull(vm);
 	return 1;
 }
+
 SQInteger sq_vehicleSetPosition(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1239,7 +1254,7 @@ SQInteger sq_vehicleSetPosition(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_SET_POSITION);
 		bsOut.Write(ID);
 		bsOut.Write(pos);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHSYNC, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
 		
 		sq_pushbool(vm, true);
 		return 1;
@@ -1247,6 +1262,7 @@ SQInteger sq_vehicleSetPosition(SQVM *vm)
 	sq_pushbool(vm, false);
 	return 1;
 }
+
 SQInteger sq_vehicleSetSpeed(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1270,7 +1286,7 @@ SQInteger sq_vehicleSetSpeed(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_SET_SPEED);
 		bsOut.Write(ID);
 		bsOut.Write(vSpeed);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHSYNC, UNASSIGNED_SYSTEM_ADDRESS, true);
 		
 		sq_pushbool(vm, true);
 		return 1;
@@ -1278,6 +1294,7 @@ SQInteger sq_vehicleSetSpeed(SQVM *vm)
 	sq_pushbool(vm, false);
 	return 1;
 }
+
 SQInteger sq_vehicleSetDamage(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1294,11 +1311,12 @@ SQInteger sq_vehicleSetDamage(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_DAMAGE);
 		bsOut.Write(ID);
 		bsOut.Write(damage);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 		return 1;
 	}
 	return 1;
 }
+
 SQInteger sq_vehicleSetRotation(SQVM *vm)
 {
 	SQInteger	ID;
@@ -1317,7 +1335,7 @@ SQInteger sq_vehicleSetRotation(SQVM *vm)
 		bsOut.Write((MessageID)LHMP_VEHICLE_SET_ROTATION);
 		bsOut.Write(ID);
 		bsOut.Write(rot);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHSYNC, g_CCore->GetNetworkManager()->GetSystemAddressFromID(veh->GetSeat(0)), false);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -1340,7 +1358,7 @@ SQInteger sq_vehicleExplode(SQVM *vm)
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_ON_EXPLODED);
 		bsOut.Write(ID);
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, UNASSIGNED_SYSTEM_ADDRESS, true);
 		sq_pushbool(vm, true);
 		return 1;
 	}
@@ -1363,8 +1381,6 @@ SQInteger sq_vehicleExists(SQVM *vm)
 	return 1;
 }
 
-
-
 SQInteger sq_playerPlayAnim(SQVM *vm)
 {
 	const SQChar* name;
@@ -1376,7 +1392,7 @@ SQInteger sq_playerPlayAnim(SQVM *vm)
 	bsOut.Write((MessageID)LHMP_PLAYER_PLAYANIM_STRING);
 	bsOut.Write(ID);
 	bsOut.Write(name);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0,UNASSIGNED_SYSTEM_ADDRESS, true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_PLAYERPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 
 	return 1;
 }
@@ -1391,10 +1407,11 @@ SQInteger sq_playerPlaySound(SQVM *vm)
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_PLAYER_PLAYSOUND_STRING);
 	bsOut.Write(name);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_SOUND, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 
 	return 1;
 }
+
 SQInteger sq_allPlaySound(SQVM *vm)
 {
 	const SQChar* name;
@@ -1403,7 +1420,7 @@ SQInteger sq_allPlaySound(SQVM *vm)
 	bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((MessageID)LHMP_PLAYER_PLAYSOUND_STRING);
 	bsOut.Write(name);
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_SOUND, UNASSIGNED_SYSTEM_ADDRESS, true);
 
 	return 1;
 }
@@ -1429,6 +1446,7 @@ SQInteger sq_playerSetCameraPos(SQVM *vm)
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 	return 1;
 }
+
 SQInteger sq_playerSetCameraToDefault(SQVM *vm)
 {
 	SQInteger ID;
@@ -1440,8 +1458,6 @@ SQInteger sq_playerSetCameraToDefault(SQVM *vm)
 	return 1;
 }
 
-
-
 SQInteger sq_timerCreate(SQVM *vm)
 {
 	SQInteger interval,repeat,param;	
@@ -1450,7 +1466,7 @@ SQInteger sq_timerCreate(SQVM *vm)
 	sq_getinteger(vm, -3, &interval);
 	sq_getinteger(vm, -2, &repeat);
 	sq_getinteger(vm, -1, &param);
-	int ID = g_CCore->GetTimerPool()->New(vm, (char*)name, interval, repeat,param);
+	int ID = g_CCore->GetTimerPool()->New(vm, (char*)name, interval, repeat, param);
 	sq_pushinteger(vm, ID);
 	return 1;
 }
@@ -1744,7 +1760,7 @@ SQInteger sq_callClientFunc(SQVM *vm)
 			break;
 		}
 
-		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(playerID), false);
+		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE, LHMP_NETCHAN_CLIENTFUNC, g_CCore->GetNetworkManager()->GetSystemAddressFromID(playerID), false);
 	}
 
 	
