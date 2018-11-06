@@ -4,7 +4,7 @@
 #define FILETRANSFER_C
 #include <vector>
 #include <fstream>
-#include "RakPeerInterface.h"
+#include <RakPeerInterface.h>
 
 // CFile holds data(file) used during trasmission
 class CFile

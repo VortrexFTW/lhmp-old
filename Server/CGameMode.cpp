@@ -2,7 +2,7 @@
 
 #include "CCore.h"
 #include "CGameMode.h"
-#include "../shared/tools.h"
+#include <lhmp_tools.h>
 #include <iostream>
 
 #include "squirrelheads.h"
@@ -273,5 +273,5 @@ void CGameMode::SendClientScripts(RakNet::SystemAddress client)
 		bsOut.Write(pointer->name);
 		pointer = pointer->next;
 	}
-	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAT_FILE, client, false);
+	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_FILE, client, false);
 }

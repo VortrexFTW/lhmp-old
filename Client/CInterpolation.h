@@ -2,7 +2,7 @@
 
 #ifndef __C_INTERPOLATION
 #define __C_INTERPOLATION
-#include "../shared/structures.h"
+#include <lhmp_structures.h>
 
 class CInterpolation {
 	Vector3D		InterPosition, InterRotation, InterRotation2;

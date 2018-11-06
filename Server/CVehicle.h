@@ -2,8 +2,8 @@
 
 #ifndef CVEHICLE_H
 #define CVEHICLE_H
-#include "../shared/structures.h"
-#include "CEntity.h"
+#include <lhmp_structures.h>
+#include <CEntity.h>
 class CVehicle : public CEntity
 {
 private:

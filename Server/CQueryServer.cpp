@@ -4,7 +4,7 @@
 #include "CQueryServer.h"
 #include "TCPInterface.h"
 #include <stdio.h>
-#include "../shared/version.h"
+#include <lhmp_version.h>
 
 #ifndef _WIN32
 #include <pthread.h>

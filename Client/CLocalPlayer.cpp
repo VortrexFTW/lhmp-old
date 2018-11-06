@@ -1,8 +1,8 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
 #include "CLocalPlayer.h"
-#include "../shared/structures.h"
-#include "../shared/CBitArray.h"
+#include "lhmp_structures.h"
+#include "lhmp_CBitArray.h"
 #include "CNetwork.h"
 #include <fstream>
 #include "CCore.h"

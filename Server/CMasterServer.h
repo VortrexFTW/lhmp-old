@@ -3,7 +3,7 @@
 #ifndef _CMASTERSERVER_H
 #define _CMASTERSERVER_H
 
-#include "../sdks/UDPWrapper/UDPWrapper.h"
+#include <UDPWrapper.h>
 
 // defines the amount of miliseconds that have to elapse between reposting
 // information to master server (MILISECONDS)

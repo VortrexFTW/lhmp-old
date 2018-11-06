@@ -3,7 +3,7 @@
 #ifndef __LOCALPLAYER_H
 #define __LOCALPLAYER_H
 
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 
 class CLocalPlayer
 {

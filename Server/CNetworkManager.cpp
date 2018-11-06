@@ -5,18 +5,18 @@
 #include <sstream>
 #include "TCPInterface.h"
 
-#include "../shared/limits.h"
-#include "../shared/gamestructures.h"
-#include "../shared/CBitArray.h"
-#include "../shared/version.h"
-#include "../shared/tools.h"
+#include <lhmp_limits.h>
+#include <lhmp_gamestructures.h>
+#include <lhmp_CBitArray.h>
+#include <lhmp_version.h>
+#include <lhmp_tools.h>
 
 #include "FileList.h"
 #include "FileListTransfer.h"
 
 extern CCore *g_CCore;
 
-#include "../shared/linux.h"
+#include <lhmp_linux.h>
 
 DWORD postTime = timeGetTime();
 CNetworkManager::CNetworkManager()

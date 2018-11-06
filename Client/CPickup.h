@@ -2,7 +2,7 @@
 
 #ifndef CPICKUP_H
 #define CPICKUP_H
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 class CPickup
 {
 private:

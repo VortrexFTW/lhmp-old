@@ -2,7 +2,7 @@
 
 #include "CCore.h"
 #include "CGraphics.h"
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 #include "CColoredText.h"
 
 

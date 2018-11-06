@@ -1,14 +1,33 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
-#include "sq_funcdef.h"
-#include "CCore.h"
+#include <sq_funcdef.h>
+#include <CCore.h>
 
 #include <fstream>
 #include <sstream>
 #include <ios>
-#include "../shared/tools.h"
-#include "../sdks/sqlite/sqlite3.h"
-#include "../sdks/sqlite/SQLiteResultPool.h"
+#include <lhmp_tools.h>
+#include <sqlite3.h>
+#include <SQLiteResultPool.h>
+#include <stdio.h>
+
+// Allow weak algorithms (MD5 only)
+#define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
+
+// Crypto++ methods
+#include <aes.h>
+#include <base64.h>
+#include <blowfish.h>
+#include <gzip.h>
+#include <hex.h>
+#include <md5.h>
+#include <ripemd.h>
+#include <sha.h>
+#include <twofish.h>
+#include <whrlpool.h>
+
+// MySQL
+#include "mysql.h"
 
 extern CCore* g_CCore;
 
@@ -791,7 +810,6 @@ SQInteger sq_serverSetDefaultMap(SQVM *vm)
 	return 1;
 }
 
-
 SQInteger sq_playerAddWeapon(SQVM *vm)
 {
 	SQInteger ID,weaponID,ammo,ammoSecond;
@@ -1009,7 +1027,6 @@ SQInteger sq_vehicleToggleSiren(SQVM *vm)
 	sq_getbool(vm, -1, &state);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
-
 
 	if (veh != NULL)
 	{
@@ -1789,7 +1806,7 @@ SQInteger sq_sqlite3_query(SQVM *vm)
 
 	if (error)
 	{
-		printf("[SQLITE] Error while openning %s database !\n", database);
+		printf("[SQLITE] Error while opening %s database !\n", database);
 		sqlite3_close(db);
 		sq_pushinteger(vm, -1);
 		return 1;
@@ -1898,5 +1915,817 @@ SQInteger sq_sqlite3_column_text(SQVM *vm)
 		return 1;
 	}
 	sq_pushnull(vm);
+	return 1;
+}
+
+SQInteger sq_hashMD5(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::Weak::MD5 hash;
+	byte digest[CryptoPP::Weak::MD5::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashSHA1(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+	
+	std::string message(szInput);
+
+	CryptoPP::SHA1 hash;
+	byte digest[CryptoPP::SHA1::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashSHA224(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::SHA224 hash;
+	byte digest[CryptoPP::SHA224::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashSHA256(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::SHA256 hash;
+	byte digest[CryptoPP::SHA256::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashSHA384(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::SHA384 hash;
+	byte digest[CryptoPP::SHA384::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashSHA512(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::SHA512 hash;
+	byte digest[CryptoPP::SHA512::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashRIPEMD128(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::RIPEMD128 hash;
+	byte digest[CryptoPP::RIPEMD128::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashRIPEMD160(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::SHA512 hash;
+	byte digest[CryptoPP::RIPEMD160::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashRIPEMD256(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::RIPEMD256 hash;
+	byte digest[CryptoPP::RIPEMD256::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashRIPEMD320(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::RIPEMD320 hash;
+	byte digest[CryptoPP::RIPEMD320::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_hashWhirlpool(SQVM *vm)
+{
+	const SQChar* szInput;
+
+	sq_getstring(vm, -1, &szInput);
+
+	std::string message(szInput);
+
+	CryptoPP::Whirlpool hash;
+	byte digest[CryptoPP::Whirlpool::DIGESTSIZE];
+
+	hash.CalculateDigest(digest, (byte *)szInput, message.length());
+
+	CryptoPP::HexEncoder encoder;
+	std::string output;
+
+	encoder.Attach(new CryptoPP::StringSink(output));
+	encoder.Put(digest, sizeof(digest));
+	encoder.MessageEnd();
+
+	sq_pushstring(vm, output.c_str(), -1);
+
+	return 1;
+}
+
+SQInteger sq_mysqlConnect(SQVM *vm)
+{
+	const SQChar* szServer = NULL;
+	const SQChar* szUser = NULL;
+	const SQChar* szPass = NULL;
+	const SQChar* szDatabase = NULL;
+	SQInteger iPort = 0;
+	MYSQL* pConn = NULL;
+
+	if (sq_gettype(vm, 2) == OT_STRING &&
+		sq_gettype(vm, 3) == OT_STRING &&
+		sq_gettype(vm, 4) == OT_STRING &&
+		sq_gettype(vm, 5) == OT_STRING)
+	{
+		sq_getstring(vm, 2, &szServer);
+		sq_getstring(vm, 3, &szUser);
+		sq_getstring(vm, 4, &szPass);
+		sq_getstring(vm, 5, &szDatabase);
+
+		if (sq_gettype(vm, 6) == OT_INTEGER) sq_getinteger(vm, 6, &iPort);
+
+		if (*szServer && *szUser && *szPass && *szDatabase)
+		{
+			pConn = mysql_init(NULL);
+
+			if (!pConn)
+			{
+				sq_pushnull(vm);
+				printf("MySQL could not initialize.");
+			}
+
+			if (!mysql_real_connect(pConn, szServer, szUser, szPass, szDatabase, (unsigned int)iPort, NULL, 0))
+			{
+				mysql_close(pConn);
+
+				sq_pushnull(vm);
+				printf("MySQL connection failed. Make sure connection details are correct.");
+			}
+			sq_pushuserpointer(vm, (SQUserPointer)pConn);
+			return 1;
+		}
+	}
+
+	sq_pushnull(vm);
+	printf("MySQL connection failed. Wrong number of arguments or invalid argument type");
+
+	return 1;
+}
+
+SQInteger sq_mysqlClose(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			mysql_close(pConn);
+
+			sq_pushbool(vm, SQTrue);
+			return 1;
+		}
+	}
+
+	sq_pushnull(vm);
+	printf("MySQL couldn't close. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlQuery(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	const SQChar* szQuery = NULL;
+	MYSQL* pConn = NULL;
+	MYSQL_RES* pResult = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER &&
+		sq_gettype(vm, 3) == OT_STRING)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+		sq_getstring(vm, 3, &szQuery);
+
+		if (pPointer && szQuery)
+		{
+			if (!*szQuery)
+			{
+				sq_pushbool(vm, SQFalse);
+				return 1;
+			}
+
+			pConn = (MYSQL*)pPointer;
+
+			if (mysql_query(pConn, szQuery))
+			{
+				// Query failed (check mysql_error or mysql_errno)
+				sq_pushbool(vm, SQFalse);
+				return 1;
+			}
+
+			pResult = mysql_store_result(pConn);
+
+			if (!pResult)
+			{
+				// The statement didn't return a result set or reading of the result set failed
+				sq_pushnull(vm);
+				return 1;
+			}
+
+			sq_pushuserpointer(vm, (SQUserPointer)pResult);
+			return 1;
+		}
+	}
+
+	sq_pushnull(vm);
+	printf("MySQL couldn't query. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlNumFields(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL_RES* pResult = NULL;
+	SQInteger iColumns = 0;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pResult = (MYSQL_RES*)pPointer;
+
+			iColumns = (SQInteger)mysql_num_fields(pResult);
+
+			sq_pushinteger(vm, iColumns);
+			return 1;
+		}
+	}
+
+	sq_pushnull(vm);
+	printf("MySQL couldn't get field count. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlNumRows(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL_RES* pResult = NULL;
+	SQInteger iRows = 0;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pResult = (MYSQL_RES*)pPointer;
+
+			iRows = (SQInteger)mysql_num_rows(pResult);
+
+			sq_pushinteger(vm, iRows);
+			return 1;
+		}
+	}
+
+	sq_pushnull(vm);
+	printf("MySQL couldn't get row count. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlFetchRow(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL_RES* pResult = NULL;
+	MYSQL_ROW pRow;
+	unsigned int ui = 0;
+	unsigned int uiColumns = 0;
+	MYSQL_FIELD* pField;
+	SQInteger i = 0;
+	SQFloat f = 0.0f;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pResult = (MYSQL_RES*)pPointer;
+
+			pRow = mysql_fetch_row(pResult);
+
+			if (!pRow)
+			{
+				// An error occured or no more rows found
+				sq_pushnull(vm);
+				return 1;
+			}
+
+			uiColumns = mysql_num_fields(pResult);
+
+			if (uiColumns > 0)
+			{
+				sq_newarray(vm, 0);
+
+				// Avoids the "null field" issue we had earlier <stormeus>
+				mysql_field_seek(pResult, 0);
+
+				for (; ui < uiColumns; ui++)
+				{
+					pField = mysql_fetch_field(pResult);
+
+					if (!pField || !pRow[ui])
+					{
+						sq_pushnull(vm);
+						sq_arrayappend(vm, -2);
+					}
+					else
+					{
+						switch (pField->type)
+						{
+						case MYSQL_TYPE_TINY:
+						case MYSQL_TYPE_SHORT:
+						case MYSQL_TYPE_LONG:
+						case MYSQL_TYPE_LONGLONG:
+						case MYSQL_TYPE_INT24:
+						case MYSQL_TYPE_YEAR:
+						case MYSQL_TYPE_BIT:
+
+							i = (SQInteger)(atoi(pRow[ui]));
+							sq_pushinteger(vm, i);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						case MYSQL_TYPE_DECIMAL:
+						case MYSQL_TYPE_NEWDECIMAL:
+						case MYSQL_TYPE_FLOAT:
+						case MYSQL_TYPE_DOUBLE:
+
+							f = (SQFloat)(atof(pRow[ui]));
+							sq_pushfloat(vm, f);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						case MYSQL_TYPE_NULL:
+
+							sq_pushnull(vm);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						default:
+
+							sq_pushstring(vm, pRow[ui], -1);
+							sq_arrayappend(vm, -2);
+
+							break;
+						}
+					}
+				}
+
+				return 1;
+			}
+
+			sq_pushnull(vm);
+			return 1;
+		}
+	}
+
+	printf("MySQL couldn't fetch row. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlFetchAssoc(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL_RES* pResult = NULL;
+	MYSQL_ROW pRow;
+	unsigned int ui = 0;
+	unsigned int uiColumns = 0;
+	MYSQL_FIELD* pField;
+	SQInteger i = 0;
+	SQFloat f = 0.0f;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pResult = (MYSQL_RES*)pPointer;
+
+			pRow = mysql_fetch_row(pResult);
+
+			if (!pRow)
+			{
+				// An error occured or no more rows found
+				sq_pushnull(vm);
+				return 1;
+			}
+
+			uiColumns = mysql_num_fields(pResult);
+
+			if (uiColumns > 0)
+			{
+				sq_newtable(vm);
+
+				// Avoids the "null field" issue we had earlier <stormeus>
+				mysql_field_seek(pResult, 0);
+
+				for (; ui < uiColumns; ui++)
+				{
+					pField = mysql_fetch_field(pResult);
+
+					sq_pushstring(vm, pField->name, pField->name_length);
+
+					if (!pField || !pRow[ui])
+					{
+						sq_pushnull(vm);
+					}
+					else
+					{
+						switch (pField->type)
+						{
+						case MYSQL_TYPE_TINY:
+						case MYSQL_TYPE_SHORT:
+						case MYSQL_TYPE_LONG:
+						case MYSQL_TYPE_LONGLONG:
+						case MYSQL_TYPE_INT24:
+						case MYSQL_TYPE_YEAR:
+						case MYSQL_TYPE_BIT:
+
+							i = (SQInteger)(atoi(pRow[ui]));
+							sq_pushinteger(vm, i);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						case MYSQL_TYPE_DECIMAL:
+						case MYSQL_TYPE_NEWDECIMAL:
+						case MYSQL_TYPE_FLOAT:
+						case MYSQL_TYPE_DOUBLE:
+
+							f = (SQFloat)(atof(pRow[ui]));
+							sq_pushfloat(vm, f);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						case MYSQL_TYPE_NULL:
+
+							sq_pushnull(vm);
+							sq_arrayappend(vm, -2);
+
+							break;
+
+						default:
+
+							sq_pushstring(vm, pRow[ui], sizeof(pRow[ui]));
+							sq_arrayappend(vm, -2);
+
+							break;
+						}
+					}
+
+					sq_rawset(vm, -3);
+				}
+
+				return 1;
+			}
+
+			sq_pushnull(vm);
+			return 1;
+		}
+	}
+
+	printf("MySQL couldn't fetch assoc array. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlFreeResult(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL_RES* pResult = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pResult = (MYSQL_RES*)pPointer;
+
+			mysql_free_result(pResult);
+
+			sq_pushbool(vm, SQTrue);
+			return 1;
+		}
+	}
+
+	printf("MySQL couldn't free result. Wrong number of arguments or invalid argument type");
+	return 1;
+}
+
+SQInteger sq_mysqlEscapeString(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+	const SQChar* szText = NULL;
+	size_t uiLen = 0;
+	char* szTemp = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER &&
+		sq_gettype(vm, 3) == OT_STRING)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+		sq_getstring(vm, 3, &szText);
+
+		if (pPointer && szText)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			uiLen = strlen(szText);
+			szTemp = (char*)alloca(uiLen * 2 + 1);
+
+			mysql_real_escape_string(pConn, szTemp, szText, uiLen);
+
+			uiLen = strlen(szTemp);
+			szTemp[uiLen + 1] = '\0';
+
+			sq_pushstring(vm, szTemp, uiLen);
+			return 1;
+		}
+	}
+	return 1;
+}
+
+SQInteger sq_mysqlSelectDatabase(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+	const SQChar* szDatabase = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER &&
+		sq_gettype(vm, 3) == OT_STRING)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+		sq_getstring(vm, 3, &szDatabase);
+
+		if (pPointer && szDatabase)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			if (!*szDatabase)
+			{
+				sq_pushbool(vm, SQFalse);
+				return 1;
+			}
+
+			if (mysql_select_db(pConn, szDatabase)) sq_pushbool(vm, SQFalse);
+			else sq_pushbool(vm, SQTrue);
+
+			return 1;
+		}
+	}
+	return 1;
+}
+
+SQInteger sq_mysqlPing(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			if (mysql_ping(pConn)) sq_pushbool(vm, SQFalse);
+			else sq_pushbool(vm, SQTrue);
+
+			return 1;
+		}
+	}
+	return 1;
+}
+
+SQInteger sq_mysqlAffectedRows(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			sq_pushinteger(vm, (SQInteger)mysql_affected_rows(pConn));
+			return 1;
+		}
+	}
+	return 1;
+}
+
+SQInteger sq_mysqlInsertID(SQVM *vm)
+{
+	SQUserPointer pPointer = NULL;
+	MYSQL* pConn = NULL;
+
+	if (sq_gettype(vm, 2) == OT_USERPOINTER)
+	{
+		sq_getuserpointer(vm, 2, &pPointer);
+
+		if (pPointer)
+		{
+			pConn = (MYSQL*)pPointer;
+
+			sq_pushinteger(vm, (SQInteger)mysql_insert_id(pConn));
+			return 1;
+		}
+	}
+
 	return 1;
 }

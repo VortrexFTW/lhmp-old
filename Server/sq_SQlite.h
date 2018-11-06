@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
-#include "../sdks/sqlite/sqlite3.h"
-#include "squirrelheads.h"
+#include <sqlite3.h>
+#include <squirrelheads.h>
 
 SQInteger sq_sqliteOpen(SQVM *vm)
 {

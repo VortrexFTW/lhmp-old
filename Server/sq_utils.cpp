@@ -9,7 +9,7 @@
 //
 //-----------------------------------------------------
 
-#include "sq_utils.h"
+#include <sq_utils.h>
 
 void RegisterFunction(HSQUIRRELVM pVM, char * szFunc, SQFUNCTION func, int params, const char * szTemplate)
 {

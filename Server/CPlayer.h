@@ -2,8 +2,8 @@
 
 #ifndef CPLAYER_H
 #define CPLAYER_H
-#include "../shared/structures.h"
-#include "CEntity.h"
+#include <lhmp_structures.h>
+#include <CEntity.h>
 class CPlayer: public CEntity
 {
 public:

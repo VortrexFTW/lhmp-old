@@ -6,7 +6,7 @@
 #ifdef _WIN32
 #include <Windows.h>
 #endif
-#include "../shared/linux.h"
+#include <lhmp_linux.h>
 class CTickManager
 {
 private:

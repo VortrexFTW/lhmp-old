@@ -19,3 +19,9 @@ _Old/server/gamemodes/default/resources.txt
 _Old/*
 Release/
 Debug/
+*.svn-base
+sdks/CryptoPP/.svn/all-wcprops
+sdks/CryptoPP/.svn/entries
+*.cache
+*.cache
+*.pdb

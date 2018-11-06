@@ -29,7 +29,7 @@
 #include "CSQFonts.h"
 #include <time.h>
 
-#include "../shared/tools.h"
+#include "lhmp_tools.h"
 
 
 class CCore

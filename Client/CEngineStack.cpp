@@ -3,7 +3,7 @@
 #include "CCore.h"
 #include "CEngineStack.h"
 //#include "structures.h"
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 extern CCore *g_CCore;
 
 CEngineStack::CEngineStack()

@@ -2,7 +2,7 @@
 
 #ifndef __VEHICLEPOOL_H
 #define	__VEHICLEPOOL_H
-#include "../shared/limits.h"
+#include "lhmp_limits.h"
 #include "CVehicle.h"
 
 class CVehiclePool

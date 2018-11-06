@@ -3,7 +3,7 @@
 #ifndef __PED_H
 #define	__PED_H
 #include "CEntity.h"
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 #include <d3d8.h>
 class CPed : public CEntity
 {

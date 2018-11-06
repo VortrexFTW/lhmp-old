@@ -408,7 +408,7 @@ _declspec(naked) void Hook_PreventHit()
 	}
 }
 
-void OnDeath(DWORD killerBase,unsigned char hitbox)
+void OnDeath(DWORD killerBase, unsigned char hitbox)
 {
 	int playerID = 0;
 	playerID = g_CCore->GetPedPool()->GetPedIdByBase(killerBase);

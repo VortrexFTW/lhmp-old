@@ -3,7 +3,7 @@
 #ifndef __PICKUP_H
 #define __PICKUP_H
 #include "CPickup.h"
-#include "../shared/limits.h"
+#include "lhmp_limits.h"
 
 class CPickupPool
 {

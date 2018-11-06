@@ -2,7 +2,7 @@
 
 #include "CCore.h"
 #include "CColoredText.h"
-#include "../shared/tools.h"
+#include "lhmp_tools.h"
 
 extern CCore* g_CCore;
 

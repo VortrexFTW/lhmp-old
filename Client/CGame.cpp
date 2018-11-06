@@ -7,7 +7,7 @@
 #define VC_EXTRALEAN
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#include "../shared/gamestructures.h"
+#include "lhmp_gamestructures.h"
 extern CCore *g_CCore;
 
 CGame::CGame()
@@ -1444,9 +1444,9 @@ void CGame::FixAfterDeath(DWORD ped)
 
 void CGame::KillPedEx(DWORD ped, DWORD reason, DWORD part)
 {
-	char buff[100];
-	sprintf(buff, "PED %x Reason %d Part %d", ped, reason, part);
-	g_CCore->GetChat()->AddMessage(buff);
+	//char buff[100];
+	//sprintf(buff, "PED %x Reason %d Part %d", ped, reason, part);
+	//g_CCore->GetChat()->AddMessage(buff);
 
 	DWORD locPed = ped;
 	//DWORD locReason = reason;

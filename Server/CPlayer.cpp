@@ -3,8 +3,8 @@
 #include "CCore.h"
 
 #include "CPlayer.h"
-#include "../shared/tools.h"
-#include "../shared/CBitArray.h"
+#include <lhmp_tools.h>
+#include <lhmp_CBitArray.h>
 
 extern CCore *g_CCore;
 

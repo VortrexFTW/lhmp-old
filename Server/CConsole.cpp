@@ -1,9 +1,9 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
-#include "CConsole.h"
-#include "CCore.h"
+#include <CConsole.h>
+#include <CCore.h>
 
-#include "../shared/tools.h"
+#include <lhmp_tools.h>
 #ifndef _WIN32
 //#include <pthread.h>
 //extern pthread_t tid;

@@ -107,12 +107,37 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "iniRemoveFile", (SQFUNCTION)sq_iniRemoveFile, 2, ".s");
 	RegisterFunction(vM, "iniCreateFile", (SQFUNCTION)sq_iniCreateFile, 2, ".s"); 
 
-	RegisterFunction(vM, "sqlite3_query", (SQFUNCTION)sq_sqlite3_query, 3, ".ss");
-	RegisterFunction(vM, "sqlite3_finalize", (SQFUNCTION)sq_sqlite3_finalize, 2, ".n");
-	RegisterFunction(vM, "sqlite3_column_name", (SQFUNCTION)sq_sqlite3_column_name, 3, ".nn");
-	RegisterFunction(vM, "sqlite3_column_text", (SQFUNCTION)sq_sqlite3_column_text, 3, ".nn");
-	RegisterFunction(vM, "sqlite3_step", (SQFUNCTION)sq_sqlite3_step, 2, ".n");
-	RegisterFunction(vM, "sqlite3_column_count", (SQFUNCTION)sq_sqlite3_column_count, 2, ".n");
+	RegisterFunction(vM, "sqliteQuery", (SQFUNCTION)sq_sqlite3_query, 3, ".ss");
+	RegisterFunction(vM, "sqliteFinalize", (SQFUNCTION)sq_sqlite3_finalize, 2, ".n");
+	RegisterFunction(vM, "sqliteColumnName", (SQFUNCTION)sq_sqlite3_column_name, 3, ".nn");
+	RegisterFunction(vM, "sqliteColumnText", (SQFUNCTION)sq_sqlite3_column_text, 3, ".nn");
+	RegisterFunction(vM, "sqliteStep", (SQFUNCTION)sq_sqlite3_step, 2, ".n");
+	RegisterFunction(vM, "sqliteColumnCount", (SQFUNCTION)sq_sqlite3_column_count, 2, ".n");
+
+	RegisterFunction(vM, "hashMD5", (SQFUNCTION)sq_hashMD5, 2, ".s");
+	RegisterFunction(vM, "hashSHA1", (SQFUNCTION)sq_hashSHA1, 2, ".s");
+	RegisterFunction(vM, "hashSHA224", (SQFUNCTION)sq_hashSHA224, 2, ".s");
+	RegisterFunction(vM, "hashSHA256", (SQFUNCTION)sq_hashSHA256, 2, ".s");
+	RegisterFunction(vM, "hashSHA384", (SQFUNCTION)sq_hashSHA384, 2, ".s");
+	RegisterFunction(vM, "hashSHA512", (SQFUNCTION)sq_hashSHA512, 2, ".s");
+	RegisterFunction(vM, "hashRIPEMD128", (SQFUNCTION)sq_hashRIPEMD128, 2, ".s");
+	RegisterFunction(vM, "hashRIPEMD160", (SQFUNCTION)sq_hashRIPEMD160, 2, ".s");
+	RegisterFunction(vM, "hashRIPEMD256", (SQFUNCTION)sq_hashRIPEMD256, 2, ".s");
+	RegisterFunction(vM, "hashRIPEMD320", (SQFUNCTION)sq_hashRIPEMD320, 2, ".s");
+	RegisterFunction(vM, "hashWhirlpool", (SQFUNCTION)sq_hashWhirlpool, 2, ".s");
+
+	RegisterFunction(vM, "mysqlConnect", (SQFUNCTION)sq_mysqlConnect, 5, ".ssss");
+	RegisterFunction(vM, "mysqlClose", (SQFUNCTION)sq_mysqlClose, 2, ".p");
+	RegisterFunction(vM, "mysqlQuery", (SQFUNCTION)sq_mysqlQuery, 3, ".ps");
+	RegisterFunction(vM, "mysqlNumRows", (SQFUNCTION)sq_mysqlNumRows, 2, ".p");
+	RegisterFunction(vM, "mysqlNumFields", (SQFUNCTION)sq_mysqlNumFields, 2, ".p");
+	RegisterFunction(vM, "mysqlFetchAssoc", (SQFUNCTION)sq_mysqlFetchAssoc, 2, ".p");
+	RegisterFunction(vM, "mysqlFetchRow", (SQFUNCTION)sq_mysqlFetchRow, 2, ".p");
+	RegisterFunction(vM, "mysqlEscapeString", (SQFUNCTION)sq_mysqlEscapeString, 3, ".ps");
+	RegisterFunction(vM, "mysqlSelectDatabase", (SQFUNCTION)sq_mysqlSelectDatabase, 3, ".ps");
+	RegisterFunction(vM, "mysqlPing", (SQFUNCTION)sq_mysqlPing, 2, ".p");
+	RegisterFunction(vM, "mysqlAffectedRows", (SQFUNCTION)sq_mysqlAffectedRows, 2, ".p");
+	RegisterFunction(vM, "mysqlInsertID", (SQFUNCTION)sq_mysqlInsertID, 2, ".p");
 
 	RegisterFunction(vM, "include", (SQFUNCTION)sq_include, 2, ".s");
 
@@ -120,7 +145,7 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "callFunc", (SQFUNCTION)sq_callFunc, 4, ".ss.");
 	
 	// part of human body
-	RegisterVariable(vM, "PLAYER_RIGHHAND", 1);
+	RegisterVariable(vM, "PLAYER_RIGHTHAND", 1);
 	RegisterVariable(vM, "PLAYER_LEFTHAND", 2);
 	RegisterVariable(vM, "PLAYER_RIGHTLEG", 3);
 	RegisterVariable(vM, "PLAYER_LEFTLEG", 4);

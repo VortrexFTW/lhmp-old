@@ -4,7 +4,7 @@
 
 
 
-#include "../shared/structures.h"
+#include <lhmp_structures.h>
 #include "CPedPool.h"
 #include "CVehiclePool.h"
 #include "CNetwork.h"

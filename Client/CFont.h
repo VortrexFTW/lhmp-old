@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
 #include "CColoredText.h"
-#include "../sdks/cd3dfont/d3dfont.h"
+#include "d3dfont.h"
 #ifndef C_FONT
 #define C_FONT
 

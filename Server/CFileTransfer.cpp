@@ -1,11 +1,11 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
-#include "CCore.h"
-#include "CFileTransfer.h"
-#include "../sdks/md5/md5.h"
-#include "../shared/structures.h"
+#include <CCore.h>
+#include <CFileTransfer.h>
+#include <md5lhmp.h>
+#include <lhmp_structures.h>
 
-#include "BitStream.h"
+#include <BitStream.h>
 
 extern CCore* g_CCore;
 

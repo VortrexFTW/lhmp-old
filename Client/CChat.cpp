@@ -6,12 +6,12 @@
 #include <dinput.h>
 #pragma comment(lib, "d3dx8.lib")
 
-#include "../shared/gamestructures.h"
+#include <lhmp_gamestructures.h>
 
-#include "RakPeerInterface.h"
-#include "MessageIdentifiers.h"
-#include "BitStream.h"
-#include "RakNetTypes.h" 
+#include <RakPeerInterface.h>
+#include <MessageIdentifiers.h>
+#include <BitStream.h>
+#include <RakNetTypes.h> 
 
 extern CCore *g_CCore;
 

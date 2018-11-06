@@ -2,7 +2,7 @@
 
 #include "CGameSync.h"
 #include "CCore.h"
-#include "../shared/CBitArray.h"
+#include "lhmp_CBitArray.h"
 
 extern CCore* g_CCore;
 

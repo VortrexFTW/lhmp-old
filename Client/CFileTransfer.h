@@ -3,7 +3,7 @@
 #ifndef __FILETRANSFER_H
 #define __FILETRANSFER_H
 #include <vector>
-#include "../sdks/md5/md5.h"
+#include "md5lhmp.h"
 #include "BitStream.h"
 
 

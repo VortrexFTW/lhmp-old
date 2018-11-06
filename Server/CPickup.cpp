@@ -5,7 +5,7 @@
 
 extern CCore* g_CCore;
 
-#include "../shared/linux.h"
+#include <lhmp_linux.h>
 
 CPickup::CPickup()
 {

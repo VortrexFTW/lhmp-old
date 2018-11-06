@@ -9,6 +9,7 @@
 #include <Psapi.h>
 #include <Windows.h>
 #pragma comment( lib, "psapi.lib" )
+#pragma comment( lib, "raknet.lib" )
 
 CCore		*g_CCore = NULL;
 

@@ -3,7 +3,7 @@
 #ifndef __ENTITY_H
 #define	__ENTITY_H
 #include "CInterpolation.h"
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 class CEntity
 {
 protected:

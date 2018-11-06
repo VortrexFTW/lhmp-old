@@ -7,12 +7,15 @@
 #include "squirrelheads.h"
 #include "CConfig.h"
 
-#include "../shared/tools.h"
-#include "../shared/version.h"
+#include <lhmp_tools.h>
+#include <lhmp_version.h>
 
 #ifdef _MSC_VER
 #pragma comment (lib ,"squirrel.lib")
 #pragma comment (lib ,"sqstdlib.lib")
+#pragma comment (lib ,"raknet.lib")
+#pragma comment (lib ,"cryptlib.lib")
+#pragma comment (lib ,"libmysql.lib")
 #endif
 
 CCore	*g_CCore = NULL;
@@ -21,15 +24,15 @@ int main()
 {
 	// Load config.txt
 	CConfig* cfg = new CConfig();
-	char*	server_name	= cfg->GetCString("servername", "Default Lost Heaven Server");
-	int		server_port = cfg->GetInt("server_port", 27015);
-	int		tick_count = cfg->GetInt("tick_count", 30);
-	int		max_players = cfg->GetInt("maxplayers", 16);
-	char*	gamemode	= cfg->GetCString("gamemode", "default");
-	char*	mode		= cfg->GetCString("mode", "Default mode");
-	char*	password	= cfg->GetCString("password", "");
+	char*	server_name		= cfg->GetCString("servername", "Default Lost Heaven Server");
+	int		server_port		= cfg->GetInt("server_port", 27015);
+	int		tick_count		= cfg->GetInt("tick_count", 30);
+	int		max_players		= cfg->GetInt("maxplayers", 16);
+	char*	gamemode		= cfg->GetCString("gamemode", "default");
+	char*	mode			= cfg->GetCString("mode", "Default mode");
+	char*	password		= cfg->GetCString("password", "");
 	bool	isAnnounced		= cfg->GetBool("visible", 1);
-	char*	websiteurl = cfg->GetCString("website", "(No URL!)");
+	char*	websiteurl		= cfg->GetCString("website", "(No URL!)");
 	delete cfg;
 	std::string startpos = "-1985.966675 -5.037054 4.284860";
 	max_players = Tools::Clamp(max_players, 1, MAX_PLAYERS);
@@ -64,7 +67,7 @@ int main()
 		// now try to load gamemode
 		if (CCore.GetGameMode()->LoadGameMode(gamemode) == false)
 		{
-			g_CCore->GetLog()->AddNormalLog("Loading of '%s' has failed - no gamemode loaded !",gamemode);
+			g_CCore->GetLog()->AddNormalLog("Loading of '%s' has failed - no gamemode loaded !", gamemode);
 		}
 		else {
 			// if gamemode has been loaded successfully, init all included scripts -> onServerInit callback
@@ -81,7 +84,7 @@ int main()
 			g_CCore->GetMasterServer()->AddServerToMaster();
 		else
 		{
-			g_CCore->GetLog()->AddNormalLog("Server visibility is set to false => we won't contact the master server.");
+			g_CCore->GetLog()->AddNormalLog("Server visibility is set to false => The server will not contact the master list.");
 		}
 		// pulse CCore until server runs
 		g_CCore->GetLog()->AddNormalLog("Server has started...");

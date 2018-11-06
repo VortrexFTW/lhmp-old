@@ -3,7 +3,7 @@
 #ifndef __VEHICLE_H
 #define	__VEHICLE_H
 #include "CEntity.h"
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 class CVehicle : public CEntity
 {
 private:

@@ -2,13 +2,13 @@
 
 #include "CNetwork.h"
 #include "CLocalPlayer.h"
-#include "../shared/structures.h"
-#include "../shared/CBitArray.h"
+#include "lhmp_structures.h"
+#include "lhmp_CBitArray.h"
 #include "CCore.h"
 #include "RakNetTime.h"
 #include <fstream>
 #include "TCPInterface.h"
-#include "../shared/version.h"
+#include "lhmp_version.h"
 
 #include "FileListTransfer.h"
 #include "CFileTransfer.h"

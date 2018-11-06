@@ -3,7 +3,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "../shared/structures.h"
+#include <lhmp_structures.h>
 
 class CEntity
 {

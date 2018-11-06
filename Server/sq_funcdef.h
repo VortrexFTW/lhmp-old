@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
 #pragma once
-#include "sq_utils.h"
+#include <sq_utils.h>
 //#include "sq_utils.h"
 #include <iostream>
 #include <stdio.h>
@@ -111,3 +111,28 @@ SQInteger sq_sqlite3_step(SQVM *vm);
 SQInteger sq_sqlite3_column_count(SQVM *vm);
 SQInteger sq_sqlite3_column_name(SQVM *vm);
 SQInteger sq_sqlite3_column_text(SQVM *vm);
+
+SQInteger sq_hashMD5(SQVM *vm);
+SQInteger sq_hashSHA1(SQVM *vm);
+SQInteger sq_hashSHA224(SQVM *vm);
+SQInteger sq_hashSHA256(SQVM *vm);
+SQInteger sq_hashSHA384(SQVM *vm);
+SQInteger sq_hashSHA512(SQVM *vm);
+SQInteger sq_hashRIPEMD128(SQVM *vm);
+SQInteger sq_hashRIPEMD160(SQVM *vm);
+SQInteger sq_hashRIPEMD256(SQVM *vm);
+SQInteger sq_hashRIPEMD320(SQVM *vm);
+SQInteger sq_hashWhirlpool(SQVM *vm);
+
+SQInteger sq_mysqlConnect(SQVM *vm);
+SQInteger sq_mysqlClose(SQVM *vm);
+SQInteger sq_mysqlQuery(SQVM *vm);
+SQInteger sq_mysqlNumRows(SQVM *vm);
+SQInteger sq_mysqlNumFields(SQVM *vm);
+SQInteger sq_mysqlFetchAssoc(SQVM *vm);
+SQInteger sq_mysqlFetchRow(SQVM *vm);
+SQInteger sq_mysqlEscapeString(SQVM *vm);
+SQInteger sq_mysqlSelectDatabase(SQVM *vm);
+SQInteger sq_mysqlPing(SQVM *vm);
+SQInteger sq_mysqlAffectedRows(SQVM *vm);
+SQInteger sq_mysqlInsertID(SQVM *vm);

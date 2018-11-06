@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 typedef unsigned long DWORD;
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 
 enum ObjectTypes
 {

@@ -15,7 +15,7 @@ typedef void(*callback)(char*);
 #include "RakSleep.h"
 #include "TCPInterface.h"
 #include <iostream>
-#include "../shared/structures.h"
+#include "lhmp_structures.h"
 
 #include "FileListTransfer.h"
 

@@ -4,7 +4,7 @@
 #include "CCore.h"
 #include <psapi.h>
 #include <Windows.h>
-#include "../shared/version.h"
+#include "lhmp_version.h"
 #include <fstream>
 #include <iostream>
 

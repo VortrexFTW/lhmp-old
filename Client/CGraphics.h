@@ -3,7 +3,7 @@
 #ifndef __CGRAPHIC_H
 #define __CGRAPHIC_H
 
-#include "../sdks/cd3dfont/d3dfont.h"
+#include "d3dfont.h"
 #include "CFont.h"
 #include "Windows.h"
 #include "d3dx8.h"

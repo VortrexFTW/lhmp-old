@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
 #include "CTimerPool.h"
-#include "../shared/limits.h"
+#include <lhmp_limits.h>
 CTimerPool::CTimerPool()
 {
 	for (int i = 0; i < MAX_TIMERS; i++)

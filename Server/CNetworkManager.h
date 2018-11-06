@@ -3,15 +3,15 @@
 #ifndef CNETWORKMANAGER_H
 #define CNETWORKMANAGER_H
 
-#include "../shared/structures.h"
-#include "RakPeerInterface.h"
-#include "MessageIdentifiers.h"
-#include "RakSleep.h"
-#include "BitStream.h"
-#include "RakNetTypes.h"
+#include <lhmp_structures.h>
+#include <RakPeerInterface.h>
+#include <MessageIdentifiers.h>
+#include <RakSleep.h>
+#include <BitStream.h>
+#include <RakNetTypes.h>
 #include <stdlib.h>
 
-#include "../shared/linux.h"
+#include <lhmp_linux.h>
 
 //#include "CCore.h"
 using namespace RakNet;
