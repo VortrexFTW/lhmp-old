@@ -6,8 +6,8 @@
 #include "CConfig.h"
 #include "CScript.h"
 */
-#include <CScript.h>
-#include <squirrelheads.h>
+#include "CScript.h"
+#include "squirrelheads.h"
 #define MAX_SCRIPTS 10
 
 class CScripts

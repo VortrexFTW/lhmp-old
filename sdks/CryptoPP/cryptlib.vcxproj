@@ -45,6 +45,7 @@
     <RootNamespace>cryptlib</RootNamespace>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <ProjectName>CryptoPP</ProjectName>
+    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <!-- Use DefaultPlatformToolset after Microsoft.Cpp.Default.props -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

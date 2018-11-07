@@ -19,7 +19,7 @@
 void printfunc(HSQUIRRELVM v, const SQChar *s, ...);
 
 
-#include <sq_functions.h>
+#include "sq_functions.h"
 
 
 

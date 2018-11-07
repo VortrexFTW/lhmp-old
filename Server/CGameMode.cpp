@@ -38,11 +38,7 @@ bool CGameMode::LoadGameMode(char* name)
 			fileContent[size] = 0x0;
 
 			char* pointer;
-			#ifdef _WIN32
-				pointer = strtok(fileContent, "\r\n\0");
-			#else
-				pointer = strtok(fileContent, "\n\0");
-			#endif
+			pointer = strtok(fileContent, "\r\n\0");
 			int lineNumber = 0;
 			while(pointer != NULL)
 			{

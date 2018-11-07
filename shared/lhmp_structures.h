@@ -95,21 +95,18 @@ struct _Server {
 enum GameMessages
 {
 	// sends client after connection accept
-	ID_INITLHMP = ID_USER_PACKET_ENUM + 1,
-	ID_GAME_SKUSKA = ID_USER_PACKET_ENUM + 2,
-	ID_GAME_SYNC = ID_USER_PACKET_ENUM + 3,
-	ID_GAME_PID = ID_USER_PACKET_ENUM + 4,
-	ID_GAME_IP = ID_USER_PACKET_ENUM + 5,
-	ID_GAME_ALIVE = ID_USER_PACKET_ENUM + 6,
+	ID_INITLHMP = ID_USER_PACKET_ENUM + 100,
+	ID_GAME_SKUSKA,
+	ID_GAME_SYNC,
+	ID_GAME_PID,
+	ID_GAME_IP,
+	ID_GAME_ALIVE,
 	ID_GAME_LHMP_PACKET,
 	ID_GAME_BAD_VERSION,
-	// when whole server-client connecting is finished and client is finaly ready to play
 	ID_CONNECTION_FINISHED,
 	ID_FILETRANSFER,
 	ID_SERVERRELOAD,
-	// indicates that server is sending the whole list of client-side scripts
-	ID_SCRIPSTLIST
-
+	ID_SCRIPSTLIST,
 };
 
 enum FileTransfer

@@ -5,18 +5,18 @@
 #include <sstream>
 #include "TCPInterface.h"
 
-#include <lhmp_limits.h>
-#include <lhmp_gamestructures.h>
-#include <lhmp_CBitArray.h>
-#include <lhmp_version.h>
-#include <lhmp_tools.h>
+#include "lhmp_limits.h"
+#include "lhmp_gamestructures.h"
+#include "lhmp_CBitArray.h"
+#include "lhmp_version.h"
+#include "lhmp_tools.h"
 
 #include "FileList.h"
 #include "FileListTransfer.h"
 
 extern CCore *g_CCore;
 
-#include <lhmp_linux.h>
+#include "lhmp_linux.h"
 
 DWORD postTime = timeGetTime();
 CNetworkManager::CNetworkManager()
@@ -362,8 +362,21 @@ void CNetworkManager::Pulse()
 			g_CCore->GetFileTransfer()->HandlePacket(&bsIn, packet->systemAddress);
 		}
 		break;
+		case ID_INCOMPATIBLE_PROTOCOL_VERSION:
+		{
+			g_CCore->GetLog()->AddNormalLog("Client has incompatible RakNet");
+		}
+		break;
+		case ID_IP_RECENTLY_CONNECTED:
+		{
+			g_CCore->GetLog()->AddNormalLog("Client recently connected. IP blocked for security purposes.");
+		}
+		break;
 		default:
-			g_CCore->GetLog()->AddNormalLog("Message with identifier %i has arrived.", packet->data[0]);
+			char buff[255];
+			sprintf(buff, "Message with identifier %i has arrived.", packet->data[0]);
+			g_CCore->GetLog()->AddNormalLog(buff);
+			g_CCore->GetLog()->AddNormalLog("LHMP PACKETID %i", ID_GAME_LHMP_PACKET);
 			break;
 		}
 	}
@@ -653,8 +666,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		vehicle_data.roofState = veh->GetRoofState();
 		vehicle_data.engineState = (veh->GetEngineState() == 1);
 
-		//vehicle_data.siren = veh->GetSirenState();
-		//vehicle_data.lights = veh->GetLightState();
+		vehicle_data.siren = veh->GetSirenState();
+		vehicle_data.siren = veh->GetLightState();
 		vehicle_data.ID = ID;
 		for (int i = 0; i < 4; i++)
 			vehicle_data.seat[i] = -1;
@@ -802,7 +815,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 	case LHMP_VEHICLE_TOGGLE_LIGHTS:
 	{
 		int vehID;
-		int state;
+		bool state;
 
 		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
 		bsIn.Read(vehID);
@@ -811,6 +824,11 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
 		if (veh != NULL)
 		{
+			if (veh->GetLightState() == state)
+			{
+				// if nothing has changed, stop streaming the message
+				break;
+			}
 			veh->SetLightState(state);
 		}
 
@@ -818,7 +836,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_VEHICLE_TOGGLE_LIGHTS);
 		bsOut.Write(vehID);
-		bsOut.Write(state);
+		bsOut.Write((bool)state);
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 	}
 	break;
@@ -1144,7 +1162,7 @@ void CNetworkManager::SendHimCars(int ID)
 				bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 				bsOut.Write((MessageID)LHMP_VEHICLE_CREATE);
 				bsOut.Write(vehicle);
-				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHADD, GetSystemAddressFromID(ID), false);
+				peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, GetSystemAddressFromID(ID), false);
 			}
 		}
 	}

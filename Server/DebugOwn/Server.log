@@ -1,0 +1,61 @@
+﻿  md5lhmp.cpp
+  UDPWrapper.cpp
+  CBanSystem.cpp
+CBanSystem.cpp(3): fatal error C1083: Cannot open include file: 'CCore.h': No such file or directory
+  CConfig.cpp
+CConfig.cpp(3): fatal error C1083: Cannot open include file: 'CCore.h': No such file or directory
+  CConsole.cpp
+CConsole.cpp(3): fatal error C1083: Cannot open include file: 'CConsole.h': No such file or directory
+  CCore.cpp
+CCore.cpp(3): fatal error C1083: Cannot open include file: 'CCore.h': No such file or directory
+  CDoorPool.cpp
+CDoorPool.cpp(3): fatal error C1083: Cannot open include file: 'CDoorPool.h': No such file or directory
+  CEntity.cpp
+CEntity.cpp(3): fatal error C1083: Cannot open include file: 'CEntity.h': No such file or directory
+  CFileTransfer.cpp
+CFileTransfer.cpp(3): fatal error C1083: Cannot open include file: 'CCore.h': No such file or directory
+  CGameMode.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CLog.cpp
+CLog.cpp(10): fatal error C1083: Cannot open include file: 'lhmp_version.h': No such file or directory
+  CMasterServer.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CNetworkManager.cpp
+d:\abram\dev\git\lhmp-old\server\CNetworkManager.h(6): fatal error C1083: Cannot open include file: 'lhmp_structures.h': No such file or directory
+  CPickup.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CPickupPool.cpp
+d:\abram\dev\git\lhmp-old\server\CPickupPool.h(3): fatal error C1083: Cannot open include file: 'lhmp_limits.h': No such file or directory
+  CPlayer.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CPlayerPool.cpp
+d:\abram\dev\git\lhmp-old\server\CPlayerPool.h(3): fatal error C1083: Cannot open include file: 'lhmp_limits.h': No such file or directory
+  CQueryServer.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CScript.cpp
+d:\abram\dev\git\lhmp-old\server\CScript.h(3): fatal error C1083: Cannot open include file: 'squirrelheads.h': No such file or directory
+  CScripts.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  Generating Code...
+  Compiling...
+  CTickManager.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  CTimer.cpp
+d:\abram\dev\git\lhmp-old\server\CTimer.h(3): fatal error C1083: Cannot open include file: 'squirrelheads.h': No such file or directory
+  CTimerPool.cpp
+d:\abram\dev\git\lhmp-old\server\CTimerPool.h(3): fatal error C1083: Cannot open include file: 'CTimer.h': No such file or directory
+  CVehicle.cpp
+d:\abram\dev\git\lhmp-old\server\CVehicle.h(5): fatal error C1083: Cannot open include file: 'lhmp_structures.h': No such file or directory
+  CVehiclePool.cpp
+d:\abram\dev\git\lhmp-old\server\CVehiclePool.h(3): fatal error C1083: Cannot open include file: 'lhmp_limits.h': No such file or directory
+  Main.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  squirrelheads.cpp
+d:\abram\dev\git\lhmp-old\server\CCore.h(6): fatal error C1083: Cannot open include file: 'lhmp_linux.h': No such file or directory
+  sq_functions.cpp
+d:\abram\dev\git\lhmp-old\server\sq_funcdef.h(4): fatal error C1083: Cannot open include file: 'sq_utils.h': No such file or directory
+  sq_funcdef.cpp
+sq_funcdef.cpp(3): fatal error C1083: Cannot open include file: 'sq_funcdef.h': No such file or directory
+  sq_utils.cpp
+sq_utils.cpp(12): fatal error C1083: Cannot open include file: 'sq_utils.h': No such file or directory
+  Generating Code...

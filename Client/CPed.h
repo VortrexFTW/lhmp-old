@@ -47,6 +47,9 @@ public:
 	bool		IsActive();
 	void		SetSkinId(int id);
 	int			GetSkin();
+	//int			GetState();
+	//float		GetHealth();
+	//void		SetHealth(float health);
 	int			GetPing();
 	char*		GetName();
 	byte		IsDucking();

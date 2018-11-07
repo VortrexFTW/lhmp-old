@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
 #include <lhmp_limits.h>
-#include <CPickup.h>
+#include "CPickup.h"
 class CPickupPool
 {
 private:

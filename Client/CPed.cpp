@@ -65,62 +65,77 @@ void CPed::SetIsOnFoot(bool b)
 {
 	this->isOnFoot = b;
 }
+
 bool CPed::IsOnFoot()
 {
 	return this->isOnFoot;
 }
+
 void CPed::SetPing(int p)
 {
 	ping = p;
 }
-/*void CPed::SetEntity(DWORD address)
+/*
+void CPed::SetEntity(DWORD address)
 {
 this->pedBase = address;
 }
 void CPed::SetPosition(Vector3D vect)
 {
 playerPos = vect;
-}*/
+}
+
+*/
+
+//void CPed::SetHealth(float ht)
+//{
+//	this->fHealth = ht;
+//}
+
 void CPed::SetName(char* nm)
 {
-	sprintf(sName, "%s", nm);
+	sprintf(this->sName, "%s", nm);
 }
-/*void CPed::SetHealth(float ht)
-{
-fHealth = ht;
-}
+
+/*
 void CPed::SetRotation(float f1,float f2,float f3)
 {
-rotation1 = f1;
-rotation2 = f2;
-rotation3 = f3;
+	rotation1 = f1;
+	rotation2 = f2;
+	rotation3 = f3;
 }
+
 void CPed::SetState(byte st)
 {
-state = st;
-}*/
-char* CPed::GetName()
-{
-	return sName;
-}
-/*
-float CPed::GetHealth()
-{
-return fHealth;
-}
-byte CPed::GetState()
-{
-return state;
+	state = st;
 }
 */
+
+char* CPed::GetName()
+{
+	return this->sName;
+}
+
+//float CPed::GetHealth()
+//{
+//	return this->fHealth;
+//}
+
+//byte CPed::GetState()
+//{
+//	return this->state;
+//}
+
 void CPed::SetDucking(byte ducking)
 {
 	isDucking = ducking;
 }
+
 bool CPed::IsActive()
 {
 	return isActive;
 }
+
 byte CPed::IsDucking()
 {
 	return isDucking;
@@ -130,6 +145,7 @@ void CPed::SetSkinId(int id)
 {
 	this->skinId = id;
 }
+
 int CPed::GetSkin()
 {
 	return this->skinId;

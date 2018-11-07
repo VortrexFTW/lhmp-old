@@ -45,3 +45,13 @@ F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Others\CrashHandler\obj\Release\Cr
 F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Others\CrashHandler\obj\Release\CrashHandler.csproj.CoreCompileInputs.cache
 F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Others\CrashHandler\obj\Release\CrashHandler.exe
 F:\abram\dev\game\lhmp\old\source\lhmp-reboot\Others\CrashHandler\obj\Release\CrashHandler.pdb
+D:\abram\dev\git\lhmp-old\Others\Release\CrashHandler.exe.config
+D:\abram\dev\git\lhmp-old\Others\Release\CrashHandler.exe
+D:\abram\dev\git\lhmp-old\Others\Release\CrashHandler.pdb
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.csprojAssemblyReference.cache
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.Form1.resources
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.Properties.Resources.resources
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.csproj.GenerateResource.cache
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.csproj.CoreCompileInputs.cache
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.exe
+D:\abram\dev\git\lhmp-old\Others\CrashHandler\obj\Release\CrashHandler.pdb

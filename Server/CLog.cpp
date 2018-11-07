@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <ctime>
 #include <string.h>
-#include <lhmp_version.h>
+#include "lhmp_version.h"
 
 
 #ifdef _WIN32

@@ -71,7 +71,7 @@ namespace CrashHandler
                 var d = new NameValueCollection();
                 d["data"] = send;
                // ASCIIEncoding a = new ASCIIEncoding();
-                var response = wb.UploadValues(new Uri("http://34.197.22.87/lhmp/crash.php"), "POST", d);
+                var response = wb.UploadValues(new Uri("http://vortrex.info/lhmp/crash.php"), "POST", d);
                 //MessageBox.Show(a.GetString((byte[])response.GetValue(0),0,response.Length));
                 button1.Visible = false;
                 button2.Visible = false;

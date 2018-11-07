@@ -3,7 +3,7 @@
 #ifndef CNETWORKMANAGER_H
 #define CNETWORKMANAGER_H
 
-#include <lhmp_structures.h>
+#include "lhmp_structures.h"
 #include <RakPeerInterface.h>
 #include <MessageIdentifiers.h>
 #include <RakSleep.h>
@@ -11,7 +11,7 @@
 #include <RakNetTypes.h>
 #include <stdlib.h>
 
-#include <lhmp_linux.h>
+#include "lhmp_linux.h"
 
 //#include "CCore.h"
 using namespace RakNet;

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugOwn|Win32">
       <Configuration>DebugOwn</Configuration>
@@ -26,7 +26,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -36,7 +36,7 @@
     <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DebugOwn|Win32'">
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -54,6 +54,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>client</TargetName>
+    <ReferencePath>$(VC_ReferencesPath_x86);$(ProjectDir);$(VCInstallDir)lib</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LHMPCORE_EXPORTS;_RAKNET_DLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\sdks\cd3dfont;$(SolutionDir)\sdks\DirectX9SDK2007\Include;$(SolutionDir)\sdks\ezraknet\include\;$(SolutionDir)\sdks\detours\include;$(SolutionDir)\sdks\SQUIRREL3\include;$(SolutionDir)\sdks\md5;$(SolutionDir)\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sdks\cd3dfont;..\sdks\DirectX9SDK2007\Include;..\sdks\ezraknet\include\;..\sdks\detours\include;..\sdks\SQUIRREL3\include;..\sdks\md5;..\sdks\Discord\include;.;..\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -93,7 +94,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\sdks\DirectX9SDK2007\Lib;$(SolutionDir)\sdks\dx8sdk\lib;$(SolutionDir)\sdks\detours\lib;$(SolutionDir)\sdks\CEGUI\lib;$(SolutionDir)\sdks\SQUIRREL3\lib;$(SolutionDir)\sdks\ezraknet;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\sdks\DirectX9SDK2007\Lib;..\sdks\dx8sdk\lib;..\sdks\detours\lib;..\sdks\CEGUI\lib;..\sdks\SQUIRREL3\lib;..\sdks\ezraknet\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libci.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -138,6 +139,7 @@
     <ClCompile Include="CLocalPlayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CNetwork.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sdks\cd3dfont\d3dfont.h" />

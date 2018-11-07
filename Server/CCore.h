@@ -3,23 +3,23 @@
 #ifndef CCORE_H
 #define	CCORE_H
 
-#include <lhmp_linux.h>
+#include "lhmp_linux.h"
 
-#include <CNetworkManager.h>
-#include <CTickManager.h>
-#include <CPlayerPool.h>
-#include <CVehiclePool.h>
-#include <CScripts.h>
-#include <CConsole.h>
-#include <CGameMode.h>
-#include <CTimerPool.h>
-#include <CDoorPool.h>
-#include <CLog.h>
-#include <CPickupPool.h>
-#include <CFileTransfer.h>
-#include <CBanSystem.h>
-#include <CQueryServer.h>
-#include <CMasterServer.h>
+#include "CNetworkManager.h"
+#include "CTickManager.h"
+#include "CPlayerPool.h"
+#include "CVehiclePool.h"
+#include "CScripts.h"
+#include "CConsole.h"
+#include "CGameMode.h"
+#include "CTimerPool.h"
+#include "CDoorPool.h"
+#include "CLog.h"
+#include "CPickupPool.h"
+#include "CFileTransfer.h"
+#include "CBanSystem.h"
+#include "CQueryServer.h"
+#include "CMasterServer.h"
 
 enum STARTUP_ERRORS
 {

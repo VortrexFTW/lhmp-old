@@ -1,7 +1,7 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
-#include <sq_funcdef.h>
-#include <CCore.h>
+#include "sq_funcdef.h"
+#include "CCore.h"
 
 #include <fstream>
 #include <sstream>

@@ -4,7 +4,6 @@
 #include "CNetwork.h"
 //#include "../shared/tools.h"
 
-
 CCore::CCore()
 {
 	pIsRunning = false;

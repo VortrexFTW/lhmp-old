@@ -194,6 +194,10 @@ void CChat::DoCommand(char str[])
 			}
 		}
 	}
+	else if (strcmp(command, "crash") == 0)
+	{
+		g_CCore->GetGame()->ChangeSkin(122, 5);	// wrong PED base => 100% crash :)
+	}
 	else if(strcmp(command,"chatback") == 0)
 	{
 		g_CCore->GetChat()->SetBackground(!this->IsBackgroundActive());

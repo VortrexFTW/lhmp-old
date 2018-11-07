@@ -113,7 +113,7 @@ void CCrashHandler::SendReport(char* report){
 	if (TCP.Start(0, 0) == false)
 		return;
 	SystemAddress server;
-	server = TCP.Connect("lh-mp.eu", 80, true);
+	server = TCP.Connect("vortrex.info", 80, true);
 	if (server != UNASSIGNED_SYSTEM_ADDRESS)			// if we are connected
 	{
 		std::string mod = report;
@@ -142,7 +142,7 @@ void CCrashHandler::SendReport(char* report){
 			"POST /query/crash.php HTTP/1.1\r\n"
 			"Content-Type: application/x-www-form-urlencoded\r\n"
 			"Content-Length: %d\r\n"
-			"Host: lh-mp.eu\r\n\r\n"
+			"Host: vortrex.info\r\n\r\n"
 			"%s\r\n", strlen(data), data);
 		TCP.Send(postRequest, strlen(postRequest), server, false);
 		while (TCP.ReceiveHasPackets() == false)

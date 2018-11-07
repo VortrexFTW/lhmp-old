@@ -126,6 +126,9 @@
     <ClCompile Include="..\sdks\md5\md5lhmp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="directx8hook.h">
