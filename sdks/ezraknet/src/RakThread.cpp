@@ -1,18 +1,8 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/RakThread.h"
-#include "../include/RakAssert.h"
-#include "../include/RakNetDefines.h"
-#include "../include/RakSleep.h"
-#include "../include/RakMemoryOverride.h"
+#include "RakThread.h"
+#include "RakAssert.h"
+#include "RakNetDefines.h"
+#include "RakSleep.h"
+#include "RakMemoryOverride.h"
 
 using namespace RakNet;
 
@@ -20,7 +10,7 @@ using namespace RakNet;
 
 
 #if   defined(_WIN32)
-	#include "../include/WindowsIncludes.h"
+	#include "WindowsIncludes.h"
 	#include <stdio.h>
 	#if !defined(_WIN32_WCE)
 		#include <process.h>

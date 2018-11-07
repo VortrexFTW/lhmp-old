@@ -1,31 +1,21 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_PacketLogger==1
 
-#include "../include/PacketLogger.h"
-#include "../include/BitStream.h"
-#include "../include/DS_List.h"
-#include "../include/InternalPacket.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/StringCompressor.h"
-#include "../include/GetTime.h"
+#include "PacketLogger.h"
+#include "BitStream.h"
+#include "DS_List.h"
+#include "InternalPacket.h"
+#include "RakPeerInterface.h"
+#include "MessageIdentifiers.h"
+#include "StringCompressor.h"
+#include "GetTime.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../include/Itoa.h"
+#include "Itoa.h"
 #include <time.h>
-#include "../include/SocketIncludes.h"
-#include "../include/gettimeofday.h"
+#include "SocketIncludes.h"
+#include "gettimeofday.h"
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -393,7 +383,7 @@ const char* PacketLogger::BaseIDTOString(unsigned char Id)
 		"ID_RELAY_PLUGIN",
 		"ID_NAT_REQUEST_BOUND_ADDRESSES",
 		"ID_NAT_RESPOND_BOUND_ADDRESSES",
-		"ID_FCM2_UPDATE_USER_CONTEXT",
+		"ID_RESERVED_2",
 		"ID_RESERVED_3",
 		"ID_RESERVED_4",
 		"ID_RESERVED_5",

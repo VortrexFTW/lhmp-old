@@ -1,26 +1,16 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_ConsoleServer==1
 
-#include "../include/ConsoleServer.h"
-#include "../include/TransportInterface.h"
-#include "../include/CommandParserInterface.h"
+#include "ConsoleServer.h"
+#include "TransportInterface.h"
+#include "CommandParserInterface.h"
 #include <string.h>
 #include <stdlib.h>
 
 #define COMMAND_DELINATOR ' '
 #define COMMAND_DELINATOR_TOGGLE '"'
 
-#include "../include/LinuxStrings.h"
+#include "LinuxStrings.h"
 
 using namespace RakNet;
 

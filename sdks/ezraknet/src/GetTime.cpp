@@ -1,19 +1,12 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 /// \file
 ///
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
 #if defined(_WIN32)
-#include "../include/WindowsIncludes.h"
+#include "WindowsIncludes.h"
 
  #if !defined(WINDOWS_PHONE_8)
 		// To call timeGetTime
@@ -23,7 +16,7 @@
 
 #endif
 
-#include "../include/GetTime.h"
+#include "GetTime.h"
 
 
 
@@ -50,7 +43,7 @@ RakNet::TimeUS initialTime;
 static bool initialized=false;
 
 #if defined(GET_TIME_SPIKE_LIMIT) && GET_TIME_SPIKE_LIMIT>0
-#include "../include/SimpleMutex.h"
+#include "SimpleMutex.h"
 RakNet::TimeUS lastNormalizedReturnedValue=0;
 RakNet::TimeUS lastNormalizedInputValue=0;
 /// This constraints timer forward jumps to 1 second, and does not let it jump backwards

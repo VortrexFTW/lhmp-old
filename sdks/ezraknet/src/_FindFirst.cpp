@@ -3,8 +3,8 @@
 * Should emulate windows finddata structure
 */
 #if (defined(__GNUC__)  || defined(__GCCXML__)) && !defined(_WIN32)
-#include "../include/_FindFirst.h"
-#include "../include/DS_List.h"
+#include "_FindFirst.h"
+#include "DS_List.h"
 
 #include <sys/stat.h>
 
@@ -13,8 +13,8 @@
 
 static DataStructures::List< _findinfo_t* > fileInfo;
 	
-#include "../include/RakMemoryOverride.h"
-#include "../include/RakAssert.h"
+#include "RakMemoryOverride.h"
+#include "RakAssert.h"
 
 /**
 * _findfirst - equivalent

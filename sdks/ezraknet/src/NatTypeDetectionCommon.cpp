@@ -1,20 +1,10 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NatTypeDetectionCommon.h"
+#include "NatTypeDetectionCommon.h"
 
 #if _RAKNET_SUPPORT_NatTypeDetectionServer==1 || _RAKNET_SUPPORT_NatTypeDetectionClient==1
 
-#include "../include/SocketLayer.h"
-#include "../include/SocketIncludes.h"
-#include "../include/SocketDefines.h"
+#include "SocketLayer.h"
+#include "SocketIncludes.h"
+#include "SocketDefines.h"
 
 using namespace RakNet;
 

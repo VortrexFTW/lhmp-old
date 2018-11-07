@@ -1,23 +1,13 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_NatPunchthroughClient==1
 
-#include "../include/NatPunchthroughClient.h"
-#include "../include/BitStream.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/GetTime.h"
-#include "../include/PacketLogger.h"
-#include "../include/Itoa.h"
+#include "NatPunchthroughClient.h"
+#include "BitStream.h"
+#include "MessageIdentifiers.h"
+#include "RakPeerInterface.h"
+#include "GetTime.h"
+#include "PacketLogger.h"
+#include "Itoa.h"
 
 using namespace RakNet;
 
@@ -125,9 +115,9 @@ void NatPunchthroughClient::Update(void)
 		if (natPunchthroughDebugInterface)
 		{
 			natPunchthroughDebugInterface->OnClientMessage("CALCULATING_PORT_STRIDE timeout");
+			SendQueuedOpenNAT();
 		}
 
-		SendQueuedOpenNAT();
 		hasPortStride=UNKNOWN_PORT_STRIDE;
 	}
 
@@ -469,7 +459,7 @@ PluginReceiveResult NatPunchthroughClient::OnReceive(Packet *packet)
 				}
 			}
 		}
-		return RR_STOP_PROCESSING_AND_DEALLOCATE;	
+		break;		
 	case ID_OUT_OF_BAND_INTERNAL:
 		if (packet->length>=2 && packet->data[1]==ID_NAT_PONG)
 		{

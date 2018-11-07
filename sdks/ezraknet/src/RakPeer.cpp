@@ -1,23 +1,15 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 // \file
 //
-
+// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+//
+// Usage of RakNet is subject to the appropriate license agreement.
 
 
 #define CAT_NEUTER_EXPORT /* Neuter dllimport for libcat */
 
-#include "../include/RakNetDefines.h"
-#include "../include/RakPeer.h"
-#include "../include/RakNetTypes.h"
+#include "RakNetDefines.h"
+#include "RakPeer.h"
+#include "RakNetTypes.h"
 
 #ifdef _WIN32
 
@@ -34,28 +26,28 @@
 #include <time.h>
 #include <ctype.h> // toupper
 #include <string.h>
-#include "../include/GetTime.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/DS_HuffmanEncodingTree.h"
-#include "../include/Rand.h"
-#include "../include/PluginInterface2.h"
-#include "../include/StringCompressor.h"
-#include "../include/StringTable.h"
-#include "../include/NetworkIDObject.h"
-#include "../include/RakNetTypes.h"
-#include "../include/DR_SHA1.h"
-#include "../include/RakSleep.h"
-#include "../include/RakAssert.h"
-#include "../include/RakNetVersion.h"
-#include "../include/NetworkIDManager.h"
-#include "../include/gettimeofday.h"
-#include "../include/SignaledEvent.h"
-#include "../include/SuperFastHash.h"
-#include "../include/RakAlloca.h"
-#include "../include/WSAStartupSingleton.h"
+#include "GetTime.h"
+#include "MessageIdentifiers.h"
+#include "DS_HuffmanEncodingTree.h"
+#include "Rand.h"
+#include "PluginInterface2.h"
+#include "StringCompressor.h"
+#include "StringTable.h"
+#include "NetworkIDObject.h"
+#include "RakNetTypes.h"
+#include "DR_SHA1.h"
+#include "RakSleep.h"
+#include "RakAssert.h"
+#include "RakNetVersion.h"
+#include "NetworkIDManager.h"
+#include "gettimeofday.h"
+#include "SignaledEvent.h"
+#include "SuperFastHash.h"
+#include "RakAlloca.h"
+#include "WSAStartupSingleton.h"
 
 #ifdef USE_THREADED_SEND
-#include "../include/SendToThread.h"
+#include "SendToThread.h"
 #endif
 
 #ifdef CAT_AUDIT
@@ -424,10 +416,53 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 	DerefAllSockets();
 
 
-	unsigned int i;
+	int i;
 	// Go through all socket descriptors and precreate sockets on the specified addresses
 	for (i=0; i<socketDescriptorCount; i++)
 	{
+		/*
+		const char *addrToBind;
+		if (socketDescriptors[i].hostAddress[0]==0)
+			addrToBind=0;
+		else
+			addrToBind=socketDescriptors[i].hostAddress;
+			*/
+
+
+
+
+
+
+
+
+
+		/*
+#if RAKNET_SUPPORT_IPV6==1
+		if (SocketLayer::IsSocketFamilySupported(addrToBind, socketDescriptors[i].socketFamily)==false)
+			return SOCKET_FAMILY_NOT_SUPPORTED;
+#endif
+
+		if (socketDescriptors[i].port!=0 && SocketLayer::IsPortInUse(socketDescriptors[i].port, addrToBind, socketDescriptors[i].socketFamily)==true)
+		{
+			DerefAllSockets();
+			return SOCKET_PORT_ALREADY_IN_USE;
+		}
+
+		RakNetSocket* rns = 0;
+		if (socketDescriptors[i].remotePortRakNetWasStartedOn_PS3_PSP2==0)
+		{
+			rns = SocketLayer::CreateBoundSocket( this, socketDescriptors[i].port, socketDescriptors[i].blockingSocket, addrToBind, 100, socketDescriptors[i].extraSocketOptions, socketDescriptors[i].socketFamily, socketDescriptors[i].chromeInstance );
+		}
+		else
+		{
+#if defined(_PS3) || defined(__PS3__) || defined(SN_TARGET_PS3) || defined(_PS4)
+			rns = SocketLayer::CreateBoundSocket_PS3Lobby( socketDescriptors[i].port, socketDescriptors[i].blockingSocket, addrToBind, socketDescriptors[i].socketFamily );
+#elif  defined(SN_TARGET_PSP2)
+			rns = SocketLayer::CreateBoundSocket_PSP2( socketDescriptors[i].port, socketDescriptors[i].blockingSocket, addrToBind, socketDescriptors[i].socketFamily );
+#endif
+		}
+		*/
+
 		RakNetSocket2 *r2 = RakNetSocket2Allocator::AllocRNS2();
 		r2->SetUserConnectionSocketIndex(i);
 		#if defined(__native_client__)
@@ -4422,9 +4457,6 @@ union Buff6AndBuff8
 uint64_t RakPeerInterface::Get64BitUniqueRandomNumber(void)
 {
 	// Mac address is a poor solution because you can't have multiple connections from the same system
-
-
-
 
 
 

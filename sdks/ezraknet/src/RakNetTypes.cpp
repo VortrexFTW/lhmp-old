@@ -1,32 +1,25 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 /// \file
 ///
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
-#include "../include/RakNetTypes.h"
-#include "../include/RakAssert.h"
+#include "RakNetTypes.h"
+#include "RakAssert.h"
 #include <string.h>
 #include <stdio.h>
-#include "../include/WindowsIncludes.h"
-#include "../include/WSAStartupSingleton.h"
-#include "../include/SocketDefines.h"
-#include "../include/RakNetSocket2.h"
+#include "WindowsIncludes.h"
+#include "WSAStartupSingleton.h"
+#include "SocketDefines.h"
+#include "RakNetSocket2.h"
 
 
 #if   defined(_WIN32)
 // extern __int64 _strtoui64(const char*, char**, int); // needed for Code::Blocks. Does not compile on Visual Studio 2010
 // IP_DONTFRAGMENT is different between winsock 1 and winsock 2.  Therefore, Winsock2.h must be linked againt Ws2_32.lib
 // winsock.h must be linked against WSock32.lib.  If these two are mixed up the flag won't work correctly
-#include "../include/WindowsIncludes.h"
+#include "WindowsIncludes.h"
 
 #else
 #include <sys/socket.h>
@@ -35,9 +28,9 @@
 #endif
 
 #include <string.h> // strncasecmp
-#include "../include/Itoa.h"
-#include "../include/SocketLayer.h"
-#include "../include/SuperFastHash.h"
+#include "Itoa.h"
+#include "SocketLayer.h"
+#include "SuperFastHash.h"
 #include <stdlib.h>
 
 using namespace RakNet;
@@ -193,7 +186,7 @@ int SystemAddress::size(void)
 #if RAKNET_SUPPORT_IPV6==1
 	return sizeof(sockaddr_in6) + sizeof(char);
 #else
-	return sizeof(uint32_t) + sizeof(unsigned short) + sizeof(char);
+	return sizeof(unsigned long) + sizeof(unsigned short) + sizeof(char);
 #endif
 }
 unsigned long SystemAddress::ToInteger( const SystemAddress &sa )

@@ -1,19 +1,9 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_Rackspace==1 && _RAKNET_SUPPORT_TCPInterface==1
 
-#include "../include/Rackspace.h"
-#include "../include/RakString.h"
-#include "../include/TCPInterface.h"
+#include "Rackspace.h"
+#include "RakString.h"
+#include "TCPInterface.h"
 
 using namespace RakNet;
 

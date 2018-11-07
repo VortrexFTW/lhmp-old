@@ -1,23 +1,13 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/SendToThread.h"
+#include "SendToThread.h"
 #ifdef USE_THREADED_SEND
-#include "../include/RakThread.h"
-#include "../include/InternalPacket.h"
-#include "../include/GetTime.h"
+#include "RakThread.h"
+#include "InternalPacket.h"
+#include "GetTime.h"
 
 #if USE_SLIDING_WINDOW_CONGESTION_CONTROL!=1
-#include "../include/CCRakNetUDT.h"
+#include "CCRakNetUDT.h"
 #else
-#include "../include/CCRakNetSlidingWindow.h"
+#include "CCRakNetSlidingWindow.h"
 #endif
 
 using namespace RakNet;

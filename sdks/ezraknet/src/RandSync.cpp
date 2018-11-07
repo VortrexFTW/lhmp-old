@@ -1,18 +1,10 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/RandSync.h"
-#include "../include/BitStream.h"
+#include "RandSync.h"
+#include "BitStream.h"
 #include <limits>
-#include <limits.h>
 
+#ifndef UINT_MAX
+#define UINT_MAX ((unsigned int)-1)
+#endif
 namespace RakNet
 {
 
@@ -64,8 +56,8 @@ unsigned int RakNetRandomSync::RandomMT( void )
 		usedValues.Push(rnr.RandomMT(), _FILE_AND_LINE_);
 		++callCount;
 		while (usedValues.Size()>64)
-			usedValues.Pop();		
-		return usedValues[usedValues.Size()-1];		
+			usedValues.Pop();
+		return usedValues[usedValues.Size()-1];
 	}
 }
 uint32_t RakNetRandomSync::GetSeed( void ) const

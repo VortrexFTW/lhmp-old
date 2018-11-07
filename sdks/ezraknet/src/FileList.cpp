@@ -1,19 +1,9 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/FileList.h"
+#include "FileList.h"
 
 #if _RAKNET_SUPPORT_FileOperations==1
 
 #include <stdio.h> // RAKNET_DEBUG_PRINTF
-#include "../include/RakAssert.h"
+#include "RakAssert.h"
 #if defined(ANDROID)
 #include <asm/io.h>
 #elif defined(_WIN32) || defined(__CYGWIN__)
@@ -34,14 +24,14 @@
 #include <sys/stat.h>
 #endif
 
-//#include "../include/DR_SHA1.h"
-#include "../include/DS_Queue.h"
-#include "../include/StringCompressor.h"
-#include "../include/BitStream.h"
-#include "../include/FileOperations.h"
-#include "../include/SuperFastHash.h"
-#include "../include/RakAssert.h"
-#include "../include/LinuxStrings.h"
+//#include "DR_SHA1.h"
+#include "DS_Queue.h"
+#include "StringCompressor.h"
+#include "BitStream.h"
+#include "FileOperations.h"
+#include "SuperFastHash.h"
+#include "RakAssert.h"
+#include "LinuxStrings.h"
 
 #define MAX_FILENAME_LENGTH 512
 static const unsigned HASH_LENGTH=4;
@@ -61,11 +51,11 @@ using namespace RakNet;
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "../include/_FindFirst.h"
+#include "_FindFirst.h"
 #include <stdint.h> //defines intptr_t
 #endif
 
-#include "../include/RakAlloca.h"
+#include "RakAlloca.h"
 
 //int RAK_DLL_EXPORT FileListNodeComp( char * const &key, const FileListNode &data )
 //{

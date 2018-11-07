@@ -1,23 +1,15 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 /// \file
 ///
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
-
-#include "../include/StringCompressor.h"
-#include "../include/DS_HuffmanEncodingTree.h"
-#include "../include/BitStream.h"
-#include "../include/RakString.h"
-#include "../include/RakAssert.h"
+#include "StringCompressor.h"
+#include "DS_HuffmanEncodingTree.h"
+#include "BitStream.h"
+#include "RakString.h"
+#include "RakAssert.h"
 #include <string.h>
 
 #include <memory.h>

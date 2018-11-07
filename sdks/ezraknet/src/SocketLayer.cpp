@@ -1,25 +1,18 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 /// \file
 /// \brief SocketLayer class implementation
 ///
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
-#include "../include/SocketLayer.h"
-#include "../include/RakAssert.h"
-#include "../include/RakNetTypes.h"
-#include "../include/RakPeer.h"
-#include "../include/GetTime.h"
-#include "../include/LinuxStrings.h"
-#include "../include/SocketDefines.h"
+#include "SocketLayer.h"
+#include "RakAssert.h"
+#include "RakNetTypes.h"
+#include "RakPeer.h"
+#include "GetTime.h"
+#include "LinuxStrings.h"
+#include "SocketDefines.h"
 #if (defined(__GNUC__)  || defined(__GCCXML__)) && !defined(__WIN32__)
 #include <netdb.h>
 #endif
@@ -33,9 +26,9 @@ using namespace pp;
 */
 
 #if USE_SLIDING_WINDOW_CONGESTION_CONTROL!=1
-#include "../include/CCRakNetUDT.h"
+#include "CCRakNetUDT.h"
 #else
-#include "../include/CCRakNetSlidingWindow.h"
+#include "CCRakNetSlidingWindow.h"
 #endif
 
 //SocketLayerOverride *SocketLayer::slo=0;
@@ -72,16 +65,16 @@ using namespace pp;
 
 
 #if   defined(_WIN32)
-#include "../include/WSAStartupSingleton.h"
-#include "../include/WindowsIncludes.h"
+#include "WSAStartupSingleton.h"
+#include "WindowsIncludes.h"
 
 #else
 #include <unistd.h>
 #endif
 
-#include "../include/RakSleep.h"
+#include "RakSleep.h"
 #include <stdio.h>
-#include "../include/Itoa.h"
+#include "Itoa.h"
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -167,7 +160,7 @@ void SocketLayer::SetSocketOptions( __UDPSOCKET__ listenSocket, bool blockingSoc
 				NULL, dwIOError, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
 				( LPTSTR ) & messageBuffer, 0, NULL );
 			// something has gone wrong here...
-			RAKNET_DEBUG_PRINTF( "setsockopt__(SO_BROADCAST) failed:Error code - %d\n%s", dwIOError, (char*)messageBuffer );
+			RAKNET_DEBUG_PRINTF( "setsockopt__(SO_BROADCAST) failed:Error code - %d\n%s", dwIOError, messageBuffer );
 			//Free the buffer.
 			LocalFree( messageBuffer );
 #endif
@@ -368,7 +361,7 @@ void GetMyIP_Win32( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 			NULL, dwIOError, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
 			( LPTSTR ) & messageBuffer, 0, NULL );
 		// something has gone wrong here...
-		RAKNET_DEBUG_PRINTF( "gethostname failed:Error code - %d\n%s", dwIOError, (char*)messageBuffer );
+		RAKNET_DEBUG_PRINTF( "gethostname failed:Error code - %d\n%s", dwIOError, messageBuffer );
 		//Free the buffer.
 		LocalFree( messageBuffer );
 		#endif
@@ -410,7 +403,7 @@ void GetMyIP_Win32( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 			NULL, dwIOError, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
 			( LPTSTR ) & messageBuffer, 0, NULL );
 		// something has gone wrong here...
-		RAKNET_DEBUG_PRINTF( "gethostbyname failed:Error code - %d\n%s", dwIOError, (char*)messageBuffer );
+		RAKNET_DEBUG_PRINTF( "gethostbyname failed:Error code - %d\n%s", dwIOError, messageBuffer );
 
 		//Free the buffer.
 		LocalFree( messageBuffer );
@@ -487,7 +480,7 @@ void SocketLayer::GetSystemAddress_Old ( __UDPSOCKET__ s, SystemAddress *systemA
 			NULL, dwIOError, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
 			( LPTSTR ) & messageBuffer, 0, NULL );
 		// something has gone wrong here...
-		RAKNET_DEBUG_PRINTF( "getsockname failed:Error code - %d\n%s", dwIOError, (char*)messageBuffer );
+		RAKNET_DEBUG_PRINTF( "getsockname failed:Error code - %d\n%s", dwIOError, messageBuffer );
 
 		//Free the buffer.
 		LocalFree( messageBuffer );

@@ -1,14 +1,4 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/WSAStartupSingleton.h"
+#include "WSAStartupSingleton.h"
 
 
 
@@ -23,7 +13,7 @@
 
 
 #endif
-#include "../include/RakNetDefines.h"
+#include "RakNetDefines.h"
 #include <stdio.h>
 
 int WSAStartupSingleton::refCount=0;
@@ -53,7 +43,7 @@ void WSAStartupSingleton::AddRef(void)
 			NULL, dwIOError, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
 			( LPTSTR ) & messageBuffer, 0, NULL );
 		// something has gone wrong here...
-		RAKNET_DEBUG_PRINTF( "WSAStartup failed:Error code - %d\n%s", dwIOError, (char*)messageBuffer );
+		RAKNET_DEBUG_PRINTF( "WSAStartup failed:Error code - %d\n%s", dwIOError, messageBuffer );
 		//Free the buffer.
 		LocalFree( messageBuffer );
 #endif

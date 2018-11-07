@@ -1,34 +1,26 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 /// \file
 ///
-
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
 #if defined(_MSC_VER) && _MSC_VER < 1299 // VC6 doesn't support template specialization
-#include "../include/BitStream_NoTemplate.cpp"
+#include "BitStream_NoTemplate.cpp"
 #else
 
-#include "../include/BitStream.h"
+#include "BitStream.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "../include/SocketIncludes.h"
-#include "../include/RakNetDefines.h"
+#include "SocketIncludes.h"
+#include "RakNetDefines.h"
 
 
 
 #if   defined(_WIN32)
-#include "../include/WindowsIncludes.h"
+#include "WindowsIncludes.h"
 #include <memory.h>
 #include <cmath>
 #include <float.h>
@@ -999,8 +991,8 @@ bool BitStream::IsNetworkOrderInternal(void)
 
 
 
-	static unsigned long htonlValue = htonl(12345);
-	return htonlValue == 12345;
+	static const bool isNetworkOrder=(htonl(12345) == 12345);
+	return isNetworkOrder;
 
 }
 void BitStream::ReverseBytes(unsigned char *inByteArray, unsigned char *inOutByteArray, const unsigned int length)

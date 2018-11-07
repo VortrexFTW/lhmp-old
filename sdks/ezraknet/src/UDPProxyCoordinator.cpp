@@ -1,24 +1,14 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_UDPProxyCoordinator==1 && _RAKNET_SUPPORT_UDPForwarder==1
 
-#include "../include/UDPProxyCoordinator.h"
-#include "../include/BitStream.h"
-#include "../include/UDPProxyCommon.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/Rand.h"
-#include "../include/GetTime.h"
-#include "../include/UDPForwarder.h"
+#include "UDPProxyCoordinator.h"
+#include "BitStream.h"
+#include "UDPProxyCommon.h"
+#include "RakPeerInterface.h"
+#include "MessageIdentifiers.h"
+#include "Rand.h"
+#include "GetTime.h"
+#include "UDPForwarder.h"
 
 // Larger than the client version
 static const int DEFAULT_CLIENT_UNRESPONSIVE_PING_TIME=2000;

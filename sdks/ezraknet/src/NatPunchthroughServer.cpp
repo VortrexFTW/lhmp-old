@@ -1,24 +1,14 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_NatPunchthroughServer==1
 
-#include "../include/NatPunchthroughServer.h"
-#include "../include/SocketLayer.h"
-#include "../include/BitStream.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/MTUSize.h"
-#include "../include/GetTime.h"
-#include "../include/PacketLogger.h"
+#include "NatPunchthroughServer.h"
+#include "SocketLayer.h"
+#include "BitStream.h"
+#include "MessageIdentifiers.h"
+#include "RakPeerInterface.h"
+#include "MTUSize.h"
+#include "GetTime.h"
+#include "PacketLogger.h"
 
 using namespace RakNet;
 
@@ -243,7 +233,7 @@ PluginReceiveResult NatPunchthroughServer::OnReceive(Packet *packet)
 			{
 				DataStructures::List<RakNetSocket2* > sockets;
 				rakPeerInterface->GetSockets(sockets);
-				for (unsigned int i=0; i < sockets.Size() && i < MAXIMUM_NUMBER_OF_INTERNAL_IDS; i++)
+				for (int i=0; i < sockets.Size() && i < MAXIMUM_NUMBER_OF_INTERNAL_IDS; i++)
 				{
 					boundAddresses[i]=sockets[i]->GetBoundAddress();
 					boundAddressCount++;

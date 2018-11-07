@@ -1,34 +1,24 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_EmailSender==1 && _RAKNET_SUPPORT_TCPInterface==1 && _RAKNET_SUPPORT_FileOperations==1
 
 // Useful sites
 // http://www.faqs.org\rfcs\rfc2821.html
 // http://www2.rad.com\networks/1995/mime/examples.htm
 
-#include "../include/EmailSender.h"
-#include "../include/TCPInterface.h"
-#include "../include/GetTime.h"
-#include "../include/Rand.h"
-#include "../include/FileList.h"
-#include "../include/BitStream.h"
-#include "../include/Base64Encoder.h"
+#include "EmailSender.h"
+#include "TCPInterface.h"
+#include "GetTime.h"
+#include "Rand.h"
+#include "FileList.h"
+#include "BitStream.h"
+#include "Base64Encoder.h"
 #include <stdio.h>
 
 
 
 
 
-#include "../include/RakSleep.h"
+#include "RakSleep.h"
 
 using namespace RakNet;
 
@@ -57,10 +47,7 @@ const char *EmailSender::Send(const char *hostAddress, unsigned short hostPort, 
 		if (packet)
 		{
 			if (doPrintf)
-			{
 				RAKNET_DEBUG_PRINTF("%s", packet->data);
-				tcpInterface.DeallocatePacket(packet);
-			}
 			break;
 		}
 		RakSleep(250);
@@ -196,7 +183,7 @@ const char *EmailSender::Send(const char *hostAddress, unsigned short hostPort, 
 	int bodyLength;
 	bodyLength=(int)strlen(body);
 	newBody = (char*) rakMalloc_Ex( bodyLength*3, _FILE_AND_LINE_ );
-	if (bodyLength>=0)
+	if (bodyLength>0)
 		newBody[0]=body[0];
 	for (i=1, j=1; i < bodyLength; i++)
 	{
@@ -310,7 +297,6 @@ const char *EmailSender::Send(const char *hostAddress, unsigned short hostPort, 
 		while (packet)
 		{
 			RAKNET_DEBUG_PRINTF("%s", packet->data);
-			tcpInterface.DeallocatePacket(packet);
 			packet = tcpInterface.Receive();
 		}
 	}

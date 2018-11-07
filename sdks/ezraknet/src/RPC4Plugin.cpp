@@ -1,24 +1,14 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_RPC4Plugin==1
 
-#include "../include/RPC4Plugin.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/PacketizedTCP.h"
-#include "../include/RakSleep.h"
-#include "../include/RakNetDefines.h"
-#include "../include/DS_Queue.h"
-//#include "../include/GetTime.h"
+#include "RPC4Plugin.h"
+#include "MessageIdentifiers.h"
+#include "RakPeerInterface.h"
+#include "PacketizedTCP.h"
+#include "RakSleep.h"
+#include "RakNetDefines.h"
+#include "DS_Queue.h"
+//#include "GetTime.h"
 
 using namespace RakNet;
 

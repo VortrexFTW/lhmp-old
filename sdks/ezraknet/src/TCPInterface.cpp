@@ -1,23 +1,15 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_TCPInterface==1
 
 /// \file
 /// \brief A simple TCP based server allowing sends and receives.  Can be connected to by a telnet client.
 ///
+/// This file is part of RakNet Copyright 2003 Jenkins Software LLC
+///
+/// Usage of RakNet is subject to the appropriate license agreement.
 
 
-
-#include "../include/TCPInterface.h"
+#include "TCPInterface.h"
 #ifdef _WIN32
 	#if !defined (WINDOWS_STORE_RT)
 		typedef int socklen_t;
@@ -30,15 +22,15 @@
 #include <pthread.h>
 #endif
 #include <string.h>
-#include "../include/RakAssert.h"
+#include "RakAssert.h"
 #include <stdio.h>
-#include "../include/RakAssert.h"
-#include "../include/RakSleep.h"
-#include "../include/StringCompressor.h"
-#include "../include/StringTable.h"
-#include "../include/Itoa.h"
-#include "../include/SocketLayer.h"
-#include "../include/SocketDefines.h"
+#include "RakAssert.h"
+#include "RakSleep.h"
+#include "StringCompressor.h"
+#include "StringTable.h"
+#include "Itoa.h"
+#include "SocketLayer.h"
+#include "SocketDefines.h"
 #if (defined(__GNUC__)  || defined(__GCCXML__)) && !defined(__WIN32__)
 #include <netdb.h>
 #endif
@@ -47,7 +39,7 @@
 #endif
 
 #ifdef _WIN32
-#include "../include/WSAStartupSingleton.h"
+#include "WSAStartupSingleton.h"
 #endif
 namespace RakNet
 {
@@ -1366,10 +1358,8 @@ bool RemoteClient::InitSSL(SSL_CTX* ctx, SSL_METHOD *meth)
 				// http://www.openssl.org/docs/ssl/SSL_get_error.html
 				char buff[1024];
 				unsigned long ege = ERR_get_error();
-				if (ege==0 && res==0)
-					printf("SSL_ERROR_SYSCALL EOF in violation of the protocol\n");
-				else if (ege==0 && res==-1)
-					printf("SSL_ERROR_SYSCALL %s\n", strerror(errno));
+				if (ege==0)
+					printf("SSL_ERROR_SYSCALL SSL_get_error ret=\n", res);
 				else
 					printf("SSL_ERROR_SYSCALL %s\n", ERR_error_string(ege, buff));
 			}

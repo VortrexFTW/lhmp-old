@@ -1,29 +1,19 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_FileListTransfer==1 && _RAKNET_SUPPORT_FileOperations==1
 
-#include "../include/FileListTransfer.h"
-#include "../include/DS_HuffmanEncodingTree.h"
-#include "../include/FileListTransferCBInterface.h"
-#include "../include/StringCompressor.h"
-#include "../include/FileList.h"
-#include "../include/DS_Queue.h"
-#include "../include/MessageIdentifiers.h"
-#include "../include/RakNetTypes.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/RakNetStatistics.h"
-#include "../include/IncrementalReadInterface.h"
-#include "../include/RakAssert.h"
-#include "../include/RakAlloca.h"
+#include "FileListTransfer.h"
+#include "DS_HuffmanEncodingTree.h"
+#include "FileListTransferCBInterface.h"
+#include "StringCompressor.h"
+#include "FileList.h"
+#include "DS_Queue.h"
+#include "MessageIdentifiers.h"
+#include "RakNetTypes.h"
+#include "RakPeerInterface.h"
+#include "RakNetStatistics.h"
+#include "IncrementalReadInterface.h"
+#include "RakAssert.h"
+#include "RakAlloca.h"
 
 #ifdef _MSC_VER
 #pragma warning( push )

@@ -1,15 +1,5 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/RakWString.h"
-#include "../include/BitStream.h"
+#include "RakWString.h"
+#include "BitStream.h"
 #include <string.h>
 #include <wchar.h>
 #include <stdlib.h>
@@ -204,29 +194,29 @@ bool RakWString::operator==(const RakWString &right) const
 {
 	if (GetLength()!=right.GetLength())
 		return false;
-	return wcscmp(C_String(),right.C_String())==0;
+	return wcscmp(c_str,right.C_String())==0;
 }
 bool RakWString::operator < ( const RakWString& right ) const
 {
-	return wcscmp(C_String(),right.C_String())<0;
+	return wcscmp(c_str,right.C_String())<0;
 }
 bool RakWString::operator <= ( const RakWString& right ) const
 {
-	return wcscmp(C_String(),right.C_String())<=0;
+	return wcscmp(c_str,right.C_String())<=0;
 }
 bool RakWString::operator > ( const RakWString& right ) const
 {
-	return wcscmp(C_String(),right.C_String())>0;
+	return wcscmp(c_str,right.C_String())>0;
 }
 bool RakWString::operator >= ( const RakWString& right ) const
 {
-	return wcscmp(C_String(),right.C_String())>=0;
+	return wcscmp(c_str,right.C_String())>=0;
 }
 bool RakWString::operator!=(const RakWString &right) const
 {
 	if (GetLength()!=right.GetLength())
 		return true;
-	return wcscmp(C_String(),right.C_String())!=0;
+	return wcscmp(c_str,right.C_String())!=0;
 }
 void RakWString::Set( wchar_t *str )
 {
@@ -284,7 +274,7 @@ void RakWString::FPrintf(FILE *fp)
 }
 void RakWString::Serialize(BitStream *bs) const
 {
-	Serialize(C_String(), bs);
+	Serialize(c_str, bs);
 }
 void RakWString::Serialize(const wchar_t * const str, BitStream *bs)
 {
@@ -331,7 +321,7 @@ bool RakWString::Deserialize(BitStream *bs)
 		rakFree_Ex(multiByteBuffer, _FILE_AND_LINE_);
 		c_str[c_strCharLength]=0;
 #else
-		c_str = (wchar_t*) rakMalloc_Ex((mbByteLength+1) * MAX_BYTES_PER_UNICODE_CHAR, _FILE_AND_LINE_);
+		c_str = (wchar_t*) rakMalloc_Ex(mbByteLength+1, _FILE_AND_LINE_);
 		c_strCharLength = mbByteLength;
 		for (unsigned int i=0; i < mbByteLength; i++)
 		{

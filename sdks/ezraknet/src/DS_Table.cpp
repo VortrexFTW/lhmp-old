@@ -1,19 +1,9 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/DS_Table.h"
-#include "../include/DS_OrderedList.h"
+#include "DS_Table.h"
+#include "DS_OrderedList.h"
 #include <string.h>
-#include "../include/RakAssert.h"
-#include "../include/RakAssert.h"
-#include "../include/Itoa.h"
+#include "RakAssert.h"
+#include "RakAssert.h"
+#include "Itoa.h"
 
 using namespace DataStructures;
 

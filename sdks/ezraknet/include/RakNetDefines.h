@@ -1,29 +1,9 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
 #ifndef __RAKNET_DEFINES_H
 #define __RAKNET_DEFINES_H
 
 // If you want to change these defines, put them in RakNetDefinesOverrides so your changes are not lost when updating RakNet
 // The user should not edit this file
 #include "RakNetDefinesOverrides.h"
-
-#ifdef WIN32
-	// Avoid annoying WinSock2 deprecated warnings
-	#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
-	#define _WINSOCK_DEPRECATED_NO_WARNINGS
-	#endif // !_WINSOCK_DEPRECATED_NO_WARNINGS
-#endif // WIN32
-
-
-
 
 /// Define __GET_TIME_64BIT to have RakNet::TimeMS use a 64, rather than 32 bit value.  A 32 bit value will overflow after about 5 weeks.
 /// However, this doubles the bandwidth use for sending times, so don't do it unless you have a reason to.

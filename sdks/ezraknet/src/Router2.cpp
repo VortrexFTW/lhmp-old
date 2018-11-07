@@ -1,25 +1,15 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/NativeFeatureIncludes.h"
+#include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_Router2==1 && _RAKNET_SUPPORT_UDPForwarder==1
 
-#include "../include/Router2.h"
-#include "../include/RakPeerInterface.h"
-#include "../include/BitStream.h"
-#include "../include/RakNetTime.h"
-#include "../include/GetTime.h"
-#include "../include/DS_OrderedList.h"
-#include "../include/SocketLayer.h"
-#include "../include/FormatString.h"
-#include "../include/SocketDefines.h"
+#include "Router2.h"
+#include "RakPeerInterface.h"
+#include "BitStream.h"
+#include "RakNetTime.h"
+#include "GetTime.h"
+#include "DS_OrderedList.h"
+#include "SocketLayer.h"
+#include "FormatString.h"
+#include "SocketDefines.h"
 
 using namespace RakNet;
 

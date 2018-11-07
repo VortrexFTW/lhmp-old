@@ -1,24 +1,14 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/RakString.h"
-#include "../include/RakAssert.h"
-#include "../include/RakMemoryOverride.h"
-#include "../include/BitStream.h"
+#include "RakString.h"
+#include "RakAssert.h"
+#include "RakMemoryOverride.h"
+#include "BitStream.h"
 #include <stdarg.h>
 #include <string.h>
-#include "../include/LinuxStrings.h"
-#include "../include/StringCompressor.h"
-#include "../include/SimpleMutex.h"
+#include "LinuxStrings.h"
+#include "StringCompressor.h"
+#include "SimpleMutex.h"
 #include <stdlib.h>
-#include "../include/Itoa.h"
+#include "Itoa.h"
 
 using namespace RakNet;
 
@@ -652,22 +642,6 @@ void RakString::TerminateAtLastCharacter(char c)
 		}
 	}
 }
-void RakString::StartAfterLastCharacter(char c)
-{
-	int i, len=(int) GetLength();
-	for (i=len-1; i >= 0; i--)
-	{
-		if (sharedString->c_str[i]==c)
-		{
-			++i;
-			if (i < len)
-			{
-				*this = SubStr(i,GetLength()-i);
-			}
-			return;
-		}
-	}
-}
 void RakString::TerminateAtFirstCharacter(char c)
 {
 	unsigned int i, len=(unsigned int) GetLength();
@@ -675,26 +649,8 @@ void RakString::TerminateAtFirstCharacter(char c)
 	{
 		if (sharedString->c_str[i]==c)
 		{
-			if (i > 0)
-			{
-				Clone();
-				sharedString->c_str[i]=0;
-			}
-		}
-	}
-}
-void RakString::StartAfterFirstCharacter(char c)
-{
-	unsigned int i, len=(unsigned int) GetLength();
-	for (i=0; i < len; i++)
-	{
-		if (sharedString->c_str[i]==c)
-		{
-			++i;
-			if (i < len)
-			{
-				*this = SubStr(i,GetLength()-i);
-			}
+			Clone();
+			sharedString->c_str[i]=0;
 			return;
 		}
 	}
@@ -1560,9 +1516,9 @@ void RakString::UnlockMutex(void)
 }
 
 /*
-#include "../include/RakString.h"
+#include "RakString.h"
 #include <string>
-#include "../include/GetTime.h"
+#include "GetTime.h"
 
 using namespace RakNet;
 

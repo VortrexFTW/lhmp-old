@@ -1,17 +1,7 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "../include/FileOperations.h"
+#include "FileOperations.h"
 #if _RAKNET_SUPPORT_FileOperations==1
-#include "../include/RakMemoryOverride.h"
-#include "../include/_FindFirst.h" // For linux
+#include "RakMemoryOverride.h"
+#include "_FindFirst.h" // For linux
 #include <stdio.h>
 #include <string.h>
 #ifdef _WIN32 
@@ -21,9 +11,9 @@
 #else
 #include <sys/stat.h>
 #include <unistd.h>
-#include "../include/_FindFirst.h"
+#include "_FindFirst.h"
 #endif
-#include <errno.h>
+#include "errno.h"
 
 #ifndef MAX_PATH
 #define MAX_PATH 260
