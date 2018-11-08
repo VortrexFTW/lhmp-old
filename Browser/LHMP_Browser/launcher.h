@@ -82,7 +82,7 @@ private:
 
     QString nickname, clientVersion, mafiaPath, filesURL, serversURL;
 
-    QString launcherVersion = "1.0.10";
+    QString launcherVersion = "1.0.11";
     QString filesPath = "lhmp/";
     QUrl launcherUpdateJSONURL = QUrl("http://vortrex.info/lhmp/launcher.json");
 };

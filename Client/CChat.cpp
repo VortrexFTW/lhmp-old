@@ -353,8 +353,6 @@ void	CChat::RenderTexture(IDirect3DDevice8* device)
 	pSurf->Release();
 	pOldTarget->Release();
 	oldStencil->Release();
-	
-
 }
 
 void	CChat::DoRendering()

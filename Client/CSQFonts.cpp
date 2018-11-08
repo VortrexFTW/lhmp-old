@@ -6,7 +6,7 @@
 
 CSQFont::CSQFont(char* font, unsigned short size)
 {
-	this->p_font = new CFont(font, size);
+	this->p_font = new CFont(font, font, size);
 	this->size = size;
 	strcpy(this->fontName, font);
 }

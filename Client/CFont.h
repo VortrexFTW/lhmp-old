@@ -9,7 +9,7 @@ class CFont{
 private:
 	CD3DFont*	m_pFont;
 public:
-	CFont(char font[100],int size,DWORD flags = 0UL);
+	CFont(char font[100],char font2[100], int size, DWORD flags = 0UL);
 	~CFont();
 
 	// Dx callbacks

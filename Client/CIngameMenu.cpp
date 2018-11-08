@@ -52,9 +52,6 @@ void CIngameMenu::Render()
 	g_CCore->GetGraphics()->DrawTextA("LH", 50, screen.y - 260, 0xffffffff, false, ahojmoj);
 	g_CCore->GetGraphics()->DrawTextA("MP", 140, screen.y - 260, 0xffff0000, false, ahojmoj);
 
-
-	g_CCore->GetGraphics()->DrawTextA("Version 1.0", 250, screen.y - 212, 0xffffffff, false);
-
 	if (this->itemSelect == 0)
 	{
 		g_CCore->GetGraphics()->DrawTextA("Back to game (ESC)", 50, screen.y - 160, 0xffcccccc, false, menuitem);

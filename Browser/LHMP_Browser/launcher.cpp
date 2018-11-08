@@ -357,11 +357,17 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
             QString name, hash, hashLocal, path;
 
-            path = QString("%1/%2").arg(mafiaPath).arg(filesPath);
+            path = QString("%1/tables/").arg(mafiaPath);
 
             if (!QDir(path).exists()) {
                 QDir().mkdir(path);
             }
+
+            path = QString("%1/%2").arg(mafiaPath).arg(filesPath);
+
+            if (!QDir(path).exists()) {
+                QDir().mkdir(path);
+            }       
 
             foreach (const QJsonValue & v, files) {
                 fileDetails = v.toArray();
@@ -373,6 +379,10 @@ void Launcher::replyFinished(QNetworkReply *reply)
 
                 if (name == "loader.exe" || name == "Game.exe" || name == "LS3DF.dll" || name == "CrashHandler.exe") {
                     location = QString("%1/%2").arg(mafiaPath).arg(name);
+
+                    qDebug() << location;
+                } else if (name == "menu.def") {
+                    location = QString("%1/tables/%2").arg(mafiaPath).arg(name);
 
                     qDebug() << location;
                 }

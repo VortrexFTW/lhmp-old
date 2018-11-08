@@ -64,7 +64,8 @@ public:
 		{
 			this->SetAlias(alias);
 		}
-		else {
+		else 
+		{
 			for (unsigned int i = 0; i < nextList.size(); i++)
 			{
 				if (nextList[i]->GetCharacter() == genuieName[0])

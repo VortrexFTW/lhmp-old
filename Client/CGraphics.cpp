@@ -82,8 +82,9 @@ void CGraphics::Init(IDirect3DDevice8* pDxDevice)
 {
 	// the most important one
 	m_DirectDevice = pDxDevice;
+
 	// place it as first to prevent startup crashes
-	m_cFont = new CFont("arial", 9, D3DFONT_BOLD);
+	m_cFont = new CFont("lhmp/opensans.ttf", "Open Sans", 9, D3DFONT_BOLD);
 
 	// initialize sprite system / our sprites(textures)
 	if (SUCCEEDED(D3DXCreateSprite(m_DirectDevice, &m_sprite)))
@@ -105,7 +106,7 @@ void CGraphics::Init(IDirect3DDevice8* pDxDevice)
 			NULL, NULL, &m_mapGUI);
 	}
 
-	HFONT font =  CreateFont(20, 0, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, 0, TEXT("Arial"));  //arial bold, lucida console
+	HFONT font =  CreateFont(20, 0, 0, 0, 600, 0, 0, 0, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, 0, TEXT("Arial"));  //arial bold, lucida console
 	D3DXCreateFont(m_DirectDevice, font, &m_chatfont);
 
 	g_CCore->GetIngameMenu()->Init();

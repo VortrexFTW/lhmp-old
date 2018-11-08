@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Lost Heaven Multiplayer"
-#define MyAppVersion "1.0.10"
+#define MyAppVersion "1.0.11"
 #define MyAppPublisher "Lost Heaven Multiplayer"
 #define MyAppURL "https://vortrex.info/lhmp/"
 #define MyAppExeName "launcher.exe"
@@ -22,7 +22,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 OutputDir=D:\abram\dev\git\lhmp-old\Installer\release
-OutputBaseFilename=lhmp_setup
+OutputBaseFilename=setup
 SetupIconFile=D:\abram\dev\git\lhmp-old\Installer\icon.ico
 Compression=lzma
 SolidCompression=yes

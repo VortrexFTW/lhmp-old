@@ -87,10 +87,10 @@ playerPos = vect;
 
 */
 
-//void CPed::SetHealth(float ht)
-//{
-//	this->fHealth = ht;
-//}
+void CPed::SetHealth(float ht)
+{
+	this->fHealth = ht;
+}
 
 void CPed::SetName(char* nm)
 {
@@ -116,10 +116,10 @@ char* CPed::GetName()
 	return this->sName;
 }
 
-//float CPed::GetHealth()
-//{
-//	return this->fHealth;
-//}
+float CPed::GetHealth()
+{
+	return this->fHealth;
+}
 
 //byte CPed::GetState()
 //{

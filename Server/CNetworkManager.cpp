@@ -367,16 +367,9 @@ void CNetworkManager::Pulse()
 			g_CCore->GetLog()->AddNormalLog("Client has incompatible RakNet");
 		}
 		break;
-		case ID_IP_RECENTLY_CONNECTED:
-		{
-			g_CCore->GetLog()->AddNormalLog("Client recently connected. IP blocked for security purposes.");
-		}
-		break;
 		default:
 			char buff[255];
 			sprintf(buff, "Message with identifier %i has arrived.", packet->data[0]);
-			g_CCore->GetLog()->AddNormalLog(buff);
-			g_CCore->GetLog()->AddNormalLog("LHMP PACKETID %i", ID_GAME_LHMP_PACKET);
 			break;
 		}
 	}

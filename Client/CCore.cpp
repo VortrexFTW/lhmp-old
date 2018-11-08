@@ -74,7 +74,7 @@ void CCore::Run()
 	// processes WM_ACTIVATE message
 	PatchBytes(0x1006A1F7, preventALTTABfocusloosing);
 	// Fix player leaving from car when engine's on
-	PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
+	//PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
 
 	// TODO - probably unneeded since we are using DirectInput to block input
 	//PatchBytes(0x004CBC1B, disableImmortalModeWhenLockedControls);
@@ -89,7 +89,7 @@ void CCore::Run()
 	PatchBytes(0x004C99C8, disableInventoryInVehicle);
 
 	/*----------------- Prevent ESC menu trigger  ----------------------------*/
-	PatchBytes(0x005F9709, disableESCmenu);
+	//PatchBytes(0x005F9709, disableESCmenu);
 
 	/*----------------- Disable TAB ingame map -------------------------------*/
 	PatchBytes(0x0055131E, preventIngameMap);

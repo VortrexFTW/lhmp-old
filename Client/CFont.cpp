@@ -4,9 +4,10 @@
 #include "CFont.h"
 
 extern CCore *g_CCore;
-CFont::CFont(char font[100], int size, DWORD flags)
+CFont::CFont(char font[100], char font2[100], int size, DWORD flags)
 {
-	this->m_pFont = new CD3DFont(font, size, flags);
+	int fontId = AddFontResourceA(font);
+	this->m_pFont = new CD3DFont(font2, 9, 0);
 	this->m_pFont->InitDeviceObjects(g_CCore->GetGraphics()->GetDevice());
 	this->m_pFont->RestoreDeviceObjects();
 }
