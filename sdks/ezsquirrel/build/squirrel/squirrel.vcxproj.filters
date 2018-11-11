@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqbaselib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqcompiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqdebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqfuncstate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqlexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqmem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqstate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqtable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\src\sqvm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqclosure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqcompiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqfuncproto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqfuncstate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqlexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqopcodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqpcheader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqstate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqtable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\squserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\squtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\include\sqvm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{AB51E618-A091-38B5-B1EB-396B85FFA073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7F738E88-4BDD-3568-9FB0-21458FB26CDF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

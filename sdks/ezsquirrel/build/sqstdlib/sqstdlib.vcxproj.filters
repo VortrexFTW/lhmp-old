@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdaux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdblob.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdmath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdrex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdstream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdsystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7F738E88-4BDD-3568-9FB0-21458FB26CDF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
