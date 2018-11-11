@@ -73,11 +73,12 @@ void CCore::Run()
 	// it just blocks case of switch at WinMessage procedure, which
 	// processes WM_ACTIVATE message
 	PatchBytes(0x1006A1F7, preventALTTABfocusloosing);
+	
 	// Fix player leaving from car when engine's on
-	//PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
+	PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
 
 	// TODO - probably unneeded since we are using DirectInput to block input
-	//PatchBytes(0x004CBC1B, disableImmortalModeWhenLockedControls);
+	PatchBytes(0x004CBC1B, disableImmortalModeWhenLockedControls);
 
 	/*------ Is game loaded -> hook some code in game load, call our naked func IsGameLoaded ---------*/
 	// fix game end - probably
@@ -89,7 +90,7 @@ void CCore::Run()
 	PatchBytes(0x004C99C8, disableInventoryInVehicle);
 
 	/*----------------- Prevent ESC menu trigger  ----------------------------*/
-	//PatchBytes(0x005F9709, disableESCmenu);
+	PatchBytes(0x005F9709, disableESCmenu);
 
 	/*----------------- Disable TAB ingame map -------------------------------*/
 	PatchBytes(0x0055131E, preventIngameMap);
@@ -128,8 +129,8 @@ void CCore::Run()
 										/*Tools::Nop(0x0056090F,6);			// disable traffic
 										Tools::Nop(0x0056091A,6);			// disable police
 										*/
-										/*---------------------------Ped NO Panic (after shoot)*/
-										// PED wouldnt do panic after this
+	
+	// PED wouldnt do panic after this
 	PatchBytes(0x004BDE6D, nopanic);
 
 	// PED-gangsters wouldnt do panic after this
@@ -155,8 +156,10 @@ void CCore::Run()
 
 	// disable scripts
 	//PatchBytes(0x005AF836, disableScripts);
+
 	// disables script process calling
-	//-----------------Tools::Nop(0x0047AA65, 0xC);
+	Tools::Nop(0x0047AA65, 0xC);
+
 	// disable AddScore 
 	PatchBytes(0x005C695E, disableScriptAddScore);
 
@@ -165,7 +168,6 @@ void CCore::Run()
 
 	//disable adding game score for each killed mobster
 	PatchBytes(0x00497465, disableScoreFromKilledMafians);
-
 
 	//-------------------------	Disable damage from collision
 	//Tools::Nop(0x00518328, 23);
