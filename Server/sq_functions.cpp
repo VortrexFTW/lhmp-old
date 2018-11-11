@@ -94,6 +94,9 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "serverGetOnlinePlayers", (SQFUNCTION)sq_serverGetOnlinePlayers, 1, ".");
 	RegisterFunction(vM, "serverGetMaxPlayers", (SQFUNCTION)sq_serverGetMaxPlayers, 1, ".");
 	RegisterFunction(vM, "serverSetDefaultMap", (SQFUNCTION)sq_serverSetDefaultMap, 2, ".s");
+	RegisterFunction(vM, "serverReloadGamemode", (SQFUNCTION)sq_serverReloadGameMode ,1, ".");
+	RegisterFunction(vM, "serverChangeGamemode", (SQFUNCTION)sq_serverChangeGameMode ,1, ".s");
+	RegisterFunction(vM, "serverSetVisible", (SQFUNCTION)sq_serverSetVisible, 1, ".");
 
 	RegisterFunction(vM, "timerCreate", (SQFUNCTION)sq_timerCreate, 5, ".snnn");
 	RegisterFunction(vM, "timerDelete", (SQFUNCTION)sq_timerDelete, 2, ".n");

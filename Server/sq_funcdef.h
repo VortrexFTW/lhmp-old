@@ -84,7 +84,9 @@ SQInteger sq_serverSetGamemodeName(SQVM *vm);
 SQInteger sq_serverGetOnlinePlayers(SQVM *vm);
 SQInteger sq_serverGetMaxPlayers(SQVM *vm);
 SQInteger sq_serverSetDefaultMap(SQVM *vm);
-
+SQInteger sq_serverReloadGameMode(SQVM *vm);
+SQInteger sq_serverChangeGameMode(SQVM *vm);
+SQInteger sq_serverSetVisible(SQVM *vm);
 
 SQInteger sq_timerCreate(SQVM *vm);
 SQInteger sq_timerDelete(SQVM *vm);

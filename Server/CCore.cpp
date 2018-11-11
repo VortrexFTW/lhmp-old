@@ -40,7 +40,7 @@ void CCore::OnSecondElapsed()
 
 }
 
-int CCore::Init(int port,int players, std::string startpos, std::string svrname,std::string mode, int visible,char* website,char* password)
+int CCore::Init(int port,int players, std::string startpos, std::string svrname,std::string mode, int visible, char* website, char* password)
 {
 	if (m_cNetworkManager.Init(port, players, startpos, mode,password) == false)
 		return STARTUP_NETWORK_FAILED;

@@ -776,10 +776,33 @@ SQInteger sq_serverGetGamemodeName(SQVM *vm)
 	return 1;
 }
 
+SQInteger sq_serverReloadGameMode(SQVM *vm)
+{
+	g_CCore->ReloadGamemode();
+	sq_pushnull(vm);
+	return 1;
+}
+
+SQInteger sq_serverChangeGameMode(SQVM *vm)
+{
+	const SQChar* modename;
+	sq_getstring(vm, -1, &modename);
+	g_CCore->ChangeModeTo(modename);
+	return 1;
+}
+
 SQInteger sq_serverSetGamemodeName(SQVM *vm)
 {
 	const SQChar* modename;
 	sq_getstring(vm, -1, &modename);
+	g_CCore->GetNetworkManager()->SetServerMode(modename);
+	return 1;
+}
+
+SQInteger sq_serverSetVisible(SQVM *vm)
+{
+	const SQBool* visible;
+	sq_getbool(vm, -1, &visible);
 	g_CCore->GetNetworkManager()->SetServerMode(modename);
 	return 1;
 }
