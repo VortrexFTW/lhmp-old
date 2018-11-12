@@ -843,7 +843,6 @@ void CGameSync::onPlayerControlsAreLocked(RakNet::BitStream* bitInput)
 	g_CCore->GetGame()->SetLockControls(status == 1);
 }
 
-
 void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS timestamp)
 {
 	VEH::CREATE vehicle;

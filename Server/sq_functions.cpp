@@ -14,6 +14,7 @@ int Init(SQVM* vM)
 
 	RegisterFunction(vM, "sendPlayerMessage", (SQFUNCTION)sq_sendPlayerMessage, 3, ".is");
 	RegisterFunction(vM, "sendAllMessage", (SQFUNCTION)sq_sendAllMessage, 2, ".s");
+	RegisterFunction(vM, "sendConsoleMessage", (SQFUNCTION)sq_sendConsoleMessage, 2, ".s");
 
 	// Player natives
 
@@ -29,7 +30,7 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "playerSetPosition", (SQFUNCTION)sq_playerSetPosition, 5, ".nfff");
 	RegisterFunction(vM, "playerSetHealth", (SQFUNCTION)sq_playerSetHealth, 3, ".nf");
 	RegisterFunction(vM, "playerSetMoney", (SQFUNCTION)sq_playerSetMoney, 3, ".nn");
-	RegisterFunction(vM, "playerEnableMoney", (SQFUNCTION)sq_playerEnableMoney, 3, ".nn");
+	RegisterFunction(vM, "playerEnableMoney", (SQFUNCTION)sq_playerEnableMoney, 3, ".nb");
 	RegisterFunction(vM, "playerSetRotation", (SQFUNCTION)sq_playerSetRotation, 3, ".nf");
 	RegisterFunction(vM, "playerSetRotationVector", (SQFUNCTION)sq_playerSetRotationVector, 5, ".nfff");
 	RegisterFunction(vM, "playerGetIP", (SQFUNCTION)sq_playerGetIP, 2, ".n");
@@ -43,12 +44,11 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "playerPlayAnim", (SQFUNCTION)sq_playerPlayAnim, 3, ".ns");
 	RegisterFunction(vM, "playerPlaySound", (SQFUNCTION)sq_playerPlaySound, 3, ".ns");
 	RegisterFunction(vM, "allPlaySound", (SQFUNCTION)sq_allPlaySound, 2, ".s");
-	RegisterFunction(vM, "playerToggleCityMusic", (SQFUNCTION)sq_playerToggleCityMusic, 3, ".nn");
 	RegisterFunction(vM, "playerLockControls", (SQFUNCTION)sq_playerLockControls, 3, ".nb");
 	RegisterFunction(vM, "playerIsLocked", (SQFUNCTION)sq_playerIsLocked, 2, ".n");
-	RegisterFunction(vM, "playerToggleCityMusic", (SQFUNCTION)sq_playerToggleCityMusic, 3, ".nn");
+	RegisterFunction(vM, "playerToggleCityMusic", (SQFUNCTION)sq_playerToggleCityMusic, 3, ".nb");
 	RegisterFunction(vM, "playerSetNickColor", (SQFUNCTION)sq_playerSetNickColor, 3, ".nn");
-	RegisterFunction(vM, "guiToggleNametag", (SQFUNCTION)sq_guiToggleNametag, 3, ".nn");
+	RegisterFunction(vM, "guiToggleNametag", (SQFUNCTION)sq_guiToggleNametag, 3, ".nb");
 
 	RegisterFunction(vM, "playerSetCameraPos", (SQFUNCTION)sq_playerSetCameraPos, 8, ".nffffff");
 	RegisterFunction(vM, "playerSetCameraToDefault", (SQFUNCTION)sq_playerSetCameraToDefault, 2, ".n");
@@ -94,8 +94,9 @@ int Init(SQVM* vM)
 	RegisterFunction(vM, "serverGetOnlinePlayers", (SQFUNCTION)sq_serverGetOnlinePlayers, 1, ".");
 	RegisterFunction(vM, "serverGetMaxPlayers", (SQFUNCTION)sq_serverGetMaxPlayers, 1, ".");
 	RegisterFunction(vM, "serverSetDefaultMap", (SQFUNCTION)sq_serverSetDefaultMap, 2, ".s");
-	RegisterFunction(vM, "serverReloadGamemode", (SQFUNCTION)sq_serverReloadGameMode ,1, ".");
-	RegisterFunction(vM, "serverChangeGamemode", (SQFUNCTION)sq_serverChangeGameMode ,1, ".s");
+	RegisterFunction(vM, "serverReloadGamemode", (SQFUNCTION)sq_serverReloadGameMode, 1, ".");
+	RegisterFunction(vM, "serverChangeGamemode", (SQFUNCTION)sq_serverChangeGameMode, 2, ".s");
+	RegisterFunction(vM, "serverConsoleCommand", (SQFUNCTION)sq_serverConsoleCommand, 3, ".ss");
 	//RegisterFunction(vM, "serverSetVisible", (SQFUNCTION)sq_serverSetVisible, 1, ".");
 
 	RegisterFunction(vM, "timerCreate", (SQFUNCTION)sq_timerCreate, 5, ".snnn");
@@ -154,51 +155,52 @@ int Init(SQVM* vM)
 	RegisterVariable(vM, "PLAYER_LEFTLEG", 4);
 	RegisterVariable(vM, "PLAYER_TORSO", 5);
 	RegisterVariable(vM, "PLAYER_HEAD", 6);
+
 	// keyboard const.
-	RegisterVariable(vM, "VK_BACK", (int)0x08);
-	RegisterVariable(vM, "VK_TAB", (int)0x09);
-	RegisterVariable(vM, "VK_RETURN", (int)0x0D);
-	RegisterVariable(vM, "VK_SPACE", (int)0x20);
-	RegisterVariable(vM, "VK_LEFT", (int)0x25);
-	RegisterVariable(vM, "VK_RIGHT", (int)0x27);
-	RegisterVariable(vM, "VK_UP", (int)0x26);
-	RegisterVariable(vM, "VK_DOWN", (int)0x28);
-	RegisterVariable(vM, "VK_NUM0", (int)0x30);
-	RegisterVariable(vM, "VK_NUM1", (int)0x31);
-	RegisterVariable(vM, "VK_NUM2", (int)0x32);
-	RegisterVariable(vM, "VK_NUM3", (int)0x33);
-	RegisterVariable(vM, "VK_NUM4", (int)0x34);
-	RegisterVariable(vM, "VK_NUM5", (int)0x35);
-	RegisterVariable(vM, "VK_NUM6", (int)0x36);
-	RegisterVariable(vM, "VK_NUM7", (int)0x37);
-	RegisterVariable(vM, "VK_NUM8", (int)0x38);
-	RegisterVariable(vM, "VK_NUM9", (int)0x39);
-	RegisterVariable(vM, "VK_A", (int)0x41);
-	RegisterVariable(vM, "VK_B", (int)0x42);
-	RegisterVariable(vM, "VK_C", (int)0x43);
-	RegisterVariable(vM, "VK_D", (int)0x44);
-	RegisterVariable(vM, "VK_E", (int)0x45);
-	RegisterVariable(vM, "VK_F", (int)0x46);
-	RegisterVariable(vM, "VK_G", (int)0x47);
-	RegisterVariable(vM, "VK_H", (int)0x48);
-	RegisterVariable(vM, "VK_I", (int)0x49);
-	RegisterVariable(vM, "VK_J", (int)0x4A);
-	RegisterVariable(vM, "VK_K", (int)0x4B);
-	RegisterVariable(vM, "VK_L", (int)0x4C);
-	RegisterVariable(vM, "VK_M", (int)0x4D);
-	RegisterVariable(vM, "VK_N", (int)0x4E);
-	RegisterVariable(vM, "VK_O", (int)0x4F);
-	RegisterVariable(vM, "VK_P", (int)0x50);
-	RegisterVariable(vM, "VK_Q", (int)0x51);
-	RegisterVariable(vM, "VK_R", (int)0x52);
-	RegisterVariable(vM, "VK_S", (int)0x53);
-	RegisterVariable(vM, "VK_T", (int)0x54);
-	RegisterVariable(vM, "VK_U", (int)0x55);
-	RegisterVariable(vM, "VK_V", (int)0x56);
-	RegisterVariable(vM, "VK_W", (int)0x57);
-	RegisterVariable(vM, "VK_X", (int)0x58);
-	RegisterVariable(vM, "VK_Y", (int)0x59);
-	RegisterVariable(vM, "VK_Z", (int)0x5A);
+	RegisterVariable(vM, "KEY_BACK", (int)0x08);
+	RegisterVariable(vM, "KEY_TAB", (int)0x09);
+	RegisterVariable(vM, "KEY_RETURN", (int)0x0D);
+	RegisterVariable(vM, "KEY_SPACE", (int)0x20);
+	RegisterVariable(vM, "KEY_LEFT", (int)0x25);
+	RegisterVariable(vM, "KEY_RIGHT", (int)0x27);
+	RegisterVariable(vM, "KEY_UP", (int)0x26);
+	RegisterVariable(vM, "KEY_DOWN", (int)0x28);
+	RegisterVariable(vM, "KEY_NUM0", (int)0x30);
+	RegisterVariable(vM, "KEY_NUM1", (int)0x31);
+	RegisterVariable(vM, "KEY_NUM2", (int)0x32);
+	RegisterVariable(vM, "KEY_NUM3", (int)0x33);
+	RegisterVariable(vM, "KEY_NUM4", (int)0x34);
+	RegisterVariable(vM, "KEY_NUM5", (int)0x35);
+	RegisterVariable(vM, "KEY_NUM6", (int)0x36);
+	RegisterVariable(vM, "KEY_NUM7", (int)0x37);
+	RegisterVariable(vM, "KEY_NUM8", (int)0x38);
+	RegisterVariable(vM, "KEY_NUM9", (int)0x39);
+	RegisterVariable(vM, "KEY_A", (int)0x41);
+	RegisterVariable(vM, "KEY_B", (int)0x42);
+	RegisterVariable(vM, "KEY_C", (int)0x43);
+	RegisterVariable(vM, "KEY_D", (int)0x44);
+	RegisterVariable(vM, "KEY_E", (int)0x45);
+	RegisterVariable(vM, "KEY_F", (int)0x46);
+	RegisterVariable(vM, "KEY_G", (int)0x47);
+	RegisterVariable(vM, "KEY_H", (int)0x48);
+	RegisterVariable(vM, "KEY_I", (int)0x49);
+	RegisterVariable(vM, "KEY_J", (int)0x4A);
+	RegisterVariable(vM, "KEY_K", (int)0x4B);
+	RegisterVariable(vM, "KEY_L", (int)0x4C);
+	RegisterVariable(vM, "KEY_M", (int)0x4D);
+	RegisterVariable(vM, "KEY_N", (int)0x4E);
+	RegisterVariable(vM, "KEY_O", (int)0x4F);
+	RegisterVariable(vM, "KEY_P", (int)0x50);
+	RegisterVariable(vM, "KEY_Q", (int)0x51);
+	RegisterVariable(vM, "KEY_R", (int)0x52);
+	RegisterVariable(vM, "KEY_S", (int)0x53);
+	RegisterVariable(vM, "KEY_T", (int)0x54);
+	RegisterVariable(vM, "KEY_U", (int)0x55);
+	RegisterVariable(vM, "KEY_V", (int)0x56);
+	RegisterVariable(vM, "KEY_W", (int)0x57);
+	RegisterVariable(vM, "KEY_X", (int)0x58);
+	RegisterVariable(vM, "KEY_Y", (int)0x59);
+	RegisterVariable(vM, "KEY_Z", (int)0x5A);
 
 	RegisterVariable(vM, "SQLITE_ERROR", 1);
 	RegisterVariable(vM, "SQLITE_INTERNAL", 2);

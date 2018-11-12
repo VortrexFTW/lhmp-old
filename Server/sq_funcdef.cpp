@@ -10,6 +10,7 @@
 #include <sqlite3.h>
 #include <SQLiteResultPool.h>
 #include <stdio.h>
+#include <iostream>
 
 // Allow weak algorithms (MD5 only)
 #define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
@@ -30,6 +31,8 @@
 #include "mysql.h"
 
 extern CCore* g_CCore;
+using namespace std;
+
 
 SQInteger sq_banIP(SQVM *vm)
 {
@@ -257,6 +260,7 @@ SQInteger sq_sendPlayerMessage(SQVM *vm)
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID), false);
 	return 1;
 }
+
 SQInteger sq_sendAllMessage(SQVM *vm)
 {
 	const SQChar*		pMessage;
@@ -267,6 +271,17 @@ SQInteger sq_sendAllMessage(SQVM *vm)
 	bsOut.Write((unsigned short)strlen(pMessage));
 	bsOut.Write(pMessage);
 	g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
+	return 1;
+}
+
+SQInteger sq_sendConsoleMessage(SQVM *vm)
+{
+	const SQChar*		pMessage;
+	sq_getstring(vm, -1, &pMessage);
+
+	char buff[255];
+	sprintf(buff, "%s", (char*)pMessage);
+	std::cout << buff << endl;
 	return 1;
 }
 
@@ -778,8 +793,7 @@ SQInteger sq_serverGetGamemodeName(SQVM *vm)
 
 SQInteger sq_serverReloadGameMode(SQVM *vm)
 {
-	g_CCore->ReloadGamemode();
-	sq_pushnull(vm);
+	g_CCore->ReloadGamemodeFromScripts();
 	return 1;
 }
 
@@ -787,7 +801,37 @@ SQInteger sq_serverChangeGameMode(SQVM *vm)
 {
 	const SQChar* modename;
 	sq_getstring(vm, -1, &modename);
-	g_CCore->ChangeModeTo((char*)modename);
+
+	g_CCore->ChangeGamemodeFromScripts((char*)modename);
+
+	// Vortrex's attempt at writing directly to console.
+	//char buff[255];
+	//sprintf(buff, "reload %s", (char*)modename);
+	//std::cout << buff << endl;
+
+	// Vortrex's attempt at processing via console command
+	//g_CCore->GetConsole()->ProcessConsoleCommand((char*)command, (char*)args);
+
+	// Vortrex's attempt at reloading the gamemode directly
+	//g_CCore->ReloadGamemode();
+	return 1;
+}
+
+SQInteger sq_serverConsoleCommand(SQVM *vm)
+{
+	const SQChar* command;
+	const SQChar* args;
+	sq_getstring(vm, -2, &command);
+	sq_getstring(vm, -1, &args);
+	
+	// Vortrex's attempt at writing directly to console (stupid workaround, will redo on it later)
+	//char buff[255];
+	//sprintf(buff, "%s %s", (char*)command, (char*)args);
+	//std::cout << buff << endl;
+
+	// Vortrex's attempt at processing via console command
+	g_CCore->GetConsole()->ProcessConsoleCommand((char*)command, (char*)args);
+
 	return 1;
 }
 
@@ -835,7 +879,7 @@ SQInteger sq_serverSetDefaultMap(SQVM *vm)
 
 SQInteger sq_playerAddWeapon(SQVM *vm)
 {
-	SQInteger ID,weaponID,ammo,ammoSecond;
+	SQInteger ID, weaponID, ammo, ammoSecond;
 	sq_getinteger(vm, -4, &ID);
 	sq_getinteger(vm, -3, &weaponID);
 	sq_getinteger(vm, -2, &ammo);
@@ -1600,7 +1644,6 @@ SQInteger sq_iniGetParam(SQVM *vm)
 	sq_getstring(vm, -2, &param);
 	sq_getstring(vm, -3, &file);
 
-
 	SQChar out[256];
 
 	//g_CCore->GetFileSystem()->iniGetParam(file, param, out);
@@ -1615,7 +1658,6 @@ SQInteger sq_iniFileExists(SQVM *vm)
 	const SQChar* file;
 
 	sq_getstring(vm, -1, &file);
-
 
 	char filepath[256] = "";
 	sprintf(filepath, "gamemodes/%s/%s", g_CCore->GetGameMode()->GetName(), file);
@@ -1744,11 +1786,10 @@ SQInteger sq_iniCreateFile(SQVM *vm)
 	return 1;
 }
 
-
 SQInteger sq_callClientFunc(SQVM *vm)
 {
 	SQInteger	playerID;
-	const SQChar* script_name,*func_name;
+	const SQChar* script_name, *func_name;
 
 	sq_getinteger(vm, -4, &playerID);
 	sq_getstring(vm, -3, &script_name);

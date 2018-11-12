@@ -191,15 +191,13 @@ void CGameMode::ReloadGameMode()
 
 	this->UnloadGameMode();
 	this->LoadGameMode(tempname);
-
-	printf("Fucking name '%s' \n", tempname);
-
 }
 
 void	CGameMode::SetName(char* name)
 {
 	sprintf(this->pGamemodeName, "%s", name);
 }
+
 char*	CGameMode::GetName()
 {
 	return this->pGamemodeName;
@@ -253,7 +251,6 @@ void	CGameMode::AddClientScript(char* script)
 	}
 	this->clientPoolSize++;
 }
-
 
 // Send the whole list of client-side scripts to @client
 void CGameMode::SendClientScripts(RakNet::SystemAddress client)

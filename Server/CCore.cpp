@@ -36,11 +36,9 @@ void CCore::OnSecondElapsed()
 
 	// update console's title
 	m_cNetworkManager.UpdateConsoleName();
-
-
 }
 
-int CCore::Init(int port,int players, std::string startpos, std::string svrname,std::string mode, int visible, char* website, char* password)
+int CCore::Init(int port, int players, std::string startpos, std::string svrname, std::string mode, int visible, char* website, char* password)
 {
 	if (m_cNetworkManager.Init(port, players, startpos, mode,password) == false)
 		return STARTUP_NETWORK_FAILED;
@@ -62,11 +60,23 @@ void CCore::ReloadGamemode()
 	this->ChangeModeTo(this->GetGameMode()->GetName());
 }
 
+void CCore::ReloadGamemodeFromScripts()
+{
+	Sleep(1000);
+	this->ChangeModeTo(this->GetGameMode()->GetName());
+}
+
+void CCore::ChangeGamemodeFromScripts(char* newmode)
+{
+	Sleep(1000);
+	this->ChangeModeTo(newmode);
+}
 
 void	CCore::ChangeModeTo(char* newmode)
 {
 	this->GetLog()->AddNormalLog("===============================================================================");
 	this->GetLog()->AddNormalLog("Changing mode to: '%s'", newmode);
+	
 	// it's neccessary to backup, @newmode might be rewritten during Unloadgamemode()
 	char modeToLoad[512];
 	strcpy(modeToLoad, newmode);
@@ -76,32 +86,11 @@ void	CCore::ChangeModeTo(char* newmode)
 	bsOutR.Write((RakNet::MessageID)ID_SERVERRELOAD);
 	this->GetNetworkManager()->GetPeer()->Send(&bsOutR, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, UNASSIGNED_SYSTEM_ADDRESS, true);
 
-
 	// reload gamemode
 	this->GetGameMode()->UnloadGameMode();
 
-
-	/*// Delete all players
-	for (int i = 0; i < MAX_PLAYERS; i++)
-	{
-		this->GetPlayerPool()->Delete(i);
-	}
-
-	// Delete all vehicles
-	for (int i = 0; i < MAX_VEHICLES; i++)
-	{
-		this->GetVehiclePool()->Delete(i);
-	}
-
-	// reset the doors' pool
-	this->GetDoorPool()->Reset();
-
-	// reset all files
-	this->GetFileTransfer()->Reset();*/
-
 	// everything is set to default, now load gamemode
 	this->GetGameMode()->LoadGameMode(modeToLoad);
-
 
 	this->GetScripts()->onServerInit();
 
@@ -120,14 +109,17 @@ CNetworkManager*	CCore::GetNetworkManager()
 {
 	return &m_cNetworkManager;
 }
+
 CTickManager*		CCore::GetTickManager()
 {
 	return &m_cTickManager;
 }
+
 CPlayerPool*		CCore::GetPlayerPool()
 {
 	return &m_cPlayerPool;
 }
+
 CVehiclePool*		CCore::GetVehiclePool()
 {
 	return &m_cVehiclePool;

@@ -229,6 +229,7 @@ bool CScripts::onPlayerText(int playerId, const char *text)
 	}
 	return ret;
 }
+
 void CScripts::onPlayerCommand(int playerId, const char *text, const char* params)
 {
 	bool ret = true;
@@ -254,14 +255,57 @@ void CScripts::onPlayerCommand(int playerId, const char *text, const char* param
 				// Push the player id onto the stack
 				sq_pushinteger(pVM, playerId);
 
-				// Push the text onto the stack
+				// Push the command onto the stack
 				sq_pushstring(pVM, text, -1);
+
+				// Push the command args onto the stack
+				sq_pushstring(pVM, params, -2);
+
+				// Call the function
+				if (!SQ_FAILED(sq_call(pVM, 4, false, true)))
+				{
+					/*SQBool result;
+					sq_getbool(pVM, sq_gettop(pVM), &result);
+					if (result == false) ret = false;*/
+				}
+			}
+
+			// Restore the stack top
+			sq_settop(pVM, iTop);
+		}
+	}
+}
+
+// Added by Vortrex (12NOV2018)
+void CScripts::onConsoleCommand(const char *command, const char* params)
+{
+	bool ret = true;
+	for (int i = 0; i < MAX_SCRIPTS; i++) {
+		if (m_pScripts[i]) {
+			// get the script vm pointer
+			SQVM * pVM = m_pScripts[i]->GetVM();
+
+			// Get the stack top
+			int iTop = sq_gettop(pVM);
+
+			// Push the root table onto the stack
+			sq_pushroottable(pVM);
+
+			// Push the function name onto the stack
+			sq_pushstring(pVM, "onConsoleCommand", -1);
+
+			// Get the closure for the function
+			if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
+				// Push the root table onto the stack
+				sq_pushroottable(pVM);
+
+				// Push the text onto the stack
+				sq_pushstring(pVM, command, -1);
 
 				sq_pushstring(pVM, params, -2);
 
 				// Call the function
-				// Call the function
-				if (!SQ_FAILED(sq_call(pVM, 4, false, true)))
+				if (!SQ_FAILED(sq_call(pVM, 3, false, true)))
 				{
 					/*SQBool result;
 					sq_getbool(pVM, sq_gettop(pVM), &result);
@@ -300,12 +344,6 @@ void CScripts::onPlayerConnect(int playerID)
 				// Push the player id onto the stack
 				sq_pushinteger(pVM, playerID);
 
-			/*	// Push the text onto the stack
-				sq_pushstring(pVM, text, -1);
-
-				sq_pushstring(pVM, params, -2);
-				*/
-				// Call the function
 				// Call the function
 				if (!SQ_FAILED(sq_call(pVM, 2, false, true)))
 				{
@@ -320,6 +358,7 @@ void CScripts::onPlayerConnect(int playerID)
 		}
 	}
 }
+
 void CScripts::onServerTick(int ticks)
 {
 	bool ret = true;
@@ -365,6 +404,7 @@ void CScripts::onServerTick(int ticks)
 		}
 	}
 }
+
 void CScripts::onServerTickSecond(int ticks)
 {
 	bool ret = true;
@@ -1010,14 +1050,14 @@ void CScripts::callServerFunc(int playerID, BitStream* bsIn)
 	bsIn->Read(script_name);
 	bsIn->Read(func_name);
 
-	g_CCore->GetLog()->AddNormalLog("callServerFunc[%d] [%s][%s]", playerID, script_name, func_name);
+	//g_CCore->GetLog()->AddNormalLog("callServerFunc[%d] [%s][%s]", playerID, script_name, func_name);
 
 	CScript* pointer = NULL;
 	for (int i = 0; i < 10; i++)
 	{
 		if (this->m_pScripts[i] != NULL)
 		{
-			g_CCore->GetLog()->AddNormalLog("Comparing: %s %s", script_name, this->m_pScripts[i]->GetScriptName());
+			//g_CCore->GetLog()->AddNormalLog("Comparing: %s %s", script_name, this->m_pScripts[i]->GetScriptName());
 			if (strcmp(this->m_pScripts[i]->GetScriptName(),script_name) == 0)
 			{
 				pointer = this->m_pScripts[i];
@@ -1025,8 +1065,6 @@ void CScripts::callServerFunc(int playerID, BitStream* bsIn)
 			}
 		}
 	}
-
-	
 
 	if (pointer)
 	{
@@ -1079,7 +1117,7 @@ void CScripts::callServerFunc(int playerID, BitStream* bsIn)
 				break;
 			}
 
-			g_CCore->GetLog()->AddNormalLog("Calling func");
+			//g_CCore->GetLog()->AddNormalLog("Calling func");
 			sq_call(pointer->GetVM(), 3, true, true);
 		}
 		sq_settop(pointer->GetVM(), iTop);
@@ -1101,7 +1139,7 @@ bool CScripts::callFunc(SQVM *vm)
 	{
 		if (this->m_pScripts[i] != NULL)
 		{
-			g_CCore->GetLog()->AddNormalLog("Comparing: %s %s", script_name, this->m_pScripts[i]->GetScriptName());
+			//g_CCore->GetLog()->AddNormalLog("Comparing: %s %s", script_name, this->m_pScripts[i]->GetScriptName());
 			if (strcmp(this->m_pScripts[i]->GetScriptName(), script_name) == 0)
 			{
 				pointer = this->m_pScripts[i];

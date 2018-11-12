@@ -2755,7 +2755,6 @@ void CGame::OnCarShot()
 	byte damage = *(byte*)(car + 0x2094);
 
 	int myID = g_CCore->GetLocalPlayer()->GetOurID();
-	//int wepID = g_CCore->GetLocalPlayer()->
 
 	int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(car);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
@@ -2775,7 +2774,6 @@ void CGame::OnCarShot()
 		g_CCore->GetLog()->AddLog(buff);
 	}
 }
-
 
 void CGame::DisableBridges()
 {

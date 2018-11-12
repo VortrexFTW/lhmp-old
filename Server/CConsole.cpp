@@ -5,16 +5,15 @@
 
 #include <lhmp_tools.h>
 #ifndef _WIN32
-//#include <pthread.h>
-//extern pthread_t tid;
+	#include <pthread.h>
+	extern pthread_t tid;
 #endif // _WIN32
 extern CCore *g_CCore;
 
 #ifdef _WIN32
-void ConsoleThread(){
-#else
-//void* ConsoleThread(void *arg){
 void ConsoleThread() {
+#else
+void* ConsoleThread(void *arg){
 #endif // _WIN32
 	while (1)
 	{
@@ -22,13 +21,14 @@ void ConsoleThread() {
 		RakSleep(50);
 	}
 }
+
 void CConsole::Init()
 {
 	// init selfstanding thread for console input
-    #ifdef _WIN32
-	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)&ConsoleThread, 0, NULL, NULL);
+	#ifdef _WIN32
+		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)&ConsoleThread, 0, NULL, NULL);
 	#else
-	//pthread_create(&tid,NULL,&ConsoleThread,NULL);
+		pthread_create(&tid, NULL, &ConsoleThread, NULL);
 	#endif
 }
 
@@ -55,18 +55,22 @@ void CConsole::Tick()
 		command[(pch - buff)] = '\0';
 		memcpy(varlist, pch + 1, strlen(pch));
 	}
-	// if 'exit'/'quit'
+
+	this->ProcessConsoleCommand(command, varlist);
+}
+
+void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 	if (strcmp(command, "exit") == 0 || strcmp(command, "quit") == 0)
 	{
-		// quit whole server
 		g_CCore->GetLog()->AddNormalLog("Exit");
 		g_CCore->GetNetworkManager()->GetPeer()->Shutdown(100, 0, IMMEDIATE_PRIORITY);
-		#ifdef _WIN32
+#ifdef _WIN32
 		TerminateProcess(GetCurrentProcess(), 0);
-		#else
+#else
 		exit(0);
-		#endif
-	} else if (strcmp(command, "help") == 0)
+#endif
+	}
+	else if (strcmp(command, "help") == 0)
 	{
 		g_CCore->GetLog()->AddNormalLog("List of commands:");
 		g_CCore->GetLog()->AddNormalLog("-> help:\t this help");
@@ -76,10 +80,10 @@ void CConsole::Tick()
 		g_CCore->GetLog()->AddNormalLog("-> reload:\t reload current gamemode");
 		g_CCore->GetLog()->AddNormalLog("-> exit:\t shutdown server");
 		g_CCore->GetLog()->AddNormalLog("-> quit:\t shutdown server");
-		g_CCore->GetLog()->AddNormalLog("-> tickdelay:\t set timeout between server ticks in ms");
-	} else if (strcmp(command, "kick") == 0)
+	}
+	else if (strcmp(command, "kick") == 0)
 	{
-		if (strlen(varlist) == 0 || Tools::isStringNumeric(varlist) == false)
+		if (strlen(varlist) == 0 || Tools::isStringNumeric((char*)varlist) == false)
 		{
 			g_CCore->GetLog()->AddNormalLog("Usage: kick <ID>");
 		}
@@ -104,12 +108,10 @@ void CConsole::Tick()
 			g_CCore->GetNetworkManager()->SendMessageToAll(message);
 		}
 	}
-
 	else if (strcmp(command, "reload") == 0)
 	{
 		g_CCore->ReloadGamemode();
 	}
-
 	else if (strcmp(command, "load") == 0)
 	{
 		//g_CCore->GetLog()->AddNormalLog("Varlist[%d]: '%s'",strlen(varlist),varlist);
@@ -119,11 +121,10 @@ void CConsole::Tick()
 		}
 		else
 		{
-			g_CCore->ChangeModeTo(varlist);
+			g_CCore->ChangeModeTo((char*)varlist);
 		}
 	}
-
-	if (strcmp(command, "pl") == 0)
+	else if (strcmp(command, "pl") == 0)
 	{
 		// get real player count
 		int pocet = 0;
@@ -133,6 +134,10 @@ void CConsole::Tick()
 			if (player != NULL)
 				pocet++;
 		}
-		g_CCore->GetLog()->AddNormalLog("Count: %d",pocet);
+		g_CCore->GetLog()->AddNormalLog("Count: %d", pocet);
+	}
+	else
+	{
+		g_CCore->GetScripts()->onConsoleCommand(command, varlist);
 	}
 }

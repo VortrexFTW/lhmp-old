@@ -816,6 +816,7 @@ _declspec(naked) void Hook_CollisionDamage()
 		fst dword ptr[ecx + 0x234]
 	}
 	g_CCore->GetGame()->OnCollision();
+	g_CCore->GetGame()->OnCarShot();
 	_asm {
 		localIsNotInCar:
 		popad
@@ -1491,31 +1492,32 @@ bool IsCarAbandoned(DWORD car)
 	return true;
 }
 
-_declspec (naked) void Hook_PreventCarMoveWhenAbandoned()
-{
-	_asm {
-		pushad
-			sub ESI, 0x70
-			push ESI
-			call IsCarAbandoned
-			add ESP, 0x4
-			cmp EAX, 1
-			popad
-			JE end
-
-			// entire move
-			PUSH ECX
-			PUSH EDX
-			PUSH EAX
-			MOV ECX, ESI
-			MOV EAX, 0x0052E6D0
-			CALL EAX; 0x0052E6D0
-
-	end:
-		PUSH 0x0052D311
-		ret
-	}
-}
+// Removed by Vortrex to enable car coasting
+//_declspec (naked) void Hook_PreventCarMoveWhenAbandoned()
+//{
+//	_asm {
+//		pushad
+//			sub ESI, 0x70
+//			push ESI
+//			call IsCarAbandoned
+//			add ESP, 0x4
+//			cmp EAX, 1
+//			popad
+//			JE end
+//
+//			// entire move
+//			PUSH ECX
+//			PUSH EDX
+//			PUSH EAX
+//			MOV ECX, ESI
+//			MOV EAX, 0x0052E6D0
+//			CALL EAX; 0x0052E6D0
+//
+//	end:
+//		PUSH 0x0052D311
+//		ret
+//	}
+//}
 
 //-------------------------------- Hit call back -----------------------------
 bool OnHitCallback(DWORD victim,DWORD reason, DWORD unk1, DWORD unk2, DWORD unk3, float damage, DWORD attacker,  DWORD playerPart,DWORD unk4)
@@ -2022,7 +2024,7 @@ void SetHooks()
 	Tools::InstallJmpHook(0x004CBC3C, (DWORD)&Hook_OnPlayerHit02);
 
 	// This should make car static
-	Tools::InstallJmpHook(0x0052D307, (DWORD)&Hook_PreventCarMoveWhenAbandoned);
+	//Tools::InstallJmpHook(0x0052D307, (DWORD)&Hook_PreventCarMoveWhenAbandoned);
 
 
 	// 005E1029

@@ -8,8 +8,11 @@
 
 SQInteger sq_banIP(SQVM *vm);
 SQInteger sq_banPlayer(SQVM *vm);
+
 SQInteger sq_sendPlayerMessage(SQVM *vm);
 SQInteger sq_sendAllMessage(SQVM *vm); 
+SQInteger sq_sendConsoleMessage(SQVM *vm);
+
 SQInteger sq_playerChangeSkin(SQVM *vm);
 SQInteger sq_playerIsConnected(SQVM *vm);
 SQInteger sq_playerGetSkinID(SQVM *vm); 
@@ -46,11 +49,12 @@ SQInteger sq_playerConsoleAddText(SQVM *vm);
 SQInteger sq_playerLockControls(SQVM *vm);
 SQInteger sq_playerIsLocked(SQVM *vm);
 SQInteger sq_playerSetNickColor(SQVM *vm);
-SQInteger sq_allPlaySound(SQVM *vm);
-SQInteger sq_guiToggleNametag(SQVM *vm);
-
 SQInteger sq_playerSetCameraPos(SQVM *vm);
 SQInteger sq_playerSetCameraToDefault(SQVM *vm);
+
+SQInteger sq_allPlaySound(SQVM *vm);
+
+SQInteger sq_guiToggleNametag(SQVM *vm);
 
 SQInteger sq_vehicleSpawn(SQVM *vm);
 SQInteger sq_vehicleDelete(SQVM *vm);
@@ -86,6 +90,7 @@ SQInteger sq_serverGetMaxPlayers(SQVM *vm);
 SQInteger sq_serverSetDefaultMap(SQVM *vm);
 SQInteger sq_serverReloadGameMode(SQVM *vm);
 SQInteger sq_serverChangeGameMode(SQVM *vm);
+SQInteger sq_serverConsoleCommand(SQVM *vm);
 //SQInteger sq_serverSetVisible(SQVM *vm);
 
 SQInteger sq_timerCreate(SQVM *vm);

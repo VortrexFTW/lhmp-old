@@ -64,7 +64,9 @@ public:
 
 	// Reloads actuall mode
 	void	ReloadGamemode();
+	void	ReloadGamemodeFromScripts();
 	void	ChangeModeTo(char* newmode);
+	void	ChangeGamemodeFromScripts(char* newmode);
 
 	// return subclasses
 

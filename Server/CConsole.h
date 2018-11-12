@@ -10,5 +10,6 @@ public:
 	void Init();
 	// function which checks console input
 	void Tick();
+	void ProcessConsoleCommand(const char*, const char*);
 };
 #endif
