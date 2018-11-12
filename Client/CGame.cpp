@@ -33,7 +33,8 @@ void CGame::UpdateCars()
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(i);
 		if (veh != NULL)
 		{
-			veh->Interpolate();
+			if (veh->m_bStreamedIn)
+				veh->Interpolate();
 		}
 	}
 }
@@ -193,6 +194,34 @@ void CGame::Tick()
 			{
 				Tools::SetString((DWORD)globalMap, this->mapName);
 				g_CCore->GetGame()->ChangeMap((char*)globalMap, "");
+			}
+		}
+	}
+
+	for (int e = 0; e < MAX_VEHICLES; e++)
+	{
+		CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
+		if (veh != NULL)
+		{
+			if (veh->IsActive())
+			{
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				if (bWithinStreamingDistance)
+				{
+					if (!veh->m_bStreamedIn)
+					{
+						veh->m_bStreamedIn = true;
+						g_CCore->GetGame()->CreateCar2(e, veh);
+					}
+				}
+				else
+				{
+					if (veh->m_bStreamedIn)
+					{
+						veh->m_bStreamedIn = false;
+						g_CCore->GetGame()->DeleteCar(veh->GetEntity());
+					}
+				}
 			}
 		}
 	}
@@ -809,34 +838,12 @@ void CGame::AfterRespawn()
 		{
 			if (veh->IsActive())
 			{
-				DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
-				veh->SetEntity(base);
-				for (int i = 0; i < 4; i++)
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				if (bWithinStreamingDistance)
 				{
-					if (veh->GetSeat(i) != -1)
-					{
-						CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
-						if (ped != NULL)
-						{
-							if (ped->GetEntity() != NULL)
-							{
-								g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), e, i);
-							}
-							else
-							{
-								// shit
-								g_CCore->GetLog()->AddLog("Error [CreateCar] - no PED entity available for sitting");
-							}
-							ped->InCar = e;
-						}
-					}
+					veh->m_bStreamedIn = true;
+					g_CCore->GetGame()->CreateCar2(e, veh);
 				}
-				veh->SetDamage(veh->GetDamage());
-				veh->SetShotDamage(veh->GetShotDamage());
-				veh->ToggleRoof(veh->GetRoofState());
-				veh->SetSirenState(veh->GetSirenState());
-				veh->ToggleEngine(veh->GetEngineState());
-				veh->SetLightState(veh->GetLightState());
 			}
 		}
 	}
@@ -897,6 +904,38 @@ void CGame::AfterRespawn()
 	char buffer[100];
 	sprintf(buffer, "Respawn ended. Elapsed time: %u", (RakNet::GetTimeMS() - afterrespawnStart));
 	g_CCore->GetLog()->AddLog(buffer);
+}
+
+void CGame::CreateCar2(int e, CVehicle *veh)
+{
+	DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
+	veh->SetEntity(base);
+	for (int i = 0; i < 4; i++)
+	{
+		if (veh->GetSeat(i) != -1)
+		{
+			CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
+			if (ped != NULL)
+			{
+				if (ped->GetEntity() != NULL)
+				{
+					g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), e, i);
+				}
+				else
+				{
+					// shit
+					g_CCore->GetLog()->AddLog("Error [CreateCar] - no PED entity available for sitting");
+				}
+				ped->InCar = e;
+			}
+		}
+	}
+	veh->SetDamage(veh->GetDamage());
+	veh->SetShotDamage(veh->GetShotDamage());
+	veh->ToggleRoof(veh->GetRoofState());
+	veh->SetSirenState(veh->GetSirenState());
+	veh->ToggleEngine(veh->GetEngineState());
+	veh->SetLightState(veh->GetLightState());
 }
 
 void CGame::ThrowAwayWeapon()

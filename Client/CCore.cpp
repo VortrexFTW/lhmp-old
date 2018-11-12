@@ -199,7 +199,7 @@ void CCore::Run()
 	DWORD* switchTable = (DWORD*)0x5C7700;
 	DWORD lpflOldProtect;
 
-	increaseLimits(void);
+	//increaseLimits(void);
 
 	// unprotect the goal memory in order to avoid 'access violations'
 	VirtualProtect((void*)switchTable, 4 * 390, PAGE_EXECUTE_READWRITE, &lpflOldProtect);

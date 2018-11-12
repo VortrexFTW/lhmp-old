@@ -10,6 +10,8 @@ private:
 	byte			isSpawned;
 	bool			isStarted;
 
+
+
 	// interpolation
 	Vector3D		actual, previous;
 	RakNet::TimeMS	timeLastMessage;
@@ -111,5 +113,7 @@ public:
 
 	DWORD		GetExplodedCar();
 	void		SetExplodedCar(DWORD);
+
+	bool		m_bStreamedIn;
 };
 #endif

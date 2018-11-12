@@ -19,6 +19,7 @@
 #define NO_CAR		(int) -1
 #define NO_PLAYER	(int) -1
 
+#define VEHICLE_STREAMING_DISTANCE 250.0f
 
 #ifndef _WIN32
 typedef unsigned char byte;
