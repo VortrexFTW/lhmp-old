@@ -847,6 +847,19 @@ SQInteger sq_serverSetGamemodeName(SQVM *vm)
 	return 1;
 }
 
+SQInteger sq_httpRequest(SQVM *vm)
+{
+	const SQChar* url;
+	sq_getstring(vm, -3, &url);
+	const SQChar* params;
+	sq_getstring(vm, -2, &params);
+	SQBool		usepost;
+	sq_getbool(vm, -1, &usepost);
+
+	// Do stuff
+	return 1;
+}
+
 //SQInteger sq_serverSetVisible(SQVM *vm)
 //{
 //	const SQBool* visible;

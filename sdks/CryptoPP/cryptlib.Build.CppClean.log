@@ -1,5 +1,2 @@
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\adhoc.cpp.copied
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\rdrand-x86.obj
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\cryptopp.tlog\custombuild.command.1.tlog
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\cryptopp.tlog\custombuild.read.1.tlog
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\cryptopp.tlog\custombuild.write.1.tlog
+d:\abram\dev\git\lhmp-old\sdks\cryptopp\cryptlib.pch
+d:\abram\dev\git\lhmp-old\sdks\cryptopp\.\cryptlib.lib
