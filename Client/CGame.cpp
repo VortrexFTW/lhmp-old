@@ -198,28 +198,33 @@ void CGame::Tick()
 		}
 	}
 
-	for (int e = 0; e < MAX_VEHICLES; e++)
+	DWORD localPed = (DWORD)GetLocalPED();
+	// if localPed is spawned
+	if (localPed)
 	{
-		CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
-		if (veh != NULL)
+		for (int e = 0; e < MAX_VEHICLES; e++)
 		{
-			if (veh->IsActive())
+			CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
+			if (veh != NULL)
 			{
-				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-				if (bWithinStreamingDistance)
+				if (veh->IsActive())
 				{
-					if (!veh->m_bStreamedIn)
+					bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+					if (bWithinStreamingDistance)
 					{
-						veh->m_bStreamedIn = true;
-						g_CCore->GetGame()->CreateCar2(e, veh);
+						if (!veh->m_bStreamedIn)
+						{
+							veh->m_bStreamedIn = true;
+							g_CCore->GetGame()->CreateCar2(e, veh);
+						}
 					}
-				}
-				else
-				{
-					if (veh->m_bStreamedIn)
+					else
 					{
-						veh->m_bStreamedIn = false;
-						g_CCore->GetGame()->DeleteCar(veh->GetEntity());
+						if (veh->m_bStreamedIn)
+						{
+							veh->m_bStreamedIn = false;
+							g_CCore->GetGame()->DeleteCar(veh->GetEntity());
+						}
 					}
 				}
 			}
@@ -839,7 +844,7 @@ void CGame::AfterRespawn()
 			if (veh->IsActive())
 			{
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-				if (bWithinStreamingDistance)
+				if (bWithinStreamingDistance && veh->GetEntity() == NULL)
 				{
 					veh->m_bStreamedIn = true;
 					g_CCore->GetGame()->CreateCar2(e, veh);
