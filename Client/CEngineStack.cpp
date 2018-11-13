@@ -445,40 +445,40 @@ void CEngineStack::DoMessage()
 			else
 			{
 				g_CCore->GetLog()->AddLog("ES CREATECAR");
-				DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(),veh->GetPosition(),veh->GetRotation());
-				veh->SetEntity(base);
-				for (int i = 0; i < 4; i++)
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				if (bWithinStreamingDistance)
 				{
-					if (veh->GetSeat(i) != -1)
+					veh->m_bStreamedIn = true;
+
+					DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
+					veh->SetEntity(base);
+					for (int i = 0; i < 4; i++)
 					{
-						CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
-						if (ped != NULL)
+						if (veh->GetSeat(i) != -1)
 						{
-							if (ped->GetEntity() != NULL)
+							CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
+							if (ped != NULL)
 							{
-								g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), start->data, i);
+								if (ped->GetEntity() != NULL)
+								{
+									g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), start->data, i);
+								}
+								else
+								{
+									// shit
+									g_CCore->GetLog()->AddLog("ES[CreateCar] - no PED entity");
+								}
+								ped->InCar = start->data;
 							}
-							else
-							{
-								// shit
-								g_CCore->GetLog()->AddLog("ES[CreateCar] - no PED entity");
-							}
-							ped->InCar = start->data;
 						}
 					}
+					veh->SetDamage(veh->GetDamage());
+					veh->SetShotDamage(veh->GetShotDamage());
+					veh->ToggleRoof(veh->GetRoofState());
+					veh->ToggleEngine(veh->GetEngineState());
+					veh->SetSirenState(veh->GetSirenState());
+					veh->SetLightState(veh->GetLightState());
 				}
-				veh->SetDamage(veh->GetDamage());
-				veh->SetShotDamage(veh->GetShotDamage());
-				veh->ToggleRoof(veh->GetRoofState());
-				veh->ToggleEngine(veh->GetEngineState());
-				veh->SetSirenState(veh->GetSirenState());
-
-				/*for (int i = 0; i < 4; i++)
-				{
-					if (veh->seea)
-				}*/
-				//g_CCore->GetGame()->SetCarPosition(veh->GetEntity(), veh->GetPosition());
-				//g_CCore->GetGame()->SetCarRotation(veh->GetEntity(), veh->GetRotation());
 			}
 		}
 		break;
@@ -749,6 +749,8 @@ void CEngineStack::DoMessage()
 						veh->SetShotDamage(veh->GetShotDamage());
 						veh->ToggleRoof(veh->GetRoofState());
 						veh->ToggleEngine(veh->GetEngineState());
+						veh->SetSirenState(veh->GetSirenState());
+						veh->SetLightState(veh->GetLightState());
 					}
 					else {
 						veh->PlayerExit(g_CCore->GetLocalPlayer()->GetOurID());

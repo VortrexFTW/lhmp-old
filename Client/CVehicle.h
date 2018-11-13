@@ -38,7 +38,7 @@ private:
 	bool			onGas;	// is accelerating
 	byte            roofState;
 	byte            engineState;
-	bool			lightState;
+	bool			lightState = false;
 
 	DWORD			explodedCar;
 
@@ -114,6 +114,6 @@ public:
 	DWORD		GetExplodedCar();
 	void		SetExplodedCar(DWORD);
 
-	bool		m_bStreamedIn;
+	bool		m_bStreamedIn = false;
 };
 #endif

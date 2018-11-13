@@ -84,7 +84,7 @@ void CGraphics::Init(IDirect3DDevice8* pDxDevice)
 	m_DirectDevice = pDxDevice;
 
 	// place it as first to prevent startup crashes
-	m_cFont = new CFont("lhmp/opensans.ttf", "Open Sans", 9, D3DFONT_BOLD);
+	m_cFont = new CFont("lhmp/opensans.ttf", "Open Sans Condensed", 9, D3DFONT_BOLD);
 
 	// initialize sprite system / our sprites(textures)
 	if (SUCCEEDED(D3DXCreateSprite(m_DirectDevice, &m_sprite)))
