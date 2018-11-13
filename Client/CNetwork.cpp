@@ -163,12 +163,14 @@ void CNetworkManager::Pulse()
 			break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
 			g_CCore->GetChat()->AddMessage("#f31d2fConnection aborted, the server is full.");
+			ConnectServer();
 			break;
 		case ID_DISCONNECTION_NOTIFICATION:
 			g_CCore->GetChat()->AddMessage("#f31d2fDisconnected from the server.");
 			break;
 		case ID_CONNECTION_LOST:
 			g_CCore->GetChat()->AddMessage("#f31d2fConnection with the server lost.");
+			ConnectServer();
 			break;
 		case ID_CONNECTION_ATTEMPT_FAILED:
 			g_CCore->GetChat()->AddMessage("#f31d2fConnection failed, trying to reconnect.");
