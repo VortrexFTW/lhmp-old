@@ -541,6 +541,7 @@ float	CVehicle::GetDamage()
 {
 	return damage;
 }
+
 void	CVehicle::SetDamage(float dmg)
 {
 	this->damage = dmg;
@@ -558,6 +559,7 @@ byte	CVehicle::GetShotDamage()
 {
 	return shotdamage;
 }
+
 void	CVehicle::SetShotDamage(byte dmg)
 {
 	this->shotdamage = dmg;

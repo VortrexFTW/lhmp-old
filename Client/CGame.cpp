@@ -198,11 +198,13 @@ void CGame::Tick()
 		}
 	}
 
-	for (int e = 0; e < MAX_VEHICLES; e++)
+	DWORD localPed = (DWORD)GetLocalPED();
+	// if localPed is spawned
+	if (localPed)
 	{
-		CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
-		if (veh != NULL)
+		for (int e = 0; e < MAX_VEHICLES; e++)
 		{
+			CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
 			//if (veh->IsActive())
 			//{
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
