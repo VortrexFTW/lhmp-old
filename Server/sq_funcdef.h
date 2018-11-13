@@ -93,9 +93,10 @@ SQInteger sq_serverChangeGameMode(SQVM *vm);
 SQInteger sq_serverConsoleCommand(SQVM *vm);
 //SQInteger sq_serverSetVisible(SQVM *vm);
 
+SQInteger sq_httpRequest(SQVM *vm);
+
 SQInteger sq_timerCreate(SQVM *vm);
 SQInteger sq_timerDelete(SQVM *vm);
-
 
 SQInteger sq_pickupCreate(SQVM *vm);
 SQInteger sq_pickupDelete(SQVM *vm);
