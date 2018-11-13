@@ -3,6 +3,8 @@
 #ifndef CCORE_H
 #define	CCORE_H
 
+#include <string>
+
 #include "lhmp_linux.h"
 
 #include "CNetworkManager.h"
@@ -33,7 +35,8 @@ class CCore
 private:
 	bool				m_bIsRunning;
 public:
-	bool				m_bReloadServer;
+	bool				m_bReloadGameMode;
+	std::string			m_strReloadGameModeName;
 private:
 	CBanSystem			m_cBanSystem;
 	CNetworkManager		m_cNetworkManager;

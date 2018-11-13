@@ -5,7 +5,7 @@
 CCore::CCore()
 {
 	m_bIsRunning = true;
-	m_bReloadServer = false;
+	m_bReloadGameMode = false;
 	sprintf(m_cMapName, "freeride");
 }
 
@@ -28,10 +28,11 @@ void CCore::Pulse()
 
 	//RakSleep(tickDelay);
 
-	if (m_bReloadServer)
+	if (m_bReloadGameMode)
 	{
-		ReloadGamemodeFromScripts();
-		m_bReloadServer = false;
+		ChangeModeTo((char*)m_strReloadGameModeName.c_str());
+		m_strReloadGameModeName = "";
+		m_bReloadGameMode = false;
 	}
 }
 

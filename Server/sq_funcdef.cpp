@@ -793,7 +793,8 @@ SQInteger sq_serverGetGamemodeName(SQVM *vm)
 
 SQInteger sq_serverReloadGameMode(SQVM *vm)
 {
-	g_CCore->m_bReloadServer = true;
+	g_CCore->m_strReloadGameModeName = g_CCore->GetGameMode()->GetName();
+	g_CCore->m_bReloadGameMode = true;
 	return 1;
 }
 
@@ -802,7 +803,10 @@ SQInteger sq_serverChangeGameMode(SQVM *vm)
 	const SQChar* modename;
 	sq_getstring(vm, -1, &modename);
 
-	g_CCore->ChangeGamemodeFromScripts((char*)modename);
+	g_CCore->m_strReloadGameModeName = (char*)modename;
+	g_CCore->m_bReloadGameMode = true;
+
+	//g_CCore->ChangeGamemodeFromScripts((char*)modename);
 
 	// Vortrex's attempt at writing directly to console.
 	//char buff[255];
