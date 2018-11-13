@@ -3,6 +3,7 @@
 #ifndef __CGAME_H
 #define __CGAME_H
 
+#include <vector>
 #include <stdio.h>
 #include <string.h>
 typedef unsigned long DWORD;
@@ -111,7 +112,6 @@ private:
 	DWORD gameStart;
 	byte MusicState;
 
-
 public:
 	CGame();
 	~CGame();
@@ -167,6 +167,7 @@ public:
 	static DWORD CreatePED();
 	static void DeletePed(DWORD);
 	static void DeleteCar(DWORD);
+	static std::vector<_PED*> GetPedsInVehicle(_VEHICLE *pVehicle);
 	static void PlayAnim(DWORD, int);
 	static void PlayAnimString(DWORD, char*);
 	// Hooks

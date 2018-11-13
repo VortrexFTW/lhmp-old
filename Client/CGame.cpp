@@ -8,6 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include "lhmp_gamestructures.h"
+
 extern CCore *g_CCore;
 
 CGame::CGame()
@@ -205,8 +206,8 @@ void CGame::Tick()
 		for (int e = 0; e < MAX_VEHICLES; e++)
 		{
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
-			//if (veh->IsActive())
-			//{
+			if (veh != NULL)
+			{
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance)
 				{
@@ -219,12 +220,13 @@ void CGame::Tick()
 				{
 					if (veh->m_bStreamedIn && veh->GetEntity() != NULL)
 					{
-						DeleteCar(veh->GetEntity());
+						DWORD uiEntity = veh->GetEntity();
 						veh->SetEntity(NULL);
 						veh->m_bStreamedIn = false;
+						DeleteCar(uiEntity);
 					}
 				}
-			//}
+			}
 		}
 	}
 
@@ -1788,12 +1790,11 @@ void CGame::DeletePed(DWORD PED)
 }
 void CGame::DeleteCar(DWORD uiVehicle)
 {
+	_VEHICLE *pVehicle = (_VEHICLE*)uiVehicle;
 
-	_PED *localis = (_PED*)g_CCore->GetLocalPlayer()->GetEntity();
-	if (localis->playersCar == (_VEHICLE*)uiVehicle || localis->carLeavingOrEntering == (_VEHICLE*)uiVehicle)
-	{
-		g_CCore->GetGame()->KickPlayerFromCarFast((DWORD)localis);
-	}
+	std::vector<_PED*> vecPedsInVehicle = GetPedsInVehicle(pVehicle);
+	for(_PED *pPed : vecPedsInVehicle)
+		KickPlayerFromCarFast((DWORD)pPed);
 
 	// Testing part
 	/*_asm {
@@ -1822,6 +1823,25 @@ void CGame::DeleteCar(DWORD uiVehicle)
 		MOV EAX, 0x005E3400
 		CALL EAX; Game.005E3400
 	}
+}
+
+std::vector<_PED*> CGame::GetPedsInVehicle(_VEHICLE *pVehicle)
+{
+	int uiVehicle = (int)pVehicle;
+	std::vector<_PED*> vecPedsInVehicle;
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		CPed *ped = g_CCore->GetPedPool()->Return(i);
+		if (ped != NULL)
+		{
+			_PED *pPed = (_PED*)(ped->GetEntity());
+			if (pPed->playersCar == pVehicle || pPed->carLeavingOrEntering == pVehicle);
+			{
+				vecPedsInVehicle.push_back(pPed);
+			}
+		}
+	}
+	return vecPedsInVehicle;
 }
 
 DWORD CGame::FindFrame(char* frame)
