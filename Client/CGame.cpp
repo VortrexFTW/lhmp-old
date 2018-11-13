@@ -203,26 +203,26 @@ void CGame::Tick()
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
 		if (veh != NULL)
 		{
-			if (veh->IsActive())
-			{
+			//if (veh->IsActive())
+			//{
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance)
 				{
-					if (!veh->m_bStreamedIn)
+					if (!veh->m_bStreamedIn && veh->GetEntity() == NULL)
 					{
-						veh->m_bStreamedIn = true;
-						g_CCore->GetGame()->CreateCar2(e, veh);
+						CreateCarAndRestoreStatus(e, veh);
 					}
 				}
 				else
 				{
-					if (veh->m_bStreamedIn)
+					if (veh->m_bStreamedIn && veh->GetEntity() != NULL)
 					{
+						DeleteCar(veh->GetEntity());
+						veh->SetEntity(NULL);
 						veh->m_bStreamedIn = false;
-						g_CCore->GetGame()->DeleteCar(veh->GetEntity());
 					}
 				}
-			}
+			//}
 		}
 	}
 
@@ -839,10 +839,9 @@ void CGame::AfterRespawn()
 			if (veh->IsActive())
 			{
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-				if (bWithinStreamingDistance)
+				if (bWithinStreamingDistance && veh->GetEntity() == NULL)
 				{
-					veh->m_bStreamedIn = true;
-					g_CCore->GetGame()->CreateCar2(e, veh);
+					g_CCore->GetGame()->CreateCarAndRestoreStatus(e, veh);
 				}
 			}
 		}
@@ -906,9 +905,10 @@ void CGame::AfterRespawn()
 	g_CCore->GetLog()->AddLog(buffer);
 }
 
-void CGame::CreateCar2(int e, CVehicle *veh)
+void CGame::CreateCarAndRestoreStatus(int e, CVehicle *veh)
 {
-	DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
+	veh->m_bStreamedIn = true;
+	DWORD base = CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
 	veh->SetEntity(base);
 	for (int i = 0; i < 4; i++)
 	{
@@ -919,7 +919,7 @@ void CGame::CreateCar2(int e, CVehicle *veh)
 			{
 				if (ped->GetEntity() != NULL)
 				{
-					g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), e, i);
+					GivePlayerToCarFast(ped->GetEntity(), e, i);
 				}
 				else
 				{
@@ -1784,11 +1784,11 @@ void CGame::DeletePed(DWORD PED)
 		}
 	}
 }
-void CGame::DeleteCar(DWORD PED)
+void CGame::DeleteCar(DWORD uiVehicle)
 {
 
 	_PED *localis = (_PED*)g_CCore->GetLocalPlayer()->GetEntity();
-	if (localis->playersCar == (_VEHICLE*)PED || localis->carLeavingOrEntering == (_VEHICLE*)PED)
+	if (localis->playersCar == (_VEHICLE*)uiVehicle || localis->carLeavingOrEntering == (_VEHICLE*)uiVehicle)
 	{
 		g_CCore->GetGame()->KickPlayerFromCarFast((DWORD)localis);
 	}
@@ -1803,7 +1803,7 @@ void CGame::DeleteCar(DWORD PED)
 	}*/
 	_asm {
 		MOV ECX, DWORD PTR DS : [0x65115C]; Game.006F9440
-		PUSH PED
+		PUSH uiVehicle
 		MOV EAX, 0x00425390
 		CALL EAX; Game.00425390
 		MOV ECX, EAX
@@ -1812,7 +1812,7 @@ void CGame::DeleteCar(DWORD PED)
 		MOV ECX, EAX
 		MOV EAX, 0x005CFB60
 		CALL EAX; Game.005CFB60
-		PUSH PED
+		PUSH uiVehicle
 		MOV ECX, DWORD PTR DS : [0x65115C]; Game.006F9440
 		MOV EAX, 0x00425390
 		CALL EAX; Game.00425390

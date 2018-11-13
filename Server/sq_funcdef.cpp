@@ -793,7 +793,7 @@ SQInteger sq_serverGetGamemodeName(SQVM *vm)
 
 SQInteger sq_serverReloadGameMode(SQVM *vm)
 {
-	g_CCore->ReloadGamemodeFromScripts();
+	g_CCore->m_bReloadServer = true;
 	return 1;
 }
 

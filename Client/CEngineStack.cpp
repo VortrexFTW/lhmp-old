@@ -446,38 +446,9 @@ void CEngineStack::DoMessage()
 			{
 				g_CCore->GetLog()->AddLog("ES CREATECAR");
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-				if (bWithinStreamingDistance)
+				if (bWithinStreamingDistance && !veh->m_bStreamedIn && veh->GetEntity() == NULL)
 				{
-					veh->m_bStreamedIn = true;
-
-					DWORD base = g_CCore->GetGame()->CreateCar(veh->GetSkin(), veh->GetPosition(), veh->GetRotation());
-					veh->SetEntity(base);
-					for (int i = 0; i < 4; i++)
-					{
-						if (veh->GetSeat(i) != -1)
-						{
-							CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
-							if (ped != NULL)
-							{
-								if (ped->GetEntity() != NULL)
-								{
-									g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), start->data, i);
-								}
-								else
-								{
-									// shit
-									g_CCore->GetLog()->AddLog("ES[CreateCar] - no PED entity");
-								}
-								ped->InCar = start->data;
-							}
-						}
-					}
-					veh->SetDamage(veh->GetDamage());
-					veh->SetShotDamage(veh->GetShotDamage());
-					veh->ToggleRoof(veh->GetRoofState());
-					veh->ToggleEngine(veh->GetEngineState());
-					veh->SetSirenState(veh->GetSirenState());
-					veh->SetLightState(veh->GetLightState());
+					g_CCore->GetGame()->CreateCarAndRestoreStatus(start->data, veh);
 				}
 			}
 		}

@@ -1039,7 +1039,7 @@ void CGameSync::onVehicleSyncArrives(RakNet::BitStream* bitInput, RakNet::TimeMS
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(syncData.ID);
 	if (veh != NULL)
 	{
-		if (timestamp - veh->GetTimeStamp() > 0 && veh->m_bStreamedIn)
+		if (timestamp - veh->GetTimeStamp() > 0 && veh->m_bStreamedIn && veh->GetEntity() != NULL)
 		{
 			veh->SetVehiclePosition(syncData.position);
 			veh->SetPosition(syncData.position);

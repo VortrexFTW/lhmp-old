@@ -32,6 +32,9 @@ class CCore
 {
 private:
 	bool				m_bIsRunning;
+public:
+	bool				m_bReloadServer;
+private:
 	CBanSystem			m_cBanSystem;
 	CNetworkManager		m_cNetworkManager;
 	CTickManager		m_cTickManager;

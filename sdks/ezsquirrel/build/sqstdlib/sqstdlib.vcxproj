@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -108,7 +108,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\..\include;D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\include;D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\squirrel\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\sqstdlib\include;..\..\squirrel\include;..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -204,11 +204,12 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
+  <!--
   <ItemGroup>
     <CustomBuild Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\CMakeLists.txt">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/sqstdlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build -          -check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -221,7 +222,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/sqstdlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build -          -check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -234,7 +235,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/sqstdlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build -          -check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -247,7 +248,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/sqstdlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezsquirrel -BD:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build -          -check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezsquirrel/build/sqstdlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -260,16 +261,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdaux.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdblob.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdio.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdmath.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdrex.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdstream.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdstring.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\sqstdlib\src\sqstdsystem.cpp" />
-  </ItemGroup>
+  -->
   <ItemGroup>
     <ProjectReference Include="D:\abram\dev\git\lhmp-old\sdks\ezsquirrel\build\ZERO_CHECK.vcxproj">
       <Project>{3424D3B2-FC96-33E9-8C88-9CA8A15AA93B}</Project>
@@ -279,6 +271,16 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{452E7C50-0124-37CE-AB33-4DACC6F7757B}</Project>
       <Name>squirrel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sqstdlib\src\sqstdaux.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdblob.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdio.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdmath.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdrex.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdstream.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdstring.cpp" />
+    <ClCompile Include="..\..\sqstdlib\src\sqstdsystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

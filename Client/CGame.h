@@ -141,7 +141,7 @@ public:
 	// vehicles
 	static DWORD CreateCar(int skinID, Vector3D position, Vector3D rotation);
 	static DWORD CreateCar(int skinID);
-	void CreateCar2(int e, CVehicle *veh);
+	void CreateCarAndRestoreStatus(int e, CVehicle *veh);
 	//static DWORD CreateCar(int);
 
 	static void ToggleVehicleEngine(DWORD vehicle, BYTE state);

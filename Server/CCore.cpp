@@ -5,6 +5,7 @@
 CCore::CCore()
 {
 	m_bIsRunning = true;
+	m_bReloadServer = false;
 	sprintf(m_cMapName, "freeride");
 }
 
@@ -26,6 +27,12 @@ void CCore::Pulse()
 	m_cMaster.Pulse();
 
 	//RakSleep(tickDelay);
+
+	if (m_bReloadServer)
+	{
+		ReloadGamemodeFromScripts();
+		m_bReloadServer = false;
+	}
 }
 
 // pulse every 1000ms
@@ -62,13 +69,11 @@ void CCore::ReloadGamemode()
 
 void CCore::ReloadGamemodeFromScripts()
 {
-	Sleep(1000);
 	this->ChangeModeTo(this->GetGameMode()->GetName());
 }
 
 void CCore::ChangeGamemodeFromScripts(char* newmode)
 {
-	Sleep(1000);
 	this->ChangeModeTo(newmode);
 }
 
