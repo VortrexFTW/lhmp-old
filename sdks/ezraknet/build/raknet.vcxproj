@@ -56,7 +56,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">raknet.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">raknet</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
@@ -64,18 +64,18 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">raknet.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">raknet</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">..\build\MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">raknet.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">raknet</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">..\build\RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">raknet.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">raknet</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -92,10 +92,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -125,10 +125,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -158,10 +158,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -190,10 +190,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\abram\dev\git\lhmp-old\sdks\ezraknet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -205,175 +205,119 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezraknet -BD:/abram/dev/git/lhmp-old/sdks/ezraknet/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezraknet/build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCXXCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeRCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeSystem.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.c;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.cxx;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezraknet -BD:/abram/dev/git/lhmp-old/sdks/ezraknet/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezraknet/build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCXXCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeRCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeSystem.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.c;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.cxx;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezraknet -BD:/abram/dev/git/lhmp-old/sdks/ezraknet/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezraknet/build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCXXCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeRCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeSystem.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.c;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.cxx;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/abram/dev/git/lhmp-old/sdks/ezraknet -BD:/abram/dev/git/lhmp-old/sdks/ezraknet/build --check-stamp-file D:/abram/dev/git/lhmp-old/sdks/ezraknet/build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/abram/dev/git/lhmp-old/sdks/ezraknet/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeCXXCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeRCCompiler.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\3.12.2\CMakeSystem.cmake;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.c;D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\feature_tests.cxx;D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
-    </CustomBuild>
+    <ClCompile Include="..\src\Base64Encoder.cpp" />
+    <ClCompile Include="..\src\BitStream.cpp" />
+    <ClCompile Include="..\src\CCRakNetSlidingWindow.cpp" />
+    <ClCompile Include="..\src\CCRakNetUDT.cpp" />
+    <ClCompile Include="..\src\CheckSum.cpp" />
+    <ClCompile Include="..\src\CloudClient.cpp" />
+    <ClCompile Include="..\src\CloudCommon.cpp" />
+    <ClCompile Include="..\src\CloudServer.cpp" />
+    <ClCompile Include="..\src\CommandParserInterface.cpp" />
+    <ClCompile Include="..\src\ConnectionGraph2.cpp" />
+    <ClCompile Include="..\src\ConsoleServer.cpp" />
+    <ClCompile Include="..\src\DR_SHA1.cpp" />
+    <ClCompile Include="..\src\DS_BytePool.cpp" />
+    <ClCompile Include="..\src\DS_ByteQueue.cpp" />
+    <ClCompile Include="..\src\DS_HuffmanEncodingTree.cpp" />
+    <ClCompile Include="..\src\DS_Table.cpp" />
+    <ClCompile Include="..\src\DataCompressor.cpp" />
+    <ClCompile Include="..\src\DirectoryDeltaTransfer.cpp" />
+    <ClCompile Include="..\src\DynDNS.cpp" />
+    <ClCompile Include="..\src\EmailSender.cpp" />
+    <ClCompile Include="..\src\EpochTimeToString.cpp" />
+    <ClCompile Include="..\src\FileList.cpp" />
+    <ClCompile Include="..\src\FileListTransfer.cpp" />
+    <ClCompile Include="..\src\FileOperations.cpp" />
+    <ClCompile Include="..\src\FormatString.cpp" />
+    <ClCompile Include="..\src\FullyConnectedMesh2.cpp" />
+    <ClCompile Include="..\src\GetTime.cpp" />
+    <ClCompile Include="..\src\Getche.cpp" />
+    <ClCompile Include="..\src\Gets.cpp" />
+    <ClCompile Include="..\src\GridSectorizer.cpp" />
+    <ClCompile Include="..\src\HTTPConnection.cpp" />
+    <ClCompile Include="..\src\HTTPConnection2.cpp" />
+    <ClCompile Include="..\src\IncrementalReadInterface.cpp" />
+    <ClCompile Include="..\src\Itoa.cpp" />
+    <ClCompile Include="..\src\LinuxStrings.cpp" />
+    <ClCompile Include="..\src\LocklessTypes.cpp" />
+    <ClCompile Include="..\src\LogCommandParser.cpp" />
+    <ClCompile Include="..\src\MessageFilter.cpp" />
+    <ClCompile Include="..\src\NatPunchthroughClient.cpp" />
+    <ClCompile Include="..\src\NatPunchthroughServer.cpp" />
+    <ClCompile Include="..\src\NatTypeDetectionClient.cpp" />
+    <ClCompile Include="..\src\NatTypeDetectionCommon.cpp" />
+    <ClCompile Include="..\src\NatTypeDetectionServer.cpp" />
+    <ClCompile Include="..\src\NetworkIDManager.cpp" />
+    <ClCompile Include="..\src\NetworkIDObject.cpp" />
+    <ClCompile Include="..\src\PS4Includes.cpp" />
+    <ClCompile Include="..\src\PacketConsoleLogger.cpp" />
+    <ClCompile Include="..\src\PacketFileLogger.cpp" />
+    <ClCompile Include="..\src\PacketLogger.cpp" />
+    <ClCompile Include="..\src\PacketOutputWindowLogger.cpp" />
+    <ClCompile Include="..\src\PacketizedTCP.cpp" />
+    <ClCompile Include="..\src\PluginInterface2.cpp" />
+    <ClCompile Include="..\src\RPC4Plugin.cpp" />
+    <ClCompile Include="..\src\Rackspace.cpp" />
+    <ClCompile Include="..\src\RakMemoryOverride.cpp" />
+    <ClCompile Include="..\src\RakNetCommandParser.cpp" />
+    <ClCompile Include="..\src\RakNetSocket.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_360_720.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_Berkley.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_Berkley_NativeClient.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_NativeClient.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_PS3_PS4.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_PS4.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_Vita.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_WindowsStore8.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_Windows_Linux.cpp" />
+    <ClCompile Include="..\src\RakNetSocket2_Windows_Linux_360.cpp" />
+    <ClCompile Include="..\src\RakNetStatistics.cpp" />
+    <ClCompile Include="..\src\RakNetTransport2.cpp" />
+    <ClCompile Include="..\src\RakNetTypes.cpp" />
+    <ClCompile Include="..\src\RakPeer.cpp" />
+    <ClCompile Include="..\src\RakSleep.cpp" />
+    <ClCompile Include="..\src\RakString.cpp" />
+    <ClCompile Include="..\src\RakThread.cpp" />
+    <ClCompile Include="..\src\RakWString.cpp" />
+    <ClCompile Include="..\src\Rand.cpp" />
+    <ClCompile Include="..\src\RandSync.cpp" />
+    <ClCompile Include="..\src\ReadyEvent.cpp" />
+    <ClCompile Include="..\src\RelayPlugin.cpp" />
+    <ClCompile Include="..\src\ReliabilityLayer.cpp" />
+    <ClCompile Include="..\src\ReplicaManager3.cpp" />
+    <ClCompile Include="..\src\Router2.cpp" />
+    <ClCompile Include="..\src\SecureHandshake.cpp" />
+    <ClCompile Include="..\src\SendToThread.cpp" />
+    <ClCompile Include="..\src\SignaledEvent.cpp" />
+    <ClCompile Include="..\src\SimpleMutex.cpp" />
+    <ClCompile Include="..\src\SocketLayer.cpp" />
+    <ClCompile Include="..\src\StatisticsHistory.cpp" />
+    <ClCompile Include="..\src\StringCompressor.cpp" />
+    <ClCompile Include="..\src\StringTable.cpp" />
+    <ClCompile Include="..\src\SuperFastHash.cpp" />
+    <ClCompile Include="..\src\TCPInterface.cpp" />
+    <ClCompile Include="..\src\TableSerializer.cpp" />
+    <ClCompile Include="..\src\TeamBalancer.cpp" />
+    <ClCompile Include="..\src\TeamManager.cpp" />
+    <ClCompile Include="..\src\TelnetTransport.cpp" />
+    <ClCompile Include="..\src\ThreadsafePacketLogger.cpp" />
+    <ClCompile Include="..\src\TwoWayAuthentication.cpp" />
+    <ClCompile Include="..\src\UDPForwarder.cpp" />
+    <ClCompile Include="..\src\UDPProxyClient.cpp" />
+    <ClCompile Include="..\src\UDPProxyCoordinator.cpp" />
+    <ClCompile Include="..\src\UDPProxyServer.cpp" />
+    <ClCompile Include="..\src\VariableDeltaSerializer.cpp" />
+    <ClCompile Include="..\src\VariableListDeltaTracker.cpp" />
+    <ClCompile Include="..\src\VariadicSQLParser.cpp" />
+    <ClCompile Include="..\src\VitaIncludes.cpp" />
+    <ClCompile Include="..\src\WSAStartupSingleton.cpp" />
+    <ClCompile Include="..\src\_FindFirst.cpp" />
+    <ClCompile Include="..\src\gettimeofday.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Base64Encoder.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\BitStream.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CCRakNetSlidingWindow.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CCRakNetUDT.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CheckSum.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudCommon.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudServer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CommandParserInterface.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ConnectionGraph2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ConsoleServer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DR_SHA1.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_BytePool.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_ByteQueue.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_HuffmanEncodingTree.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_Table.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DataCompressor.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DirectoryDeltaTransfer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DynDNS.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\EmailSender.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\EpochTimeToString.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileList.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileListTransfer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileOperations.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FormatString.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FullyConnectedMesh2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\GetTime.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Getche.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Gets.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\GridSectorizer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\HTTPConnection.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\HTTPConnection2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\IncrementalReadInterface.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Itoa.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LinuxStrings.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LocklessTypes.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LogCommandParser.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\MessageFilter.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatPunchthroughClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatPunchthroughServer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionCommon.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionServer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NetworkIDManager.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NetworkIDObject.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PS4Includes.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketConsoleLogger.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketFileLogger.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketLogger.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketOutputWindowLogger.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketizedTCP.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PluginInterface2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RPC4Plugin.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Rackspace.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakMemoryOverride.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetCommandParser.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_360_720.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Berkley.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Berkley_NativeClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_NativeClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_PS3_PS4.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_PS4.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Vita.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_WindowsStore8.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Windows_Linux.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Windows_Linux_360.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetStatistics.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetTransport2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetTypes.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakPeer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakSleep.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakString.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakThread.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakWString.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Rand.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RandSync.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReadyEvent.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RelayPlugin.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReliabilityLayer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReplicaManager3.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Router2.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SecureHandshake.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SendToThread.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SignaledEvent.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SimpleMutex.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SocketLayer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StatisticsHistory.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StringCompressor.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StringTable.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SuperFastHash.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TCPInterface.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TableSerializer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TeamBalancer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TeamManager.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TelnetTransport.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ThreadsafePacketLogger.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TwoWayAuthentication.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPForwarder.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyClient.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyCoordinator.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyServer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariableDeltaSerializer.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariableListDeltaTracker.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariadicSQLParser.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VitaIncludes.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\WSAStartupSingleton.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\_FindFirst.cpp" />
-    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\gettimeofday.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\build\ZERO_CHECK.vcxproj">
+    <ProjectReference Include="..\build\ZERO_CHECK.vcxproj">
       <Project>{0779897B-6741-3C08-80B1-67EED1988210}</Project>
       <Name>ZERO_CHECK</Name>
     </ProjectReference>
