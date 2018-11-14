@@ -19,6 +19,12 @@
     <Filter Include="Source Files\UDPWrapper">
       <UniqueIdentifier>{151c6663-200d-475e-bd2d-aeb8a8073985}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{42e6e282-95c6-4ba5-9dd3-fab13badb4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{1b64d1ce-223f-49ac-a92d-2371b0dfbc6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -114,6 +120,21 @@
     <ClCompile Include="..\sdks\UDPWrapper\UDPWrapper.cpp">
       <Filter>Source Files\UDPWrapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\shared\Events\CScriptingArgument.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Events\CScriptingArguments.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Events\CScriptingFunction.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Events\CEvent.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Events\CEventPool.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CNetworkManager.h">
@@ -202,6 +223,24 @@
     </ClInclude>
     <ClInclude Include="..\sdks\md5\md5lhmp.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\CScriptingArguments.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\CScriptingFunction.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\EScriptingArgumentType.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\CEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\CEventPool.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Events\CScriptingArgument.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

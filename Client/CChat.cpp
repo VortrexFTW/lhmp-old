@@ -204,7 +204,7 @@ void CChat::DoCommand(char str[])
 	}
 	else if (strcmp(command, "reconnect") == 0)
 	{
-		ConnectServer();
+		//ConnectServer();
 	}
 }
 

@@ -2810,3 +2810,49 @@ SQInteger sq_mysqlInsertID(SQVM *vm)
 
 	return 1;
 }
+
+// event functions
+SQInteger sq_eventBind(SQVM *vm)
+{
+	CEventPool *pEventPool = g_CCore->GetEventPool();
+
+	const SQChar* szEventName = NULL;
+	sq_getstring(vm, 2, &szEventName);
+
+	CEvent *pEvent = pEventPool->GetEventByName(szEventName);
+	if(!pEvent)
+	{
+		sq_pushbool(vm, (SQBool) false);
+		return 1;
+	}
+	CScriptingFunction *pScriptingFunction = new CScriptingFunction(vm, 3);
+	pEvent->BindFunction(pScriptingFunction);
+
+	sq_pushbool(vm, (SQBool) true);
+	return 1;
+}
+
+SQInteger sq_eventTrigger(SQVM *vm)
+{
+	CEventPool *pEventPool = g_CCore->GetEventPool();
+
+	const SQChar* szEventName = NULL;
+	sq_getstring(vm, 2, &szEventName);
+
+	CEvent *pEvent = pEventPool->GetEventByName(szEventName);
+	if(!pEvent)
+	{
+		sq_pushbool(vm, (SQBool) false);
+		return 1;
+	}
+
+	CScriptingArguments *pScriptArgs = new CScriptingArguments;
+	pScriptArgs->ReadFromVM(vm);
+
+	pEvent->Trigger(vm, pScriptArgs);
+
+	delete pScriptArgs;
+
+	sq_pushbool(vm, (SQBool) true);
+	return 1;
+}

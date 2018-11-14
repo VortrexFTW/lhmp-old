@@ -109,6 +109,11 @@
     <ClCompile Include="..\sdks\cd3dfont\d3dutil.cpp" />
     <ClCompile Include="..\sdks\cd3dfont\dxutil.cpp" />
     <ClCompile Include="..\sdks\md5\md5lhmp.cpp" />
+    <ClCompile Include="..\shared\Events\CEvent.cpp" />
+    <ClCompile Include="..\shared\Events\CEventPool.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingArgument.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingArguments.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingFunction.cpp" />
     <ClCompile Include="AntiCheat.cpp" />
     <ClCompile Include="CChat.cpp" />
     <ClCompile Include="CColoredText.cpp" />
@@ -146,6 +151,12 @@
     <ClInclude Include="..\sdks\cd3dfont\d3dutil.h" />
     <ClInclude Include="..\sdks\cd3dfont\dxutil.h" />
     <ClInclude Include="..\sdks\md5\md5lhmp.h" />
+    <ClInclude Include="..\shared\Events\CEvent.h" />
+    <ClInclude Include="..\shared\Events\CEventPool.h" />
+    <ClInclude Include="..\shared\Events\CScriptingArgument.h" />
+    <ClInclude Include="..\shared\Events\CScriptingArguments.h" />
+    <ClInclude Include="..\shared\Events\CScriptingFunction.h" />
+    <ClInclude Include="..\shared\Events\EScriptingArgumentType.h" />
     <ClInclude Include="AntiCheat.h" />
     <ClInclude Include="CChat.h" />
     <ClInclude Include="CColoredText.h" />

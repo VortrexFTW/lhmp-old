@@ -194,3 +194,8 @@ CMasterList*		CCore::GetMasterServer()
 {
 	return &this->m_cMaster;
 }
+
+CEventPool*			CCore::GetEventPool()
+{
+	return &this->m_cEventPool;
+}

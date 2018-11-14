@@ -22,6 +22,7 @@
 #include "CBanSystem.h"
 #include "CQueryServer.h"
 #include "CMasterServer.h"
+#include "Events/CEventPool.h"
 
 enum STARTUP_ERRORS
 {
@@ -53,6 +54,7 @@ private:
 	CFileTransfer		m_cFileTransfer;
 	CQueryServer		m_cQueryServer;
 	CMasterList			m_cMaster;
+	CEventPool			m_cEventPool;
 	char				m_cMapName[200];
 
 public:
@@ -91,6 +93,7 @@ public:
 	CBanSystem*			GetBanSystem();
 	CQueryServer*		GetQueryServer();
 	CMasterList*		GetMasterServer();
+	CEventPool*			GetEventPool();
 
 	void				SetDefaultMap(char*);
 	char*				GetDefaultMap();

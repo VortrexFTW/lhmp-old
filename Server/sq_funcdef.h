@@ -144,3 +144,6 @@ SQInteger sq_mysqlSelectDatabase(SQVM *vm);
 SQInteger sq_mysqlPing(SQVM *vm);
 SQInteger sq_mysqlAffectedRows(SQVM *vm);
 SQInteger sq_mysqlInsertID(SQVM *vm);
+
+SQInteger sq_eventBind(SQVM *vm);
+SQInteger sq_eventTrigger(SQVM *vm);

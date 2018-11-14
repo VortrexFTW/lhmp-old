@@ -108,6 +108,11 @@
     <ClCompile Include="..\sdks\md5\md5lhmp.cpp" />
     <ClCompile Include="..\sdks\sqlite\sqlite3.c" />
     <ClCompile Include="..\sdks\UDPWrapper\UDPWrapper.cpp" />
+    <ClCompile Include="..\shared\Events\CEvent.cpp" />
+    <ClCompile Include="..\shared\Events\CEventPool.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingArgument.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingArguments.cpp" />
+    <ClCompile Include="..\shared\Events\CScriptingFunction.cpp" />
     <ClCompile Include="CBanSystem.cpp" />
     <ClCompile Include="CConfig.cpp" />
     <ClCompile Include="CConsole.cpp" />
@@ -139,6 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sdks\md5\md5lhmp.h" />
+    <ClInclude Include="..\shared\Events\CEvent.h" />
+    <ClInclude Include="..\shared\Events\CEventPool.h" />
+    <ClInclude Include="..\shared\Events\CScriptingArgument.h" />
+    <ClInclude Include="..\shared\Events\CScriptingArguments.h" />
+    <ClInclude Include="..\shared\Events\CScriptingFunction.h" />
+    <ClInclude Include="..\shared\Events\EScriptingArgumentType.h" />
     <ClInclude Include="CBanSystem.h" />
     <ClInclude Include="CConfig.h" />
     <ClInclude Include="CConsole.h" />
