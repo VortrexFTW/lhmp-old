@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Loader", "Loader\Loader.vcxproj", "{93587070-828A-42CE-A002-CCCE305FC578}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrashHandler", "Others\CrashHandler\CrashHandler.csproj", "{437EA8E6-2E07-4FF4-A940-C3B5E86BAF8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrashHandler", "CrashHandler\CrashHandler.csproj", "{437EA8E6-2E07-4FF4-A940-C3B5E86BAF8F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterList", "MasterList\MasterList.vcxproj", "{2123038C-C8BC-4230-9AFE-7A917CD5D1AF}"
 EndProject
@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptoPP", "sdks\CryptoPP\cryptlib.vcxproj", "{C39F4B46-6E89-4074-902E-CA57073044D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBrowser", "browser-new\ServerBrowser.csproj", "{081BE9A5-099B-4515-82B7-F29A29E56099}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBrowser", "Browser2\ServerBrowser.csproj", "{081BE9A5-099B-4515-82B7-F29A29E56099}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Squirrel Standard Library", "sdks\ezsquirrel\build\sqstdlib\sqstdlib.vcxproj", "{2A25B096-B461-34E9-8B9F-148B1CB067C3}"
 EndProject
