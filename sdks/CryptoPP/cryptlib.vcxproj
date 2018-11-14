@@ -77,7 +77,7 @@
   <!-- Intermediate and Output directories -->
   <!-- Cryptlib and Cryptest need extra care due to Non-DLL/DLL configs -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'" Label="Non-DLL Directories">
-    <OutDir>.</OutDir>
+    <OutDir>$(SolutionDir)sdks\cryptopp</OutDir>
     <IntDir>.</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='DLL-Import Debug'" Label="DLL Directories">

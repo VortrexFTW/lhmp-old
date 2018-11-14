@@ -60,7 +60,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">squirrel.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">squirrel</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\sdks\ezsquirrel\build</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)sdks\ezsquirrel\build</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">squirrel.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">squirrel</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
