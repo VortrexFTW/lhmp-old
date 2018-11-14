@@ -15,5 +15,5 @@ public:
 	void	BindFunction(CScriptingFunction *pScriptingFunction);
 	void	UnbindFunction(CScriptingFunction *pScriptingFunction);
 
-	void	Trigger(CScriptingArguments *pScriptArgs);
+	void	Trigger(CScriptingArguments& scriptArgs);
 };

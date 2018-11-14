@@ -16,10 +16,10 @@ void	CEvent::UnbindFunction(CScriptingFunction *pScriptingFunction)
 }
 
 // trigger
-void	CEvent::Trigger(CScriptingArguments *pScriptArgs)
+void	CEvent::Trigger(CScriptingArguments& scriptArgs)
 {
 	for (CScriptingFunction *pScriptingFunction : m_vecBoundFunctions)
 	{
-		pScriptingFunction->Call(pScriptArgs);
+		pScriptingFunction->Call(&scriptArgs);
 	}
 }

@@ -2849,7 +2849,7 @@ SQInteger sq_eventTrigger(SQVM *vm)
 	CScriptingArguments scriptingArguments;
 	scriptingArguments.ReadFromVM(vm);
 
-	pEvent->Trigger(&scriptingArguments);
+	pEvent->Trigger(scriptingArguments);
 
 	sq_pushbool(vm, (SQBool) true);
 	return 1;

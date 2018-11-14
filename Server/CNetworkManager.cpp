@@ -452,7 +452,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
+		EventArgs.AddNumber(ID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerUpdate", EventArgs);
 	}
 	break;
@@ -470,7 +470,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
+		EventArgs.AddNumber(ID);
 		g_CCore->GetEventPool()->Trigger("OnOccupiedVehicleUpdate", EventArgs);
 	}
 	break;
@@ -502,7 +502,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
+		EventArgs.AddNumber(ID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerRespawn", EventArgs);
 	}
 	break;
@@ -525,10 +525,10 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(wepID);
-		EventArgs.addNumber(wepLoaded);
-		EventArgs.addNumber(wepHidden);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(wepID);
+		EventArgs.AddNumber(wepLoaded);
+		EventArgs.AddNumber(wepHidden);
 		g_CCore->GetEventPool()->Trigger("OnPlayerAddWeapon", EventArgs);
 	}
 	break;
@@ -547,8 +547,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(wepID);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(wepID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerDropWeapon", EventArgs);
 	}
 	break;
@@ -568,8 +568,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(wepID);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(wepID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerChangeWeapon", EventArgs);
 	}
 	break;
@@ -593,11 +593,11 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(weapon);
-		EventArgs.addNumber(position.x);
-		EventArgs.addNumber(position.y);
-		EventArgs.addNumber(position.z);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(weapon);
+		EventArgs.AddNumber(position.x);
+		EventArgs.AddNumber(position.y);
+		EventArgs.AddNumber(position.z);
 		g_CCore->GetEventPool()->Trigger("OnPlayerShoot", EventArgs);
 	}
 	break;
@@ -615,10 +615,10 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(position.x);
-		EventArgs.addNumber(position.y);
-		EventArgs.addNumber(position.z);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(position.x);
+		EventArgs.AddNumber(position.y);
+		EventArgs.AddNumber(position.z);
 		g_CCore->GetEventPool()->Trigger("OnPlayerThrowGrenade", EventArgs);
 	}
 	break;
@@ -660,9 +660,9 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(ID);
-		EventArgs.addNumber(reason);
-		EventArgs.addNumber(part);
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(reason);
+		EventArgs.AddNumber(part);
 		g_CCore->GetEventPool()->Trigger("OnPlayerDeath", EventArgs);
 	}
 	break;
@@ -686,8 +686,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		//g_CCore->GetScripts()->onPlayerHit(ID, attackerID);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber(attackerID);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(attackerID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerHit", EventArgs);
 	}
 	break;
@@ -721,8 +721,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_RAKNET_GUID, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber(ID);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(ID);
 		g_CCore->GetEventPool()->Trigger("OnVehicleCreate", EventArgs);
 	}
 	break;
@@ -759,8 +759,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber();
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(syncData.ID);
 		g_CCore->GetEventPool()->Trigger("OnVehicleUpdate", EventArgs);
 	}
 	break;
@@ -781,9 +781,9 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		//std::cout << "EnterVeh" << GetIDFromSystemAddress(packet->systemAddress) << " - " << vehID << std::endl;
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber(vehID);
-		EventArgs.addNumber(seatID);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(vehID);
+		EventArgs.AddNumber(seatID);
 		g_CCore->GetEventPool()->GetEventByName("OnPlayerEnterVehicle")->Trigger(EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerEnterVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID, seatID);
@@ -803,8 +803,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber(vehID);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(vehID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerExitingVehicle", EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerExitVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID);
@@ -820,7 +820,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
 		g_CCore->GetEventPool()->Trigger("OonPlayerExitedVehicle", EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerExitVehicleFinish(GetIDFromSystemAddress(packet->systemAddress));
@@ -846,9 +846,9 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsOut.Write(seatID);
 		
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber(vehID);
-		EventArgs.addNumber(seatID);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber(vehID);
+		EventArgs.AddNumber(seatID);
 		g_CCore->GetEventPool()->Trigger("OnPlayerJackedVehicle", EventArgs);
 
 		//peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
@@ -886,8 +886,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(vehID);
-		EventArgs.addBoolean((bool)state);
+		EventArgs.AddNumber(vehID);
+		EventArgs.AddBoolean((bool)state);
 		g_CCore->GetEventPool()->Trigger("OnVehicleEngineChange", EventArgs);
 	}
 	break;
@@ -920,8 +920,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(vehID);
-		EventArgs.addBoolean((bool)state);
+		EventArgs.AddNumber(vehID);
+		EventArgs.AddBoolean((bool)state);
 		g_CCore->GetEventPool()->Trigger("OnVehicleLightsChange", EventArgs);
 	}
 	break;
@@ -944,7 +944,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_SYSTEM_ADDRESS, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(vehID);
+		EventArgs.AddNumber(vehID);
 		g_CCore->GetEventPool()->Trigger("OnVehicleDelete", EventArgs);
 	}
 	break;
@@ -967,8 +967,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 			
 			CScriptingArguments EventArgs;
-			EventArgs.addNumber(vehID);
-			EventArgs.addNumber(damage);
+			EventArgs.AddNumber(vehID);
+			EventArgs.AddNumber(damage);
 			g_CCore->GetEventPool()->Trigger("OnVehicleDamage", EventArgs);
 		}
 	}
@@ -992,8 +992,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, packet->systemAddress, true);
 
 			CScriptingArguments EventArgs;
-			EventArgs.addNumber(vehID);
-			EventArgs.addNumber((int)damage);
+			EventArgs.AddNumber(vehID);
+			EventArgs.AddNumber((int)damage);
 			g_CCore->GetEventPool()->Trigger("OnVehicleShotDamage", EventArgs);
 		}
 	}
@@ -1019,7 +1019,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 				//g_CCore->GetScripts()->onVehicleExploded(vehID);
 
 				CScriptingArguments EventArgs;
-				EventArgs.addNumber(vehID);
+				EventArgs.AddNumber(vehID);
 				g_CCore->GetEventPool()->Trigger("OnVehicleExplode", EventArgs);
 			}
 		}
@@ -1047,9 +1047,9 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		//g_CCore->GetScripts()->onDoorSetState(this->GetIDFromSystemAddress(packet->systemAddress), state, facing, (char)name);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addString(name);
-		EventArgs.addNumber(state);
-		EventArgs.addBoolean(facing);
+		EventArgs.AddString(name);
+		EventArgs.AddNumber(state);
+		EventArgs.AddBoolean(facing);
 		g_CCore->GetEventPool()->Trigger("OnDoorChange", EventArgs);
 	}
 	break;
@@ -1061,8 +1061,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		//g_CCore->GetScripts()->onPlayerKeyPressed(this->GetIDFromSystemAddress(packet->systemAddress), (int)key);
 
 		CScriptingArguments EventArgs;
-		EventArgs.addNumber(GetIDFromSystemAddress(packet->systemAddress));
-		EventArgs.addNumber((int)key);
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		EventArgs.AddNumber((int)key);
 		g_CCore->GetEventPool()->Trigger("OnPlayerKeyPress", EventArgs);
 	}
 	break;

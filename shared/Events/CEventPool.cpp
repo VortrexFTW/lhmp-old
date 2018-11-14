@@ -41,5 +41,5 @@ void	CEventPool::Trigger(string strEventName, CScriptingArguments& scriptingArgu
 	CEvent *pEvent = GetEventByName(strEventName);
 	if (!pEvent)
 		return;
-	pEvent->Trigger(&scriptingArguments);
+	pEvent->Trigger(scriptingArguments);
 }
