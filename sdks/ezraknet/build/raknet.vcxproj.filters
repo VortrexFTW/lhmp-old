@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Base64Encoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\BitStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CCRakNetSlidingWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CCRakNetUDT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CheckSum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudCommon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CloudServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\CommandParserInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ConnectionGraph2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ConsoleServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DR_SHA1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_BytePool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_ByteQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_HuffmanEncodingTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DS_Table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DataCompressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DirectoryDeltaTransfer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\DynDNS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\EmailSender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\EpochTimeToString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileListTransfer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FileOperations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FormatString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\FullyConnectedMesh2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\GetTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Getche.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Gets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\GridSectorizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\HTTPConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\HTTPConnection2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\IncrementalReadInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Itoa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LinuxStrings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LocklessTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\LogCommandParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\MessageFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatPunchthroughClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatPunchthroughServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionCommon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NatTypeDetectionServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NetworkIDManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\NetworkIDObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PS4Includes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketConsoleLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketFileLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketOutputWindowLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PacketizedTCP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\PluginInterface2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RPC4Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Rackspace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakMemoryOverride.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetCommandParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_360_720.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Berkley.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Berkley_NativeClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_NativeClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_PS3_PS4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_PS4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Vita.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_WindowsStore8.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Windows_Linux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetSocket2_Windows_Linux_360.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetStatistics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetTransport2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakNetTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakPeer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakSleep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RakWString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Rand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RandSync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReadyEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\RelayPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReliabilityLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ReplicaManager3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\Router2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SecureHandshake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SendToThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SignaledEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SimpleMutex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SocketLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StatisticsHistory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StringCompressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\StringTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\SuperFastHash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TCPInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TableSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TeamBalancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TeamManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TelnetTransport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\ThreadsafePacketLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\TwoWayAuthentication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPForwarder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyCoordinator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\UDPProxyServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariableDeltaSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariableListDeltaTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VariadicSQLParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\VitaIncludes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\WSAStartupSingleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\_FindFirst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\src\gettimeofday.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\abram\dev\git\lhmp-old\sdks\ezraknet\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B9C93431-D767-3FB7-A249-0006E6235916}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
