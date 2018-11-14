@@ -393,11 +393,15 @@ void CGraphics::TakeScreenshot()
     time(&timeObj);
 	//tm *pTime = gmtime(&timeObj);
 	tm *pTime = localtime(&timeObj);
-//    char buffer[100];
+	//char buffer[100];
+	// Create directory if it doesn't exist
+	CreateDirectory("lhmp/screenshots", NULL);
 	sprintf(filename, "lhmp/screenshots/screen-%d-%d-%d-%d-%d-%d.bmp", pTime->tm_year, pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
+	//sprintf(filename, "lhmp/screenshots/screen-%d-%d-%d-%d-%d-%d.jpg", pTime->tm_year, pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
 	if(bIsFullscreen)
 	{
 		D3DXSaveSurfaceToFile(filename, D3DXIFF_BMP, screen, NULL, NULL);
+		//D3DXSaveSurfaceToFile(filename, D3DXIFF_JPG, screen, NULL, NULL);
 	} else
 	{
 		Vector2D screensize = GetResolution();
@@ -410,9 +414,8 @@ void CGraphics::TakeScreenshot()
 		clientscreen.top = abs(point.y);
 		clientscreen.bottom = abs(point.y)+screensize.y;
 		clientscreen.right = abs(point.x)+screensize.x;
-		//D3DXSaveSurfaceToFile(filename,D3DXIFF_JPG,screen,NULL,NULL);
-
 		D3DXSaveSurfaceToFile(filename, D3DXIFF_BMP, screen, NULL, &clientscreen);
+		//D3DXSaveSurfaceToFile(filename, D3DXIFF_JPG, screen, NULL, &clientscreen);
 	}
 	screen->Release();
 	char buff[255];
