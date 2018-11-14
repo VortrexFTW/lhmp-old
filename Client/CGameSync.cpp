@@ -1026,7 +1026,7 @@ void CGameSync::onVehicleIsExited(RakNet::BitStream* bitInput)
 	{
 		ped->InCar = -1;
 		veh->PlayerExit(Id);
-		ENGINE_STACK::PLAYER_ENTER_VEH* data = new ENGINE_STACK::PLAYER_ENTER_VEH(Id, vehId, NULL);
+		ENGINE_STACK::PLAYER_EXIT_VEH* data = new ENGINE_STACK::PLAYER_EXIT_VEH(Id, vehId);
 		g_CCore->GetEngineStack()->AddMessage(ES_PLAYER_EXIT_VEH, (DWORD)data);
 		ped->SetIsOnFoot(true);
 	}

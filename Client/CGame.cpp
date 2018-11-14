@@ -2607,7 +2607,14 @@ void CGame::GivePlayerToCar(DWORD ped, int vehId, int seatId)
 	char buff[255];
 	sprintf(buff, "%x %d %d", ped, vehId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
-	DWORD car = g_CCore->GetVehiclePool()->Return(vehId)->GetEntity();
+	
+	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
+	if (!pVehicle)
+		return;
+	DWORD car = pVehicle->GetEntity();
+	if (!car)
+		return;
+	
 	/*	if (car == NULL)
 	g_CCore->GetLog()->AddLog("GivePTC - car doesnt exist");
 	return;*/
@@ -2726,7 +2733,12 @@ void CGame::KickPlayerFromCar(DWORD ped, int vehId)
 	char buff[255];
 	sprintf(buff, "%x %d", ped, vehId);
 	g_CCore->GetLog()->AddLog(buff);
-	DWORD car = g_CCore->GetVehiclePool()->Return(vehId)->GetEntity();
+	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
+	if (!pVehicle)
+		return;
+	DWORD car = pVehicle->GetEntity();
+	if (!car)
+		return;
 	//if (car == NULL)
 	//	g_CCore->GetLog()->AddLog("KickPFC - car doesnt exist");
 	//return;

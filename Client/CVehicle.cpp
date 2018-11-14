@@ -357,13 +357,6 @@ void CVehicle::PlayerExit(int ID)
 	//this->Seat[i] = -1;
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
 		g_CCore->GetLocalPlayer()->IDinCar = -1;
-	CPed *pPed = g_CCore->GetPedPool()->Return(ID);
-	if (pPed)
-	{
-		_PED *pPed2 = (_PED*)pPed->GetEntity();
-		pPed2->playersCar = nullptr;
-		pPed2->carLeavingOrEntering = nullptr;
-	}
 }
 
 void CVehicle::SetSpeed(Vector3D sp)
