@@ -147,6 +147,8 @@ int Init(SQVM* vM)
 
 	RegisterFunction(vM, "callClientFunc", (SQFUNCTION)sq_callClientFunc, 5, ".nss.");
 	RegisterFunction(vM, "callFunc", (SQFUNCTION)sq_callFunc, 4, ".ss.");
+
+	RegisterFunction(vM, "httpRequest", (SQFUNCTION)sq_httpRequest, 4, ".ssb");
 	
 	// part of human body
 	RegisterVariable(vM, "PLAYER_RIGHTHAND", 1);

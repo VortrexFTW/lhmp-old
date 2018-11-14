@@ -84,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LHMPCORE_EXPORTS;_RAKNET_DLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\sdks\cd3dfont;..\sdks\DirectX9SDK2007\Include;..\sdks\ezraknet\include\;..\sdks\detours\include;..\sdks\ezsquirrel\include;..\sdks\md5;..\sdks\Discord\include;.;..\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdks\cd3dfont;$(SolutionDir)sdks\DirectX9SDK2007\Include;$(SolutionDir)sdks\ezraknet\include\;$(SolutionDir)sdks\detours\include;$(SolutionDir)sdks\ezsquirrel\include;$(SolutionDir)sdks\md5;$(SolutionDir)sdks\Discord\include;$(SolutionDir)shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -94,7 +94,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\sdks\DirectX9SDK2007\Lib;..\sdks\dx8sdk\lib;..\sdks\detours\lib;..\sdks\CEGUI\lib;..\sdks\ezsquirrel\build;..\sdks\ezraknet\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)sdks\DirectX9SDK2007\Lib;$(SolutionDir)sdks\dx8sdk\lib;$(SolutionDir)sdks\detours\lib;$(SolutionDir)sdks\CEGUI\lib;$(SolutionDir)sdks\ezsquirrel\build;$(SolutionDir)sdks\ezraknet\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libci.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
