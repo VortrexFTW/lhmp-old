@@ -150,7 +150,7 @@ bool CGameMode::LoadGameMode(char* name)
 		return false;
 	}
 	SetName(name);
-	g_CCore->GetLog()->AddNormalLog("Gamemode '%s' been successfully loaded. \n%d file(s) processed",name,successfulFiles++);
+	g_CCore->GetLog()->AddNormalLog("%d file(s) processed.\nGamemode '%s' has been successfully loaded.", successfulFiles++, name);
 	return true;
 }
 
