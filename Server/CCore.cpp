@@ -199,3 +199,8 @@ CEventPool*			CCore::GetEventPool()
 {
 	return &this->m_cEventPool;
 }
+
+CEventRegistrar*	CCore::GetEventRegistrar()
+{
+	return &this->m_cEventRegistrar;
+}

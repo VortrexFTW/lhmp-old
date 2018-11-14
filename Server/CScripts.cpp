@@ -321,6 +321,10 @@ void CScripts::onConsoleCommand(const char *command, const char* params)
 
 void CScripts::onPlayerConnect(int playerID)
 {
+	//CScriptingArguments EventArgs;
+	//EventArgs.AddNumber(playerID);
+	//g_CCore->GetEventPool()->Trigger("onPlayerConnect", EventArgs);
+
 	bool ret = true;
 	for (int i = 0; i < MAX_SCRIPTS; i++) {
 		if (m_pScripts[i]) {

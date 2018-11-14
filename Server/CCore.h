@@ -23,6 +23,7 @@
 #include "CQueryServer.h"
 #include "CMasterServer.h"
 #include "Events/CEventPool.h"
+#include "CEventRegistrar.h"
 
 enum STARTUP_ERRORS
 {
@@ -55,6 +56,7 @@ private:
 	CQueryServer		m_cQueryServer;
 	CMasterList			m_cMaster;
 	CEventPool			m_cEventPool;
+	CEventRegistrar		m_cEventRegistrar;
 	char				m_cMapName[200];
 
 public:
@@ -94,6 +96,7 @@ public:
 	CQueryServer*		GetQueryServer();
 	CMasterList*		GetMasterServer();
 	CEventPool*			GetEventPool();
+	CEventRegistrar*	GetEventRegistrar();
 
 	void				SetDefaultMap(char*);
 	char*				GetDefaultMap();

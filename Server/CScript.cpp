@@ -1,7 +1,10 @@
 // (C) LHMP Team 2013-2016; Licensed under Apache 2; See LICENSE;;
 
+#include "CCore.h"
 #include "CScript.h"
 #include "squirrelheads.h"
+
+extern CCore *g_CCore;
 
 CScript::CScript(const char *szScriptName)
 {

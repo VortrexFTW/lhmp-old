@@ -150,8 +150,8 @@ int Init(SQVM* vM)
 
 	RegisterFunction(vM, "httpRequest", (SQFUNCTION)sq_httpRequest, 4, ".ssb");
 	
-	RegisterFunction(vM, "eventBind", (SQFUNCTION)sq_eventBind, 2, ".sf");
-	RegisterFunction(vM, "eventTrigger", (SQFUNCTION)sq_eventTrigger, 2, ".sf.");
+	RegisterFunction(vM, "eventBind", (SQFUNCTION)sq_eventBind, 3, ".sc");
+	RegisterFunction(vM, "eventTrigger", (SQFUNCTION)sq_eventTrigger, 4, ".sc.");
 
 	// part of human body
 	RegisterVariable(vM, "PLAYER_RIGHTHAND", 1);

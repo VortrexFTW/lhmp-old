@@ -5,7 +5,7 @@
 #include "CDirectInput8Proxy.h"
 #include "CDirect3D8Proxy.h"
 #include "CHooks.h"
-#include "AntiCheat.h"
+//#include "AntiCheat.h"
 #include <Psapi.h>
 #include <Windows.h>
 #pragma comment( lib, "psapi.lib" )

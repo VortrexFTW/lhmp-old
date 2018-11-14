@@ -16,6 +16,8 @@ CGameMode::CGameMode()
 
 bool CGameMode::LoadGameMode(char* name)
 {
+	g_CCore->GetEventRegistrar()->Init();
+
 	unsigned int successfulFiles = 0;
 	this->clientPoolSize = 0;
 	this->clientPool = 0;

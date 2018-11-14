@@ -2846,12 +2846,10 @@ SQInteger sq_eventTrigger(SQVM *vm)
 		return 1;
 	}
 
-	CScriptingArguments *pScriptArgs = new CScriptingArguments;
-	pScriptArgs->ReadFromVM(vm);
+	CScriptingArguments scriptingArguments;
+	scriptingArguments.ReadFromVM(vm);
 
-	pEvent->Trigger(vm, pScriptArgs);
-
-	delete pScriptArgs;
+	pEvent->Trigger(&scriptingArguments);
 
 	sq_pushbool(vm, (SQBool) true);
 	return 1;

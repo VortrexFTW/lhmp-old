@@ -3,7 +3,7 @@
 #ifndef _CQUERYSERVER
 #define _CQUERYSERVER
 
-#include <UDPWrapper.h>
+#include "UDPWrapper.h"
 
 //----------	Query types ---------//
 /*

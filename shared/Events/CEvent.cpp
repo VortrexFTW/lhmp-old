@@ -1,5 +1,6 @@
 #include "CEvent.h"
 
+// bound existence
 void	CEvent::BindFunction(CScriptingFunction *pScriptingFunction)
 {
 	m_vecBoundFunctions.push_back(pScriptingFunction);
@@ -14,10 +15,11 @@ void	CEvent::UnbindFunction(CScriptingFunction *pScriptingFunction)
 	}
 }
 
-void	CEvent::Trigger(HSQUIRRELVM vm, CScriptingArguments *pScriptArgs)
+// trigger
+void	CEvent::Trigger(CScriptingArguments *pScriptArgs)
 {
-	for(CScriptingFunction *pScriptingFunction : m_vecBoundFunctions)
+	for (CScriptingFunction *pScriptingFunction : m_vecBoundFunctions)
 	{
-		pScriptingFunction->Call(vm, pScriptArgs);
+		pScriptingFunction->Call(pScriptArgs);
 	}
 }

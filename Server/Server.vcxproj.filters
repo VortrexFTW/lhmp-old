@@ -135,6 +135,9 @@
     <ClCompile Include="..\shared\Events\CEventPool.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
+    <ClCompile Include="CEventRegistrar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CNetworkManager.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="..\shared\Events\CScriptingArgument.h">
       <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="CEventRegistrar.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

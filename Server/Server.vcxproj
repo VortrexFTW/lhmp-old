@@ -63,15 +63,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\sdks\SQUIRREL3\include;..\sdks\RakNet;..\sdks\INIParser\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdks\md5;$(SolutionDir)sdks\sqlite\include;$(SolutionDir)sdks\ezsquirrel\include;$(SolutionDir)sdks\ezraknet\include;$(SolutionDir)sdks\CryptoPP;$(SolutionDir)sdks\INIParser\cpp;$(SolutionDir)shared;$(SolutionDir)sdks\UDPWrapper;$(SolutionDir)sdks\MySQL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);ws2_32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\sdks\SQUIRREL3\lib;I:\Programming\LHMP\LHMP\sdks\sqlite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)sdks\MySQL\lib;$(SolutionDir)sdks\ezsquirrel\build;$(SolutionDir)sdks\CryptoPP;$(SolutionDir)sdks\ezraknet\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,6 +119,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDoorPool.cpp" />
     <ClCompile Include="CEntity.cpp" />
+    <ClCompile Include="CEventRegistrar.cpp" />
     <ClCompile Include="CFileTransfer.cpp" />
     <ClCompile Include="CGameMode.cpp" />
     <ClCompile Include="CLog.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDoorPool.h" />
     <ClInclude Include="CEntity.h" />
+    <ClInclude Include="CEventRegistrar.h" />
     <ClInclude Include="CFileTransfer.h" />
     <ClInclude Include="CGameMode.h" />
     <ClInclude Include="CLog.h" />

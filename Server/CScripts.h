@@ -6,6 +6,7 @@
 #include "CConfig.h"
 #include "CScript.h"
 */
+#include "RakPeerInterface.h"
 #include "CScript.h"
 #include "squirrelheads.h"
 #define MAX_SCRIPTS 10

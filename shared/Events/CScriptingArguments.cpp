@@ -10,11 +10,18 @@ unsigned int	CScriptingArguments::GetCount(void)
 void	CScriptingArguments::PushToVM(HSQUIRRELVM vm)
 {
 	for(CScriptingArgument *pArgument : m_vecArguments)
-		pArgument->PushToVM();
+		pArgument->PushToVM(vm);
 }
 
 void	CScriptingArguments::ReadFromVM(HSQUIRRELVM vm)
 {
+	SQInteger iArgumentCount = sq_gettop(vm) - 3;
+	for (int i = 0; i < iArgumentCount; i++)
+	{
+		CScriptingArgument *pScriptingArgument = new CScriptingArgument;
+		pScriptingArgument->ReadFromVM(vm, 2 + i);
+		m_vecArguments.push_back(pScriptingArgument);
+	}
 }
 
 // add argument

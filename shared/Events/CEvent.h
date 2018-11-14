@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include "squirrel.h"
 #include "CScriptingFunction.h"
 #include "CScriptingArguments.h"
 
@@ -16,5 +15,5 @@ public:
 	void	BindFunction(CScriptingFunction *pScriptingFunction);
 	void	UnbindFunction(CScriptingFunction *pScriptingFunction);
 
-	void	Trigger(HSQUIRRELVM vm, CScriptingArguments *pScriptArgs);
+	void	Trigger(CScriptingArguments *pScriptArgs);
 };

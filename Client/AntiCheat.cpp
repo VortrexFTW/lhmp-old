@@ -2,6 +2,17 @@
 
 #include "AntiCheat.h"
 
+// Blacklisted checksums
+DWORD dwACBlacklist[] = {
+	279040, // Mafia.dll (Mafiacon)
+	763392, //MHook.dll (Mafiacon)
+	153600, //MafiaHack.exe
+	315392, //fdx - maft.exe
+	1464320, //Mafia + 10trn.exe
+	331776, //mafia - trn.exe
+	196608 //trainer.exe (1.0 trainer)
+};
+
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
 	char title[80];
 	std::string str(title);
