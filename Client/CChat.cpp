@@ -202,6 +202,10 @@ void CChat::DoCommand(char str[])
 	{
 		g_CCore->GetChat()->SetBackground(!this->IsBackgroundActive());
 	}
+	else if (strcmp(command, "reconnect") == 0)
+	{
+		ConnectServer();
+	}
 }
 
 bool CChat::IsTyping()
