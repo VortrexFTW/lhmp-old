@@ -62,7 +62,7 @@ public:
 	~CCore();
 	// Init server with params
 	// Returns false if something went wrogn
-	int		Init(int,int,std::string,std::string,std::string, int, char* website,char* password);
+	int		Init(int,int,std::string,std::string,std::string, std::string, char* website,char* password);
 	// Tick callback 
 	void	Pulse();
 	// Returns whether server is running

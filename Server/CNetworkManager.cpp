@@ -245,7 +245,7 @@ void	CNetworkManager::OnPlayerDisconnect(RakNet::Packet* packet)
 			SendMessageToAll(buff);
 
 			if (packet->data[0] == ID_CONNECTION_LOST)
-				g_CCore->GetLog()->AddNormalLog("%s[%d] has lost his connection.", player->GetNickname(), ID);
+				g_CCore->GetLog()->AddNormalLog("%s[%d] has lost connection.", player->GetNickname(), ID);
 			else
 				g_CCore->GetLog()->AddNormalLog("%s[%d] has disconnected.", player->GetNickname(), ID);
 
@@ -331,6 +331,7 @@ void CNetworkManager::Pulse()
 			bsOut.Write(player->GetSkin());
 			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, true);
 
+			g_CCore->GetLog()->AddNormalLog("%s[%d] has connected.", player->GetNickname(), ID);
 			char buff[255];
 			sprintf(buff, "#00d717Player #ffffff%s #00d717connected to the server.", player->GetNickname());
 			this->SendMessageToAll(buff);
