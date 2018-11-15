@@ -784,7 +784,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
 		EventArgs.AddNumber(vehID);
 		EventArgs.AddNumber(seatID);
-		g_CCore->GetEventPool()->GetEventByName("OnPlayerEnterVehicle")->Trigger(EventArgs);
+		g_CCore->GetEventPool()->Trigger("OnPlayerEnterVehicle", EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerEnterVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID, seatID);
 	}
