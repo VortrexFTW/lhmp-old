@@ -1396,6 +1396,23 @@ SQInteger sq_vehicleSetSpeed(SQVM *vm)
 	return 1;
 }
 
+SQInteger sq_vehicleGetSpeed(SQVM *vm)
+{
+	SQInteger	ID;
+	sq_getinteger(vm, -1, &ID);
+
+	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
+	if (veh != NULL)
+	{
+		Vector3D vSpeed = veh->GetSpeed();
+		float speed = sqrtf(vSpeed.x * vSpeed.x + vSpeed.y * vSpeed.y + vSpeed.z * vSpeed.z);
+		sq_pushfloat(vm, speed);
+		return 1;
+	}
+	sq_pushnull(vm);
+	return 1;
+}
+
 SQInteger sq_vehicleSetDamage(SQVM *vm)
 {
 	SQInteger	ID;
