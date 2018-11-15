@@ -333,7 +333,7 @@ void CNetworkManager::Pulse()
 
 			g_CCore->GetLog()->AddNormalLog("%s[%d] has connected.", player->GetNickname(), ID);
 			char buff[255];
-			sprintf(buff, "#00d717Player #ffffff%s #00d717connected to the server.", player->GetNickname());
+			sprintf(buff, "#ffffff%s[%d]#00d717 has connected.", player->GetNickname(), ID);
 			this->SendMessageToAll(buff);
 			// causing server crash, packet->systemAddress.ToString is either not thread-safe
 			//g_CCore->GetLog()->AddNormalLog("Player %s(%s) connected to the server.", player->GetNickname(),packet->systemAddress.ToString());
