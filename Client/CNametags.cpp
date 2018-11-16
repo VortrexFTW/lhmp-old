@@ -20,6 +20,18 @@ void CNametags::Tick()
 				continue;
 			
 			Vector3D playerPosition = g_CCore->GetGame()->GetPEDNeckPosition((PED*)ped->GetEntity());
+
+			CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(ped->InCar);
+			if (pVehicle)
+			{
+				_VEHICLE *veh2 = (_VEHICLE*)pVehicle->GetEntity();
+				if (veh2)
+				{
+					playerPosition = veh2->position;
+					playerPosition.y += 1.4f;
+				}
+			}
+
 			playerPosition.y += 0.3f;
 			//--------------------------------------------------------
 			/*Vector3D playerPosition = ped->GetPEDFramePosition();
