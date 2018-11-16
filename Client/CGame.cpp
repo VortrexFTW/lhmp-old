@@ -209,41 +209,26 @@ void CGame::Tick()
 			if (veh != NULL)
 			{
 				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
-				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
-				
-
-
-				/*
-				static Vector3D a = vecVehPos;
-				static Vector3D b = g_CCore->GetLocalPlayer()->GetLocalPos();
-				
-				bool c = vecVehPos.x != a.x || vecVehPos.y != a.y || vecVehPos.z != a.z;
-				bool d = g_CCore->GetLocalPlayer()->GetLocalPos().x != b.x || g_CCore->GetLocalPlayer()->GetLocalPos().y != b.y || g_CCore->GetLocalPlayer()->GetLocalPos().z != b.z;
-				
-				g_CCore->GetLog()->AddLog((char*)(std::string("veh pos ") + std::string(c ? "changed" : "same") + std::string(",") + std::string("local player pos ") + std::string(d ? "changed" : "same")).c_str());
-				
-				a = vecVehPos;
-				b = g_CCore->GetLocalPlayer()->GetLocalPos();
-				*/
-
-
-
-				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-				if (bWithinStreamingDistance)
+				if (veh2)
 				{
-					if (!veh->m_bStreamedIn && veh->GetEntity() == NULL)
+					Vector3D vecVehPos = veh2->position;
+					bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+					if (bWithinStreamingDistance)
 					{
-						CreateCarAndRestoreStatus(e, veh);
+						if (!veh->m_bStreamedIn && veh->GetEntity() == NULL)
+						{
+							CreateCarAndRestoreStatus(e, veh);
+						}
 					}
-				}
-				else
-				{
-					if (veh->m_bStreamedIn && veh->GetEntity() != NULL)
+					else
 					{
-						DWORD uiEntity = veh->GetEntity();
-						veh->SetEntity(NULL);
-						veh->m_bStreamedIn = false;
-						DeleteCar(uiEntity);
+						if (veh->m_bStreamedIn && veh->GetEntity() != NULL)
+						{
+							DWORD uiEntity = veh->GetEntity();
+							veh->SetEntity(NULL);
+							veh->m_bStreamedIn = false;
+							DeleteCar(uiEntity);
+						}
 					}
 				}
 			}
@@ -863,7 +848,7 @@ void CGame::AfterRespawn()
 			if (veh->IsActive())
 			{
 				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
-				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
+				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->position;
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance && veh->GetEntity() == NULL)
 				{
@@ -1857,7 +1842,7 @@ std::vector<_PED*> CGame::GetPedsInVehicle(_VEHICLE *pVehicle)
 		if (ped != NULL)
 		{
 			_PED *pPed = (_PED*)(ped->GetEntity());
-			if (pPed->playersCar == pVehicle || pPed->carLeavingOrEntering == pVehicle);
+			if (pPed->playersCar == pVehicle || pPed->carLeavingOrEntering == pVehicle)
 			{
 				vecPedsInVehicle.push_back(pPed);
 			}

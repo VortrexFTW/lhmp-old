@@ -233,7 +233,7 @@ Vector3D CLocalPlayer::GetLocalPos()
 		if (veh != NULL)
 		{
 			_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
-			return veh2->object.position;
+			return veh2->position;
 			//return veh->GetPosition();
 		}
 		else {

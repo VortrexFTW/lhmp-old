@@ -446,7 +446,7 @@ void CEngineStack::DoMessage()
 			{
 				g_CCore->GetLog()->AddLog("ES CREATECAR");
 				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
-				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
+				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->position;
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance && !veh->m_bStreamedIn && veh->GetEntity() == NULL)
 				{
