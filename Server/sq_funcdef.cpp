@@ -311,9 +311,10 @@ SQInteger sq_playerChangeSkin(SQVM *vm)
 
 SQInteger sq_playerToggleCityMusic(SQVM *vm)
 {
-	SQInteger ID, state;
+	SQInteger ID;
+	SQBool state;
 	sq_getinteger(vm, -2, &ID);
-	sq_getinteger(vm, -1, &state);
+	sq_getbool(vm, -1, &state);
 
 	state = !state;
 
@@ -323,7 +324,7 @@ SQInteger sq_playerToggleCityMusic(SQVM *vm)
 		BitStream bsOut;
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_PLAYER_TOGGLE_CITY_MUSIC);
-		bsOut.Write(state);
+		bsOut.Write((bool)state);
 		g_CCore->GetNetworkManager()->GetPeer()->Send(&bsOut, MEDIUM_PRIORITY, RELIABLE, 0, g_CCore->GetNetworkManager()->GetSystemAddressFromID(ID),false);
 	}
 	return 1;
