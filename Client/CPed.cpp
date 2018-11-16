@@ -245,7 +245,7 @@ void CPed::SetUpInterpolation()
 	this->playerPos.x += speedvector.x;
 	this->playerPos.y += speedvector.y;
 	this->playerPos.z += speedvector.z;*/
-	interpolation.SetUpInterpolation(playerPos);
+	interpolation.SetUpInterpolation(this, playerPos);
 	interpolation.SetUpInterpolationRot(rotation);
 }
 

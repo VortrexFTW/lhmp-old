@@ -114,7 +114,7 @@ void CVehicle::UpdateGameObject()
 void CVehicle::SetUpInterpolation()
 {
 	//this->interpolation.SetTimestamp(RakNet::GetTimeMS());
-	this->interpolation.SetUpInterpolation(this->playerPos);
+	this->interpolation.SetUpInterpolation(this, this->playerPos);
 	this->interpolation.SetUpInterpolationRotVehicle(this->rotation, this->secondRot);
 }
 

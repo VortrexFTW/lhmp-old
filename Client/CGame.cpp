@@ -208,7 +208,27 @@ void CGame::Tick()
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(e);
 			if (veh != NULL)
 			{
-				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
+				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
+				
+
+
+				/*
+				static Vector3D a = vecVehPos;
+				static Vector3D b = g_CCore->GetLocalPlayer()->GetLocalPos();
+				
+				bool c = vecVehPos.x != a.x || vecVehPos.y != a.y || vecVehPos.z != a.z;
+				bool d = g_CCore->GetLocalPlayer()->GetLocalPos().x != b.x || g_CCore->GetLocalPlayer()->GetLocalPos().y != b.y || g_CCore->GetLocalPlayer()->GetLocalPos().z != b.z;
+				
+				g_CCore->GetLog()->AddLog((char*)(std::string("veh pos ") + std::string(c ? "changed" : "same") + std::string(",") + std::string("local player pos ") + std::string(d ? "changed" : "same")).c_str());
+				
+				a = vecVehPos;
+				b = g_CCore->GetLocalPlayer()->GetLocalPos();
+				*/
+
+
+
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance)
 				{
 					if (!veh->m_bStreamedIn && veh->GetEntity() == NULL)
@@ -842,7 +862,9 @@ void CGame::AfterRespawn()
 		{
 			if (veh->IsActive())
 			{
-				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
+				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance && veh->GetEntity() == NULL)
 				{
 					g_CCore->GetGame()->CreateCarAndRestoreStatus(e, veh);

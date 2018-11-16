@@ -23,6 +23,14 @@ CInterpolation::CInterpolation() {
 
 	actualRot = Tools::NullVect();
 	previousRot = Tools::NullVect();
+
+	entity = nullptr;
+}
+
+void CInterpolation::SetUpInterpolation(CEntity *pEntity, Vector3D position)
+{
+	this->entity = pEntity;
+	SetUpInterpolation(position);
 }
 
 void CInterpolation::SetUpInterpolation(Vector3D position) {
@@ -42,12 +50,14 @@ void CInterpolation::SetUpInterpolation(Vector3D position) {
 	}*/
 
 	this->timeDiff = (this->timestamp) - (this->timeLastMessage);
+	//this->timeDiff = RakNet::GetTimeMS() - this->timeLastMessage;
 	if (this->timeDiff <= 0) this->timeDiff = 1;
 
 	this->timeLastMessage = this->timestamp;
 	this->interpolationTick = RakNet::GetTimeMS();
 
-	this->previousPos = this->actualPos;
+	//this->previousPos = this->actualPos;
+	this->previousPos = GetEntityPosition();
 
 	// Rounding lessens jittery bouncing
 	this->actualPos.x = roundf(position.x * 10000) / 10000;
@@ -60,7 +70,8 @@ void CInterpolation::SetUpInterpolationRot(Vector3D rotation) {
 	this->timeLastMessage = this->timestamp;
 	interpolationTick = RakNet::GetTimeMS();*/
 
-	this->previousRot = this->actualRot;
+	//this->previousRot = this->actualRot;
+	this->previousRot = GetEntityRotation();
 
 	// Rounding lessens jittery bouncing
 	this->actualRot.x = roundf(rotation.x * 10000) / 10000;
@@ -75,8 +86,10 @@ void CInterpolation::SetUpInterpolationRotVehicle(Vector3D rotation, Vector3D ro
 	this->timeLastMessage = this->timestamp;
 	this->interpolationTick = RakNet::GetTimeMS();*/
 
-	this->previousRot = this->actualRot;
-	this->previousRot2 = this->actualRot2;
+	//this->previousRot = this->actualRot;
+	//this->previousRot2 = this->actualRot2;
+	this->previousRot = GetVehicleRotation1();
+	this->previousRot2 = GetVehicleRotation2();
 
 	// Rounding lessens jittery bouncing
 	this->actualRot.x = roundf(rotation.x * 10000) / 10000;
@@ -169,4 +182,50 @@ float CInterpolation::Lerp(float v0, float v1, float t) {
 	if (t > 1) t = 1;
 
 	return (1 - t) * v0 + t * v1;
+}
+
+void CInterpolation::SetEntity(CEntity *pEntity)
+{
+	entity = pEntity;
+}
+
+CEntity* CInterpolation::GetEntity(void)
+{
+	return this->entity;
+}
+
+Vector3D CInterpolation::GetEntityPosition(void)
+{
+	if (!entity) return Tools::NullVect();
+	DWORD uiEntity = this->entity->GetEntity();
+	if (!uiEntity) return Tools::NullVect();
+	OBJECT *pEntityObject = (OBJECT*)uiEntity;
+	return pEntityObject->position;
+}
+
+Vector3D CInterpolation::GetEntityRotation(void)
+{
+	if (!entity) return Tools::NullVect();
+	DWORD uiEntity = this->entity->GetEntity();
+	if (!uiEntity) return Tools::NullVect();
+	OBJECT *pEntityObject = (OBJECT*)uiEntity;
+	return pEntityObject->rotation;
+}
+
+Vector3D CInterpolation::GetVehicleRotation1(void)
+{
+	if (!entity) return Tools::NullVect();
+	DWORD uiEntity = this->entity->GetEntity();
+	if (!uiEntity) return Tools::NullVect();
+	_VEHICLE *pGameVehicle = (_VEHICLE*)uiEntity;
+	return pGameVehicle->rotation;
+}
+
+Vector3D CInterpolation::GetVehicleRotation2(void)
+{
+	if (!entity) return Tools::NullVect();
+	DWORD uiEntity = this->entity->GetEntity();
+	if (!uiEntity) return Tools::NullVect();
+	_VEHICLE *pGameVehicle = (_VEHICLE*)uiEntity;
+	return pGameVehicle->rotationSecond;
 }

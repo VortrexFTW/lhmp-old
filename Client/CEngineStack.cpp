@@ -445,7 +445,9 @@ void CEngineStack::DoMessage()
 			else
 			{
 				g_CCore->GetLog()->AddLog("ES CREATECAR");
-				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(veh->GetPosition(), g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
+				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->object.position;
+				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
 				if (bWithinStreamingDistance && !veh->m_bStreamedIn && veh->GetEntity() == NULL)
 				{
 					g_CCore->GetGame()->CreateCarAndRestoreStatus(start->data, veh);
@@ -541,6 +543,7 @@ void CEngineStack::DoMessage()
 			{
 				g_CCore->GetLocalPlayer()->IDinCar = -1;
 				g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
+				g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 4");
 				g_CCore->GetGame()->KickPlayerFromCarFast(g_CCore->GetLocalPlayer()->GetEntity());
 			}
 			else
@@ -551,6 +554,7 @@ void CEngineStack::DoMessage()
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(true);
+						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 3");
 						g_CCore->GetGame()->KickPlayerFromCarFast(ped->GetEntity());
 					}
 				}
@@ -574,6 +578,7 @@ void CEngineStack::DoMessage()
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(true);
+						g_CCore->GetLog()->AddLog("KickPlayerFromCar 1");
 						g_CCore->GetGame()->KickPlayerFromCar(ped->GetEntity(), pw->vehID);
 					}
 				}
@@ -726,6 +731,7 @@ void CEngineStack::DoMessage()
 					else {
 						veh->PlayerExit(g_CCore->GetLocalPlayer()->GetOurID());
 						g_CCore->GetLocalPlayer()->IDinCar = -1;
+						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 2");
 						g_CCore->GetGame()->KickPlayerFromCarFast(veh->GetEntity());
 					}
 					//g_CCore->GetGame()->ChangeSkin(veh->GetEntity(), veh->GetSkin());

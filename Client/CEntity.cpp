@@ -90,9 +90,11 @@ int CEntity::GetSkin()
 
 void CEntity::SetTimeStamp(RakNet::TimeMS ts)
 {
+	//ts = RakNet::GetTimeMS();
 	this->timestamp = ts;
 	this->shouldUpdate = true;
 	interpolation.SetTimestamp(ts);
+	//interpolation.SetTimestamp();
 }
 RakNet::TimeMS CEntity::GetTimeStamp()
 {

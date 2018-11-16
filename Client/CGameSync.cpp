@@ -72,7 +72,7 @@ void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 {
 	int vehID = 0;
-	for (vehID = 0; vehID < MAX_PLAYERS; vehID++)
+	for (vehID = 0; vehID < MAX_VEHICLES; vehID++)
 		if (g_CCore->GetVehiclePool()->Return(vehID) == vehicle)
 			break;
 	if (vehID != MAX_VEHICLES)
@@ -92,7 +92,7 @@ void CGameSync::Engine_onPlayerEnterVehicle(CVehicle* vehicle, DWORD seatID)
 void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 {
 	int vehID = 0;
-	for (vehID = 0; vehID < MAX_PLAYERS; vehID++)
+	for (vehID = 0; vehID < MAX_VEHICLES; vehID++)
 		if (g_CCore->GetVehiclePool()->Return(vehID) == vehicle)
 			break;
 	if (vehID != MAX_VEHICLES)
@@ -111,7 +111,7 @@ void CGameSync::Engine_onPlayerExitVehicle(CVehicle* vehicle)
 void CGameSync::Engine_onPlayerCarjack(CVehicle* vehicle, int seatId)
 {
 	int vehID = 0;
-	for (vehID = 0; vehID < MAX_PLAYERS; vehID++)
+	for (vehID = 0; vehID < MAX_VEHICLES; vehID++)
 		if (g_CCore->GetVehiclePool()->Return(vehID) == vehicle)
 			break;
 	if (vehID != MAX_VEHICLES)

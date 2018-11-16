@@ -232,7 +232,9 @@ Vector3D CLocalPlayer::GetLocalPos()
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(IDinCar);
 		if (veh != NULL)
 		{
-			return veh->GetPosition();
+			_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
+			return veh2->object.position;
+			//return veh->GetPosition();
 		}
 		else {
 			pos.x = 0.0f;
