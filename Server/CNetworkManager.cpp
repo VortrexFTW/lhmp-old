@@ -721,7 +721,6 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP, UNASSIGNED_RAKNET_GUID, true);
 
 		CScriptingArguments EventArgs;
-		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
 		EventArgs.AddNumber(ID);
 		g_CCore->GetEventPool()->Trigger("OnVehicleCreate", EventArgs);
 	}
@@ -759,7 +758,6 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		}
 
 		CScriptingArguments EventArgs;
-		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
 		EventArgs.AddNumber(syncData.ID);
 		g_CCore->GetEventPool()->Trigger("OnVehicleUpdate", EventArgs);
 	}
