@@ -11,7 +11,7 @@
 #define PORT	50000
 
 // Time between server query checks (seconds)
-#define TIME_BETWEEN	10
+#define TIME_BETWEEN	15
 
 #define QUERY_DELAY		1000*TIME_BETWEEN
 

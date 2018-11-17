@@ -232,6 +232,10 @@ void	CNetworkManager::OnPlayerDisconnect(RakNet::Packet* packet)
 		{
 			g_CCore->GetScripts()->onPlayerDisconnect(ID);
 
+			CScriptingArguments EventArgs;
+			EventArgs.AddNumber(ID);
+			g_CCore->GetEventPool()->Trigger("OnPlayerDisconnect", EventArgs);
+
 			if (player->GetCurrentCar() != NO_CAR)
 			{
 				CVehicle* veh = g_CCore->GetVehiclePool()->Return(player->GetCurrentCar());
@@ -338,6 +342,9 @@ void CNetworkManager::Pulse()
 			// causing server crash, packet->systemAddress.ToString is either not thread-safe
 			//g_CCore->GetLog()->AddNormalLog("Player %s(%s) connected to the server.", player->GetNickname(),packet->systemAddress.ToString());
 
+			CScriptingArguments EventArgs;
+			EventArgs.AddNumber(ID);
+			g_CCore->GetEventPool()->Trigger("OnPlayerConnect", EventArgs);
 
 			g_CCore->GetScripts()->onPlayerConnect(ID);
 			g_CCore->GetScripts()->onPlayerSpawn(ID);
@@ -419,6 +426,11 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 					if (slot[i].isUsed == true)
 						peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_CHAT, slot[i].sa, false);
 				}
+
+				CScriptingArguments EventArgs;
+				EventArgs.AddNumber(ID);
+				EventArgs.AddString(buff);
+				g_CCore->GetEventPool()->Trigger("OnPlayerChat", EventArgs);
 			}
 			delete[] buff;
 			delete[] output;
@@ -436,6 +448,12 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsIn.Read(buff);
 		bsIn.Read(params);
 		g_CCore->GetScripts()->onPlayerCommand(ID, buff, params);
+
+		CScriptingArguments EventArgs;
+		EventArgs.AddNumber(ID);
+		EventArgs.AddString(buff);
+		EventArgs.AddString(params);
+		g_CCore->GetEventPool()->Trigger("OnPlayerCommand", EventArgs);
 	}
 	break;
 	case LHMP_PLAYER_SENT_SYNC_ON_FOOT:
@@ -487,6 +505,10 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsIn.Read(skin);
 			player->OnChangeSkin(skin);
 		}
+		CScriptingArguments EventArgs;
+		EventArgs.AddNumber(ID);
+		EventArgs.AddNumber(skin);
+		g_CCore->GetEventPool()->Trigger("OnPlayerSkinChange", EventArgs);
 	}
 	break;
 	case LHMP_PLAYER_RESPAWN:
@@ -676,6 +698,10 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		bsOut.Write((MessageID)LHMP_PLAYER_DEATH_END);
 		bsOut.Write(ID);
 		peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE, packet->systemAddress, true);
+		
+		CScriptingArguments EventArgs;
+		EventArgs.AddNumber(ID);
+		g_CCore->GetEventPool()->Trigger("OnPlayerDeathEnd", EventArgs);
 	}
 	break;
 	case LHMP_PLAYER_HIT:
@@ -782,7 +808,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
 		EventArgs.AddNumber(vehID);
 		EventArgs.AddNumber(seatID);
-		g_CCore->GetEventPool()->Trigger("OnPlayerEnterVehicle", EventArgs);
+		g_CCore->GetEventPool()->Trigger("OnPlayerEnteredVehicle", EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerEnterVehicle(GetIDFromSystemAddress(packet->systemAddress), vehID, seatID);
 	}
@@ -992,7 +1018,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			CScriptingArguments EventArgs;
 			EventArgs.AddNumber(vehID);
 			EventArgs.AddNumber((int)damage);
-			g_CCore->GetEventPool()->Trigger("OnVehicleShotDamage", EventArgs);
+			g_CCore->GetEventPool()->Trigger("OnVehicleShot", EventArgs);
 		}
 	}
 	break;
