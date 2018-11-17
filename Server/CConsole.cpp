@@ -73,8 +73,9 @@ void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 	else if (strcmp(command, "help") == 0)
 	{
 		g_CCore->GetLog()->AddNormalLog("List of commands:");
-		g_CCore->GetLog()->AddNormalLog("-> help:\t this help");
+		g_CCore->GetLog()->AddNormalLog("-> help:\t show this help again");
 		g_CCore->GetLog()->AddNormalLog("-> kick:\t kick player");
+		g_CCore->GetLog()->AddNormalLog("-> kickall:\t kick all players");
 		g_CCore->GetLog()->AddNormalLog("-> msg:\t\t send a message to all players");
 		g_CCore->GetLog()->AddNormalLog("-> load:\t load a new gamemode");
 		g_CCore->GetLog()->AddNormalLog("-> reload:\t reload current gamemode");
@@ -90,13 +91,38 @@ void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 		else
 		{
 			// kick player from server
-			SystemAddress sa = g_CCore->GetNetworkManager()->GetSystemAddressFromID(atoi(varlist));
-			g_CCore->GetNetworkManager()->GetPeer()->CloseConnection(sa, true);
+			CPlayer* player = g_CCore->GetPlayerPool()->Return(atoi(varlist));
+			if (player != NULL) {
+				SystemAddress sa = g_CCore->GetNetworkManager()->GetSystemAddressFromID(atoi(varlist));
+				g_CCore->GetNetworkManager()->GetPeer()->CloseConnection(sa, true);
+			}
+			else
+			{
+				g_CCore->GetLog()->AddNormalLog("Could not kick player. Given ID not found !");
+			}
+		}
+	}
+	else if (strcmp(command, "kickall") == 0)
+	{
+		// kick all players from server
+		if (strlen(varlist) == 0 || Tools::isStringNumeric((char*)varlist) == false)
+		{
+			int pocet = 0;
+			for (int i = 0; i < MAX_PLAYERS; i++)
+			{
+				CPlayer* player = g_CCore->GetPlayerPool()->Return(i);
+				if (player != NULL) {
+					SystemAddress sa = g_CCore->GetNetworkManager()->GetSystemAddressFromID(i);
+					g_CCore->GetNetworkManager()->GetPeer()->CloseConnection(sa, true);
+					pocet++;
+				}
+			}
+			g_CCore->GetLog()->AddNormalLog("Kicked player count: %d", pocet);
 		}
 	}
 	else if (strcmp(command, "msg") == 0)
 	{
-		// sends admin message to all players
+		// send admin message to all players
 		if (strlen(varlist) == 0)
 		{
 			g_CCore->GetLog()->AddNormalLog("Usage: msg <some message to all players>");
@@ -104,8 +130,9 @@ void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 		else
 		{
 			char message[250];
-			sprintf(message, "#ff0000[Admin]#fffFFF%s", varlist);
+			sprintf(message, "#ff0000[Server]:#fffFFF %s", varlist);
 			g_CCore->GetNetworkManager()->SendMessageToAll(message);
+			g_CCore->GetLog()->AddNormalLog("[Server]: %s", varlist);
 		}
 	}
 	else if (strcmp(command, "reload") == 0)
@@ -124,17 +151,17 @@ void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 			g_CCore->ChangeModeTo((char*)varlist);
 		}
 	}
-	else if (strcmp(command, "pl") == 0)
+	else if (strcmp(command, "pc") == 0)
 	{
 		// get real player count
 		int pocet = 0;
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
 			CPlayer* player = g_CCore->GetPlayerPool()->Return(i);
 			if (player != NULL)
 				pocet++;
 		}
-		g_CCore->GetLog()->AddNormalLog("Count: %d", pocet);
+		g_CCore->GetLog()->AddNormalLog("Player count: %d", pocet);
 	}
 	else
 	{
