@@ -34,12 +34,12 @@ public:
 class CFileSystemCharacter
 {
 private:
-	wchar_t* aliasString;
+	char* aliasString;
 	std::vector<CFileSystemLink*> nextList;
-	void SetAlias(wchar_t* alias)
+	void SetAlias(char* alias)
 	{
-		aliasString = new wchar_t[wcslen(alias) + 1];
-		wcscpy(aliasString, alias);
+		aliasString = new char[strlen(alias) + 1];
+		strcpy(aliasString, alias);
 	}
 public:
 	CFileSystemCharacter()
@@ -58,7 +58,7 @@ public:
 		}
 	}
 
-	void	AddFile(wchar_t* genuieName, wchar_t* alias)
+	void	AddFile(char* genuieName, char* alias)
 	{
 		if (genuieName[0] == 0x0)
 		{
@@ -82,7 +82,7 @@ public:
 	}
 
 	// return NULL if there is no link
-	wchar_t*	GetFileAlias(wchar_t* genuieName)
+	char*	GetFileAlias(char* genuieName)
 	{
 		if (genuieName[0] == 0x0)
 		{
@@ -123,12 +123,12 @@ class CFileSystem
 private:
 	CFileSystemCharacter		base;
 public:
-	void  AddFile(wchar_t* genuieName, wchar_t* alias)
+	void  AddFile(char* genuieName, char* alias)
 	{
-		wchar_t test[255];
-		wcscpy(test, genuieName);
+		char test[255];
+		strcpy(test, genuieName);
 
-		int len = wcslen(test);
+		int len = strlen(test);
 		for (int i = 0; i < len; i++)
 		{
 			if (test[i] >= 'A' && test[i] <= 'Z')
@@ -141,12 +141,12 @@ public:
 		base.AddFile(test, alias);
 	}
 
-	wchar_t*	GetFileAliasFromName(wchar_t* file)
+	char*	GetFileAliasFromName(char* file)
 	{
-		wchar_t test[255];
-		wcscpy(test, file);
+		char test[255];
+		strcpy(test, file);
 
-		int len = wcslen(test);
+		int len = strlen(test);
 		for (int i = 0; i < len; i++)
 		{
 			if (test[i] >= 'A' && test[i] <= 'Z')

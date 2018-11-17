@@ -64,14 +64,14 @@ void CChat::Render(IDirect3DDevice8* pInterface,LPD3DXFONT font)
 }
 
 // add message process and add message into chat log
-void CChat::AddMessage(std::wstring message)
+void CChat::AddMessage(std::string message)
 {
 	if (message.length() > 0)
 	{
 		if (elementCount > (unsigned int) CHAT_LINES_PER_RENDER-1)
 			animation = 20;
 		//----
-		CColoredText* newText = new CColoredText((wchar_t*)message.c_str());
+		CColoredText* newText = new CColoredText((char*)message.c_str());
 		CChatStack* newStack = new CChatStack();
 		newStack->text = newText;
 		newStack->next = this->ChatPoolStart;
@@ -282,10 +282,10 @@ void	CChat::RenderTexture(IDirect3DDevice8* device)
 	HRESULT hr;
 	hr = device->SetRenderTarget(pSurf, NULL);
 	if (FAILED(hr)) {
-		wchar_t buffer[255];
+		char buffer[255];
 		D3DXGetErrorString(hr, buffer, 200);
-		wsprintf(buffer, L"SetRenderTarget %s", buffer);
-		MessageBoxW(NULL, buffer, buffer, MB_OK);
+		sprintf(buffer, "SetRenderTarget %s", buffer);
+		MessageBoxA(NULL, buffer, buffer, MB_OK);
 	}
 	
 	device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
@@ -325,29 +325,29 @@ void	CChat::RenderTexture(IDirect3DDevice8* device)
 			{
 				if (this->IsBackgroundActive() == true)
 					g_CCore->GetGraphics()->Clear(10, base_y, 10 + CHAT_WIDTH, 30, D3DCOLOR_ARGB(200, 50, 0, 0));
-				g_CCore->GetGraphics()->GetFont()->DrawTextW(L">", 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
+				g_CCore->GetGraphics()->GetFont()->DrawTextA(">", 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
 			}
 			else
 			{
 				int index = 0;
-				int howMuchWeNeed = g_CCore->GetGraphics()->GetStrlenForWidth(CHAT_WIDTH - 10, (wchar_t*) ChatMessage.c_str() + index);
+				int howMuchWeNeed = g_CCore->GetGraphics()->GetStrlenForWidth(CHAT_WIDTH - 10, (char*) ChatMessage.c_str() + index);
 				while (howMuchWeNeed > 0)
 				{
-					std::wstring	colour = g_CCore->GetGraphics()->GetLastColorInText((wchar_t*)ChatMessage.c_str(), index);
+					std::string	colour = g_CCore->GetGraphics()->GetLastColorInText((char*)ChatMessage.c_str(), index);
 					// let's presume there will never be more than 512 characters per line
 					// TODO - buffer overflow warning
-					wchar_t buf[512];
-					wsprintf(buf, L"%s%s", colour.c_str(), ChatMessage.substr(index, howMuchWeNeed).c_str());
+					char buf[512];
+					sprintf(buf, "%s%s", colour.c_str(), ChatMessage.substr(index, howMuchWeNeed).c_str());
 					// if background filling is enabled, then render the background
 					if (this->IsBackgroundActive() == true)
 						g_CCore->GetGraphics()->Clear(10, base_y, 10 + CHAT_WIDTH, 30, D3DCOLOR_ARGB(200, 50, 0, 0));
 					// draw the text
-					g_CCore->GetGraphics()->GetFont()->DrawTextW(buf, 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
+					g_CCore->GetGraphics()->GetFont()->DrawTextA(buf, 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
 					// sum up the position pointer with the already drawn text
 					index += howMuchWeNeed;
 					// add up pixels for rendered line
 					base_y += 20;
-					howMuchWeNeed = g_CCore->GetGraphics()->GetStrlenForWidth(CHAT_WIDTH - 10, (wchar_t*)ChatMessage.c_str() + index);
+					howMuchWeNeed = g_CCore->GetGraphics()->GetStrlenForWidth(CHAT_WIDTH - 10, (char*)ChatMessage.c_str() + index);
 				}
 			}
 		}
@@ -394,20 +394,20 @@ void	CChat::DoRendering()
 			if (this->IsBackgroundActive() == true)
 				g_CCore->GetGraphics()->Clear(10, base_y, 10 + CHAT_WIDTH, 30, D3DCOLOR_ARGB(200, 50, 0, 0));
 			//return;
-			g_CCore->GetGraphics()->GetFont()->DrawTextW(L">", 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
+			g_CCore->GetGraphics()->GetFont()->DrawTextA(">", 21, base_y + 5, D3DCOLOR_XRGB(200, 200, 200), true);
 		}
 		else
 		{
-			wchar_t buff[255];
-			wsprintf(buff, L"%s", ChatMessage.c_str());
+			char buff[255];
+			sprintf(buff, "%s", ChatMessage.c_str());
 			int index = 0;
 			while (1)
 			{
 				int howMuchWeNeed = g_CCore->GetGraphics()->GetStrlenForWidth(CHAT_WIDTH - 10, buff + index);
-				std::wstring	farba = g_CCore->GetGraphics()->GetLastColorInText(buff, index);
+				std::string	farba = g_CCore->GetGraphics()->GetLastColorInText(buff, index);
 				if (howMuchWeNeed == 0) break;
-				wchar_t buf[255];
-				wsprintf(buf, L"%s%s", farba.c_str(), ChatMessage.substr(index, howMuchWeNeed).c_str());
+				char buf[255];
+				sprintf(buf, "%s%s", farba.c_str(), ChatMessage.substr(index, howMuchWeNeed).c_str());
 				int line_y = base_y + (30 * iRendered);
 				if (this->IsBackgroundActive() == true)
 					g_CCore->GetGraphics()->Clear(10, line_y, 10 + CHAT_WIDTH, 30, D3DCOLOR_ARGB(200, 50, 0, 0));

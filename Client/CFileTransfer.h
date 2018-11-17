@@ -17,16 +17,16 @@ class CFile
 {
 private:
 	unsigned int ID;
-	wchar_t name[255];
+	char name[255];
 	FILE* handle;
-	wchar_t checksum[33];
+	char checksum[33];
 	int size;
 	int alreadyWritten;
 public:
 	CFile(unsigned int _ID, FILE* _handle, char _name[], char _checksum[], int _size);
 	~CFile();
-	wchar_t*		GetName();
-	wchar_t*		GetCheckSum();
+	char*			GetName();
+	char*			GetCheckSum();
 	int				GetSize();
 	unsigned int	GetID();
 	FILE*			GetFileHandle();

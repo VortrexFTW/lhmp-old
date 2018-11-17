@@ -10,7 +10,7 @@ CPed::CPed()
 	this->SetActive(true);
 	isActive = true;
 	this->SetIsOnFoot(true);
-	wsprintf(sName, L"Player");
+	sprintf(sName, "Player");
 	playerPos.x = -1985.97f;
 	playerPos.y = -5.03f;
 	playerPos.z = 4.28f;
@@ -92,9 +92,9 @@ void CPed::SetHealth(float ht)
 	this->fHealth = ht;
 }
 
-void CPed::SetName(wchar_t* nm)
+void CPed::SetName(char* nm)
 {
-	wsprintf(this->sName, L"%s", nm);
+	sprintf(this->sName, "%s", nm);
 }
 
 /*
@@ -111,7 +111,7 @@ void CPed::SetState(byte st)
 }
 */
 
-wchar_t* CPed::GetName()
+char* CPed::GetName()
 {
 	return this->sName;
 }
@@ -265,8 +265,8 @@ void CPed::Interpolate()
 		//if (ped->object.isActive == 1)
 		//	return;
 		//RakNet::TimeMS actualtime = RakNet::GetTimeMS(), b = this->timestamp, c = this->timeDiff;
-		//wchar_t buff[255];
-		//wsprintf(buff, L"I: %i %i %i", actualtime, b, c);
+		//char buff[255];
+		//sprintf(buff, "I: %i %i %i", actualtime, b, c);
 		//g_CCore->GetLog()->AddLog(buff);
 		if (this->fHealth < 1.0f) return;
 		DWORD car = *(DWORD*)(this->EntityBase + 0x98);
@@ -278,16 +278,16 @@ void CPed::Interpolate()
 			{
 			coeficient = (FLOAT)((FLOAT)(actualtime - interpolationTick) / (FLOAT)c);
 			}
-			/*wchar_t buff[255];
-			wsprintf(buff, L"I: %f", coeficient);
+			/*char buff[255];
+			sprintf(buff, "I: %f", coeficient);
 			g_CCore->GetLog()->AddLog(buff);
 			*/
 			/*Vector3D speedvector;
 			speedvector.x = this->actual.x - this->previous.x;
 			speedvector.y = this->actual.y - this->previous.y;
 			speedvector.z = this->actual.z - this->previous.z;
-			/*wchar_t buff[255];
-			wsprintf(buff, L"I: %f %f %f", speedvector.x ,speedvector.y, speedvector.z);
+			/*char buff[255];
+			sprintf(buff, "I: %f %f %f", speedvector.x ,speedvector.y, speedvector.z);
 			g_CCore->GetLog()->AddLog(buff);*/
 
 			// multiply speedvector by elapsed time

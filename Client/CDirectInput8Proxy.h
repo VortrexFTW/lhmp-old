@@ -12,12 +12,12 @@
 
 extern CCore	*g_CCore;
 
-class MyDirectInput : public IDirectInput8A
+class MyDirectInput : public IDirectInput8
 {
 	private:
-		IDirectInput8A* p_DI;
+		IDirectInput8* p_DI;
 	public:
-		MyDirectInput(IDirectInput8A* di) : p_DI(di)
+		MyDirectInput(IDirectInput8* di) : p_DI(di)
 		{
 		}
 		~MyDirectInput ( )
@@ -45,7 +45,7 @@ class MyDirectInput : public IDirectInput8A
 			return ulRefCount;
 		}
 
-		HRESULT STDMETHODCALLTYPE EnumDevices ( DWORD a, LPDIENUMDEVICESCALLBACKA b, LPVOID c, DWORD d )
+		HRESULT STDMETHODCALLTYPE EnumDevices ( DWORD a, LPDIENUMDEVICESCALLBACK b, LPVOID c, DWORD d )
 		{
 			return p_DI->EnumDevices ( a, b, c, d );
 		}
@@ -70,17 +70,17 @@ class MyDirectInput : public IDirectInput8A
 			return p_DI->FindDevice ( a, b, c );
 		}
 
-		HRESULT STDMETHODCALLTYPE EnumDevicesBySemantics ( LPCSTR a, LPDIACTIONFORMATA b, LPDIENUMDEVICESBYSEMANTICSCBA c, LPVOID d, DWORD e )
+		HRESULT STDMETHODCALLTYPE EnumDevicesBySemantics ( LPCSTR a, LPDIACTIONFORMAT b, LPDIENUMDEVICESBYSEMANTICSCB c, LPVOID d, DWORD e )
 		{
 			return p_DI->EnumDevicesBySemantics ( a, b, c, d, e );
 		}
 
-		HRESULT STDMETHODCALLTYPE ConfigureDevices ( LPDICONFIGUREDEVICESCALLBACK a, LPDICONFIGUREDEVICESPARAMSA b, DWORD c, LPVOID d )
+		HRESULT STDMETHODCALLTYPE ConfigureDevices ( LPDICONFIGUREDEVICESCALLBACK a, LPDICONFIGUREDEVICESPARAMS b, DWORD c, LPVOID d )
 		{
 			return p_DI->ConfigureDevices ( a, b, c, d );
 		}
 
-		STDMETHOD(CreateDevice)(REFGUID rguid, LPDIRECTINPUTDEVICE8A *b, LPUNKNOWN unknown)
+		STDMETHOD(CreateDevice)(REFGUID rguid, LPDIRECTINPUTDEVICE8 *b, LPUNKNOWN unknown)
         {
 				bool isKB	= false;
 				if(rguid == GUID_SysKeyboard)

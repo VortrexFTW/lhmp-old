@@ -307,8 +307,8 @@ void CGame::ChangeSkin(DWORD playerObject, int skinId)
 		if (character->object.frame)
 		{
 
-			wchar_t buff[500];
-			wsprintf(buff, L"CGame::ChangeSkin %u %d", character, skinId);
+			char buff[500];
+			sprintf(buff, "CGame::ChangeSkin %u %d", character, skinId);
 			g_CCore->GetLog()->AddLog(buff);
 
 			skinId = Tools::Clamp(skinId, 0, (int)(sizeof(SKINS) / 200));
@@ -489,8 +489,8 @@ DWORD CGame::CreateCar(int skin)
 			//C:
 			popad
 	}
-	wchar_t buff[255];
-	wsprintf(buff, L"Car address: %x %x", caraddr, addr);
+	char buff[255];
+	sprintf(buff, "Car address: %x %x", caraddr, addr);
 	g_CCore->GetLog()->AddLog(buff);
 	return caraddr;
 }
@@ -720,8 +720,8 @@ DWORD CGame::CreatePED()
 																						add esp, 2000
 	}
 
-	wchar_t buff[255];
-	wsprintf(buff, L"PED address: %x %x", pedaddr, frameaddr);
+	char buff[255];
+	sprintf(buff, "PED address: %x %x", pedaddr, frameaddr);
 	g_CCore->GetLog()->AddLog(buff);
 	return pedaddr;
 }
@@ -794,7 +794,7 @@ void CGame::PreRespawn()
 	}
 	g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
 	g_CCore->GetLocalPlayer()->IDinCar = -1;
-	g_CCore->GetLog()->AddLog(L"CCGame::PreRespawn");
+	g_CCore->GetLog()->AddLog("CCGame::PreRespawn");
 
 	g_CCore->GetGame()->LHMP_DeleteAllPeds();
 	g_CCore->GetGame()->LHMP_DeleteAllCars();
@@ -828,9 +828,9 @@ void CGame::AfterRespawn()
 		CPed* ped = g_CCore->GetPedPool()->Return(i);
 		if (ped != NULL)
 		{
-			wchar_t buff[250];
+			char buff[250];
 			DWORD handle = g_CCore->GetGame()->CreatePED();
-			wsprintf(buff, L"AfterRespawn CreatePED %d %x", i, handle);
+			sprintf(buff, "AfterRespawn CreatePED %d %x", i, handle);
 			g_CCore->GetLog()->AddLog(buff);
 			ped->SetEntity(handle);
 			if (handle != NULL)
@@ -869,7 +869,7 @@ void CGame::AfterRespawn()
 				pickup->SetEntity(g_CCore->GetGame()->CreateFrame(pickup->GetModel()));
 				g_CCore->GetGame()->SetFrameScale(pickup->GetEntity(), pickup->GetSize(), pickup->GetSize(), pickup->GetSize());
 				g_CCore->GetGame()->SetFramePos(pickup->GetEntity(), pickup->GetPosition().x, pickup->GetPosition().y, pickup->GetPosition().z);
-				g_CCore->GetLog()->AddLog(L"[Respwn] RESPAWNING PICKUP");
+				g_CCore->GetLog()->AddLog("[Respwn] RESPAWNING PICKUP");
 			}
 		}
 	}
@@ -911,8 +911,8 @@ void CGame::AfterRespawn()
 
 	g_CCore->GetSquirrel()->onSpawn();
 
-	wchar_t buffer[100];
-	wsprintf(buffer, L"Respawn ended. Elapsed time: %u", (RakNet::GetTimeMS() - afterrespawnStart));
+	char buffer[100];
+	sprintf(buffer, "Respawn ended. Elapsed time: %u", (RakNet::GetTimeMS() - afterrespawnStart));
 	g_CCore->GetLog()->AddLog(buffer);
 }
 
@@ -935,7 +935,7 @@ void CGame::CreateCarAndRestoreStatus(int e, CVehicle *veh)
 				else
 				{
 					// shit
-					g_CCore->GetLog()->AddLog(L"Error [CreateCar] - no PED entity available for sitting");
+					g_CCore->GetLog()->AddLog("Error [CreateCar] - no PED entity available for sitting");
 				}
 				ped->InCar = e;
 			}
@@ -962,8 +962,8 @@ void CGame::ThrowAwayWeapon()
 			MOV AX, WORD PTR DS : [ESI]
 			MOV wepId, eax
 		}
-		wchar_t buff[255];
-		wsprintf(buff, L"CGame::ThrowAway: %i", wepId);
+		char buff[255];
+		sprintf(buff, "CGame::ThrowAway: %i", wepId);
 		//g_CCore->GetChat()->AddMessage(buff);
 		g_CCore->GetLog()->AddLog(buff);
 		RakNet::BitStream bsOut;
@@ -999,8 +999,8 @@ void CGame::TakeWeapon()
 		MOV EAX, DWORD PTR SS : [EDI + 0x8]
 		MOV wepHidden, EAX
 	}
-	wchar_t buff[255];
-	wsprintf(buff, L"CGame::TakeWep: %i %i %i", wepId, wepLoaded, wepHidden);
+	char buff[255];
+	sprintf(buff, "CGame::TakeWep: %i %i %i", wepId, wepLoaded, wepHidden);
 	//g_CCore->GetChat()->AddMessage(buff);
 	g_CCore->GetLog()->AddLog(buff);
 	RakNet::BitStream bsOut;
@@ -1026,8 +1026,8 @@ void CGame::ChangeWeapon()
 			MOV EAX, DWORD PTR SS : [ESI]
 			MOV wepId, EAX
 		}
-		wchar_t buff[255];
-		wsprintf(buff, L"CGame::SwitchWep: %i", wepId);
+		char buff[255];
+		sprintf(buff, "CGame::SwitchWep: %i", wepId);
 		//g_CCore->GetChat()->AddMessage(buff);
 		g_CCore->GetLog()->AddLog(buff);
 		RakNet::BitStream bsOut;
@@ -1069,7 +1069,7 @@ MOV y, EAX
 MOV EAX, DWORD PTR SS:[EDI+0x8]
 MOV z, EAX
 }
-wchar_t buff[255];
+char buff[255];
 sprintf(buff,"On Shot: %f %f %f",x,y,z);
 //g_CCore->GetChat()->AddMessage(buff);
 g_CCore->GetLog()->AddLog(buff);
@@ -1098,8 +1098,8 @@ MOV EDI, DWORD PTR SS : [ESP + 0x248]
 MOV seatId, EDI
 }
 carId = g_CCore->GetVehiclePool()->GetVehicleIdByBase(carId);
-wchar_t buff[255];
-wsprintf(buff, L"Car jack ID: %i Seat: %i", carId,seatId);
+char buff[255];
+sprintf(buff, "Car jack ID: %i Seat: %i", carId,seatId);
 g_CCore->GetLog()->AddLog(buff);
 
 RakNet::BitStream bsOut;
@@ -1153,8 +1153,8 @@ void CGame::OnDeath()
 	killerId = g_CCore->GetPedPool()->GetPedIdByBase(killerBase);
 	if (killerId != -1)
 	{
-		wchar_t buff[255];
-		wsprintf(buff, L"CGame::OnDeath - Killed by 0x%i", killerId);
+		char buff[255];
+		sprintf(buff, "CGame::OnDeath - Killed by 0x%i", killerId);
 		g_CCore->GetLog()->AddLog(buff);
 
 		RakNet::BitStream bsOut;
@@ -1178,7 +1178,7 @@ void CGame::OnSuicide()
 
 void CGame::Shoot(DWORD PED, Vector3D pos)
 {
-	g_CCore->GetLog()->AddLog(L"CGame:Shoot");
+	g_CCore->GetLog()->AddLog("CGame:Shoot");
 	//g_CCore->GetChat()->AddMessage("CGame::Shoot");
 	//MessageBox(NULL,"a","b",MB_OK);
 	float x = pos.x, y = pos.y, z = pos.z;
@@ -1211,9 +1211,9 @@ void CGame::Shoot(DWORD PED, Vector3D pos)
 void CGame::ThrowGranade(DWORD PED, Vector3D way)
 {
 	_PED* character = (_PED*)PED;
-	g_CCore->GetLog()->AddLog(L"CGame:ThrowGranade");
-	wchar_t wtf[500];
-	wsprintf(wtf, L"Wep: %d", character->inventary.slot[0].weaponType);
+	g_CCore->GetLog()->AddLog("CGame:ThrowGranade");
+	char wtf[500];
+	sprintf(wtf, "Wep: %d", character->inventary.slot[0].weaponType);
 	g_CCore->GetLog()->AddLog(wtf);
 
 	_asm {
@@ -1330,7 +1330,7 @@ void CGame::PlayerEnteredVehicle()
 		mov EAX, DWORD PTR DS : [ESP + 0x254]
 			mov vehicle, EAX;
 	}
-	wchar_t buff[255];
+	char buff[255];
 
 	int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(vehicle);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
@@ -1345,7 +1345,7 @@ void CGame::PlayerEnteredVehicle()
 		bsOut.Write(seatID);
 		g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE);
 
-		wsprintf(buff, L"CGame::PlayerEnteredVehicle %x, seat id: %d", vehicle, seatID);
+		sprintf(buff, "CGame::PlayerEnteredVehicle %x, seat id: %d", vehicle, seatID);
 		g_CCore->GetLog()->AddLog(buff);
 	}
 }
@@ -1359,7 +1359,7 @@ void CGame::PlayerExitVehicle()
 		mov EAX, DWORD PTR DS : [ESP + 0x25C]
 		mov vehicle, EAX;
 	}
-	wchar_t buff[255];
+	char buff[255];
 
 	int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(vehicle);
 	CVehicle* car = g_CCore->GetVehiclePool()->Return(vehID);
@@ -1374,7 +1374,7 @@ void CGame::PlayerExitVehicle()
 	bsOut.Write(vehID);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE);
 
-	wsprintf(buff, L"CGame::PlayerExitVehicle %x", vehicle);
+	sprintf(buff, "CGame::PlayerExitVehicle %x", vehicle);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -1384,7 +1384,7 @@ void CGame::PlayerExitVehicleFinish()
 	bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
 	bsOut.Write((RakNet::MessageID)LHMP_PLAYER_EXIT_VEHICLE_FINISH);
 	g_CCore->GetNetwork()->SendServerMessage(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_STATECHANGE);
-	g_CCore->GetLog()->AddLog(L"CGame::PlayerExitVehicleFinish");
+	g_CCore->GetLog()->AddLog("CGame::PlayerExitVehicleFinish");
 }
 
 void CGame::DeleteWeapon(DWORD PED, DWORD weaponID)
@@ -1495,7 +1495,7 @@ void CGame::FixAfterDeath(DWORD ped)
 void CGame::KillPedEx(DWORD ped, DWORD reason, DWORD part)
 {
 	//char buff[100];
-	//wsprintf(buff, L"PED %x Reason %d Part %d", ped, reason, part);
+	//sprintf(buff, "PED %x Reason %d Part %d", ped, reason, part);
 	//g_CCore->GetChat()->AddMessage(buff);
 
 	DWORD locPed = ped;
@@ -1503,7 +1503,7 @@ void CGame::KillPedEx(DWORD ped, DWORD reason, DWORD part)
 	DWORD locReason = 0;
 	DWORD locPart = part;
 	/*char buff[500];
-	wsprintf(buff, L"%x; %x; %x", ped, reason, part);
+	sprintf(buff, "%x; %x; %x", ped, reason, part);
 	g_CCore->GetLog()->AddLog(buff);
 	*/
 
@@ -2190,13 +2190,13 @@ void CGame::SetCarPosition(DWORD carBase, Vector3D position)
 {
 	if (carBase == NULL)
 	{
-		g_CCore->GetLog()->AddLog(L"SetCarPosition - car doesnt exist");
+		g_CCore->GetLog()->AddLog("SetCarPosition - car doesnt exist");
 		return;
 	}
 	DWORD car_frame = *(DWORD*)(carBase + 0x68);
 	if (car_frame == NULL)
 	{
-		g_CCore->GetLog()->AddLog(L"SetCarPosition - carframe doesnt exist");
+		g_CCore->GetLog()->AddLog("SetCarPosition - carframe doesnt exist");
 		return;
 	}
 	float x = position.x, y = position.y, z = position.z;
@@ -2298,13 +2298,13 @@ void CGame::SetCarRotation(DWORD carBase, Vector3D rotation)
 {
 	if (carBase == NULL)
 	{
-		g_CCore->GetLog()->AddLog(L"SetCarRotation - car doesnt exist");
+		g_CCore->GetLog()->AddLog("SetCarRotation - car doesnt exist");
 		return;
 	}
 	DWORD car_frame = *(DWORD*)(carBase + 0x68);
 	if (car_frame == NULL)
 	{
-		g_CCore->GetLog()->AddLog(L"SetCarRotation - carframe doesnt exist");
+		g_CCore->GetLog()->AddLog("SetCarRotation - carframe doesnt exist");
 		return;
 	}
 	float x = rotation.x, y = rotation.y, z = rotation.z;
@@ -2447,13 +2447,13 @@ CALL EAx; Game.00469DD0
 {
 if (carBase == NULL)
 {
-g_CCore->GetLog()->AddLog(L"UpdateCar - car doesnt exist");
+g_CCore->GetLog()->AddLog("UpdateCar - car doesnt exist");
 return;
 }
 DWORD car_frame = *(DWORD*)(carBase + 0x68);
 if (car_frame == NULL)
 {
-g_CCore->GetLog()->AddLog(L"UpdateCar - carframe doesnt exist");
+g_CCore->GetLog()->AddLog("UpdateCar - carframe doesnt exist");
 return;
 }
 float x = position.x, y = position.y, z = position.z;
@@ -2583,8 +2583,8 @@ add ESP, 0x1000
 */
 void CGame::GivePlayerToCarFast(DWORD ped, int vehId, int seatId)
 {
-	wchar_t buff[255];
-	wsprintf(buff, L"GivePlayerToCarFast %x %d %d", ped, vehId, seatId);
+	char buff[255];
+	sprintf(buff, "GivePlayerToCarFast %x %d %d", ped, vehId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
 	if (ped == NULL)
 		return;
@@ -2611,8 +2611,8 @@ void CGame::GivePlayerToCarFast(DWORD ped, int vehId, int seatId)
 
 void CGame::GivePlayerToCar(DWORD ped, int vehId, int seatId)
 {
-	wchar_t buff[255];
-	wsprintf(buff, L"%x %d %d", ped, vehId, seatId);
+	char buff[255];
+	sprintf(buff, "%x %d %d", ped, vehId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
 	
 	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
@@ -2623,7 +2623,7 @@ void CGame::GivePlayerToCar(DWORD ped, int vehId, int seatId)
 		return;
 	
 	/*	if (car == NULL)
-	g_CCore->GetLog()->AddLog(L"GivePTC - car doesnt exist");
+	g_CCore->GetLog()->AddLog("GivePTC - car doesnt exist");
 	return;*/
 	_asm
 	{
@@ -2737,8 +2737,8 @@ void CGame::SetPlayerPosition(DWORD ped, Vector3D position)
 
 void CGame::KickPlayerFromCar(DWORD ped, int vehId)
 {
-	wchar_t buff[255];
-	wsprintf(buff, L"%x %d", ped, vehId);
+	char buff[255];
+	sprintf(buff, "%x %d", ped, vehId);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
 	if (!pVehicle)
@@ -2747,7 +2747,7 @@ void CGame::KickPlayerFromCar(DWORD ped, int vehId)
 	if (!car)
 		return;
 	//if (car == NULL)
-	//	g_CCore->GetLog()->AddLog(L"KickPFC - car doesnt exist");
+	//	g_CCore->GetLog()->AddLog("KickPFC - car doesnt exist");
 	//return;
 	_asm
 	{
@@ -2766,8 +2766,8 @@ void CGame::KickPlayerFromCar(DWORD ped, int vehId)
 
 void CGame::KickPlayerFromCarFast(DWORD ped)
 {
-	wchar_t buff[255];
-	wsprintf(buff, L"%x", ped);
+	char buff[255];
+	sprintf(buff, "%x", ped);
 	DWORD car = NULL;
 	_asm {
 		mov ECX, ped
@@ -2785,14 +2785,14 @@ void CGame::KickPlayerFromCarFast(DWORD ped)
 	}
 	else
 	{
-		g_CCore->GetLog()->AddLog(L"[Err] Player is not in car");
+		g_CCore->GetLog()->AddLog("[Err] Player is not in car");
 	}
 }
 
 void CGame::HideWeapon()
 {
-	wchar_t buff[255];
-	wsprintf(buff, L"HideWep");
+	char buff[255];
+	sprintf(buff, "HideWep");
 	g_CCore->GetLog()->AddLog(buff);
 	RakNet::BitStream bsOut;
 	bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
@@ -2821,8 +2821,8 @@ void CGame::OnCollision()
 		bsOut.Write(vehID);
 		bsOut.Write(damage);
 		g_CCore->GetNetwork()->SendServerMessage(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP);
-		wchar_t buff[250];
-		wsprintf(buff, L"OnCollision %d %f", vehID, damage);
+		char buff[250];
+		sprintf(buff, "OnCollision %d %f", vehID, damage);
 		g_CCore->GetLog()->AddLog(buff);
 	}
 }
@@ -2849,8 +2849,8 @@ void CGame::OnCarShot()
 		bsOut.Write(myID);
 		bsOut.Write(damage);
 		g_CCore->GetNetwork()->SendServerMessage(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_VEHPROP);
-		wchar_t buff[250];
-		wsprintf(buff, L"OnCarShot %d %d", vehID, damage);
+		char buff[250];
+		sprintf(buff, "OnCarShot %d %d", vehID, damage);
 		g_CCore->GetLog()->AddLog(buff);
 	}
 }
@@ -3815,7 +3815,7 @@ void CGame::LockCarDoor(DWORD car, int seat, bool status)
 
 void CGame::SetCarEngineState(DWORD vehicle, bool shouldBeOn)
 {
-	g_CCore->GetLog()->AddLog(L"SetCarEngineState");
+	g_CCore->GetLog()->AddLog("SetCarEngineState");
 	DWORD param = (DWORD)shouldBeOn;
 	_asm
 	{

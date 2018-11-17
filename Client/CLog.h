@@ -24,7 +24,7 @@ public:
 	CLog();
 	// Insert a new @logmessage into log system
 	// if @priority is BIGGER than logState, message is dismissed
-	void AddLog(wchar_t* logmessage, unsigned char priority = LOG_NORMAL);
+	void AddLog(char* logmessage, unsigned char priority = LOG_NORMAL);
 	// Set logState
 	void SetLogState(unsigned char);
 	// Get logState

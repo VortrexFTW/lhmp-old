@@ -36,7 +36,7 @@ public:
 	CSquirrel();
 	// Startup a new client script
 	// IF SUCCESS, new script is added into script pool
-	void LoadClientScript(wchar_t* scriptname);
+	void LoadClientScript(char* scriptname);
 
 	// Delete all scripts
 	void DeleteScripts();
@@ -53,16 +53,16 @@ public:
 	void onRender();
 	void onKeyDown(unsigned int key);
 	void onSpawn();
-	void callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStream* message);
+	void callClientFunc(char* scriptname,char* scriptfunc, BitStream* message);
 private:
 	// Register all native functions and constants
 	void PrepareMachine(SQVM* pVM);
 	// functions used to register constants and functions, used in InitVM
 	//void RegisterFunction(HSQUIRRELVM pVM, char * szFunc, SQFUNCTION func, int params, const char * szTemplate);
-	void RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, bool bValue);
-	void RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, int iValue);
-	void RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, float fValue);
-	void RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, const wchar_t * szValue);
+	void RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, bool bValue);
+	void RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, int iValue);
+	void RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, float fValue);
+	void RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, const char * szValue);
 
 	// client-side scripts pool
 	//std::vector <CScript> p_scriptPool;
@@ -77,10 +77,10 @@ class CScript
 {
 public:
 	// Create new instance with @scriptname name and @pvm virtual machine instance
-	CScript(HSQUIRRELVM INpvm,wchar_t* INname)
+	CScript(HSQUIRRELVM INpvm,char* INname)
 	{
 		this->p_VM = INpvm;
-		wcscpy(this->name, INname);
+		strcpy(this->name, INname);
 	}
 	~CScript()
 	{
@@ -91,13 +91,13 @@ public:
 	{
 		return this->p_VM;
 	}
-	wchar_t* GetName()
+	char* GetName()
 	{
 		return this->name;
 	}
 private:
 	HSQUIRRELVM p_VM;
-	wchar_t name[500];
+	char name[500];
 };
 
 #endif

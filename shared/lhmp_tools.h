@@ -87,9 +87,9 @@ namespace Tools
 	/*---------------------------------------------------------------------------------*/
 	//								REST
 	/*---------------------------------------------------------------------------------*/
-	static DWORD GetARGBFromString(wchar_t buff[]) 
+	static DWORD GetARGBFromString(char buff[]) 
 	{
-		if(wcslen(buff) < 6)
+		if(strlen(buff) < 6)
 			return 0xFFFFFFFF;
 		DWORD result = 0xff000000;
 		unsigned long multiply;
@@ -283,7 +283,7 @@ namespace Tools
 		strcpy(host, url);
 		sprintf(rest, "");
 	}
-	static bool IsEmptyString(wchar_t* string)
+	static bool IsEmptyString(char* string)
 	{
 		return (string[0] == 0x0); // if C-string string has first char \0, it's empty
 	}
@@ -348,24 +348,10 @@ namespace Tools
 		return true;
 	}
 
-	static bool isHEXStamp(wchar_t* pch)
-	{
-		for (short i = 1; i < 7; i++)
-		{
-			//if(!(((pch[i] >= 'a') && (pch[i] <= 'f')) || ((pch[i] >= 'A') && (pch[i] <= 'F')) || ((pch[i] >= '0') && (pch[i] <= '9'))))
-			if (Tools::isHexChar(pch[i]) == false)
-			{
-				return false;
-			}
-
-		}
-		return true;
-	}
-
 	// return ID of first color stamp start, return 0 if the first letter matches and -1 if there isn't any stamp
-	static int getFirstColorStamp(wchar_t* input)
+	static int getFirstColorStamp(char* input)
 	{
-		int inputLen = wcslen(input);
+		int inputLen = strlen(input);
 		inputLen -= 7;
 		for (int i = 0; i < inputLen; i++)
 		{
@@ -394,13 +380,5 @@ namespace Tools
 		memcpy(input, stamp + 4, 6);
 #endif
 		input[6] = 0x0;
-	}
-
-	static wchar_t* charToWChar(const char* text)
-	{
-		size_t size = strlen(text) + 1;
-		wchar_t* wa = new wchar_t[size];
-		mbstowcs(wa, text, size);
-		return wa;
 	}
 }

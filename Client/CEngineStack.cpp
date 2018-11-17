@@ -41,7 +41,7 @@ void CEngineStack::DoMessage()
 		{
 		case CLIENT_ENGINESTACK::ES_SERVERRELOAD:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_SERVERRELOAD",LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_SERVERRELOAD",LOG_NORMAL);
 			// delete all cars
 			for (unsigned int i = 0; i < MAX_VEHICLES; i++)
 			{
@@ -87,10 +87,10 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_CREATEPLAYER:
 		{
-													wchar_t message[255];
-													wsprintf(message,L"CLIENT_ENGINESTACK::ES_CREATEPLAYER [ID:%d]", start->data);
+													char message[255];
+													sprintf(message,"CLIENT_ENGINESTACK::ES_CREATEPLAYER [ID:%d]", start->data);
 													g_CCore->GetLog()->AddLog(message, LOG_NORMAL);
-				//g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_CREATEPLAYER",LOG_NORMAL);
+				//g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_CREATEPLAYER",LOG_NORMAL);
 				CPed* ped = g_CCore->GetPedPool()->Return(start->data);
 				if(ped != NULL)
 				{
@@ -120,13 +120,13 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_DELETEPLAYER:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_DELETEPLAYER", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_DELETEPLAYER", LOG_NORMAL);
 			g_CCore->GetGame()->DeletePed(start->data);
 		}
 			break;
 		case CLIENT_ENGINESTACK::ES_PLAYERSETPOS:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYERSETPOS", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYERSETPOS", LOG_NORMAL);
 			ENGINE_STACK::PLAYER_SETPOS* pw = (ENGINE_STACK::PLAYER_SETPOS*) start->data;
 			// if it's local player
 			if (pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
@@ -143,7 +143,7 @@ void CEngineStack::DoMessage()
 		}break;
 		case CLIENT_ENGINESTACK::ES_CHANGESKIN:
 			{
-				g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_CHANGESKIN", LOG_NORMAL);
+				g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_CHANGESKIN", LOG_NORMAL);
 				if(start->data == g_CCore->GetLocalPlayer()->GetOurID())
 				{
 					DWORD adr = *(DWORD*) (*(DWORD*)(0x006F9464)+0xE4);
@@ -171,7 +171,7 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_PLAYANIM:
 			{
-				g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYANIM", LOG_NORMAL);
+				g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYANIM", LOG_NORMAL);
 				if(start->data == g_CCore->GetLocalPlayer()->GetOurID())
 				{
 					DWORD adr = *(DWORD*) (*(DWORD*)(0x006F9464)+0xE4);
@@ -191,7 +191,7 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_PLAYANIM_STRING:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYANIM_STRING", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYANIM_STRING", LOG_NORMAL);
 			ENGINE_STACK::PLAYER_PLAYANIM* pw = (ENGINE_STACK::PLAYER_PLAYANIM*) start->data;
 			if (pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 			{
@@ -213,7 +213,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_PLAYSOUND_STRING:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYSOUND_STRING", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYSOUND_STRING", LOG_NORMAL);
 			ENGINE_STACK::PLAYER_PLAYSOUND* pw = (ENGINE_STACK::PLAYER_PLAYSOUND*) start->data;
 			//char test[] = "sounds\\15020060.wav";
 			g_CCore->GetGame()->PlayGameSound(pw->name);
@@ -221,7 +221,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_ADDWEAPON:
 			{
-				g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_ADDWEAPON", LOG_NORMAL);
+				g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_ADDWEAPON", LOG_NORMAL);
 				ENGINE_STACK::PLAYER_ADDWEAPON* pw = (ENGINE_STACK::PLAYER_ADDWEAPON*) start->data;
 				if(pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 				{
@@ -256,7 +256,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_DELETEWEAPON:
 			{
-				g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_DELETEWEAPON", LOG_NORMAL);
+				g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_DELETEWEAPON", LOG_NORMAL);
 				ENGINE_STACK::PLAYER_DELETEWEAPON* pw = (ENGINE_STACK::PLAYER_DELETEWEAPON*) start->data;
 				if(pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 				{
@@ -281,7 +281,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_SWITCHWEAPON:
 			{
-				g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_SWITCHWEAPON", LOG_NORMAL);
+				g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_SWITCHWEAPON", LOG_NORMAL);
 				ENGINE_STACK::PLAYER_SWITCHWEAPON* pw = (ENGINE_STACK::PLAYER_SWITCHWEAPON*) start->data;
 				if(pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 				{
@@ -330,7 +330,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_THROWGRANADE:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_THROWGRANADE", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_THROWGRANADE", LOG_NORMAL);
 			ENGINE_STACK::PLAYER_SHOOT* pw = (ENGINE_STACK::PLAYER_SHOOT*) start->data;
 
 			if (pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
@@ -353,7 +353,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_PLAYERDEATH:
 		{ 
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYERDEATH", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYERDEATH", LOG_NORMAL);
 			if (start->data == g_CCore->GetLocalPlayer()->GetOurID())
 			{
 				DWORD adr = *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
@@ -377,7 +377,7 @@ void CEngineStack::DoMessage()
 		case CLIENT_ENGINESTACK::ES_PLAYERDEATHEX:
 		{
 			ENGINE_STACK::KILL_PED_EX* pw = (ENGINE_STACK::KILL_PED_EX*) start->data;
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYERDEATHEX", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYERDEATHEX", LOG_NORMAL);
 			if (pw->ID == g_CCore->GetLocalPlayer()->GetOurID())
 			{
 				DWORD adr = *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
@@ -402,7 +402,7 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_PLAYERDEATH_END:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_PLAYERDEATH_END", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_PLAYERDEATH_END", LOG_NORMAL);
 			if (start->data == g_CCore->GetLocalPlayer()->GetOurID())
 			{
 				DWORD adr = *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
@@ -423,14 +423,14 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_CAMERASETPOS:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_CAMERASETPOS", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_CAMERASETPOS", LOG_NORMAL);
 			ENGINE_STACK::CAMERA_SET* pw = (ENGINE_STACK::CAMERA_SET*) start->data;
 			g_CCore->GetGame()->SetCameraPos(pw->pos, pw->rot.x, pw->rot.y, pw->rot.z,0);
 		}
 			break;
 		case CLIENT_ENGINESTACK::ES_CAMERAUNLOCK:
 		{
-			g_CCore->GetLog()->AddLog(L"CLIENT_ENGINESTACK::ES_CAMERAUNLOCK", LOG_NORMAL);
+			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_CAMERAUNLOCK", LOG_NORMAL);
 			g_CCore->GetGame()->CameraUnlock();
 		}
 		break;
@@ -440,11 +440,11 @@ void CEngineStack::DoMessage()
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(start->data);
 			if (veh == NULL)
 			{
-				g_CCore->GetLog()->AddLog(L"no dpc");
+				g_CCore->GetLog()->AddLog("no dpc");
 			}
 			else
 			{
-				g_CCore->GetLog()->AddLog(L"ES CREATECAR");
+				g_CCore->GetLog()->AddLog("ES CREATECAR");
 				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
 				Vector3D vecVehPos = veh->GetEntity() == NULL ? veh->GetPosition() : veh2->position;
 				bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
@@ -457,7 +457,7 @@ void CEngineStack::DoMessage()
 		break;
 		case CLIENT_ENGINESTACK::ES_DELETECAR:
 		{
-			g_CCore->GetLog()->AddLog(L"ES_DELETECAR");
+			g_CCore->GetLog()->AddLog("ES_DELETECAR");
 			ENGINE_STACK::VEH_DELETEVEH* pw = (ENGINE_STACK::VEH_DELETEVEH*) start->data;
 			for (int i = 0; i < MAX_PLAYERS; i++)
 			{
@@ -513,7 +513,7 @@ void CEngineStack::DoMessage()
 			ENGINE_STACK::PLAYER_ENTER_VEH* pw = (ENGINE_STACK::PLAYER_ENTER_VEH*) start->data;
 			if (pw->pID == g_CCore->GetLocalPlayer()->GetOurID())
 			{
-				g_CCore->GetLog()->AddLog(L"ES_PLAYER_PUT_TO_VEH local");
+				g_CCore->GetLog()->AddLog("ES_PLAYER_PUT_TO_VEH local");
 				DWORD adr = *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
 				//DWORD adr = *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
 				//g_CCore->GetGame()->SwitchWeapon(adr, pw->wepID);
@@ -523,7 +523,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				g_CCore->GetLog()->AddLog(L"ES_PLAYER_PUT_TO_VEH");
+				g_CCore->GetLog()->AddLog("ES_PLAYER_PUT_TO_VEH");
 				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
 				if (ped != 0)
 				{
@@ -543,7 +543,7 @@ void CEngineStack::DoMessage()
 			{
 				g_CCore->GetLocalPlayer()->IDinCar = -1;
 				g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
-				g_CCore->GetLog()->AddLog(L"KickPlayerFromCarFast 4");
+				g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 4");
 				g_CCore->GetGame()->KickPlayerFromCarFast(g_CCore->GetLocalPlayer()->GetEntity());
 			}
 			else
@@ -554,7 +554,7 @@ void CEngineStack::DoMessage()
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(true);
-						g_CCore->GetLog()->AddLog(L"KickPlayerFromCarFast 3");
+						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 3");
 						g_CCore->GetGame()->KickPlayerFromCarFast(ped->GetEntity());
 					}
 				}
@@ -578,7 +578,7 @@ void CEngineStack::DoMessage()
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(true);
-						g_CCore->GetLog()->AddLog(L"KickPlayerFromCar 1");
+						g_CCore->GetLog()->AddLog("KickPlayerFromCar 1");
 						g_CCore->GetGame()->KickPlayerFromCar(ped->GetEntity(), pw->vehID);
 					}
 				}
@@ -629,21 +629,19 @@ void CEngineStack::DoMessage()
 
 		case CLIENT_ENGINESTACK::ES_DOOR_SET_STATE:
 		{
-			g_CCore->GetLog()->AddLog(L"ES_DOORSETSTATE");
+			g_CCore->GetLog()->AddLog("ES_DOORSETSTATE");
 			ENGINE_STACK::DOOR_SET_STATE* pw = (ENGINE_STACK::DOOR_SET_STATE*) start->data;
 			g_CCore->GetGame()->SetDoorStateFacing(pw->buff, pw->state,pw->facing);
 
-			wchar_t buff[255];
-			wsprintf(buff, L"DoorChange: %d %d", pw->state, pw->facing);
+			char buff[255];
+			sprintf(buff, "DoorChange: %d %d", pw->state, pw->facing);
 			g_CCore->GetLog()->AddLog(buff);
 		}
 		break;
 		case CLIENT_ENGINESTACK::ES_CHANGEMAP:
 		{
-			g_CCore->GetLog()->AddLog(L"ES_CHANGEMAP"); 
-
-			wchar_t *text2 = Tools::charToWChar((char*)start->data);
-			g_CCore->GetLog()->AddLog(text2);
+			g_CCore->GetLog()->AddLog("ES_CHANGEMAP"); 
+			g_CCore->GetLog()->AddLog((char*)start->data);
 			//ENGINE_STACK::DOOR_SET_STATE* pw = (ENGINE_STACK::DOOR_SET_STATE*) start->data;
 			//g_CCore->GetGame()->SetDoorState(pw->buff, pw->state);
 			/*if (*(DWORD*)((*(DWORD*)0x6F9464) + 0x24) == 0x0)
@@ -670,7 +668,7 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_CAREXPLODE:
 		{
-			g_CCore->GetLog()->AddLog(L"ES_CAREXPLODE");
+			g_CCore->GetLog()->AddLog("ES_CAREXPLODE");
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(start->data);
 			if (veh != NULL)
 			{
@@ -704,7 +702,7 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_CARRESPAWN:
 		{
-			g_CCore->GetLog()->AddLog(L"ES_CARRESPAWN");
+			g_CCore->GetLog()->AddLog("ES_CARRESPAWN");
 
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(start->data);
 			if (veh != NULL)
@@ -733,7 +731,7 @@ void CEngineStack::DoMessage()
 					else {
 						veh->PlayerExit(g_CCore->GetLocalPlayer()->GetOurID());
 						g_CCore->GetLocalPlayer()->IDinCar = -1;
-						g_CCore->GetLog()->AddLog(L"KickPlayerFromCarFast 2");
+						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 2");
 						g_CCore->GetGame()->KickPlayerFromCarFast(veh->GetEntity());
 					}
 					//g_CCore->GetGame()->ChangeSkin(veh->GetEntity(), veh->GetSkin());
@@ -757,11 +755,11 @@ void CEngineStack::DoMessage()
 					g_CCore->GetGame()->SetFrameScale(pickup->GetEntity(), pickup->GetSize(), pickup->GetSize(), pickup->GetSize());
 					g_CCore->GetGame()->SetFramePos(pickup->GetEntity(), pickup->GetPosition().x, pickup->GetPosition().y, pickup->GetPosition().z);
 					
-					g_CCore->GetLog()->AddLog(L"ES_CREATEPICKUP");
+					g_CCore->GetLog()->AddLog("ES_CREATEPICKUP");
 					//g_CCore->GetGame()->SetFrameRot(pickup->GetEntity(),0,0,0,0);
 
 					//char buff[200];
-					//wsprintf(buff, L"pice %f", pickup->GetSize());
+					//sprintf(buff, "pice %f", pickup->GetSize());
 					//g_CCore->GetChat()->AddMessage(buff);
 				}
 			}
@@ -825,11 +823,11 @@ void CEngineStack::DoMessage()
 			break;
 		case CLIENT_ENGINESTACK::ES_SCRIPT_RUN:
 		{
-			 g_CCore->GetSquirrel()->LoadClientScript(L"");
+			 g_CCore->GetSquirrel()->LoadClientScript("");
 		}
 			break;
 		default:
-			g_CCore->GetLog()->AddLog(L"Default ENGINE STACK");
+			g_CCore->GetLog()->AddLog("Default ENGINE STACK");
 			//char buffer[255];
 			//sprintf(buffer,"Spravy iduuuuuuuuuu hura %i",start->data);
 			//g_CCore->GetChat()->AddMessage(buffer);

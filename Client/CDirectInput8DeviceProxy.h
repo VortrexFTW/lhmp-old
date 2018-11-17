@@ -5,13 +5,13 @@
 
 #include <dinput.h>
 extern CCore	*g_CCore;
-class MyDirectDevice : public IDirectInputDevice8A
+class MyDirectDevice : public IDirectInputDevice8
 {
 private:
-	IDirectInputDevice8A*	p_DID;
+	IDirectInputDevice8*	p_DID;
 	bool					p_bIsKeyboard;
 public:
-	MyDirectDevice(IDirectInputDevice8A* DID,bool isKeyboard = false) : p_DID(DID)
+	MyDirectDevice(IDirectInputDevice8* DID,bool isKeyboard = false) : p_DID(DID)
 	{
 		p_bIsKeyboard = isKeyboard;
 	}
@@ -41,7 +41,7 @@ public:
 		return p_DID->GetCapabilities(devCaps);
 	}
 
-	STDMETHOD(EnumObjects)(LPDIENUMDEVICEOBJECTSCALLBACKA callback, LPVOID ref, DWORD flags)
+	STDMETHOD(EnumObjects)(LPDIENUMDEVICEOBJECTSCALLBACK callback, LPVOID ref, DWORD flags)	
 	{
 		return p_DID->EnumObjects(callback, ref, flags);
 	}
@@ -106,12 +106,12 @@ public:
 		return p_DID->SetCooperativeLevel(window, level);
 	}
 
-	STDMETHOD(GetObjectInfo)(LPDIDEVICEOBJECTINSTANCEA object, DWORD objId, DWORD objHow)
+	STDMETHOD(GetObjectInfo)(LPDIDEVICEOBJECTINSTANCE object, DWORD objId, DWORD objHow)
 	{
 		return p_DID->GetObjectInfo(object, objId, objHow);
 	}
 
-	STDMETHOD(GetDeviceInfo)(LPDIDEVICEINSTANCEA di)
+	STDMETHOD(GetDeviceInfo)(LPDIDEVICEINSTANCE di)
 	{
 		return p_DID->GetDeviceInfo(di);
 	}
@@ -131,12 +131,12 @@ public:
 		return p_DID->CreateEffect(rguid, effect_params, effect, unknown);
 	}
 
-    STDMETHOD(EnumEffects)(LPDIENUMEFFECTSCALLBACKA callback, LPVOID ref, DWORD type)
+    STDMETHOD(EnumEffects)(LPDIENUMEFFECTSCALLBACK callback, LPVOID ref, DWORD type)
 	{
 		return p_DID->EnumEffects(callback, ref, type);
 	}
 
-    STDMETHOD(GetEffectInfo)(LPDIEFFECTINFOA effect_info, REFGUID rguid)
+    STDMETHOD(GetEffectInfo)(LPDIEFFECTINFO effect_info, REFGUID rguid)
 	{
 		return p_DID->GetEffectInfo(effect_info, rguid);
 	}
@@ -181,17 +181,17 @@ public:
 		return p_DID->WriteEffectToFile(file_name, num_entries, effects, flags);
 	}
 
-    STDMETHOD(BuildActionMap)(LPDIACTIONFORMATA format, LPCSTR username, DWORD flags)
+    STDMETHOD(BuildActionMap)(LPDIACTIONFORMAT format, LPCSTR username, DWORD flags)
 	{
 		return p_DID->BuildActionMap(format, username, flags);
 	}
 
-    STDMETHOD(SetActionMap)(LPDIACTIONFORMATA format, LPCSTR username, DWORD flags)
+    STDMETHOD(SetActionMap)(LPDIACTIONFORMAT format, LPCSTR username, DWORD flags)
 	{
 		return p_DID->SetActionMap(format, username, flags);
 	}
 
-    STDMETHOD(GetImageInfo)(LPDIDEVICEIMAGEINFOHEADERA image_header)
+    STDMETHOD(GetImageInfo)(LPDIDEVICEIMAGEINFOHEADER image_header)
 	{
 		return p_DID->GetImageInfo(image_header);
 	}

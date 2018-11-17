@@ -31,38 +31,38 @@ CColoredText::~CColoredText()
 }
 
 
-CColoredText::CColoredText(wchar_t* input)
+CColoredText::CColoredText(char* input)
 {
 	this->pointer = NULL;
 	this->start = NULL;
 	this->elementsCount = NULL;
 	this->wholeLength = NULL;
 	this->wholeWidth = NULL;
-	if (wcslen(input) > 0)
+	if (strlen(input) > 0)
 	{
 		this->MakeBlocksFromText(input);
 		this->GetBlocksLength();
 	}
 }
 
-void CColoredText::MakeBlocksFromText(wchar_t* input)
+void CColoredText::MakeBlocksFromText(char* input)
 {
-	int len = wcslen(input);
+	int len = strlen(input);
 	unsigned int textColor = 0xFFFFFFFF;
-	wchar_t* color = this->FindNextColor(input);
+	char* color = this->FindNextColor(input);
 	if (color == NULL)
 	{
-		this->CreateBlock(input, wcslen(input), textColor);
+		this->CreateBlock(input, strlen(input), textColor);
 	}
 	else {
 		if (len > 7)
 		{
 			if (color == input)
 			{
-				wchar_t* nextColor = this->FindNextColor(input + 7);
+				char* nextColor = this->FindNextColor(input + 7);
 				if (nextColor == NULL)
 				{
-					this->CreateBlock(input + 7, wcslen(input), Tools::GetARGBFromString(color + 1));
+					this->CreateBlock(input + 7, strlen(input), Tools::GetARGBFromString(color + 1));
 				}
 				else {
 					len = nextColor - input -7;
@@ -72,10 +72,10 @@ void CColoredText::MakeBlocksFromText(wchar_t* input)
 				}
 			}
 			else {
-				wchar_t* nextColor = this->FindNextColor(input + 7);
+				char* nextColor = this->FindNextColor(input + 7);
 				if (nextColor == NULL)
 				{
-					this->CreateBlock(input, wcslen(input), textColor);
+					this->CreateBlock(input, strlen(input), textColor);
 				}
 				else {
 					len = nextColor - input - 7;
@@ -92,9 +92,9 @@ void CColoredText::MakeBlocksFromText(wchar_t* input)
 }
 
 
-wchar_t*	CColoredText::FindNextColor(wchar_t* input)
+char*	CColoredText::FindNextColor(char* input)
 {
-	wchar_t*	color = wcschr(input, L'#');
+	char*	color = strchr(input, '#');
 	if (color == 0)
 	{
 		return NULL;
@@ -111,14 +111,14 @@ wchar_t*	CColoredText::FindNextColor(wchar_t* input)
 }
 
 
-void	CColoredText::CreateBlock(wchar_t* input, unsigned int length, unsigned int color)
+void	CColoredText::CreateBlock(char* input, unsigned int length, unsigned int color)
 {
 	CColoredStruct* newstruct = new CColoredStruct();
 	newstruct->next = NULL;
 	newstruct->width = NULL;
 	newstruct->color = color;
-	wchar_t*	text = new wchar_t[length+1];
-	wcsncpy(text, input,length);
+	char*	text = new char[length+1];
+	strncpy(text, input,length);
 	text[length] = '\0';
 	newstruct->text = text;
 	
@@ -191,8 +191,8 @@ __declspec(noinline) CColoredText* CColoredText::SplitText(unsigned int width, b
 					// here we go
 					unsigned int wantedWidth = (desiredLength + point->width)-width;
 					unsigned int currentWidth = NULL;
-					wchar_t*	textEnd = NULL;
-					int len = wcslen(point->text);
+					char*		textEnd = NULL;
+					int len = strlen(point->text);
 					textEnd = point->text;
 
 					int enoughCharacters = g_CCore->GetGraphics()->GetFont()->GetStrlenForWidth(width - desiredLength, point->text);
@@ -217,9 +217,9 @@ __declspec(noinline) CColoredText* CColoredText::SplitText(unsigned int width, b
 					if (textEnd != point->text)
 					{
 						CColoredStruct* block = new CColoredStruct();
-						int newLen = wcslen(textEnd);
-						block->text = new wchar_t[newLen + 1];
-						wcscpy(block->text, textEnd);
+						int newLen = strlen(textEnd);
+						block->text = new char[newLen + 1];
+						strcpy(block->text, textEnd);
 						block->color = point->color;
 						block->width = currentWidth;
 						newClass->PushBlock(block);
@@ -283,7 +283,7 @@ __declspec(noinline) void	CColoredText::PushBlock(CColoredStruct* block)
 		this->start = block;
 	}
 	block->next = NULL;
-	this->wholeLength += wcslen(block->text);
+	this->wholeLength += strlen(block->text);
 	this->wholeWidth += block->width;
 
 }
@@ -307,7 +307,7 @@ void	CColoredText::ReCalculate()
 			next->width = size.cx;
 
 			width += next->width;
-			length += wcslen(next->text);
+			length += strlen(next->text);
 			next = next->next;
 		} while (next != NULL);
 		this->wholeWidth = width;

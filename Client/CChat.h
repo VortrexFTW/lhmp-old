@@ -54,7 +54,7 @@ public:
 	void					OnResetDevice();
 	void					Render(IDirect3DDevice8*,LPD3DXFONT);
 
-	void					AddMessage(std::wstring);
+	void					AddMessage(std::string);
 	void					AddDebugMessage(char* format, ...);
 	void					DoneMessage();
 	void					DoCommand(char[]);

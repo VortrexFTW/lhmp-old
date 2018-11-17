@@ -31,11 +31,11 @@ private:
 	RakNet::RakPeerInterface	*peer;
 	RakNet::Packet				*packet;
 	RakNet::SocketDescriptor	sd;
-	wchar_t						CONNECT_IP[100];
+	char						CONNECT_IP[100];
 	int							CONNECT_PORT;
-	wchar_t						CONNECT_PASSWORD[100];
-	wchar_t						NickName[100];
-	wchar_t						m_pServerName[255];
+	char						CONNECT_PASSWORD[100];
+	char						NickName[100];
+	char						m_pServerName[255];
 
 	bool						isConnected;
 
@@ -58,11 +58,11 @@ public:
 	void Pulse();
 	void SendServerMessage(RakNet::BitStream*, PacketPriority, PacketReliability, char = 0);
 	RakNet::RakPeerInterface* GetPeer();
-	wchar_t* GetNick();
+	char* GetNick();
 	RakNet::RakPeerInterface* ReturnPeer();
 	bool IsConnected();
 
-	wchar_t*	GetServerName();
+	char*	GetServerName();
 
 	void httpRequest(int type, char* url, void* callback);
 

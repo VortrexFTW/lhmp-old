@@ -26,7 +26,7 @@ CPickup* CPickupPool::Return(unsigned int slot)
 	{
 		// generate error
 		//char buff[250];
-		//wsprintf(buff, L"[Err] SLOT overlaps MAX_PICKUPS - caller [%p] %s:%d", _ReturnAddress(),__FILE__, __LINE__);
+		//sprintf(buff, "[Err] SLOT overlaps MAX_PICKUPS - caller [%p] %s:%d", _ReturnAddress(),__FILE__, __LINE__);
 		//g_CCore->GetLog()->AddLog(buff);
 		return NULL;
 	}

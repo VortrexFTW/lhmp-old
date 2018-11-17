@@ -82,7 +82,7 @@ void CVehicle::UpdateGameObject()
 	{
 	if (Seat[0] != g_CCore->GetLocalPlayer()->GetOurID())
 	{
-	//g_CCore->GetLog()->AddLog(L"VehicleUpdate");
+	//g_CCore->GetLog()->AddLog("VehicleUpdate");
 	//g_CCore->GetGame()->SetCarPosition(this->GetEntity(), this->GetPosition());
 	//g_CCore->GetGame()->SetCarRotation(this->GetEntity(), interpolation.InterpolateRotVehicle());
 
@@ -337,7 +337,7 @@ void CVehicle::SendSync()
 		bsOut.Write(syncData);
 
 		g_CCore->GetNetwork()->SendServerMessage(&bsOut, HIGH_PRIORITY, UNRELIABLE);
-		//g_CCore->GetLog()->AddLog(L"vehicle stream");
+		//g_CCore->GetLog()->AddLog("vehicle stream");
 	}
 
 }
@@ -400,8 +400,8 @@ void CVehicle::ToggleEngine(byte state)
 	}
 	this->engineState = state;
 
-	wchar_t buff[200];
-	wsprintf(buff, L"Toggle Engine  %d", this->engineState);
+	char buff[200];
+	sprintf(buff, "Toggle Engine  %d", this->engineState);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -434,15 +434,15 @@ void CVehicle::SetSeat(int seatID, int pID)
 {
 	if (seatID > 3)
 	{
-		g_CCore->GetLog()->AddLog(L"CVehicle::SetSeat: seatID is out of <0-3> range.");
+		g_CCore->GetLog()->AddLog("CVehicle::SetSeat: seatID is out of <0-3> range.");
 		return;
 	}
 	this->Seat[seatID] = pID;
 
-	wchar_t buff[100];
-	wsprintf(buff, L"SetSeat seat %d ID %d", seatID, pID);
+	char buff[100];
+	sprintf(buff, "SetSeat seat %d ID %d", seatID, pID);
 	g_CCore->GetLog()->AddLog(buff);
-	wsprintf(buff, L"SetSeat seats %d %d %d %d", this->Seat[0], this->Seat[1], this->Seat[2], this->Seat[3]);
+	sprintf(buff, "SetSeat seats %d %d %d %d", this->Seat[0], this->Seat[1], this->Seat[2], this->Seat[3]);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -503,8 +503,8 @@ void CVehicle::SetLightState(bool b)
 	}
 
 	this->lightState = (bool)b;
-	wchar_t buff[200];
-	wsprintf(buff, L"Toggle Lights  %d", b);
+	char buff[200];
+	sprintf(buff, "Toggle Lights  %d", b);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -549,8 +549,8 @@ void	CVehicle::SetDamage(float dmg)
 	{
 		*(float*)(this->GetEntity() + 0x2A4) = this->damage;
 	}
-	wchar_t buff[30];
-	wsprintf(buff, L"Damage: %f", dmg);
+	char buff[30];
+	sprintf(buff, "Damage: %f", dmg);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -567,8 +567,8 @@ void	CVehicle::SetShotDamage(byte dmg)
 	{
 		*(float*)(this->GetEntity() + 0x2094) = this->shotdamage;
 	}
-	wchar_t buff[30];
-	wsprintf(buff, L"ShotDamage: %d", dmg);
+	char buff[30];
+	sprintf(buff, "ShotDamage: %d", dmg);
 	g_CCore->GetLog()->AddLog(buff);
 }
 

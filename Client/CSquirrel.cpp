@@ -25,10 +25,10 @@ CSquirrel::CSquirrel()
 // default script printf function - goes to log
 void printfunc(HSQUIRRELVM v, const SQChar *s, ...)
 {
-	wchar_t endbuff[500] = L"MP  ";
+	char endbuff[500] = "MP  ";
 	va_list args;
 	va_start(args, s);
-	wvsprintf(endbuff + 4, s, args);
+	vsprintf(endbuff + 4, s, args);
 	va_end(args);
 	//g_CCore->GetLog()->AddLog(endbuff);
 	g_CCore->GetChat()->AddMessage(endbuff);
@@ -39,13 +39,13 @@ static void squirrel_stack_trace(HSQUIRRELVM sqvm)
 	SQStackInfos stack_info;
 	SQInteger stack_depth = 1;
 
-	printfunc(sqvm, L"Stack Dump:\n");
+	printfunc(sqvm, "Stack Dump:\n");
 	while (SQ_SUCCEEDED(sq_stackinfos(sqvm, stack_depth, &stack_info))) {
 		const SQChar *func_name = (stack_info.funcname) ?
-			stack_info.funcname : L"unknown_function";
+			stack_info.funcname : "unknown_function";
 		const SQChar *source_file = (stack_info.source) ?
-			stack_info.source : L"unknown_source_file";
-		printfunc(sqvm, L"[%d]: function [%s()] %s line [%d]\n",
+			stack_info.source : "unknown_source_file";
+		printfunc(sqvm, "[%d]: function [%s()] %s line [%d]\n",
 			stack_depth, func_name, source_file, stack_info.line);
 		stack_depth++;
 	}
@@ -57,8 +57,8 @@ static SQInteger squirrel_runtime_error(HSQUIRRELVM sqvm)
 	const SQChar* error_message = NULL;
 	if (sq_gettop(sqvm) >= 1) {
 		if (SQ_SUCCEEDED(sq_getstring(sqvm, 2, &error_message))) {
-			wchar_t buff[500];
-			wsprintf(buff, L"sqvm: %s.\n", error_message);
+			char buff[500];
+			sprintf(buff, "sqvm: %s.\n", error_message);
 			g_CCore->GetChat()->AddMessage(buff);
 		}
 		squirrel_stack_trace(sqvm);
@@ -70,21 +70,21 @@ static SQInteger squirrel_runtime_error(HSQUIRRELVM sqvm)
 static void squirrel_compile_error(HSQUIRRELVM sqvm, const SQChar* description,
 	const SQChar* file, SQInteger line, SQInteger column)
 {
-	wchar_t endbuff[500];
-	wsprintf(endbuff, L"sqvm: '%s' (Ln:%d Col:%d) : %s.\n", file, line, column, description);
+	char endbuff[500];
+	sprintf(endbuff, "sqvm: '%s' (Ln:%d Col:%d) : %s.\n", file, line, column, description);
 	g_CCore->GetChat()->AddMessage(endbuff);
 }
 
 static void squirrel_print_function(HSQUIRRELVM sqvm, const SQChar *format, ...)
 {
-	wchar_t endbuff[500];
+	char endbuff[500];
 	va_list args;
 	va_start(args, format);
 	//vfprintf(stdout, format, args);
 	//printfunc(sqvm, format, args);
 	//g_CCore->GetChat()->AddMessage("PRINTF");
 
-	wvsprintf(endbuff, format, args);
+	vsprintf(endbuff, format, args);
 	g_CCore->GetChat()->AddMessage(endbuff);
 	va_end(args);
 }
@@ -92,27 +92,27 @@ static void squirrel_print_function(HSQUIRRELVM sqvm, const SQChar *format, ...)
 // NEW!
 static void squirrel_error_function(HSQUIRRELVM sqvm, const SQChar *format, ...)
 {
-	wchar_t endbuff[500];
+	char endbuff[500];
 	va_list args;
 	va_start(args, format);
-	wvsprintf(endbuff, format, args);
+	vsprintf(endbuff, format, args);
 	g_CCore->GetChat()->AddMessage(endbuff);
 	va_end(args);
 
 }
 
-void CSquirrel::LoadClientScript(wchar_t* scriptname)
+void CSquirrel::LoadClientScript(char* scriptname)
 {
 	//g_CCore->GetChat()->AddMessage(scriptname);
 	// Need to get the correct filename as all client files 
 	// from server are stored with their MD5 checksum as name
-	wchar_t* realName = g_CCore->GetFileSystem()->GetFileAliasFromName(scriptname);
+	char* realName = g_CCore->GetFileSystem()->GetFileAliasFromName(scriptname);
 
-	wchar_t szScriptPath[512];
-	wsprintf(szScriptPath, L"lhmp/files/%s", realName);
+	char szScriptPath[512];
+	sprintf(szScriptPath, "lhmp/files/%s", realName);
 
 	/*char buff[300];
-	wsprintf(buff, L"Script: %s", szScriptPath);
+	sprintf(buff, "Script: %s", szScriptPath);
 	//g_CCore->GetChat()->AddMessage(buff);
 	*/
 
@@ -154,7 +154,7 @@ void CSquirrel::LoadClientScript(wchar_t* scriptname)
 	}*/
 	if (SQ_FAILED(sqstd_dofile(pVM, szScriptPath, SQFalse, SQTrue))) {
 		// script compilation failed
-		g_CCore->GetChat()->AddMessage(L"Compile failed");
+		g_CCore->GetChat()->AddMessage("Compile failed");
 		return;
 	}
 
@@ -176,7 +176,7 @@ void CSquirrel::LoadClientScript(wchar_t* scriptname)
 	this->onSpawn();
 
 	/*char buff[100];
-	wsprintf(buff, L"Origi %p", pVM);
+	sprintf(buff, "Origi %p", pVM);
 	g_CCore->GetLog()->AddLog(buff);
 	//sq_close(sqvm);
 	this->p_VM = sqvm;
@@ -185,7 +185,7 @@ void CSquirrel::LoadClientScript(wchar_t* scriptname)
 	sq_pushroottable(this->p_VM);
 
 	// Push the function name onto the stack
-	g_CCore->GetLog()->AddLog(L"rendering test...");
+	g_CCore->GetLog()->AddLog("rendering test...");
 	sq_pushstring(this->p_VM, "onRender", -1);
 	// Get the closure for the function
 	if (SQ_SUCCEEDED(sq_get(this->p_VM, -2))) {
@@ -364,7 +364,7 @@ void CSquirrel::onRender()
 
 
 	char buff[100];
-	wsprintf(buff, L"NEXT: %p", pVM);
+	sprintf(buff, "NEXT: %p", pVM);
 	g_CCore->GetLog()->AddLog(buff);
 	}*/
 
@@ -397,7 +397,7 @@ void CSquirrel::onRender()
 				sq_pushroottable(pVM);
 
 				// Push the function name onto the stack
-				sq_pushstring(pVM, L"onRender", -1);
+				sq_pushstring(pVM, "onRender", -1);
 				// Get the closure for the function
 				if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
 					// Push the root table onto the stack
@@ -408,7 +408,7 @@ void CSquirrel::onRender()
 
 
 				//char buff[100];
-				//wsprintf(buff, L"NEXT: %p", pVM);
+				//sprintf(buff, "NEXT: %p", pVM);
 				//g_CCore->GetLog()->AddLog(buff);
 			}
 		}
@@ -428,7 +428,7 @@ void CSquirrel::onKeyDown(unsigned int key)
 				sq_pushroottable(pVM);
 
 				// Push the function name onto the stack
-				sq_pushstring(pVM, L"onKeyDown", -1);
+				sq_pushstring(pVM, "onKeyDown", -1);
 				// Get the closure for the function
 				if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
 					// Push the root table onto the stack
@@ -453,7 +453,7 @@ void CSquirrel::onSpawn()
 				sq_pushroottable(pVM);
 
 				// Push the function name onto the stack
-				sq_pushstring(pVM, L"onSpawn", -1);
+				sq_pushstring(pVM, "onSpawn", -1);
 				// Get the closure for the function
 				if (SQ_SUCCEEDED(sq_get(pVM, -2))) {
 					// Push the root table onto the stack
@@ -466,10 +466,10 @@ void CSquirrel::onSpawn()
 	}
 }
 
-void CSquirrel::callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStream* message)
+void CSquirrel::callClientFunc(char* scriptname, char* scriptfunc, BitStream* message)
 {
 	/*char buff[500];
-	wsprintf(buff, L"callClientFunc[%s][%s]", scriptname, scriptfunc);
+	sprintf(buff, "callClientFunc[%s][%s]", scriptname, scriptfunc);
 	g_CCore->GetChat()->AddMessage(buff);*/
 
 	CScript* pointer = NULL;
@@ -477,7 +477,7 @@ void CSquirrel::callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStre
 	{
 		if (this->p_scriptPool[i] != NULL)
 		{
-			if (wcscmp(this->p_scriptPool[i]->GetName(), scriptname) == 0)
+			if (strcmp(this->p_scriptPool[i]->GetName(), scriptname) == 0)
 			{
 				pointer = this->p_scriptPool[i];
 				break;
@@ -490,7 +490,7 @@ void CSquirrel::callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStre
 		// now get type of param and serialize it
 		SQInteger iPar;
 		SQFloat fPar;
-		wchar_t parString[500];
+		char parString[500];
 		SQBool	bPar;
 
 		SQObjectType type;
@@ -520,7 +520,7 @@ void CSquirrel::callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStre
 				break;
 			case OT_STRING:
 				message->Read(parString);
-				len = wcslen(parString);
+				len = strlen(parString);
 				sq_pushstring(pointer->GetVirtualMachine(), parString, len);
 				break;
 			case OT_BOOL:
@@ -547,7 +547,7 @@ void CSquirrel::callClientFunc(wchar_t* scriptname, wchar_t* scriptfunc, BitStre
 
 /* ----------------------- Utils -----------------------------------*/
 
-void RegisterFunction(HSQUIRRELVM pVM, wchar_t * szFunc, SQFUNCTION func, int params, const wchar_t * szTemplate)
+void RegisterFunction(HSQUIRRELVM pVM, char * szFunc, SQFUNCTION func, int params, const char * szTemplate)
 {
 	sq_pushroottable(pVM);
 
@@ -561,28 +561,28 @@ void RegisterFunction(HSQUIRRELVM pVM, wchar_t * szFunc, SQFUNCTION func, int pa
 	sq_pop(pVM, 1); //pops the root table
 }
 
-void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, bool bValue)
+void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, bool bValue)
 {
 	sq_pushstring(pVM, szVarName, -1);
 	sq_pushbool(pVM, bValue);
 	sq_createslot(pVM, -3);
 }
 
-void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, int iValue)
+void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, int iValue)
 {
 	sq_pushstring(pVM, szVarName, -1);
 	sq_pushinteger(pVM, iValue);
 	sq_createslot(pVM, -3);
 }
 
-void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, float fValue)
+void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, float fValue)
 {
 	sq_pushstring(pVM, szVarName, -1);
 	sq_pushfloat(pVM, fValue);
 	sq_createslot(pVM, -3);
 }
 
-void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const wchar_t * szVarName, const wchar_t * szValue)
+void CSquirrel::RegisterVariable(HSQUIRRELVM pVM, const char * szVarName, const char * szValue)
 {
 	sq_pushstring(pVM, szVarName, -1);
 	sq_pushstring(pVM, szValue, -1);
@@ -601,7 +601,7 @@ SQInteger sq_drawText(SQVM *vm)
 	sq_getinteger(vm, -2, &coord_y);
 	sq_getinteger(vm, -1, &color);
 
-	g_CCore->GetGraphics()->GetFont()->DrawTextW((wchar_t*)text, coord_x, coord_y, color, true);
+	g_CCore->GetGraphics()->GetFont()->DrawTextA((char*)text, coord_x, coord_y, color, true);
 	return 1;
 }
 
@@ -803,10 +803,10 @@ SQInteger sq_createTexture(SQVM *vm)
 	const SQChar* textureName;
 	sq_getstring(vm, -1, &textureName);
 
-	wchar_t* realName = g_CCore->GetFileSystem()->GetFileAliasFromName((wchar_t*)textureName);
+	char* realName = g_CCore->GetFileSystem()->GetFileAliasFromName((char*)textureName);
 
-	wchar_t szScriptPath[512];
-	wsprintf(szScriptPath, L"lhmp/files/%s", realName);
+	char szScriptPath[512];
+	sprintf(szScriptPath, "lhmp/files/%s", realName);
 
 	CSQImage* image = g_CCore->GetSquirrelImages()->createTexture((char*)szScriptPath);
 	/*if (image != NULL)
@@ -857,7 +857,7 @@ SQInteger sq_drawTexture(SQVM* vm)
 		g_CCore->GetGraphics()->GetSprite()->Draw(image->GetTexture(), NULL, &scaling, NULL, 0.0f, &position, 0xFFFFFFFF);
 	}
 	else {
-		g_CCore->GetChat()->AddMessage(L"[Err] drawImage - image doesn't exists");
+		g_CCore->GetChat()->AddMessage("[Err] drawImage - image doesn't exists");
 	}
 	return 1;
 }
@@ -964,7 +964,7 @@ SQInteger sq_drawTextureEx(SQVM* vm)
 		g_CCore->GetGraphics()->GetSprite()->Draw(image->GetTexture(), &sourceRect, &scaling, NULL, rotation, &position, 0xFFFFFFFF);
 	}
 	else {
-		g_CCore->GetChat()->AddMessage(L"[Err] drawImageEx - image doesn't exists");
+		g_CCore->GetChat()->AddMessage("[Err] drawImageEx - image doesn't exists");
 	}
 	return 1;
 }
@@ -976,10 +976,10 @@ SQInteger sq_createFont(SQVM *vm)
 	sq_getstring(vm, -2, &name_font);
 	sq_getinteger(vm, -1, &size);
 
-	CSQFont* font = g_CCore->GetSquirrelFonts()->createFont((wchar_t*)name_font, size);
+	CSQFont* font = g_CCore->GetSquirrelFonts()->createFont((char*)name_font, size);
 
 	/*char buff[500];
-	wsprintf(buff, L"createFont: %p", font);
+	sprintf(buff, "createFont: %p", font);
 	g_CCore->GetChat()->AddMessage(buff);
 	*/
 
@@ -1001,7 +1001,7 @@ SQInteger sq_drawFontText(SQVM *vm)
 
 	if (font)
 	{
-		font->GetFont()->DrawTextW((wchar_t*)text, x, y, color);
+		font->GetFont()->DrawTextA((char*)text, x, y, color);
 	}
 	return 1;
 }
@@ -1017,7 +1017,7 @@ SQInteger sq_getFontWidthOfText(SQVM *vm)
 	{
 		if (font->GetFont())
 		{
-			SIZE size = font->GetFont()->GetFontWidth((wchar_t*)text);
+			SIZE size = font->GetFont()->GetFontWidth((char*)text);
 			sq_newarray(vm, 0);
 			sq_pushinteger(vm, size.cx);
 			sq_arrayappend(vm, -2);
@@ -1270,176 +1270,176 @@ void CSquirrel::PrepareMachine(SQVM* pVM)
 
 	// consts
 
-	RegisterVariable(pVM, L"COLOR_WHITE", (int)0xFFFFFFFF);
-	RegisterVariable(pVM, L"COLOR_RED", (int)0xFFFF0000);
-	RegisterVariable(pVM, L"COLOR_GREEN", (int)0xFF00FF00);
-	RegisterVariable(pVM, L"COLOR_BLUE", (int)0xFF0000FF);
-	RegisterVariable(pVM, L"COLOR_BLACK", (int)0xFF000000);
-	RegisterVariable(pVM, L"COLOR_GRAY", (int)0xFF555555);
+	RegisterVariable(pVM, "COLOR_WHITE", (int)0xFFFFFFFF);
+	RegisterVariable(pVM, "COLOR_RED", (int)0xFFFF0000);
+	RegisterVariable(pVM, "COLOR_GREEN", (int)0xFF00FF00);
+	RegisterVariable(pVM, "COLOR_BLUE", (int)0xFF0000FF);
+	RegisterVariable(pVM, "COLOR_BLACK", (int)0xFF000000);
+	RegisterVariable(pVM, "COLOR_GRAY", (int)0xFF555555);
 
 
 	// Virtual codes - for key strokes
 
-	RegisterVariable(pVM, L"VK_BACK", (int)0x08);
-	RegisterVariable(pVM, L"VK_TAB", (int)0x09);
-	RegisterVariable(pVM, L"VK_RETURN", (int)0x0D);
-	RegisterVariable(pVM, L"VK_SPACE", (int)0x20);
-	RegisterVariable(pVM, L"VK_LEFT", (int)0x25);
-	RegisterVariable(pVM, L"VK_RIGHT", (int)0x27);
-	RegisterVariable(pVM, L"VK_UP", (int)0x26);
-	RegisterVariable(pVM, L"VK_DOWN", (int)0x28);
-	RegisterVariable(pVM, L"VK_NUM0", (int)0x30);
-	RegisterVariable(pVM, L"VK_NUM1", (int)0x31);
-	RegisterVariable(pVM, L"VK_NUM2", (int)0x32);
-	RegisterVariable(pVM, L"VK_NUM3", (int)0x33);
-	RegisterVariable(pVM, L"VK_NUM4", (int)0x34);
-	RegisterVariable(pVM, L"VK_NUM5", (int)0x35);
-	RegisterVariable(pVM, L"VK_NUM6", (int)0x36);
-	RegisterVariable(pVM, L"VK_NUM7", (int)0x37);
-	RegisterVariable(pVM, L"VK_NUM8", (int)0x38);
-	RegisterVariable(pVM, L"VK_NUM9", (int)0x39);
-	RegisterVariable(pVM, L"VK_A", (int)0x41);
-	RegisterVariable(pVM, L"VK_B", (int)0x42);
-	RegisterVariable(pVM, L"VK_C", (int)0x43);
-	RegisterVariable(pVM, L"VK_D", (int)0x44);
-	RegisterVariable(pVM, L"VK_E", (int)0x45);
-	RegisterVariable(pVM, L"VK_F", (int)0x46);
-	RegisterVariable(pVM, L"VK_G", (int)0x47);
-	RegisterVariable(pVM, L"VK_H", (int)0x48);
-	RegisterVariable(pVM, L"VK_I", (int)0x49);
-	RegisterVariable(pVM, L"VK_J", (int)0x4A);
-	RegisterVariable(pVM, L"VK_K", (int)0x4B);
-	RegisterVariable(pVM, L"VK_L", (int)0x4C);
-	RegisterVariable(pVM, L"VK_M", (int)0x4D);
-	RegisterVariable(pVM, L"VK_N", (int)0x4E);
-	RegisterVariable(pVM, L"VK_O", (int)0x4F);
-	RegisterVariable(pVM, L"VK_P", (int)0x50);
-	RegisterVariable(pVM, L"VK_Q", (int)0x51);
-	RegisterVariable(pVM, L"VK_R", (int)0x52);
-	RegisterVariable(pVM, L"VK_S", (int)0x53);
-	RegisterVariable(pVM, L"VK_T", (int)0x54);
-	RegisterVariable(pVM, L"VK_U", (int)0x55);
-	RegisterVariable(pVM, L"VK_V", (int)0x56);
-	RegisterVariable(pVM, L"VK_W", (int)0x57);
-	RegisterVariable(pVM, L"VK_X", (int)0x58);
-	RegisterVariable(pVM, L"VK_Y", (int)0x59);
-	RegisterVariable(pVM, L"VK_Z", (int)0x5A);
+	RegisterVariable(pVM, "VK_BACK", (int)0x08);
+	RegisterVariable(pVM, "VK_TAB", (int)0x09);
+	RegisterVariable(pVM, "VK_RETURN", (int)0x0D);
+	RegisterVariable(pVM, "VK_SPACE", (int)0x20);
+	RegisterVariable(pVM, "VK_LEFT", (int)0x25);
+	RegisterVariable(pVM, "VK_RIGHT", (int)0x27);
+	RegisterVariable(pVM, "VK_UP", (int)0x26);
+	RegisterVariable(pVM, "VK_DOWN", (int)0x28);
+	RegisterVariable(pVM, "VK_NUM0", (int)0x30);
+	RegisterVariable(pVM, "VK_NUM1", (int)0x31);
+	RegisterVariable(pVM, "VK_NUM2", (int)0x32);
+	RegisterVariable(pVM, "VK_NUM3", (int)0x33);
+	RegisterVariable(pVM, "VK_NUM4", (int)0x34);
+	RegisterVariable(pVM, "VK_NUM5", (int)0x35);
+	RegisterVariable(pVM, "VK_NUM6", (int)0x36);
+	RegisterVariable(pVM, "VK_NUM7", (int)0x37);
+	RegisterVariable(pVM, "VK_NUM8", (int)0x38);
+	RegisterVariable(pVM, "VK_NUM9", (int)0x39);
+	RegisterVariable(pVM, "VK_A", (int)0x41);
+	RegisterVariable(pVM, "VK_B", (int)0x42);
+	RegisterVariable(pVM, "VK_C", (int)0x43);
+	RegisterVariable(pVM, "VK_D", (int)0x44);
+	RegisterVariable(pVM, "VK_E", (int)0x45);
+	RegisterVariable(pVM, "VK_F", (int)0x46);
+	RegisterVariable(pVM, "VK_G", (int)0x47);
+	RegisterVariable(pVM, "VK_H", (int)0x48);
+	RegisterVariable(pVM, "VK_I", (int)0x49);
+	RegisterVariable(pVM, "VK_J", (int)0x4A);
+	RegisterVariable(pVM, "VK_K", (int)0x4B);
+	RegisterVariable(pVM, "VK_L", (int)0x4C);
+	RegisterVariable(pVM, "VK_M", (int)0x4D);
+	RegisterVariable(pVM, "VK_N", (int)0x4E);
+	RegisterVariable(pVM, "VK_O", (int)0x4F);
+	RegisterVariable(pVM, "VK_P", (int)0x50);
+	RegisterVariable(pVM, "VK_Q", (int)0x51);
+	RegisterVariable(pVM, "VK_R", (int)0x52);
+	RegisterVariable(pVM, "VK_S", (int)0x53);
+	RegisterVariable(pVM, "VK_T", (int)0x54);
+	RegisterVariable(pVM, "VK_U", (int)0x55);
+	RegisterVariable(pVM, "VK_V", (int)0x56);
+	RegisterVariable(pVM, "VK_W", (int)0x57);
+	RegisterVariable(pVM, "VK_X", (int)0x58);
+	RegisterVariable(pVM, "VK_Y", (int)0x59);
+	RegisterVariable(pVM, "VK_Z", (int)0x5A);
 
 	// Functions
-	RegisterFunction(pVM, L"timerOff", (SQFUNCTION)sq_TimerOff, 1, L".");
+	RegisterFunction(pVM, "timerOff", (SQFUNCTION)sq_TimerOff, 1, ".");
 
-	RegisterFunction(pVM, L"timerOn", (SQFUNCTION)sq_TimerOn, 5, L".nnnn");
+	RegisterFunction(pVM, "timerOn", (SQFUNCTION)sq_TimerOn, 5, ".nnnn");
 
-	RegisterFunction(pVM, L"timerSetInterval", (SQFUNCTION)sq_TimerSetInterval, 2, L".f");
+	RegisterFunction(pVM, "timerSetInterval", (SQFUNCTION)sq_TimerSetInterval, 2, ".f");
 
-	RegisterFunction(pVM, L"timerGetInterval", (SQFUNCTION)sq_TimerGetInterval, 1, L".");
+	RegisterFunction(pVM, "timerGetInterval", (SQFUNCTION)sq_TimerGetInterval, 1, ".");
 
 	// Returns size of screen in 2D vector (x,y)
-	RegisterFunction(pVM, L"getScreenSize", (SQFUNCTION)sq_getScreenSize, 1, L".");
+	RegisterFunction(pVM, "getScreenSize", (SQFUNCTION)sq_getScreenSize, 1, ".");
 
 	// Draws @text at @pos.x @pos.y with @color (hex)
-	RegisterFunction(pVM, L"drawText", (SQFUNCTION)sq_drawText, 5, L".snnn");
+	RegisterFunction(pVM, "drawText", (SQFUNCTION)sq_drawText, 5, ".snnn");
 
 	// Draws colorbox at @pos.x @pos.y (@width, @height) with @color (hex)
-	RegisterFunction(pVM, L"fillBox", (SQFUNCTION)sq_fillBox, 6, L".nnnnn");
+	RegisterFunction(pVM, "fillBox", (SQFUNCTION)sq_fillBox, 6, ".nnnnn");
 
 	// Block or unblock user in-game input
-	RegisterFunction(pVM, L"blockInput", (SQFUNCTION)sq_blockInput, 2, L".b");
+	RegisterFunction(pVM, "blockInput", (SQFUNCTION)sq_blockInput, 2, ".b");
 
 	// returns TRUE when input is blocked
-	RegisterFunction(pVM, L"isInputBlocked", (SQFUNCTION)sq_isInputBlocked, 1, L".");
+	RegisterFunction(pVM, "isInputBlocked", (SQFUNCTION)sq_isInputBlocked, 1, ".");
 
 	// Block or unblock user in-game input
-	RegisterFunction(pVM, L"hideChat", (SQFUNCTION)sq_hideChat, 2, L".b");
+	RegisterFunction(pVM, "hideChat", (SQFUNCTION)sq_hideChat, 2, ".b");
 
 	// returns TRUE when input is blocked
-	RegisterFunction(pVM, L"isChatHidden", (SQFUNCTION)sq_isChatHidden, 1, L".");
+	RegisterFunction(pVM, "isChatHidden", (SQFUNCTION)sq_isChatHidden, 1, ".");
 
 	// set camera at position to look at another position
-	RegisterFunction(pVM, L"cameraLookAtFrom", (SQFUNCTION)sq_cameraLookAtFrom, 7, L".ffffff");
+	RegisterFunction(pVM, "cameraLookAtFrom", (SQFUNCTION)sq_cameraLookAtFrom, 7, ".ffffff");
 
 	// restore original camera position
-	RegisterFunction(pVM, L"restoreCamera", (SQFUNCTION)sq_restoreCamera, 1, L".");
+	RegisterFunction(pVM, "restoreCamera", (SQFUNCTION)sq_restoreCamera, 1, ".");
 
 	// set localplayer position
 	// Params: x, y, z
-	RegisterFunction(pVM, L"setPosition", (SQFUNCTION)sq_setPosition, 4, L".fff");
+	RegisterFunction(pVM, "setPosition", (SQFUNCTION)sq_setPosition, 4, ".fff");
 
 	// set localplayer rotation
 	// Params: x, y, z
-	RegisterFunction(pVM, L"setRotation", (SQFUNCTION)sq_setRotation, 4, L".fff");
+	RegisterFunction(pVM, "setRotation", (SQFUNCTION)sq_setRotation, 4, ".fff");
 
 	// Get localplayer position
-	RegisterFunction(pVM, L"getPosition", (SQFUNCTION)sq_getPosition, 1, L".");
+	RegisterFunction(pVM, "getPosition", (SQFUNCTION)sq_getPosition, 1, ".");
 
 	// Get localplayer rotation
-	RegisterFunction(pVM, L"getRotation", (SQFUNCTION)sq_getRotation, 1, L".");
+	RegisterFunction(pVM, "getRotation", (SQFUNCTION)sq_getRotation, 1, ".");
 
 	// Get localplayer rotation as single float
-	RegisterFunction(pVM, L"getHeading", (SQFUNCTION)sq_getHeading, 1, L".");
+	RegisterFunction(pVM, "getHeading", (SQFUNCTION)sq_getHeading, 1, ".");
 
 	// Play anim
-	RegisterFunction(pVM, L"playAnimation", (SQFUNCTION)sq_playAnimation, 2, L".n");
+	RegisterFunction(pVM, "playAnimation", (SQFUNCTION)sq_playAnimation, 2, ".n");
 
 	// set localplayer skin
 	// Params: skinID
-	RegisterFunction(pVM, L"changeSkin", (SQFUNCTION)sq_changeSkin, 2, L".n");
+	RegisterFunction(pVM, "changeSkin", (SQFUNCTION)sq_changeSkin, 2, ".n");
 
 	// Call function located at server-side in a script
 	// Params: scriptname, functionname, param(int, float, bool, string)
-	RegisterFunction(pVM, L"callServerFunc", (SQFUNCTION)sq_callServerFunc, 4, L".ss.");
+	RegisterFunction(pVM, "callServerFunc", (SQFUNCTION)sq_callServerFunc, 4, ".ss.");
 
 	// Creates a texture(image)
 	// Returns pointer or FALSE (on fail)
-	RegisterFunction(pVM, L"createTexture", (SQFUNCTION)sq_createTexture, 2, L".s");
+	RegisterFunction(pVM, "createTexture", (SQFUNCTION)sq_createTexture, 2, ".s");
 
 	// Returns the size of texture (width/height) as an array
-	RegisterFunction(pVM, L"getTextureSize", (SQFUNCTION)sq_getTextureSize, 2, L".p");
+	RegisterFunction(pVM, "getTextureSize", (SQFUNCTION)sq_getTextureSize, 2, ".p");
 
 	// Draws image(created in 'createTexture') at X and Y and scaling width and height
-	RegisterFunction(pVM, L"drawTexture", (SQFUNCTION)sq_drawTexture, 6, L".pnnnn");
+	RegisterFunction(pVM, "drawTexture", (SQFUNCTION)sq_drawTexture, 6, ".pnnnn");
 
 	// Draws image(created in 'createTexture') at X and Y, scaling width and height, source rect(x1,y1,x2,y2),rotation(0-360f)
-	RegisterFunction(pVM, L"drawTextureEx", (SQFUNCTION)sq_drawTexture, 11, L".pnnnnnnnnn");
+	RegisterFunction(pVM, "drawTextureEx", (SQFUNCTION)sq_drawTexture, 11, ".pnnnnnnnnn");
 
 	// Creates a new font 
-	RegisterFunction(pVM, L"createFont", (SQFUNCTION)sq_createFont, 3, L".sn");
+	RegisterFunction(pVM, "createFont", (SQFUNCTION)sq_createFont, 3, ".sn");
 
 	// draw @test at @x/y with @color and @font
-	RegisterFunction(pVM, L"drawFontText", (SQFUNCTION)sq_drawFontText, 6, L".snnnp");
+	RegisterFunction(pVM, "drawFontText", (SQFUNCTION)sq_drawFontText, 6, ".snnnp");
 
 	// returns width and height of text if it's rendered with current font
-	RegisterFunction(pVM, L"getTextWidth", (SQFUNCTION)sq_getFontWidthOfText, 3, L".sp");
+	RegisterFunction(pVM, "getTextWidth", (SQFUNCTION)sq_getFontWidthOfText, 3, ".sp");
 
 	// Returns RGB color as DWORD (useful for all Color params, drawtext/fillbox)
-	RegisterFunction(pVM, L"colorRGB", (SQFUNCTION)sq_ColorRGB, 4, L".nnn");
+	RegisterFunction(pVM, "colorRGB", (SQFUNCTION)sq_ColorRGB, 4, ".nnn");
 
 	// Returns RGB color as DWORD (useful for all Color params, drawtext/fillbox)
-	RegisterFunction(pVM, L"colorARGB", (SQFUNCTION)sq_ColorARGB, 4, L".nnnn");
+	RegisterFunction(pVM, "colorARGB", (SQFUNCTION)sq_ColorARGB, 4, ".nnnn");
 
 	//Create 3D sound at specific coordinates	
-	RegisterFunction(pVM, L"create3DSound", (SQFUNCTION)sq_Play3DSound, 7, L".sfffff");
+	RegisterFunction(pVM, "create3DSound", (SQFUNCTION)sq_Play3DSound, 7, ".sfffff");
 
 	//Remove 3D sound
-	RegisterFunction(pVM, L"remove3DSound", (SQFUNCTION)sq_Remove3DSound, 2, L".n");
+	RegisterFunction(pVM, "remove3DSound", (SQFUNCTION)sq_Remove3DSound, 2, ".n");
 
 	//Create animated particle at specific coordinates	
-	RegisterFunction(pVM, L"createParticle", (SQFUNCTION)sq_CreateParticle, 5, L".nfff");
+	RegisterFunction(pVM, "createParticle", (SQFUNCTION)sq_CreateParticle, 5, ".nfff");
 
 	//Remove particle
-	RegisterFunction(pVM, L"removeParticle", (SQFUNCTION)sq_RemoveParticle, 2, L".n");
+	RegisterFunction(pVM, "removeParticle", (SQFUNCTION)sq_RemoveParticle, 2, ".n");
 
 	//Money Functions
-	RegisterFunction(pVM, L"enableMoney", (SQFUNCTION)sq_EnableMoney, 2, L".n");
+	RegisterFunction(pVM, "enableMoney", (SQFUNCTION)sq_EnableMoney, 2, ".n");
 
-	RegisterFunction(pVM, L"setMoney", (SQFUNCTION)sq_SetMoney, 2, L".n");
+	RegisterFunction(pVM, "setMoney", (SQFUNCTION)sq_SetMoney, 2, ".n");
 
-	RegisterFunction(pVM, L"getMoney", (SQFUNCTION)sq_GetMoney, 1, L".");
+	RegisterFunction(pVM, "getMoney", (SQFUNCTION)sq_GetMoney, 1, ".");
 
 	//Tools Functions
-	RegisterFunction(pVM, L"getDistanceBetween3DPoints", (SQFUNCTION)sq_getDistanceBetween3DPoints, 7, L".ffffff");
+	RegisterFunction(pVM, "getDistanceBetween3DPoints", (SQFUNCTION)sq_getDistanceBetween3DPoints, 7, ".ffffff");
 
-	RegisterFunction(pVM, L"getDistanceBetween2DPoints", (SQFUNCTION)sq_getDistanceBetween2DPoints, 5, L".ffff");
+	RegisterFunction(pVM, "getDistanceBetween2DPoints", (SQFUNCTION)sq_getDistanceBetween2DPoints, 5, ".ffff");
 
-	RegisterFunction(pVM, L"worldPosToScreen", (SQFUNCTION)sq_worldPosToScreen, 5, L".fff");
+	RegisterFunction(pVM, "worldPosToScreen", (SQFUNCTION)sq_worldPosToScreen, 5, ".fff");
 }

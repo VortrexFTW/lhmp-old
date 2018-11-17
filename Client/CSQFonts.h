@@ -12,11 +12,11 @@
 class CSQFont
 {
 public:
-	CSQFont(wchar_t* font, unsigned short size);
+	CSQFont(char* font, unsigned short size);
 	~CSQFont();
 
 	CFont*				GetFont();
-	wchar_t*			GetName();
+	char*				GetName();
 	unsigned short		GetSize();
 	// intern things
 	void	OnLostDevice();
@@ -26,7 +26,7 @@ public:
 	unsigned short GetRefCount();
 private:
 	CFont* p_font;
-	wchar_t fontName[300];
+	char fontName[300];
 	unsigned short size;
 
 	unsigned short referenceCount;
@@ -36,7 +36,7 @@ class CSQFonts
 {
 public:
 	CSQFonts();
-	CSQFont*	createFont(wchar_t* textureName,unsigned short fontsize);
+	CSQFont*	createFont(char* textureName,unsigned short fontsize);
 	void		deleteFont(CSQFont*);
 	// Called by game on device lost
 	void	OnLostDevice();
