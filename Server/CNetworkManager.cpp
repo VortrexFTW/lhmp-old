@@ -845,7 +845,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 
 		CScriptingArguments EventArgs;
 		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
-		g_CCore->GetEventPool()->Trigger("OonPlayerExitedVehicle", EventArgs);
+		g_CCore->GetEventPool()->Trigger("OnPlayerExitedVehicle", EventArgs);
 
 		//g_CCore->GetScripts()->onPlayerExitVehicleFinish(GetIDFromSystemAddress(packet->systemAddress));
 		//std::cout << "ExitVehFinish" << GetIDFromSystemAddress(packet->systemAddress) << std::endl;
