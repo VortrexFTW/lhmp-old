@@ -101,7 +101,7 @@ void	CCore::ChangeModeTo(char* newmode)
 	this->GetScripts()->onServerInit();
 
 	CScriptingArguments EventArgs;
-	g_CCore->GetEventPool()->Trigger("OnServerInit", EventArgs);
+	GetEventPool()->Trigger("OnServerInit", EventArgs);
 
 	// start
 	for (int i = 0; i < MAX_PLAYERS; i++)

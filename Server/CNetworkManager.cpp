@@ -504,11 +504,12 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			bsIn.Read(pID);
 			bsIn.Read(skin);
 			player->OnChangeSkin(skin);
+
+			CScriptingArguments EventArgs;
+			EventArgs.AddNumber(ID);
+			EventArgs.AddNumber(skin);
+			g_CCore->GetEventPool()->Trigger("OnPlayerSkinChange", EventArgs);
 		}
-		CScriptingArguments EventArgs;
-		EventArgs.AddNumber(ID);
-		EventArgs.AddNumber(skin);
-		g_CCore->GetEventPool()->Trigger("OnPlayerSkinChange", EventArgs);
 	}
 	break;
 	case LHMP_PLAYER_RESPAWN:
