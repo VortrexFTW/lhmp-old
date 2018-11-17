@@ -94,8 +94,8 @@ public:
 		{
 			char errorstr[255];
 			D3DXGetErrorStringA(hr, errorstr, 254);
-			char str[255];
-			sprintf_s(str, "Dx Reset Error: %x error description: %s \n", hr, errorstr);
+			wchar_t str[255];
+			wsprintf(str, L"Dx Reset Error: %x error description: %s \n", hr, errorstr);
 			MessageBox(NULL,str,str,MB_OK);
 		}
 		return hr;

@@ -9,7 +9,7 @@ class CPed : public CEntity
 {
 private:
 	bool		isOnFoot;
-	char		sName[80];
+	wchar_t		sName[80];
 	byte		isSpawned;
 	byte		isDucking;
 	byte		isAiming;
@@ -36,7 +36,7 @@ public:
 	bool		IsOnFoot();
 
 	void		UpdateGameObject();
-	void		SetName(char[]);
+	void		SetName(wchar_t[]);
 	void		SetDucking(byte);
 	void		SetAiming(byte);
 	void		SetPing(int);
@@ -51,7 +51,7 @@ public:
 	float		GetHealth();
 	void		SetHealth(float health);
 	int			GetPing();
-	char*		GetName();
+	wchar_t*		GetName();
 	byte		IsDucking();
 
 	void		SetAnim(int);

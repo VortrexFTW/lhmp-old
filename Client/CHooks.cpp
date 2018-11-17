@@ -134,8 +134,8 @@ _declspec(naked) void Hook_ThrowAwayWeapon()
 
 void TakeWeapon(DWORD wepId, DWORD wepLoaded, DWORD wepHidden)
 {
-	char buff[255];
-	sprintf(buff, "TakeWep: %i %i %i", wepId, wepLoaded, wepHidden);
+	wchar_t buff[255];
+	wsprintf(buff, L"TakeWep: %i %i %i", wepId, wepLoaded, wepHidden);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGameSync()->Engine_onPlayerTakeWeapon(wepId, wepLoaded, wepHidden);
 }
@@ -210,8 +210,8 @@ void ChangeWeapon(DWORD testPed,DWORD wepId)
 {
 	if ((g_CCore->GetLocalPlayer()->GetBase() + 0x4A0) == testPed)
 	{
-		char buff[255];
-		sprintf(buff, "SwitchWep: %i", wepId);
+		wchar_t buff[255];
+		wsprintf(buff, L"SwitchWep: %i", wepId);
 		g_CCore->GetLog()->AddLog(buff);
 		g_CCore->GetGameSync()->Engine_onChangeWeapon(wepId);
 	}
@@ -318,8 +318,8 @@ void OnShoot(DWORD testPed, float x, float y, float z)
 {
 	if ((g_CCore->GetLocalPlayer()->GetBase()) == testPed)
 	{
-		char buff[255];
-		sprintf(buff, "On Shot: %f %f %f", x, y, z);
+		wchar_t buff[255];
+		wsprintf(buff, L"On Shot: %f %f %f", x, y, z);
 		g_CCore->GetLog()->AddLog(buff);
 
 		Vector3D position = Vector3D(x, y, z);
@@ -414,8 +414,8 @@ void OnDeath(DWORD killerBase, unsigned char hitbox)
 	playerID = g_CCore->GetPedPool()->GetPedIdByBase(killerBase);
 	if (playerID != -1)
 	{
-		char buff[255];
-		sprintf(buff, "Killed by 0x%i [Part %d]", playerID, hitbox);
+		wchar_t buff[255];
+		wsprintf(buff, L"Killed by 0x%i [Part %d]", playerID, hitbox);
 		g_CCore->GetLog()->AddLog(buff);
 		g_CCore->GetGameSync()->Engine_onPlayerDie(g_CCore->GetPedPool()->Return(playerID), hitbox);
 	}
@@ -515,14 +515,14 @@ _declspec(naked) void Hook_OnDeath4()
 
 void PlayerEnteredVehicle(DWORD vehicle, DWORD seatID)
 {
-	char buff[255];
+	wchar_t buff[255];
 	int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(vehicle);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
 	if (veh)
 	{
 		veh->PlayerEnter(g_CCore->GetLocalPlayer()->GetOurID(), seatID);
 		g_CCore->GetLocalPlayer()->SetIsOnFoot(0);
-		sprintf(buff, "[PEV] vehicle %x, seat id: %d", vehicle, seatID);
+		wsprintf(buff, L"[PEV] vehicle %x, seat id: %d", vehicle, seatID);
 		g_CCore->GetLog()->AddLog(buff);
 
 		g_CCore->GetGameSync()->Engine_onPlayerEnterVehicle(veh, seatID);
@@ -589,7 +589,7 @@ _declspec(naked) void Hook_OnPlayerEnteredVehicle2()
 
 void PlayerExitVehicle(DWORD vehicle)
 {
-	char buff[255];
+	wchar_t buff[255];
 
 	int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(vehicle);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
@@ -597,7 +597,7 @@ void PlayerExitVehicle(DWORD vehicle)
 	{
 		veh->PlayerExit(g_CCore->GetLocalPlayer()->GetOurID());
 		g_CCore->GetLocalPlayer()->SetIsOnFoot(1);
-		sprintf(buff, "[PEV] Exit vehicle %x", vehicle);
+		wsprintf(buff, L"[PEV] Exit vehicle %x", vehicle);
 		g_CCore->GetLog()->AddLog(buff);
 		g_CCore->GetGameSync()->Engine_onPlayerExitVehicle(veh);
 	}
@@ -688,8 +688,8 @@ void OnCarJack(int carBase, int seatId)
 {
 	int carId = -1;
 	carId = g_CCore->GetVehiclePool()->GetVehicleIdByBase(carBase);
-	char buff[255];
-	sprintf(buff, "Car jack ID: %i Seat: %i", carId, seatId);
+	wchar_t buff[255];
+	wsprintf(buff, L"Car jack ID: %i Seat: %i", carId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
 
 	// TODO: move following sequence into GameSync class
@@ -847,8 +847,8 @@ _declspec(naked) void Hook_CarShot()
 
 void OnThrowGranade(float x, float y, float z)
 {
-	char buff[250];
-	sprintf(buff, "Throw: %f %f %f", x, y, z);
+	wchar_t buff[250];
+	wsprintf(buff, L"Throw: %f %f %f", x, y, z);
 	g_CCore->GetLog()->AddLog(buff);
 
 	Vector3D pos = Vector3D(x,y,z);
@@ -923,10 +923,12 @@ void OnDoorStateChange(DWORD doorActor, int state)
 		char* actorName = g_CCore->GetGame()->GetFrameName(doors->frame);
 		bool facing = *(bool*)(doorActor + 0x11E);
 
-		char buff[255];
-		sprintf(buff, "[Hook] DoorChange: %s %d %d", actorName, state, facing);
+		wchar_t *wactorName = Tools::charToWChar(actorName);
+
+		wchar_t buff[255];
+		wsprintf(buff, L"[Hook] DoorChange: %s %d %d", actorName, state, facing);
 		g_CCore->GetLog()->AddLog(buff);
-		g_CCore->GetLog()->AddLog(actorName);
+		g_CCore->GetLog()->AddLog(wactorName);
 		g_CCore->GetGameSync()->Engine_onDoorStateChange(actorName, state, facing);
 	}
 }
@@ -990,7 +992,7 @@ char* OnScriptLoad(char* input)
 		return script;
 	}
 
-	g_CCore->GetLog()->AddLog("Loading script ORIGINAL !");
+	g_CCore->GetLog()->AddLog(L"Loading script ORIGINAL !");
 	return input;
 }
 
@@ -1038,7 +1040,7 @@ __declspec(naked) void Hook_OnScriptLoad()
 void HookLoadGameScript(DWORD a, DWORD script, DWORD b, DWORD c, DWORD d)
 {
 	char* newscript = OnScriptLoad((char*) script);
-	g_CCore->GetLog()->AddLog("Loading script...");
+	g_CCore->GetLog()->AddLog(L"Loading script...");
 	//g_CCore->GetLog()->AddLog(newscript);
 
 
@@ -1258,8 +1260,8 @@ _declspec(naked) void Hook_EngineOnLoadProgress()
 
 void	ExplodeTransformCar(DWORD oldbase,DWORD newbase)
 {
-	char buff[100];
-	sprintf(buff, "ExplodeCar: %p %p", oldbase, newbase);
+	wchar_t buff[100];
+	wsprintf(buff, L"ExplodeCar: %p %p", oldbase, newbase);
 	g_CCore->GetLog()->AddLog(buff);
 
 	int ID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(oldbase);
@@ -1300,8 +1302,8 @@ void	OnExplodeCar(DWORD carBase)
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
 		if (veh != NULL)
 		{
-				char buff[100];
-				sprintf(buff, "CarExplodedEvent: %p", carBase);
+				wchar_t buff[100];
+				wsprintf(buff, L"CarExplodedEvent: %p", carBase);
 				g_CCore->GetLog()->AddLog(buff);
 
 				// TODO: add here some documentation - WTF is this engine function good for ?
@@ -1357,8 +1359,8 @@ _declspec(naked) void Hook_DoorUnlock()
 void NewMessage(MSG message)
 {
 	_asm pushad;
-	char buff[250];
-	sprintf(buff,"ID: %u", message.message);
+	wchar_t buff[250];
+	wsprintf(buff, L"ID: %u", message.message);
 	if (message.message > 0)
 	{
 		g_CCore->GetChat()->AddMessage(buff);
@@ -1731,8 +1733,8 @@ void OnPlayerVehicleEngineStateChange(DWORD vehicle, BYTE state)
 		int vehID = g_CCore->GetVehiclePool()->GetVehicleIdByBase(vehicle);
 		int ourID = g_CCore->GetLocalPlayer()->GetOurID();
 
-		char buff[500];
-		sprintf(buff, "[Hook] OnEngineStateC %d %d 0x%p", vehID, ourID,vehicle);
+		wchar_t buff[500];
+		wsprintf(buff, L"[Hook] OnEngineStateC %d %d 0x%p", vehID, ourID,vehicle);
 		g_CCore->GetLog()->AddLog(buff);
 
 		// if that vehicle is valid LHMP vehicle (that means synced)
@@ -1741,13 +1743,13 @@ void OnPlayerVehicleEngineStateChange(DWORD vehicle, BYTE state)
 			CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehID);
 			if (veh == NULL)
 			{
-				g_CCore->GetLog()->AddLog("VEHICLE NOT FOUND !");
+				g_CCore->GetLog()->AddLog(L"VEHICLE NOT FOUND !");
 				return;
 			}
 			int playerid = veh->GetSeat(0);
 
-			//sprintf(buff, "[Hook] OnEngineStateC %d 0x%p", playerid, veh->GetEntity());
-			//sprintf(buff, "[Hook] OnEngineStateC %d | %d %d %d %d", playerid, veh->GetPlayerSeat(0), veh->GetPlayerSeat(1), veh->GetPlayerSeat(2), veh->GetPlayerSeat(3));
+			//wsprintf(buff, L"[Hook] OnEngineStateC %d 0x%p", playerid, veh->GetEntity());
+			//wsprintf(buff, L"[Hook] OnEngineStateC %d | %d %d %d %d", playerid, veh->GetPlayerSeat(0), veh->GetPlayerSeat(1), veh->GetPlayerSeat(2), veh->GetPlayerSeat(3));
 			g_CCore->GetLog()->AddLog(buff);
 
 			// if localPlayer == driver of that vehicle
@@ -1884,7 +1886,7 @@ void Hook_Car_ProcessEngineStateChange(DWORD car, DWORD shouldStartOrSwitchOff)
 			/*TODO - remove debug strings
 			
 			char buff[500];
-			sprintf(buff, "ProcessEngineState %x %u", car, shouldStartOrSwitchOff);
+			wsprintf(buff, L"ProcessEngineState %x %u", car, shouldStartOrSwitchOff);
 			g_CCore->GetChat()->AddMessage(buff);
 			*/
 			// if it's streamed, then allow the changes & call engine function

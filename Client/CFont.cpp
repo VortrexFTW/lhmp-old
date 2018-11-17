@@ -4,9 +4,9 @@
 #include "CFont.h"
 
 extern CCore *g_CCore;
-CFont::CFont(char font[100], char font2[100], int size, DWORD flags)
+CFont::CFont(wchar_t font[100], wchar_t font2[100], int size, DWORD flags)
 {
-	int fontId = AddFontResourceA(font);
+	int fontId = AddFontResourceW(font);
 	this->m_pFont = new CD3DFont(font2, 9, 0);
 	this->m_pFont->InitDeviceObjects(g_CCore->GetGraphics()->GetDevice());
 	this->m_pFont->RestoreDeviceObjects();
@@ -32,20 +32,20 @@ void	CFont::OnReset()
 
 //----------------------------------------------------
 
-void	CFont::DrawText(char text[], int x, int y, D3DCOLOR color, bool shadow )
+void	CFont::DrawText(wchar_t text[], int x, int y, D3DCOLOR color, bool shadow )
 {
 	DWORD alpha = color >> 24;
 
 	if (shadow)
 	{
 		for (int i = 0; i < 4; i++) {
-			this->m_pFont->DrawTextA((float)(x + 1), (float)(y + 1), (alpha << 24), text);					// 0xFF000000 is base color
-			this->m_pFont->DrawTextA((float)(x + 2), (float)(y + 2), ((alpha/0xA) << 24), text);			// 0x38000000 is base color
+			this->m_pFont->DrawTextW((float)(x + 1), (float)(y + 1), (alpha << 24), text);					// 0xFF000000 is base color
+			this->m_pFont->DrawTextW((float)(x + 2), (float)(y + 2), ((alpha/0xA) << 24), text);			// 0x38000000 is base color
 		}
 
 		//this->m_pFont->DrawTextA((float)(x + 2), (float)(y + 2), 0xFF000000, text);
 	}
-	this->m_pFont->DrawTextA((float)x, (float) y, color, text);
+	this->m_pFont->DrawTextW((float)x, (float) y, color, text);
 }
 
 void	CFont::DrawColoredText(CColoredText* text, int x, int y, bool shadow)
@@ -54,7 +54,7 @@ void	CFont::DrawColoredText(CColoredText* text, int x, int y, bool shadow)
 	text->StartGetting();
 	while (CColoredStruct* strr = text->GetNext())
 	{
-		this->DrawTextA(strr->text, x + drawn, y, strr->color, true);
+		this->DrawTextW(strr->text, x + drawn, y, strr->color, true);
 
 		//TODO remove
 		//char test[255];
@@ -65,7 +65,7 @@ void	CFont::DrawColoredText(CColoredText* text, int x, int y, bool shadow)
 	}
 }
 
-void	CFont::DrawColoredText(char* text, int x, int y, DWORD color, bool shadow)
+void	CFont::DrawColoredText(wchar_t* text, int x, int y, DWORD color, bool shadow)
 {
 	/*int drawn = 0;
 	text->StartGetting();
@@ -78,7 +78,7 @@ void	CFont::DrawColoredText(char* text, int x, int y, DWORD color, bool shadow)
 	int start = Tools::getFirstColorStamp(text);
 	if (start == -1)
 	{
-		this->DrawTextA(text, x + drawn, y, color, shadow);
+		this->DrawTextW(text, x + drawn, y, color, shadow);
 		//this->m_pFont->DrawTextA(x + drawn, y, color, text);
 	}
 	else if (start == 0)
@@ -88,7 +88,7 @@ void	CFont::DrawColoredText(char* text, int x, int y, DWORD color, bool shadow)
 	}
 	else {
 		text[start] = 0x0;
-		this->DrawTextA(text, x + drawn, y, color, shadow);
+		this->DrawTextW(text, x + drawn, y, color, shadow);
 		//this->m_pFont->DrawTextA(x + drawn, y, color, text);
 		SIZE size = this->GetFontWidth(text);
 		drawn = size.cx;
@@ -101,7 +101,7 @@ void	CFont::DrawColoredText(char* text, int x, int y, DWORD color, bool shadow)
 
 //----------------------------------------------------
 
-SIZE	CFont::GetFontWidth(char text[], int len)
+SIZE	CFont::GetFontWidth(wchar_t text[], int len)
 {
 	SIZE textSize;
 	if (this->m_pFont)
@@ -126,13 +126,13 @@ SIZE	CFont::GetFontWidth(char text[], int len)
 	}
 	return textSize;
 }
-int		CFont::GetColoredTextWidth(char text[])
+int		CFont::GetColoredTextWidth(wchar_t text[])
 {
 	int size = 0;
 	if (Tools::IsEmptyString(text) != NULL)
 	{
 		int start;
-		char* pointer = text;
+		wchar_t* pointer = text;
 		while (1 == 1)
 		{
 			start = Tools::getFirstColorStamp(text);
@@ -155,10 +155,10 @@ int		CFont::GetColoredTextWidth(char text[])
 	}
 	return size;
 }
-int		CFont::GetStrlenForWidth(int size, char* text)
+int		CFont::GetStrlenForWidth(int size, wchar_t* text)
 {
 	int curSize = 0;
-	int len = strlen(text);
+	int len = wcslen(text);
 	int i;
 	for (i = 0; i < len; i++)
 	{

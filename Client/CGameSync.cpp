@@ -207,7 +207,7 @@ void CGameSync::onTextMessage(RakNet::BitStream* bitInput)
 	// the lenght of message might vary
 	bitInput->Read(messageLen);
 	// allocate enough memory for message
-	char* buff = new char[messageLen + 100];
+	wchar_t* buff = new wchar_t[messageLen + 100];
 	bitInput->Read(buff);
 	// add new message into message buffer
 	g_CCore->GetChat()->AddMessage(buff);
@@ -282,7 +282,7 @@ void CGameSync::onPlayerUpdateInCar(RakNet::BitStream* bitInput)
 
 void CGameSync::onPlayerConnect(RakNet::BitStream* bitInput)
 {
-	char sz_nickname[255];
+	wchar_t sz_nickname[255];
 	int PlayerID, skinId;
 	unsigned int color;
 
@@ -293,7 +293,7 @@ void CGameSync::onPlayerConnect(RakNet::BitStream* bitInput)
 
 	// creates new instance
 	g_CCore->GetPedPool()->New(PlayerID);
-	g_CCore->GetLog()->AddLog("LHMP_CONNECTORCREATEPED");
+	g_CCore->GetLog()->AddLog(L"LHMP_CONNECTORCREATEPED");
 	CPed* ped = g_CCore->GetPedPool()->Return(PlayerID);
 	if (ped != 0)
 	{
@@ -449,8 +449,8 @@ void CGameSync::onPlayerAddWeapon(RakNet::BitStream* bitInput)
 
 	}
 	g_CCore->GetEngineStack()->AddMessage(ES_ADDWEAPON, (DWORD)pw);
-	char buff[255];
-	sprintf(buff, "[NM]AddWep: %i %i %i", pw->wepID, pw->wepLoaded, pw->wepHidden);
+	wchar_t buff[255];
+	wsprintf(buff, L"[NM]AddWep: %i %i %i", pw->wepID, pw->wepLoaded, pw->wepHidden);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -468,7 +468,7 @@ void CGameSync::onPlayerDeleteWeapon(RakNet::BitStream* bitInput)
 			ped->DeleteWeapon(pw->wepID);
 	}
 	g_CCore->GetEngineStack()->AddMessage(ES_DELETEWEAPON, (DWORD)pw);
-	g_CCore->GetLog()->AddLog("[NM] delwep");
+	g_CCore->GetLog()->AddLog(L"[NM] delwep");
 }
 
 
@@ -486,7 +486,7 @@ void CGameSync::onPlayerChangeWeapon(RakNet::BitStream* bitInput)
 	}
 	else {
 		g_CCore->GetEngineStack()->AddMessage(ES_SWITCHWEAPON, (DWORD)pw);
-		g_CCore->GetLog()->AddLog("[NM]switchwep");
+		g_CCore->GetLog()->AddLog(L"[NM]switchwep");
 	}
 }
 
@@ -498,8 +498,8 @@ void CGameSync::onPlayerShoot(RakNet::BitStream* bitInput)
 	bitInput->Read(pos);
 	bitInput->Read(currentID);
 	ENGINE_STACK::PLAYER_SHOOT* pw = new ENGINE_STACK::PLAYER_SHOOT(ID, pos);
-	char buff[255];
-	sprintf(buff, "[NM] Shot %i %f %f %f %d", pw->ID, pw->pos.x, pw->pos.y, pw->pos.z, currentID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[NM] Shot %i %f %f %f %d", pw->ID, pw->pos.x, pw->pos.y, pw->pos.z, currentID);
 	if (g_CCore->GetLocalPlayer()->GetOurID() != pw->ID)
 	{
 		CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
@@ -532,8 +532,8 @@ void CGameSync::onPlayerDie(RakNet::BitStream* bitInput)
 	bitInput->Read(reason);
 	bitInput->Read(part);
 
-	char buff[255];
-	sprintf(buff, "[NM] PlayerDeath %i", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[NM] PlayerDeath %i", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	ENGINE_STACK::KILL_PED_EX* pw = new ENGINE_STACK::KILL_PED_EX(ID, reason, part);
@@ -545,8 +545,8 @@ void CGameSync::onPlayerDieEnd(RakNet::BitStream* bitInput)
 	int ID;// reason, part;
 	bitInput->Read(ID);
 
-	char buff[500];
-	sprintf(buff, "[NM] PlayerDeathEND %i", ID);
+	wchar_t buff[500];
+	wsprintf(buff, L"[NM] PlayerDeathEND %i", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	g_CCore->GetEngineStack()->AddMessage(ES_PLAYERDEATH_END, ID);
@@ -560,8 +560,8 @@ void CGameSync::onPlayerIsPutToCar(RakNet::BitStream* bitInput)
 	bitInput->Read(carID);
 	bitInput->Read(seatID);
 
-	char buff[255];
-	sprintf(buff, "[Nm] PUT TO VEH %d %d %d", ID, carID, seatID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PUT TO VEH %d %d %d", ID, carID, seatID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(carID);
@@ -594,8 +594,8 @@ void CGameSync::onPlayerIsKickedFromCar(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(carID);
 
-	char buff[255];
-	sprintf(buff, "[Nm] KICK OUT VEH %d %d", ID, carID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] KICK OUT VEH %d %d", ID, carID);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(carID);
 	if (veh)
@@ -629,8 +629,8 @@ void CGameSync::onGUIMoneyChange(RakNet::BitStream* bitInput)
 	int money;
 	bitInput->Read(money);
 
-	char buff[255];
-	sprintf(buff, "[Nm] SET MONEY %d", money);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET MONEY %d", money);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetLocalPlayer()->SetMoney(money);
 }
@@ -640,8 +640,8 @@ void CGameSync::onGUIEnableChange(RakNet::BitStream* bitInput)
 	int enable;
 	bitInput->Read(enable);
 
-	char buff[255];
-	sprintf(buff, "[Nm] ENABLE MONEY %d", enable);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] ENABLE MONEY %d", enable);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetLocalPlayer()->EnableMoney(enable);
 
@@ -652,8 +652,8 @@ void CGameSync::onGUIEnableNametags(RakNet::BitStream* bitInput)
 	bool status;
 	bitInput->Read(status);
 
-	char buff[255];
-	sprintf(buff, "[Nm] SET NAMETAG %d", status);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET NAMETAG %d", status);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGraphics()->SetShowNameTags(status);
 }
@@ -664,8 +664,8 @@ void CGameSync::onPlayerPositionChange(RakNet::BitStream* bitInput)
 	Vector3D pos;
 	bitInput->Read(ID);
 	bitInput->Read(pos);
-	char buff[255];
-	sprintf(buff, "[Nm] SET POSITION %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET POSITION %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
@@ -691,8 +691,8 @@ void CGameSync::onPlayerHealthChange(RakNet::BitStream* bitInput)
 	float Health;
 	bitInput->Read(ID);
 	bitInput->Read(Health);
-	char buff[255];
-	//sprintf(buff, "[Nm] SET HEALTH %d to %d", ID, Health);
+	wchar_t buff[255];
+	//wsprintf(buff, L"[Nm] SET HEALTH %d to %d", ID, Health);
 	g_CCore->GetLog()->AddLog(buff);
 
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
@@ -716,8 +716,8 @@ void CGameSync::onPlayerRotationChange(RakNet::BitStream* bitInput)
 	Vector3D rot;
 	bitInput->Read(ID);
 	bitInput->Read(rot);
-	char buff[255];
-	sprintf(buff, "[Nm] SET ROTATION %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET ROTATION %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	if (ID == g_CCore->GetLocalPlayer()->GetOurID())
@@ -755,8 +755,8 @@ void CGameSync::onCameraSetSwing(RakNet::BitStream* bitInput)
 	bitInput->Read(state);
 	bitInput->Read(force);
 
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER SET CAMERA SWING %d %f", state, force);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER SET CAMERA SWING %d %f", state, force);
 	g_CCore->GetLog()->AddLog(buff);
 
 	g_CCore->GetGame()->CameraSetSwing((byte)state, force);
@@ -767,8 +767,8 @@ void CGameSync::onCameraSetFOV(RakNet::BitStream* bitInput)
 {
 	float FOV;
 	bitInput->Read(FOV);
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER SET CAMERA FOV %f", FOV);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER SET CAMERA FOV %f", FOV);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGame()->CameraSetFov(FOV);
 }
@@ -778,8 +778,8 @@ void CGameSync::onMusicIsTurnedOff(RakNet::BitStream* bitInput)
 	int state;
 	bitInput->Read(state);
 
-	char buff[255];
-	sprintf(buff, "[Nm] TOGGLE CITY MUSIC %d", state);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] TOGGLE CITY MUSIC %d", state);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGame()->ToggleCityMusic(state);
 }
@@ -792,8 +792,8 @@ void CGameSync::onWeatherIsChanged(RakNet::BitStream* bitInput)
 	bitInput->Read(parameter);
 	bitInput->Read(param_val);
 
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER SET WEATHER PARAM %s, %d", parameter, param_val);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER SET WEATHER PARAM %s, %d", parameter, param_val);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGame()->WeatherSetParam(parameter, param_val);
 }
@@ -802,8 +802,8 @@ void CGameSync::onObjectivesAreSet(RakNet::BitStream* bitInput)
 {
 	char text[900];
 	bitInput->Read(text);
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER SET  OBJECTIVE %s", text);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER SET  OBJECTIVE %s", text);
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGame()->SetObjective(text);
 }
@@ -812,27 +812,29 @@ void CGameSync::onObjectivesAreCleared(RakNet::BitStream* bitInput)
 {
 	int ID;
 	bitInput->Read(ID);
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER CLEAR OBJECTIVE");
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER CLEAR OBJECTIVE");
 	g_CCore->GetLog()->AddLog(buff);
 	g_CCore->GetGame()->ClearObjective();
 }
 
 void  CGameSync::onConsoleTextIsAdded(RakNet::BitStream* bitInput)
 {
-	char color[50];
-	char text[900];
+	wchar_t color[50];
+	wchar_t text[900];
 
 	bitInput->Read(color);
 	bitInput->Read(text);
 
 	DWORD color_ex = Tools::GetARGBFromString(color);
 
-	char buff[255];
-	sprintf(buff, "[Nm] PLAYER ADD CONSOLE TEXT %X, %s", color_ex, text);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] PLAYER ADD CONSOLE TEXT %X, %s", color_ex, text);
 	g_CCore->GetLog()->AddLog(buff);
 
-	g_CCore->GetGame()->ConsoleAddText(text, color_ex);
+	char text2[255];
+	wcstombs(text2, text, 255);
+	g_CCore->GetGame()->ConsoleAddText(text2, color_ex);
 }
 
 
@@ -849,8 +851,8 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 	bitInput->Read(vehicle);
 
 	// log it
-	char buff[255];
-	sprintf(buff, "LHMP_VEHICLE_CREATE %d %d %d %d %d %d", vehicle.ID, vehicle.seat[0], vehicle.seat[1], vehicle.seat[2], vehicle.seat[3], vehicle.siren);
+	wchar_t buff[255];
+	wsprintf(buff, L"LHMP_VEHICLE_CREATE %d %d %d %d %d %d", vehicle.ID, vehicle.seat[0], vehicle.seat[1], vehicle.seat[2], vehicle.seat[3], vehicle.siren);
 	g_CCore->GetLog()->AddLog(buff);
 
 	// create a new instance in vehicle pool
@@ -871,7 +873,7 @@ void  CGameSync::onVehicleIsSpawned(RakNet::BitStream* bitInput, RakNet::TimeMS 
 		veh->SetLightState(vehicle.lights);
 		for (int i = 0; i < 4; i++)
 			veh->SetSeat(i, vehicle.seat[i]);
-		g_CCore->GetLog()->AddLog("LHMP_VEHICLE_CREATE");
+		g_CCore->GetLog()->AddLog(L"LHMP_VEHICLE_CREATE");
 	}
 	else {
 		// TODO: handle error
@@ -906,8 +908,8 @@ void CGameSync::onVehicleEngineStateChange(RakNet::BitStream* bitInput)
 	if (veh && g_CCore->GetLocalPlayer()->GetOurID() != veh->GetSeat(0))
 	{
 		veh->ToggleEngine(state);
-		char buff[255];
-		sprintf(buff, "[Nm] TOGGLE ENGINE %d STATE: %d", ID, (int)state);
+		wchar_t buff[255];
+		wsprintf(buff, L"[Nm] TOGGLE ENGINE %d STATE: %d", ID, (int)state);
 		g_CCore->GetLog()->AddLog(buff);
 	}
 }
@@ -927,8 +929,8 @@ void CGameSync::onVehicleLightStateChange(RakNet::BitStream* bitInput)
 		veh->SetLightState(state);
 	}
 
-	char buff[255];
-	sprintf(buff, "[Nm] TOGGLE LIGHTS %d STATE: %d", ID, state ? 1 : 0);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] TOGGLE LIGHTS %d STATE: %d", ID, state ? 1 : 0);
 	g_CCore->GetLog()->AddLog(buff);
 }
 
@@ -939,8 +941,8 @@ void CGameSync::onVehicleRoofIsChanged(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(state);
 
-	char buff[255];
-	sprintf(buff, "[Nm] TOGGLE ROOF %d STATE: %d", ID, state);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] TOGGLE ROOF %d STATE: %d", ID, state);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -958,8 +960,8 @@ void CGameSync::onVehicleSirenIsSet(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(state);
 
-	char buff[255];
-	sprintf(buff, "[Nm] TOGGLE SIREN %d STATE: %d", ID, state);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] TOGGLE SIREN %d STATE: %d", ID, state);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -976,8 +978,8 @@ void CGameSync::onVehicleFuelIsSet(RakNet::BitStream* bitInput)
 	bitInput->Read(ID);
 	bitInput->Read(fuel);
 
-	char buff[255];
-	sprintf(buff, "[Nm] SET FUEL %f", fuel);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET FUEL %f", fuel);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -993,8 +995,8 @@ void CGameSync::onVehicleIsEntered(RakNet::BitStream* bitInput)
 	bitInput->Read(Id);
 	bitInput->Read(vehId);
 	bitInput->Read(seatId);
-	char buff[255];
-	sprintf(buff, "ENTER VEHICLE %d %d %d", Id, vehId, seatId);
+	wchar_t buff[255];
+	wsprintf(buff, L"ENTER VEHICLE %d %d %d", Id, vehId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehId);
 	if (veh != NULL)
@@ -1017,8 +1019,8 @@ void CGameSync::onVehicleIsExited(RakNet::BitStream* bitInput)
 	int Id, vehId;
 	bitInput->Read(Id);
 	bitInput->Read(vehId);
-	char buff[255];
-	sprintf(buff, "EXIT VEHICLE %d %d", Id, vehId);
+	wchar_t buff[255];
+	wsprintf(buff, L"EXIT VEHICLE %d %d", Id, vehId);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehId);
 	CPed* ped = g_CCore->GetPedPool()->Return(Id);
@@ -1071,8 +1073,8 @@ void CGameSync::onVehicleIsJacked(RakNet::BitStream* bitInput)
 	bitInput->Read(vehId);
 	bitInput->Read(seatId);
 
-	char buff[255];
-	sprintf(buff, "CAR JACK %d %d %d", Id, vehId, seatId);
+	wchar_t buff[255];
+	wsprintf(buff, L"CAR JACK %d %d %d", Id, vehId, seatId);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehId);
@@ -1136,8 +1138,8 @@ void CGameSync::onVehiclePositionIsSet(RakNet::BitStream* bitInput)
 	Vector3D pos;
 	bitInput->Read(ID);
 	bitInput->Read(pos);
-	char buff[255];
-	sprintf(buff, "[Nm] SET POSITION %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET POSITION %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
 	if (veh != NULL)
@@ -1160,8 +1162,8 @@ void CGameSync::onVehicleRotationIsSet(RakNet::BitStream* bitInput)
 	Vector3D rot;
 	bitInput->Read(ID);
 	bitInput->Read(rot);
-	char buff[255];
-	sprintf(buff, "[Nm] SET ROTATION %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET ROTATION %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -1184,8 +1186,8 @@ void CGameSync::onVehicleSpeedIsSet(RakNet::BitStream* bitInput)
 	Vector3D speed;
 	bitInput->Read(ID);
 	bitInput->Read(speed);
-	char buff[255];
-	sprintf(buff, "[Nm] SET SPEED %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] SET SPEED %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -1208,8 +1210,8 @@ void CGameSync::onVehicleRespawned(RakNet::BitStream* bitInput)
 	bitInput->Read(rot);
 
 
-	char buff[255];
-	sprintf(buff, "[Nm] On Car Respawn %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] On Car Respawn %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -1230,8 +1232,8 @@ void CGameSync::onVehicleExploded(RakNet::BitStream* bitInput)
 {
 	int ID;
 	bitInput->Read(ID);
-	char buff[255];
-	sprintf(buff, "[Nm] On Exploded %d", ID);
+	wchar_t buff[255];
+	wsprintf(buff, L"[Nm] On Exploded %d", ID);
 	g_CCore->GetLog()->AddLog(buff);
 
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(ID);
@@ -1251,8 +1253,8 @@ void CGameSync::onDoorStateChange(RakNet::BitStream* bitInput)
 	bitInput->Read(state);
 	bitInput->Read(facing);
 
-	char buff[250];
-	sprintf(buff, "[Nm] SET DOOR '%s'[%d] STATE %d %d", name, strlen(name), state, facing);
+	wchar_t buff[250];
+	wsprintf(buff, L"[Nm] SET DOOR '%s'[%d] STATE %d %d", name, strlen(name), state, facing);
 	g_CCore->GetLog()->AddLog(buff);
 	if (strlen(name) > 0)
 	{
@@ -1269,8 +1271,8 @@ void CGameSync::onMapChange(RakNet::BitStream* bitInput)
 	bitInput->Read(name);
 
 	sprintf(g_CCore->GetGame()->mapName, name);
-	char buff[250];
-	sprintf(buff, "[Nm] SET map %s", name);
+	wchar_t buff[250];
+	wsprintf(buff, L"[Nm] SET map %s", name);
 	g_CCore->GetLog()->AddLog(buff);
 
 }
@@ -1281,15 +1283,15 @@ void CGameSync::onTrafficStateChange(RakNet::BitStream* bitInput)
 	bitInput->Read(traffic);
 
 	g_CCore->GetGame()->SetTrafficVisible((bool)traffic);
-	char buff[250];
-	sprintf(buff, "[Nm] SET traffic %d", traffic);
+	wchar_t buff[250];
+	wsprintf(buff, L"[Nm] SET traffic %d", traffic);
 	g_CCore->GetLog()->AddLog(buff);
 
 }
 
 void CGameSync::onPickupIsCreated(RakNet::BitStream* bitInput)
 {
-	g_CCore->GetLog()->AddLog("[NM] Pickup create");
+	g_CCore->GetLog()->AddLog(L"[NM] Pickup create");
 	int ID;
 	char model[250];
 	bool isVisible;
@@ -1534,9 +1536,9 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
 		FileList* listFile = new FileList();
 		listFile->Deserialize(&bsIn);
-		g_CCore->GetChat()->AddMessage("FileList arrived");
-		char buff[200];
-		sprintf(buff, "List size: %u", listFile->fileList.Size());
+		g_CCore->GetChat()->AddMessage(L"FileList arrived");
+		wchar_t buff[200];
+		wsprintf(buff, L"List size: %u", listFile->fileList.Size());
 		g_CCore->GetChat()->AddMessage(buff);
 		listFile->WriteDataToDisk("lhmp/files/");
 
@@ -1546,8 +1548,8 @@ void CGameSync::HandlePacket(RakNet::Packet* packet, RakNet::TimeMS timestamp)
 	case LHMP_SCRIPT_CALLFUNC:
 	{
 		RakNet::BitStream bsIn(packet->data + offset + 1, packet->length - offset - 1, false);
-		char script_name[500];
-		char func_name[500];
+		wchar_t script_name[500];
+		wchar_t func_name[500];
 
 		bsIn.Read(script_name);
 		bsIn.Read(func_name);

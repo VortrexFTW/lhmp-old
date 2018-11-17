@@ -54,19 +54,23 @@ RakNet::RakPeerInterface* CNetworkManager::GetPeer()
 
 bool CNetworkManager::ConnectServer()
 {
-	if (strlen(CONNECT_PASSWORD) > 0)
-		peer->Connect(CONNECT_IP, CONNECT_PORT, CONNECT_PASSWORD, strlen(CONNECT_PASSWORD));
+	char ip[255], password[255];
+	wcstombs(ip, CONNECT_IP, 255);
+	wcstombs(password, CONNECT_PASSWORD, 255);
+
+	if (wcslen(CONNECT_PASSWORD) > 0)
+		peer->Connect(ip, CONNECT_PORT, password, strlen(password));
 	else
-		peer->Connect(CONNECT_IP, CONNECT_PORT, 0, 0);
-	char buffer[255];
-	sprintf(buffer, "Connecting %s:%d", CONNECT_IP, CONNECT_PORT);
+		peer->Connect(ip, CONNECT_PORT, 0, 0);
+	wchar_t buffer[255];
+	wsprintf(buffer, L"Connecting %s:%d", CONNECT_IP, CONNECT_PORT);
 	g_CCore->GetChat()->AddMessage(buffer);
 	return true;
 }
 
 void CNetworkManager::OnConnectionAccepted(RakNet::Packet* packet)
 {
-	g_CCore->GetChat()->AddMessage("#00d717Connection accepted.");
+	g_CCore->GetChat()->AddMessage(L"#00d717Connection accepted.");
 	RakNet::BitStream bsOut;
 	bsOut.Write((RakNet::MessageID)ID_INITLHMP);
 	//bsOut.Write(NickName);
@@ -113,16 +117,16 @@ void CNetworkManager::Pulse()
 		case ID_CONNECTION_FINISHED:
 		{
 			g_CCore->GetChat()->ClearChat();
-			g_CCore->GetChat()->AddMessage("#ff8600Lost Heaven Multiplayer started.");
-			char version[255];
+			g_CCore->GetChat()->AddMessage(L"#ff8600Lost Heaven Multiplayer started.");
+			wchar_t version[255];
 #if LHMP_VERSION_TYPE == 1
 			sprintf(version, "#fec606Version %d.%d", LHMP_VERSION_MAJOR, LHMP_VERSION_MINOR);
 			g_CCore->GetChat()->AddMessage(version);
 #else
 
-			sprintf(version, "#ff8600Build hash: #e3e3e3%s", LHMP_VERSION_TEST_HASH);
+			wsprintf(version, L"#ff8600Build hash: #e3e3e3%s", LHMP_VERSION_TEST_HASH);
 			g_CCore->GetChat()->AddMessage(version);
-			sprintf(version, "#ff8600Build time:  #e3e3e3%s (%s)", __DATE__, __TIME__);
+			wsprintf(version, L"#ff8600Build time:  #e3e3e3%s (%s)", __DATE__, __TIME__);
 			g_CCore->GetChat()->AddMessage(version);
 #endif
 			//g_CCore->GetChat()->AddMessage("#71ba51Connected to the server.");
@@ -132,7 +136,7 @@ void CNetworkManager::Pulse()
 			_Server svr;
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 			bsIn.Read(svr);
-			sprintf(this->m_pServerName, "%s", svr.server_name);
+			wsprintf(this->m_pServerName, L"%s", svr.server_name);
 			g_CCore->GetLocalPlayer()->SetID(svr.playerid);
 
 			char mapName[255];
@@ -159,28 +163,28 @@ void CNetworkManager::Pulse()
 		}
 		break;
 		case ID_GAME_BAD_VERSION:
-			g_CCore->GetChat()->AddMessage("#f31d2fConnection aborted, the server is running a different version.");
+			g_CCore->GetChat()->AddMessage(L"#f31d2fConnection aborted, the server is running a different version.");
 			break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
-			g_CCore->GetChat()->AddMessage("#f31d2fConnection aborted, the server is full.");
+			g_CCore->GetChat()->AddMessage(L"#f31d2fConnection aborted, the server is full.");
 			ConnectServer();
 			break;
 		case ID_DISCONNECTION_NOTIFICATION:
-			g_CCore->GetChat()->AddMessage("#f31d2fDisconnected from the server.");
+			g_CCore->GetChat()->AddMessage(L"#f31d2fDisconnected from the server.");
 			break;
 		case ID_CONNECTION_LOST:
-			g_CCore->GetChat()->AddMessage("#f31d2fConnection with the server lost.");
+			g_CCore->GetChat()->AddMessage(L"#f31d2fConnection with the server lost.");
 			ConnectServer();
 			break;
 		case ID_CONNECTION_ATTEMPT_FAILED:
-			g_CCore->GetChat()->AddMessage("#f31d2fConnection failed, trying to reconnect.");
+			g_CCore->GetChat()->AddMessage(L"#f31d2fConnection failed, trying to reconnect.");
 			ConnectServer();
 			break;
 		case ID_INVALID_PASSWORD:
-			g_CCore->GetChat()->AddMessage("#ff0000Password rejected.");
+			g_CCore->GetChat()->AddMessage(L"#ff0000Password rejected.");
 			break;
 		case ID_CONNECTION_BANNED:
-			g_CCore->GetChat()->AddMessage("#ff0000Connection refused - we are banned.");
+			g_CCore->GetChat()->AddMessage(L"#ff0000Connection refused - we are banned.");
 			break;
 		case ID_GAME_ALIVE:
 		case ID_GAME_SYNC:
@@ -215,7 +219,7 @@ void CNetworkManager::Pulse()
 				g_CCore->GetFileTransfer()->HandlePacket(&bsIn);
 			}
 			else {
-				g_CCore->GetChat()->AddMessage("Fuck");
+				g_CCore->GetChat()->AddMessage(L"Fuck");
 			}
 		}
 		break;
@@ -237,7 +241,7 @@ void CNetworkManager::Pulse()
 			RakNet::BitStream bsIn(packet->data + offset, packet->length - offset, false);
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 			unsigned short count = 0;
-			char scriptname[256];
+			wchar_t scriptname[256];
 			bsIn.Read(count);
 			for (int i = 0; i < count; i++)
 			{
@@ -263,42 +267,42 @@ void CNetworkManager::GetConnectInfo()
 {
 	//char commandLine[255] = "\"C:\\nejaky string\" 50.50.50.50 127";
 	//MessageBoxA(NULL,commandLine,"-1",MB_OK);
-	char* commandLine = GetCommandLine();
-	LPCSTR pch;
-	pch = strrchr(commandLine, '"');
+	wchar_t* commandLine = GetCommandLine();
+	wchar_t* pch;
+	pch = wcsrchr(commandLine, L'"');
 	if (pch == NULL)
 	{
-		pch = strtok(commandLine, " ");
-		pch = strtok(NULL, " ");
+		pch = wcstok(commandLine, L" ");
+		pch = wcstok(NULL, L" ");
 	}
 	else {
-		char buffer[255];
-		pch = strtok(commandLine, "\"");
+		wchar_t buffer[255];
+		pch = wcstok(commandLine, L"\"");
 		//MessageBoxA(NULL,pch,"1",MB_OK);
-		pch = strtok(NULL, "\"");
+		pch = wcstok(NULL, L"\"");
 		//MessageBoxA(NULL,pch,"2",MB_OK);
-		sprintf(buffer, "%s", pch);
-		pch = strtok(buffer, " ");
+		wsprintf(buffer, L"%s", pch);
+		pch = wcstok(buffer, L" ");
 		//MessageBoxA(NULL,pch,"3",MB_OK);
 	}
 
 	// is there any IP as argument
 	if (pch != NULL)
 	{
-		sprintf(CONNECT_IP, "%s", pch);
-		pch = strtok(NULL, " ");
+		wsprintf(CONNECT_IP, L"%s", pch);
+		pch = wcstok(NULL, L" ");
 		// is there any PORT as argument
 		if (pch != NULL)
 		{
-			CONNECT_PORT = atoi(pch);
-			pch = strtok(NULL, " ");
+			CONNECT_PORT = _wtol(pch);
+			pch = wcstok(NULL, L" ");
 			if (pch != NULL)
 			{
 				// password argument
-				sprintf(CONNECT_PASSWORD, "%s", pch);
+				wsprintf(CONNECT_PASSWORD, L"%s", pch);
 			}
 			else {
-				sprintf(CONNECT_PASSWORD, "%s", "");
+				wsprintf(CONNECT_PASSWORD, L"%s", "");
 			}
 		}
 		else
@@ -309,30 +313,30 @@ void CNetworkManager::GetConnectInfo()
 	else
 	{
 		// if there aren't any arguments, use default ones
-		sprintf(CONNECT_IP, "%s", "127.0.0.1");
+		wsprintf(CONNECT_IP, L"%s", L"127.0.0.1");
 		CONNECT_PORT = 27015;
 	}
 }
 
 void CNetworkManager::ValidateIP()
 {
-	char buffer[255];
-	sprintf(buffer, "%s", CONNECT_IP);
-	if (strlen(buffer) < 7)
+	wchar_t buffer[255];
+	wsprintf(buffer, L"%s", CONNECT_IP);
+	if (wcslen(buffer) < 7)
 	{
-		sprintf(CONNECT_IP, "%s", "127.0.0.1");
+		wsprintf(CONNECT_IP, L"%s", L"127.0.0.1");
 	}
 	else
 	{
 		int countNum = 0;
 		int countDot = 0;
-		for (int i = 0; i < (int)strlen(buffer); i++)
+		for (int i = 0; i < (int)wcslen(buffer); i++)
 		{
 			if (buffer[i] == '.')
 			{
 				if (countNum == 0)
 				{
-					sprintf(CONNECT_IP, "%s", "127.0.0.1");
+					wsprintf(CONNECT_IP, L"%s", L"127.0.0.1");
 					break;
 				}
 				else
@@ -347,7 +351,7 @@ void CNetworkManager::ValidateIP()
 			}
 			else
 			{
-				sprintf(CONNECT_IP, "%s", "127.0.0.1");
+				wsprintf(CONNECT_IP, L"%s", L"127.0.0.1");
 				break;
 			}
 		}
@@ -355,7 +359,7 @@ void CNetworkManager::ValidateIP()
 }
 
 
-char* CNetworkManager::GetNick()
+wchar_t* CNetworkManager::GetNick()
 {
 	return NickName;
 }
@@ -370,7 +374,7 @@ bool CNetworkManager::IsConnected()
 	return this->isConnected;
 }
 
-char*	CNetworkManager::GetServerName()
+wchar_t*	CNetworkManager::GetServerName()
 {
 	return this->m_pServerName;
 }
@@ -480,18 +484,18 @@ void CNetworkManager::LoadRegistryConfig()
 	HRESULT res = RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Lost Heaven Multiplayer\\Launcher"), &key);
 	if (res != ERROR_SUCCESS)
 	{
-		strcpy(this->NickName, "UnknownPlayer");
+		wcscpy(this->NickName, L"UnknownPlayer");
 	}
 	else {
 		DWORD size = 256;
-		char nickname[256];
+		wchar_t nickname[256];
 		DWORD type = REG_SZ;
-		if (RegQueryValueEx(key, "nickname", NULL, &type, (LPBYTE)&nickname, &size) == ERROR_SUCCESS)
+		if (RegQueryValueEx(key, L"nickname", NULL, &type, (LPBYTE)&nickname, &size) == ERROR_SUCCESS)
 		{
-			strcpy(this->NickName, nickname);
+			wcscpy(this->NickName, nickname);
 		}
 		else {
-			strcpy(this->NickName, "UnknownPlayer");
+			wcscpy(this->NickName, L"UnknownPlayer");
 		}
 		RegCloseKey(key);
 	}

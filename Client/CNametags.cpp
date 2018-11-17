@@ -152,10 +152,10 @@ void CNametags::RenderToTexture(int playerID)
 			HRESULT hr;
 			hr = g_CCore->GetGraphics()->GetDevice()->SetRenderTarget(pSurf, NULL);
 			if (FAILED(hr)) {
-				char buffer[255];
+				wchar_t buffer[255];
 				D3DXGetErrorString(hr, buffer, 200);
-				sprintf(buffer, "SetRenderTarget %s", buffer);
-				MessageBoxA(NULL, buffer, buffer, MB_OK);
+				wsprintf(buffer, L"SetRenderTarget %s", buffer);
+				MessageBoxW(NULL, buffer, buffer, MB_OK);
 			}
 
 			// clear texture to clean one
@@ -163,9 +163,9 @@ void CNametags::RenderToTexture(int playerID)
 			g_CCore->GetGraphics()->GetDevice()->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 			// now we are ready to render to texture
 
-			g_CCore->GetGraphics()->GetFont()->DrawTextA(ped->GetName(), 128 - (size.cx / 2) + 1, 128 - (size.cy / 2) + 1, D3DCOLOR_RGBA(0, 0, 0, 255), false);
+			g_CCore->GetGraphics()->GetFont()->DrawTextW(ped->GetName(), 128 - (size.cx / 2) + 1, 128 - (size.cy / 2) + 1, D3DCOLOR_RGBA(0, 0, 0, 255), false);
 			// original color: D3DCOLOR_RGBA(255, 255, 255, 255)
-			g_CCore->GetGraphics()->GetFont()->DrawTextA(ped->GetName(), 128 - (size.cx / 2), 128 - (size.cy / 2), 0xFFFFFFFF, false);
+			g_CCore->GetGraphics()->GetFont()->DrawTextW(ped->GetName(), 128 - (size.cx / 2), 128 - (size.cy / 2), 0xFFFFFFFF, false);
 
 			// return D3D to previos stage and release unneeded resources
 			g_CCore->GetGraphics()->GetDevice()->SetRenderTarget(pOldTarget, oldStencil);

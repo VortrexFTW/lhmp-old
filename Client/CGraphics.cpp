@@ -84,7 +84,7 @@ void CGraphics::Init(IDirect3DDevice8* pDxDevice)
 	m_DirectDevice = pDxDevice;
 
 	// place it as first to prevent startup crashes
-	m_cFont = new CFont("lhmp/opensans.ttf", "Open Sans Condensed", 9, D3DFONT_BOLD);
+	m_cFont = new CFont(L"lhmp/opensans.ttf", L"Open Sans Condensed", 9, D3DFONT_BOLD);
 
 	// initialize sprite system / our sprites(textures)
 	if (SUCCEEDED(D3DXCreateSprite(m_DirectDevice, &m_sprite)))
@@ -135,27 +135,27 @@ void DebugWeapons()
 				Vector3D screen;
 				g_CCore->GetGraphics()->CalcScreenPosition(gamePED->object.position, &screen);
 
-				g_CCore->GetGraphics()->DrawTextA("Weapon list (ID,ammo,ammo)", (int)(screen.x + 200.0f), (int)screen.y,0xffff0000, true);
+				g_CCore->GetGraphics()->DrawTextW(L"Weapon list (ID,ammo,ammo)", (int)(screen.x + 200.0f), (int)screen.y,0xffff0000, true);
 
-				char aha[250];
-				sprintf(aha, "Current ID: %d",ped->GetCurrentWeapon());
-				g_CCore->GetGraphics()->DrawTextA(aha, (int) (screen.x + 100.0f), (int) (screen.y + 40.0f), 0xffffffff, true);
+				wchar_t aha[250];
+				wsprintf(aha, L"Current ID: %d",ped->GetCurrentWeapon());
+				g_CCore->GetGraphics()->DrawTextW(aha, (int) (screen.x + 100.0f), (int) (screen.y + 40.0f), 0xffffffff, true);
 				/*for (int i = 0; i < 8; i++)
 				{
 					SWeapon *wep = ped->GetWeapon(i);
 					if (wep)
 					{
 						char buff[250];
-						sprintf(buff, "%d %d %d", wep->wepID, wep->wepLoaded, wep->wepHidden);
+						wsprintf(buff, L"%d %d %d", wep->wepID, wep->wepLoaded, wep->wepHidden);
 						g_CCore->GetGraphics()->DrawTextA(buff, screen.x + 100, screen.y + 20 + (i * 20), 0xffffffff, true);
 					}
 				}*/
 
 				for (int i = 0; i < 8; i++)
 				{
-					char buff[250];
-					sprintf(buff, "%d %d %d", gamePED->inventary.slot[i].weaponType, gamePED->inventary.slot[i].ammoLoaded, gamePED->inventary.slot[i].ammo);
-					g_CCore->GetGraphics()->DrawTextA(buff, (int) (screen.x + 300.0f), (int)(screen.y + 20.0f + (i * 20.0f)), 0xffffffff, true);
+					wchar_t buff[250];
+					wsprintf(buff, L"%d %d %d", gamePED->inventary.slot[i].weaponType, gamePED->inventary.slot[i].ammoLoaded, gamePED->inventary.slot[i].ammo);
+					g_CCore->GetGraphics()->DrawTextW(buff, (int) (screen.x + 300.0f), (int)(screen.y + 20.0f + (i * 20.0f)), 0xffffffff, true);
 					
 				}
 			}
@@ -197,7 +197,7 @@ void CGraphics::Render()
 	if (ped)
 	{
 		char buff[200];
-		sprintf(buff, "Local PED: %d", ped->object.isActive);
+		wsprintf(buff, L"Local PED: %d", ped->object.isActive);
 		this->DrawTextA(buff, 500, 100, 0xFFFF0000, true);
 	}*/
 
@@ -253,7 +253,7 @@ void CGraphics::Render()
 	{
 		this->Clear(curPos.x, curPos.y, 10, 10, 0xFFFFFFFF);
 	}*/
-	/*sprintf(buff, "Status: %f", g_CCore->GetGame()->loadingStatus);
+	/*wsprintf(buff, L"Status: %f", g_CCore->GetGame()->loadingStatus);
 	this->DrawTextA(buff, 700, 200, 0xffffffff, true);*/
 
 	//this->FillARGB(100, 100,0.5f, 50, 50, 0xFF00adef);
@@ -285,7 +285,7 @@ void CGraphics::RenderLoadingScreen()
 	//this->Clear(0, resolution.y*0.90, resolution.x*((int)(g_CCore->GetGame()->loadingStatus)), 1, D3DCOLOR_XRGB(200, 200, 200));
 
 	/*char buff[10];
-	sprintf(buff, "%.0f%%", g_CCore->GetGame()->loadingStatus * 100);
+	wsprintf(buff, L"%.0f%%", g_CCore->GetGame()->loadingStatus * 100);
 	g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, resolution.x / 2, (int)(resolution.y*0.90f) - 40, 0xffffffff, false);*/
 }
 
@@ -295,7 +295,7 @@ void CGraphics::RenderNametags()
 	if (m_bShowNameTags == true && m_bUserShowNameTags == true)
 	{
 		Vector3D screen;
-		char buff[100];
+		wchar_t buff[100];
 		// for every player
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
@@ -317,12 +317,12 @@ void CGraphics::RenderNametags()
 			if (screen.z < 1)
 			{
 				RECT rect;
-				sprintf(buff, "%s", ped->GetName());
+				wsprintf(buff, L"%s", ped->GetName());
 				int size = GetFontWidth(buff);
 				SetRect(&rect, (int)ceil(screen.x) - (size / 2), (int)ceil(screen.y), (int)ceil(screen.x) + 100, (int)ceil(screen.y) + 100);
 
 				//m_chatfont->DrawTextA(buff, strlen(buff), &rect, DT_SINGLELINE, D3DCOLOR_XRGB(255, 255, 255));
-				g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, rect.left,rect.top, D3DCOLOR_XRGB(255, 255, 255));
+				g_CCore->GetGraphics()->GetFont()->DrawTextW(buff, rect.left,rect.top, D3DCOLOR_XRGB(255, 255, 255));
 				D3DCOLOR farba;
 				if ((ped->GetHealth() / 200) > 0.5)
 				{
@@ -387,7 +387,7 @@ void CGraphics::TakeScreenshot()
 	if (FAILED(result=m_DirectDevice->CreateImageSurface(mode.Width,mode.Height,D3DFMT_A8R8G8B8,&screen)))
 		return;
 	m_DirectDevice->GetFrontBuffer(screen);
-	char filename[255];
+	wchar_t filename[255];
 
 	time_t timeObj;
     time(&timeObj);
@@ -395,8 +395,8 @@ void CGraphics::TakeScreenshot()
 	tm *pTime = localtime(&timeObj);
 	//char buffer[100];
 	// Create directory if it doesn't exist
-	CreateDirectory("lhmp/screenshots", NULL);
-	sprintf(filename, "lhmp/screenshots/screen-%d-%d-%d-%d-%d-%d.bmp", pTime->tm_year, pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
+	CreateDirectory(L"lhmp/screenshots", NULL);
+	wsprintf(filename, L"lhmp/screenshots/screen-%d-%d-%d-%d-%d-%d.bmp", pTime->tm_year, pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
 	//sprintf(filename, "lhmp/screenshots/screen-%d-%d-%d-%d-%d-%d.jpg", pTime->tm_year, pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
 	if(bIsFullscreen)
 	{
@@ -418,8 +418,8 @@ void CGraphics::TakeScreenshot()
 		//D3DXSaveSurfaceToFile(filename, D3DXIFF_JPG, screen, NULL, &clientscreen);
 	}
 	screen->Release();
-	char buff[255];
-	sprintf(buff, "#f31d2fScreenshot #e3e3e3""%s""#f31d2f taken.", filename);
+	wchar_t buff[255];
+	wsprintf(buff, L"#f31d2fScreenshot #e3e3e3""%s""#f31d2f taken.", filename);
 	g_CCore->GetChat()->AddMessage(buff);
 }
 
@@ -443,17 +443,17 @@ void CGraphics::CalcScreenPosition(Vector3D world,Vector3D *screen)
 
 }
 
-int	CGraphics::GetFontWidth(char text[])
+int	CGraphics::GetFontWidth(wchar_t text[])
 {
 	if (!m_chatfont)
 		return 0;
 	RECT rect;
 	SetRect(&rect,0,0,1000,1000);
-	m_chatfont->DrawTextA(text,strlen(text),&rect,DT_NOCLIP | DT_SINGLELINE|DT_CALCRECT,D3DCOLOR_XRGB(255,255,255));
+	m_chatfont->DrawTextW(text,wcslen(text),&rect,DT_NOCLIP | DT_SINGLELINE|DT_CALCRECT,D3DCOLOR_XRGB(255,255,255));
 	return rect.right-rect.left;
 }
 
-void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,LPD3DXFONT font)
+void	CGraphics::DrawText(wchar_t text[],int x,int y,D3DCOLOR color,bool ifShadow,LPD3DXFONT font)
 {
 	if (!m_chatfont)
 		return;
@@ -462,31 +462,31 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,LP
 	if(ifShadow == true)
 	{
 		SetRect(&rect, x + 1, y, x + 1000, y + 1000);
-		font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
+		font->DrawTextW(text, wcslen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
 		SetRect(&rect, x - 1, y, x + 1000, y + 1000);
-		font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
+		font->DrawTextW(text, wcslen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
 		SetRect(&rect, x, y+1, x + 1000, y + 1000);
-		font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
+		font->DrawTextW(text, wcslen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
 		SetRect(&rect, x, y - 1, x + 1000, y + 1000);
-		font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
+		font->DrawTextW(text, wcslen(text), &rect, DT_NOCLIP | DT_SINGLELINE, D3DCOLOR_XRGB(0, 0, 0));
 		SetRect(&rect, x, y, x + 1000, y + 1000);
 	}
-	font->DrawTextA(text, strlen(text), &rect, DT_NOCLIP | DT_SINGLELINE, color);
+	font->DrawTextW(text, wcslen(text), &rect, DT_NOCLIP | DT_SINGLELINE, color);
 }
 
-void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow)
+void	CGraphics::DrawText(wchar_t text[],int x,int y,D3DCOLOR color,bool ifShadow)
 {
 	DrawText(text,x,y,color,ifShadow,m_chatfont);
 }
 
-int		CGraphics::GetLetterWidth(char c)
+int		CGraphics::GetLetterWidth(wchar_t c)
 {
-	char buf[2];
-	sprintf(buf,"%c",c);
+	wchar_t buf[2];
+	wsprintf(buf,L"%c",c);
 	return this->GetFontWidth(buf);
 }
 
-std::string	CGraphics::GetLastColorInText(char* text,int maxlen)
+std::wstring	CGraphics::GetLastColorInText(wchar_t* text,int maxlen)
 {
 	for (int i = maxlen; i > 0; i--)
 	{
@@ -509,20 +509,20 @@ std::string	CGraphics::GetLastColorInText(char* text,int maxlen)
 					}
 					if (stop == false)
 					{
-						std::string str = text;
+						std::wstring str = text;
 						return str.substr(i, 7);
 					}
 				}
 			}
 		}
 	}
-	return "";
+	return L"";
 }
 
-int	CGraphics::GetStrlenForWidth(int width, char* text)
+int	CGraphics::GetStrlenForWidth(int width, wchar_t* text)
 {
 	int size = 0;
-	int len = strlen(text);
+	int len = wcslen(text);
 	for (int i = 0; i < len; i++)
 	{
 		if (text[i] == '#')
@@ -558,7 +558,7 @@ int	CGraphics::GetStrlenForWidth(int width, char* text)
 	return len;
 }
 
-int	CGraphics::GetColoredTextWidth(char text[])
+int	CGraphics::GetColoredTextWidth(wchar_t text[])
 {
 	/*if (Tools::IsEmptyString(text) == true)
 		return -1;
@@ -629,7 +629,7 @@ int	CGraphics::GetColoredTextWidth(char text[])
 	if (Tools::IsEmptyString(text) != NULL)
 	{
 		int start;
-		char* pointer = text;
+		wchar_t* pointer = text;
 		while (1 == 1)
 		{
 			start = Tools::getFirstColorStamp(text);
@@ -652,14 +652,14 @@ int	CGraphics::GetColoredTextWidth(char text[])
 	}
 	return size;
 }
-void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bool colored,LPD3DXFONT font)
+void	CGraphics::DrawText(wchar_t text[],int x,int y,D3DCOLOR color,bool ifShadow,bool colored,LPD3DXFONT font)
 {
 	if(Tools::IsEmptyString(text) == true)
 		return;
 	if(colored == true)
 	{
-		char* akt;
-		char* pch	=	strchr(text,'#');
+		wchar_t* akt;
+		wchar_t* pch	=	wcschr(text,L'#');
 		bool next	= false;
 		int size = NULL;
 		D3DCOLOR farba;
@@ -674,8 +674,8 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bo
 			}
 			else
 			{
-				char bufA[255];
-				sprintf(bufA,"%s",text);
+				wchar_t bufA[255];
+				wsprintf(bufA,L"%s",text);
 				bufA[(pch-text)] = 0x0;	// null terminated
 				DrawText(bufA,x,y,color,ifShadow,font);
 				size = GetFontWidth(bufA);
@@ -698,15 +698,15 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bo
 			
 			if (Tools::isHEXStamp(pch) == false)
 			{
-	            pch	 = strchr(pch+1,'#');
+	            pch	 = wcschr(pch+1,L'#');
 				if(pch == NULL)
 				{
 					DrawText(akt,x,y,farba,ifShadow,font);
 					break;
 				} else
 				{
-					char buf[255];
-					sprintf(buf,"%s",akt);
+					wchar_t buf[255];
+					wsprintf(buf,L"%s",akt);
 					buf[(pch-akt)] = 0x0;	// null terminated
 					DrawText(buf,x,y,farba,ifShadow,font);
 					size = GetFontWidth(buf);
@@ -721,7 +721,7 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bo
 					return;
 				farba = 0xFFFFFFFF;
 				farba = Tools::GetARGBFromString(pch + 1);
-				pch = strchr(pch + 1, '#');
+				pch = wcschr(pch + 1, '#');
 				if (pch == NULL)
 				{
 					DrawText(akt + 7, x, y, farba, ifShadow, font);
@@ -729,8 +729,8 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bo
 				}
 				else
 				{
-					char buf[255];
-					sprintf(buf, "%s", akt + 7);
+					wchar_t buf[255];
+					wsprintf(buf, L"%s", akt + 7);
 					buf[(pch - akt) - 7] = 0x0;	// null terminated
 					DrawText(buf, x, y, farba, ifShadow, font);
 					size = GetFontWidth(buf);
@@ -743,7 +743,7 @@ void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bo
 		DrawText(text,x,y,color,ifShadow,font);
 	}
 }
-void	CGraphics::DrawText(char text[],int x,int y,D3DCOLOR color,bool ifShadow,bool colored)
+void	CGraphics::DrawText(wchar_t text[],int x,int y,D3DCOLOR color,bool ifShadow,bool colored)
 {
 	DrawText(text,x,y,color,ifShadow,colored,m_chatfont);
 }
@@ -1066,7 +1066,7 @@ void CGraphics::RenderScoreboard()
 	int width = (int)(((screen.x*0.2) < 250)?250:(screen.x*0.2)); // min width is 250px
 	int x = (int)((screen.x-width)/2), y = (int)(screen.y*0.4);
 	int numRendered = 0;
-	char buff[255];
+	wchar_t buff[255];
 	int numLines = 2;
 	// Render title
 	FillARGB(x, y - 25, width, 25, 0xffdb0000);
@@ -1082,14 +1082,14 @@ void CGraphics::RenderScoreboard()
 	}
 	FillARGB(x, y, width, 20 + (20 * numLines), 0x60000000);
 	// Render navigation
-	g_CCore->GetGraphics()->GetFont()->DrawText("ID", x + (int)(width * 0.02f), y + 10, 0xffffffff, true);
-	g_CCore->GetGraphics()->GetFont()->DrawText("Nickname", x + (int)(width * 0.10f), y + 10, 0xffffffff, true);
-	g_CCore->GetGraphics()->GetFont()->DrawText("Ping", x + (int)(width * 0.87f), y + 10, 0xffffffff, true);
+	g_CCore->GetGraphics()->GetFont()->DrawText(L"ID", x + (int)(width * 0.02f), y + 10, 0xffffffff, true);
+	g_CCore->GetGraphics()->GetFont()->DrawText(L"Nickname", x + (int)(width * 0.10f), y + 10, 0xffffffff, true);
+	g_CCore->GetGraphics()->GetFont()->DrawText(L"Ping", x + (int)(width * 0.87f), y + 10, 0xffffffff, true);
 	// Render local player
-	sprintf(buff,"%i",g_CCore->GetLocalPlayer()->GetOurID());
+	wsprintf(buff,L"%i",g_CCore->GetLocalPlayer()->GetOurID());
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + (int)(width * 0.02f), 20 + y + 10, 0xffffffff, true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(g_CCore->GetNetwork()->GetNick(), x + (int)(width * 0.10f), 20 + y + 10, 0xffffffff, true);
-	sprintf(buff,"%i",g_CCore->GetLocalPlayer()->GetPing());
+	wsprintf(buff,L"%i",g_CCore->GetLocalPlayer()->GetPing());
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + (int)(width * 0.87f), 20 + y + 10, 0xffffffff, true);
 
 	//y = screen.y*0.4;
@@ -1099,10 +1099,10 @@ void CGraphics::RenderScoreboard()
 		if(ped == NULL) continue;
 		if(ped->IsActive() == 1)
 		{
-			sprintf(buff,"%i",ID);
+			wsprintf(buff,L"%i",ID);
 			g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + (int)(width * 0.02f), 20 + y + 30 + (numRendered * 20), 0xffffffff, true);
 			g_CCore->GetGraphics()->GetFont()->DrawText(ped->GetName(), x + (int)(width * 0.10f), 20 + y + 30 + (numRendered * 20), 0xffffffff, true);
-			sprintf(buff,"%i",ped->GetPing());
+			wsprintf(buff,L"%i",ped->GetPing());
 			g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + (int)(width * 0.87f), 20 + y + 30 + (numRendered * 20), 0xffffffff, true);
 			numRendered++;
 		}
@@ -1120,7 +1120,7 @@ void CGraphics::RenderStatistics()
 	using namespace RakNet;
 	RakNetStatistics *pRakStats = g_CCore->GetNetwork()->GetPeer()->GetStatistics(UNASSIGNED_SYSTEM_ADDRESS);
 
-	char buff[255];
+	wchar_t buff[255];
 	unsigned int uBytesPerSecondReceived = (unsigned int)pRakStats->valueOverLastSecond[ACTUAL_BYTES_RECEIVED];
 	unsigned int uBytesPerSecondSent = (unsigned int)pRakStats->valueOverLastSecond[ACTUAL_BYTES_SENT];
 	unsigned int uTotalBytesReceived = (unsigned int)pRakStats->runningTotal[ACTUAL_BYTES_RECEIVED];
@@ -1134,28 +1134,28 @@ void CGraphics::RenderStatistics()
 	int x = (screen.x - width) / 2, y = screen.y / 2;
 	// Title
 	FillARGB(x, y - 25, width, 25, 0xffdb0000);
-	g_CCore->GetGraphics()->GetFont()->DrawText("Statistics", x + 8, y - 20, 0xffffffff, true);
+	g_CCore->GetGraphics()->GetFont()->DrawText(L"Statistics", x + 8, y - 20, 0xffffffff, true);
 
 	FillARGB(x, y, width, 160, 0x60000000);
-	sprintf(buff, "Bytes Per Second Received: %.2f%sB", Tools::GetMetricUnitNum((float)uBytesPerSecondReceived), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uBytesPerSecondReceived)]);
+	wsprintf(buff, L"Bytes Per Second Received: %.2f%sB", Tools::GetMetricUnitNum((float)uBytesPerSecondReceived), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uBytesPerSecondReceived)]);
 	//this->DrawTextA(buff,x+10,y+10,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 10, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff, "Bytes Per Second Sent: %.2f%sB", Tools::GetMetricUnitNum((float)uBytesPerSecondSent), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uBytesPerSecondSent)]);
+	wsprintf(buff, L"Bytes Per Second Sent: %.2f%sB", Tools::GetMetricUnitNum((float)uBytesPerSecondSent), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uBytesPerSecondSent)]);
 	//this->DrawTextA(buff,x+10,y+30,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 30, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff, "Total Bytes Received: %.2f%sB", Tools::GetMetricUnitNum((float)uTotalBytesReceived), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uTotalBytesReceived)]);
+	wsprintf(buff, L"Total Bytes Received: %.2f%sB", Tools::GetMetricUnitNum((float)uTotalBytesReceived), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uTotalBytesReceived)]);
 	//this->DrawTextA(buff,x+10,y+50,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 50, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff, "Total Bytes Sent: %.2f%sB", Tools::GetMetricUnitNum((float)uTotalBytesSent), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uTotalBytesSent)]);
+	wsprintf(buff, L"Total Bytes Sent: %.2f%sB", Tools::GetMetricUnitNum((float)uTotalBytesSent), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)uTotalBytesSent)]);
 	//this->DrawTextA(buff,x+10,y+70,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 70, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff,"Current Packet Loss: %.02f",fCurrentPacketLoss);
+	wsprintf(buff,L"Current Packet Loss: %.02f",fCurrentPacketLoss);
 	//this->DrawTextA(buff,x+10,y+90,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 90, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff,"Average Packet Loss: %.02f",fAveragePacketLoss);
+	wsprintf(buff,L"Average Packet Loss: %.02f",fAveragePacketLoss);
 	//this->DrawTextA(buff,x+10,y+110,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 110, D3DCOLOR_XRGB(255, 255, 255), true);
-	sprintf(buff,"Connection Time: %ds",uConnectionTime);
+	wsprintf(buff,L"Connection Time: %ds",uConnectionTime);
 	//this->DrawTextA(buff,x+10,y+130,D3DCOLOR_XRGB(255,255,255),true);
 	g_CCore->GetGraphics()->GetFont()->DrawText(buff, x + 10, y + 130, D3DCOLOR_XRGB(255, 255, 255), true);
 
@@ -1291,7 +1291,7 @@ void	CGraphics::DrawColoredText(CColoredText* text, int x, int y, bool ifShadow)
 	text->StartGetting();
 	while (CColoredStruct* strr = text->GetNext())
 	{
-		this->DrawTextA(strr->text, x+drawn,y, strr->color, true);
+		this->DrawTextW(strr->text, x+drawn,y, strr->color, true);
 		drawn += strr->width;
 	}
 }

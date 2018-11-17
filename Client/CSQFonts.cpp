@@ -4,11 +4,11 @@
 
 // Handles single texture
 
-CSQFont::CSQFont(char* font, unsigned short size)
+CSQFont::CSQFont(wchar_t* font, unsigned short size)
 {
 	this->p_font = new CFont(font, font, size);
 	this->size = size;
-	strcpy(this->fontName, font);
+	wcscpy(this->fontName, font);
 }
 CSQFont::~CSQFont()
 {
@@ -21,7 +21,7 @@ CFont*				CSQFont::GetFont()
 {
 	return this->p_font;
 }
-char*				CSQFont::GetName()
+wchar_t*			CSQFont::GetName()
 {
 	return this->fontName;
 }
@@ -56,7 +56,7 @@ CSQFonts::CSQFonts()
 		this->pool[i] = NULL;
 	}
 }
-CSQFont*	CSQFonts::createFont(char* textureName,unsigned short size)
+CSQFont*	CSQFonts::createFont(wchar_t* textureName,unsigned short size)
 {
 	int firstOne = -1;
 	// check whether texture exists or find a fist free texture
@@ -64,7 +64,7 @@ CSQFont*	CSQFonts::createFont(char* textureName,unsigned short size)
 	{
 		if (pool[i] != NULL)
 		{
-			if (strcmp(textureName, pool[i]->GetName()) == 0 && pool[i]->GetSize() == size)
+			if (wcscmp(textureName, pool[i]->GetName()) == 0 && pool[i]->GetSize() == size)
 			{
 				// if object already exists, increase ref count 
 				pool[i]->SetRefCount(pool[i]->GetRefCount() + 1);

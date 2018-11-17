@@ -104,12 +104,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 				//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&TestKB, 0, 0, 0);	// testovacia klavesnica
 			}
 			else {
-				char buff[255];
+				wchar_t buff[255];
 				if (GetGameVersion() == 385)
-					sprintf(buff, "You are running bad game version. You are running version 1.2 (395). You need 1.0 (384)");
+					wsprintf(buff, L"You are running bad game version. You are running version 1.2 (395). You need 1.0 (384)");
 				else
-					sprintf(buff, "You are running undetected game version. You need 1.0 (384)");
-				MessageBox(NULL, buff, "Error", MB_ICONERROR);
+					wsprintf(buff, L"You are running undetected game version. You need 1.0 (384)");
+				MessageBox(NULL, buff, L"Error", MB_ICONERROR);
 				TerminateProcess(GetCurrentProcess(), 0);
 			}
 			break;
@@ -175,14 +175,14 @@ BOOL WINAPI hookPeekMessageW(
 	return result;
 }
 
-DWORD _stdcall DtaOpen(char* filename,DWORD params)
+DWORD _stdcall DtaOpen(wchar_t* filenamew,DWORD params)
 {
 	HMODULE hM = GetModuleHandleA("rw_data.dll");
 	//00012C98
 	//DWORD dtaFirst = (DWORD)orig_DtaOpen + 0x000113F8;
 	DWORD dtaFirst = (DWORD)hM + 0x00012C98;
 	*(DWORD*)dtaFirst = 0x0;
-	char* moddedFile = g_CCore->GetFileSystem()->GetFileAliasFromName(filename);
+	wchar_t* moddedFile = g_CCore->GetFileSystem()->GetFileAliasFromName(filenamew);
 	if (moddedFile != NULL)
 	{
 
@@ -194,6 +194,10 @@ DWORD _stdcall DtaOpen(char* filename,DWORD params)
 	}
 	else {
 		*(DWORD*)dtaFirst = 0x1;
+
+		char filename[255];
+		wcstombs(filename, filenamew, 255);
+
 		return orig_DtaOpen(filename, params);
 	}
 }
@@ -202,8 +206,11 @@ void WaitTillD3D8IsLoaded()
 {
 	while(GetModuleHandleA("d3d8.dll") == NULL)
 	{
+		g_CCore->GetLog()->AddLog(L"TTT1");
 		Sleep(10);
 	}
+	g_CCore->GetLog()->AddLog(L"TTT2");
+	
 	HMODULE hM = GetModuleHandleA("d3d8.dll");
 	pDirect3DCreate8 = (PBYTE)GetProcAddress(hM, "Direct3DCreate8");
 
@@ -234,7 +241,7 @@ HRESULT WINAPI MyDirectInput8Create(HINSTANCE hinst, DWORD dwVersion, REFIID rii
                                                                         LPUNKNOWN punkOuter)
 {
 	HRESULT DI8Cresult = orig_DirectInput8Create(hinst,dwVersion, riidltf,ppvOut,punkOuter);
-	IDirectInput8* pDirectInput8 = static_cast < IDirectInput8 * > ( *ppvOut );
+	IDirectInput8A* pDirectInput8 = static_cast < IDirectInput8A * > ( *ppvOut );
 
     // Give the caller a proxy interface.
     MyDirectInput* pProxyDirectInput8 = new MyDirectInput ( pDirectInput8 );
@@ -245,7 +252,7 @@ HRESULT WINAPI MyDirectInput8Create(HINSTANCE hinst, DWORD dwVersion, REFIID rii
 	return DI8Cresult;
 }
 
-void _stdcall MyLoadFunction(char * file, int type)
+void _stdcall MyLoadFunction(wchar_t * file, int type)
 {
 	HANDLE handleFile = CreateFile(file, 0x80000000, 1, 0, 3, 80, 0);
 	if (handleFile != INVALID_HANDLE_VALUE)	// if it isn't -1

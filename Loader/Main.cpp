@@ -18,6 +18,14 @@ char exename[MAX_PATH];
 char dllname[MAX_PATH];
 
 
+static wchar_t* charToWChar(const char* text)
+{
+	size_t size = strlen(text) + 1;
+	wchar_t* wa = new wchar_t[size];
+	mbstowcs(wa, text, size);
+	return wa;
+}
+
 int WINAPI WinMain ( HINSTANCE _hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
 	if(!CheckFileExist(dll_name))
@@ -84,6 +92,7 @@ int WINAPI WinMain ( HINSTANCE _hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	DWORD pId = piProcessInfo.dwProcessId;
 
 	// Inject the dll
+	//wchar_t *dllnamew = charToWChar(dllname);
 	if (!InjectDLL(pId, dllname)) {
 		MessageBoxA(NULL, "Injection failed", "Error", MB_OK | MB_ICONERROR);
 	}

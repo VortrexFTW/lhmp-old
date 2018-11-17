@@ -8,7 +8,7 @@ struct CColoredStruct
 	CColoredStruct* next;
 	unsigned int	color;
 	unsigned int	width;
-	char*			text;
+	wchar_t*		text;
 	CColoredStruct()
 	{
 		next = NULL;
@@ -16,15 +16,15 @@ struct CColoredStruct
 		width = NULL;
 		text = NULL;
 	}
-	CColoredStruct(CColoredStruct* _next, unsigned int _color, unsigned int _width, char* _text)
+	CColoredStruct(CColoredStruct* _next, unsigned int _color, unsigned int _width, wchar_t* _text)
 	{
 		next = _next;
 		color = _color;
 		width =_width;
 		// copy the text
-		unsigned int len = strlen(_text);
-		text = new char[len+1];
-		strcpy(text, _text);
+		unsigned int len = wcslen(_text);
+		text = new wchar_t[len+1];
+		wcscpy(text, _text);
 		text[len] = '\0';
 	}
 };
@@ -40,14 +40,14 @@ private:
 	CColoredStruct*		pointer;
 
 
-	void	MakeBlocksFromText(char* input);
-	char*	FindNextColor(char* input);
-	void	CreateBlock(char* input, unsigned int length, unsigned int color);
-	void	GetBlocksLength();
+	void		MakeBlocksFromText(wchar_t* input);
+	wchar_t*	FindNextColor(wchar_t* input);
+	void		CreateBlock(wchar_t* input, unsigned int length, unsigned int color);
+	void		GetBlocksLength();
 public:
 
 	CColoredText();
-	CColoredText(char* input);
+	CColoredText(wchar_t* input);
 	~CColoredText();
 
 	/**

@@ -68,15 +68,15 @@ public:
 
 	// text utils
 	Vector2D			GetResolution();
-	int					GetFontWidth(char []);
-	int					GetLetterWidth(char c);
-	int					GetColoredTextWidth(char[]);
-	int					GetStrlenForWidth(int,char*);
-	std::string			GetLastColorInText(char*,int);
-	virtual void		DrawText(char [],int,int,D3DCOLOR,bool,LPD3DXFONT);
-	virtual void		DrawText(char [],int,int,D3DCOLOR,bool);
-	virtual void		DrawText(char [],int,int,D3DCOLOR,bool,bool,LPD3DXFONT);
-	virtual void		DrawText(char [],int,int,D3DCOLOR,bool,bool);
+	int					GetFontWidth(wchar_t[]);
+	int					GetLetterWidth(wchar_t c);
+	int					GetColoredTextWidth(wchar_t[]);
+	int					GetStrlenForWidth(int, wchar_t*);
+	std::wstring		GetLastColorInText(wchar_t*,int);
+	virtual void		DrawText(wchar_t[],int,int,D3DCOLOR,bool,LPD3DXFONT);
+	virtual void		DrawText(wchar_t[],int,int,D3DCOLOR,bool);
+	virtual void		DrawText(wchar_t[],int,int,D3DCOLOR,bool,bool,LPD3DXFONT);
+	virtual void		DrawText(wchar_t[],int,int,D3DCOLOR,bool,bool);
 	virtual void		DrawColoredText(CColoredText* text, int, int, bool);
 
 	// other utils
@@ -99,7 +99,7 @@ public:
 	CColoredText*		textiq;
 	CColoredText*		textiqSecond;
 
-	void				D3DDrawText(char[], int, int, D3DCOLOR, bool shadow);
+	void				D3DDrawText(wchar_t[], int, int, D3DCOLOR, bool shadow);
 
 	CFont*				GetFont();
 

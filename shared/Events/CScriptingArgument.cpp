@@ -29,7 +29,7 @@ void	CScriptingArgument::PushToVM(HSQUIRRELVM vm)
 	case SCRIPTING_ARG_STRING:
 	{
 		std::string *pString = (std::string*)m_pValue;
-		sq_pushstring(vm, pString->c_str(), pString->length());
+		sq_pushstring(vm, (const SQChar*)pString->c_str(), pString->length());
 		break;
 	}
 	}
@@ -61,7 +61,7 @@ void	CScriptingArgument::ReadFromVM(HSQUIRRELVM vm, int iStackIndex)
 		const SQChar *pString2 = nullptr;
 		sq_getstring(vm, iStackIndex, &pString2);
 		SQInteger iStringLength = sq_getsize(vm, iStackIndex);
-		((std::string*)m_pValue)->assign(pString2, iStringLength);
+		((std::string*)m_pValue)->assign((char*)pString2, iStringLength);
 		break;
 	}
 	}

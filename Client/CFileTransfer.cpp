@@ -11,8 +11,8 @@ CFile::CFile(unsigned int _ID, FILE* _handle, char _name[], char _checksum[], in
 {
 	this->ID = _ID;
 	this->handle = _handle;
-	sprintf(this->name, "%s", _name);
-	sprintf(this->checksum, "%s", _checksum);
+	wsprintf(this->name, L"%s", _name);
+	wsprintf(this->checksum, L"%s", _checksum);
 	this->size = _size;
 	this->alreadyWritten = 0;
 
@@ -25,11 +25,11 @@ CFile::~CFile()
 		fclose(handle);
 	}
 }
-char*	CFile::GetName()
+wchar_t*	CFile::GetName()
 {
 	return this->name;
 }
-char*	CFile::GetCheckSum()
+wchar_t*	CFile::GetCheckSum()
 {
 	return this->checksum;
 }
@@ -54,7 +54,7 @@ void			CFile::WriteBytes(unsigned char data[], int len)
 	alreadyWritten += len;
 
 	//char buff[250];
-	//sprintf(buff, "Data arrived: %d/%d", alreadyWritten, this->GetSize());
+	//wsprintf(buff, L"Data arrived: %d/%d", alreadyWritten, this->GetSize());
 	//g_CCore->GetChat()->AddMessage(buff);
 
 	// if file transfer is done properly
@@ -83,7 +83,7 @@ int	CFile::GetAlreadyWritten()
 
 void CFileTransfer::InitTransfer(RakNet::BitStream* stream)
 {
-	CreateDirectory("lhmp/files", NULL);
+	CreateDirectory(L"lhmp/files", NULL);
 	this->status = FILETRANSFER_STATE::CHECKING_INTEGRITY;
 
 	int count;
@@ -113,7 +113,9 @@ void CFileTransfer::InitTransfer(RakNet::BitStream* stream)
 			if (strcmp(fileChecksum, checksum) == 0)
 			{
 				// Add to our file system
-				g_CCore->GetFileSystem()->AddFile(name, checksum);
+				wchar_t *name2 = Tools::charToWChar(name);
+				wchar_t *checksum2 = Tools::charToWChar(checksum);
+				g_CCore->GetFileSystem()->AddFile(name2, checksum2);
 				continue;
 			}
 			else {
@@ -133,7 +135,9 @@ void CFileTransfer::InitTransfer(RakNet::BitStream* stream)
 		}
 		else
 		{
-			g_CCore->GetFileSystem()->AddFile(name, checksum);
+			wchar_t *name2 = Tools::charToWChar(name);
+			wchar_t *checksum2 = Tools::charToWChar(checksum);
+			g_CCore->GetFileSystem()->AddFile(name2, checksum2);
 			//g_CCore->GetChat()->AddMessage("Open file failed, what now ? Fuck !");
 		}
 	}
@@ -143,12 +147,12 @@ void CFileTransfer::InitTransfer(RakNet::BitStream* stream)
 	out.Write((RakNet::MessageID) FILETRANSFER_INIT);
 	out.Write((int)this->fileList.size());
 
-	g_CCore->GetLog()->AddLog("Get files:");
+	g_CCore->GetLog()->AddLog(L"Get files:");
 	for (unsigned int i = 0; i < this->fileList.size(); i++)
 	{
 		out.Write(this->fileList[i]->GetID());
-		char buff[200];
-		sprintf(buff, "---%s,%s", this->fileList[i]->GetName(), this->fileList[i]->GetCheckSum());
+		wchar_t buff[200];
+		wsprintf(buff, L"---%s,%s", this->fileList[i]->GetName(), this->fileList[i]->GetCheckSum());
 		g_CCore->GetLog()->AddLog(buff);
 		
 	}
@@ -239,10 +243,10 @@ void CFileTransfer::HandlePacket(RakNet::BitStream* stream)
 									// Add to our file system
 									g_CCore->GetFileSystem()->AddFile(this->fileList[i]->GetName(), this->fileList[i]->GetCheckSum());
 
-									char log[300];
-									sprintf(log, "File: %s %s", this->fileList[i]->GetName(), this->fileList[i]->GetCheckSum());
+									wchar_t log[300];
+									wsprintf(log, L"File: %s %s", this->fileList[i]->GetName(), this->fileList[i]->GetCheckSum());
 									g_CCore->GetLog()->AddLog(log);
-									sprintf(log, "File: size[%d]", this->fileList[i]->GetSize());
+									wsprintf(log, L"File: size[%d]", this->fileList[i]->GetSize());
 									g_CCore->GetLog()->AddLog(log);
 									this->fileList[i]->CloseHandle();
 								}
@@ -272,24 +276,24 @@ void CFileTransfer::Render()
 
 					// Title + container
 					g_CCore->GetGraphics()->FillARGB(x, y - 25, 384, 25, 0xffdb0000);                    
-					g_CCore->GetGraphics()->GetFont()->DrawText("Downloading resources", x + 8, y - 20, 0xffffffff, true);
+					g_CCore->GetGraphics()->GetFont()->DrawText(L"Downloading resources", x + 8, y - 20, 0xffffffff, true);
 
 					g_CCore->GetGraphics()->FillARGB(x, y, 384, 135, 0x60000000);
 
 					// file downloading status
-					char buff[255];
-					sprintf(buff, "Resource: %s", this->fileList[i]->GetName());
-					g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, x + 20, y + 10, 0xffffffff);
+					wchar_t buff[255];
+					wsprintf(buff, L"Resource: %s", this->fileList[i]->GetName());
+					g_CCore->GetGraphics()->GetFont()->DrawTextW(buff, x + 20, y + 10, 0xffffffff);
 
 					float ratio = this->fileList[i]->GetAlreadyWritten() / (float)this->fileList[i]->GetSize();                    
 					g_CCore->GetGraphics()->FillARGB(x + 20, y + 30, 344, 15, 0xaa000000);
 					g_CCore->GetGraphics()->FillARGB(x + 20, y + 30, (int)(344 * ratio), 15, 0xFFff0000);
 
-					sprintf(buff, "%.2f%sB / %.2f%sB", Tools::GetMetricUnitNum((float)this->fileList[i]->GetAlreadyWritten()), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->fileList[i]->GetAlreadyWritten())],
-						Tools::GetMetricUnitNum((float)this->fileList[i]->GetSize()), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->fileList[i]->GetSize())]);
+					wsprintf(buff, L"%.2f%sB / %.2f%sB", Tools::GetMetricUnitNum((float)this->fileList[i]->GetAlreadyWritten()), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->fileList[i]->GetAlreadyWritten())],
+					Tools::GetMetricUnitNum((float)this->fileList[i]->GetSize()), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->fileList[i]->GetSize())]);
 					
 					int width = g_CCore->GetGraphics()->GetFont()->GetFontWidth(buff).cx;
-					g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, x + 364 - width, y + 50, 0xffffffff);
+					g_CCore->GetGraphics()->GetFont()->DrawTextW(buff, x + 364 - width, y + 50, 0xffffffff);
 
 
 					// overall (received/awaiting bytes)
@@ -300,13 +304,13 @@ void CFileTransfer::Render()
 					g_CCore->GetGraphics()->GetFont()->DrawText("Overall progress", x + 10, y - 22, 0xffffffff, true);
 
 					g_CCore->GetGraphics()->FillARGB(x, y, 384, 60, 0x60000000);*/
-					sprintf(buff, "%.2f%sB / %.2f%sB", Tools::GetMetricUnitNum((float)this->receivedBytes), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->receivedBytes)],
+					wsprintf(buff, L"%.2f%sB / %.2f%sB", Tools::GetMetricUnitNum((float)this->receivedBytes), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->receivedBytes)],
 						Tools::GetMetricUnitNum((float)this->overallBytes), Tools::MetricUnits[Tools::GetMetricUnitIndex((float)this->overallBytes)]);
 
-					g_CCore->GetGraphics()->GetFont()->DrawTextA("Total progress:", x + 20, y + 70, 0xffffffff);
+					g_CCore->GetGraphics()->GetFont()->DrawTextW(L"Total progress:", x + 20, y + 70, 0xffffffff);
 
 					width = g_CCore->GetGraphics()->GetFont()->GetFontWidth(buff).cx;
-					g_CCore->GetGraphics()->GetFont()->DrawTextA(buff, x + 364 - width, y + 110, 0xffffffff);
+					g_CCore->GetGraphics()->GetFont()->DrawTextW(buff, x + 364 - width, y + 110, 0xffffffff);
 
 					float overallRatio = (float)this->receivedBytes / (float)this->overallBytes;
 					/*g_CCore->GetGraphics()->FillARGB(x, y + 85, 384, 20, 0xaa000000);

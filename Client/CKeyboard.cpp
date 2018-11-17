@@ -210,13 +210,13 @@ void	CKeyboard::ProccessMessage(LPMSG lpMsg)
 	LPBYTE lpb = new BYTE[dwSize];
 	if (lpb == NULL)
 	{
-		g_CCore->GetChat()->AddMessage("raw input error LOL");
+		g_CCore->GetChat()->AddMessage(L"raw input error LOL");
 		return;
 	}
 
 	if (GetRawInputData((HRAWINPUT)lpMsg->lParam, RID_INPUT, lpb, &dwSize,
 		sizeof(RAWINPUTHEADER)) != dwSize)
-		g_CCore->GetChat()->AddMessage("raw input error");
+		g_CCore->GetChat()->AddMessage(L"raw input error");
 
 	RAWINPUT* raw = (RAWINPUT*)lpb;
 

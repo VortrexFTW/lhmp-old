@@ -28,7 +28,7 @@ void CLocalPlayer::Init()
 
 void CLocalPlayer::SetMoney(int money)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetMoney", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetMoney", LOG_ALL);
 	__asm
 	{
 		MOV ESI, money
@@ -61,7 +61,7 @@ int CLocalPlayer::GetMoney()
 
 void CLocalPlayer::EnableMoney(int enable)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::EnableMoney", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::EnableMoney", LOG_ALL);
 	BYTE benable = (BYTE)enable;
 
 
@@ -80,7 +80,7 @@ void CLocalPlayer::EnableMoney(int enable)
 
 void CLocalPlayer::SetLocalPos(Vector3D vector)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetLocalPos", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetLocalPos", LOG_ALL);
 	if (this->GetEntity() != NULL)
 	{
 		PED* ped = g_CCore->GetGame()->GetLocalPED();
@@ -94,35 +94,35 @@ void CLocalPlayer::SetLocalPos(Vector3D vector)
 
 float CLocalPlayer::GetCarAim()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetCarAim", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetCarAim", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return ped->inCarRotation;
 	//return *(float*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x5F4);
 }
 float CLocalPlayer::GetHealth()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetHealth", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetHealth", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return ped->health;
 	//return *(float*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x644);
 }
 byte CLocalPlayer::GetStatus()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetStatus", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetStatus", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return ped->animStateLocal;
 	//return	*(BYTE*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x70);
 }
 bool CLocalPlayer::GetIsAiming()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetIsAiming", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetIsAiming", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return (ped->isAiming == 1);
 	//return	(*(BYTE*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x1E5) == 1);
 }
 bool CLocalPlayer::GetIsDucking()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetIsDucking", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetIsDucking", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return (ped->isDucking == 1);
 	//return	(*(BYTE*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x1E4) == 1);
@@ -130,28 +130,28 @@ bool CLocalPlayer::GetIsDucking()
 
 bool CLocalPlayer::GetIsCarAnim()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetLocalPED", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetLocalPED", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	return (ped->isInAnimWithCarLocal == 1);
 	//return	(*(BYTE*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x71) == 1);
 }
 bool CLocalPlayer::IsOnFoot()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::IsOnFoot", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::IsOnFoot", LOG_ALL);
 		return bIsOnFoot;
 }
 void CLocalPlayer::SetIsOnFoot(bool b)
 {
 	this->bIsOnFoot = b;
 	if (b)
-		g_CCore->GetLog()->AddLog("CLocalPlayer::SetIsOnFoot 1", LOG_ALL);
+		g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetIsOnFoot 1", LOG_ALL);
 	else
-		g_CCore->GetLog()->AddLog("CLocalPlayer::SetIsOnFoot 0", LOG_ALL);
+		g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetIsOnFoot 0", LOG_ALL);
 }
 
 void CLocalPlayer::Pulse()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::Pulse", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::Pulse", LOG_ALL);
 	if (this->GetEntity() != NULL)
 	{
 		if (this->IsOnFoot())
@@ -213,19 +213,19 @@ void CLocalPlayer::Pulse()
 
 void CLocalPlayer::SetID(int id)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetID", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetID", LOG_ALL);
 	this->ourID = id;
 }
 
 int CLocalPlayer::GetOurID()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetOurID", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetOurID", LOG_ALL);
 	return this->ourID;
 }
 
 Vector3D CLocalPlayer::GetLocalPos()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetLocalPos", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetLocalPos", LOG_ALL);
 	Vector3D pos;
 	if (this->IDinCar != -1)
 	{
@@ -274,30 +274,30 @@ Vector3D CLocalPlayer::GetLocalPos()
 
 char*	CLocalPlayer::GetNickname()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetNickname", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetNickname", LOG_ALL);
 	return nickname;
 }
 void	CLocalPlayer::SetNickname(char* nick)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetNickname", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetNickname", LOG_ALL);
 	sprintf(nickname,"%s",nick);
 }
 
 void	CLocalPlayer::SetPing(int p)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetPing", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetPing", LOG_ALL);
 	ping = p;
 }
 
 int		CLocalPlayer::GetPing()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetPing", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetPing", LOG_ALL);
 	return ping;
 }
 
 DWORD CLocalPlayer::GetBase()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetBase", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetBase", LOG_ALL);
 	if ((*(DWORD*)0x006F9464) != NULL)
 	{
 		return *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
@@ -310,7 +310,7 @@ DWORD CLocalPlayer::GetBase()
 
 DWORD CLocalPlayer::GetEntity()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetEntity", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetEntity", LOG_ALL);
 	if ((*(DWORD*)0x006F9464) != NULL)
 	{
 		return *(DWORD*)(*(DWORD*)(0x006F9464) + 0xE4);
@@ -322,7 +322,7 @@ DWORD CLocalPlayer::GetEntity()
 
 Vector3D	CLocalPlayer::GetLocalRot()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::GetLocalRot", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::GetLocalRot", LOG_ALL);
 	if (this->IDinCar != -1)
 	{
 		CVehicle* veh = g_CCore->GetVehiclePool()->Return(IDinCar);
@@ -352,7 +352,7 @@ Vector3D	CLocalPlayer::GetLocalRot()
 
 void	CLocalPlayer::SetLocalRot(Vector3D rot)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetLocalRot", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetLocalRot", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	ped->object.rotation = rot;
 	/**(float*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x30) = rot.x;
@@ -362,7 +362,7 @@ void	CLocalPlayer::SetLocalRot(Vector3D rot)
 
 void	CLocalPlayer::SetHealth(float f)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetHealth", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetHealth", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	ped->health = f;
 	//*(float*)((*(DWORD*)((*(DWORD*)0x006F9464) + 0xE4)) + 0x644) = f;
@@ -374,7 +374,7 @@ void	CLocalPlayer::SetHealth(float f)
 
 bool	CLocalPlayer::HasWeapon(int wepID)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::HasWeapon", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::HasWeapon", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	for (int i = 0; i < 7; i++)
 	{
@@ -386,7 +386,7 @@ bool	CLocalPlayer::HasWeapon(int wepID)
 }
 void	CLocalPlayer::SetWeapon(int wepID, int ammo, int ammo2)
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::SetWeapon", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::SetWeapon", LOG_ALL);
 	PED* ped = g_CCore->GetGame()->GetLocalPED();
 	for (int i = 0; i < 7; i++)
 	{
@@ -404,7 +404,7 @@ void	CLocalPlayer::SetWeapon(int wepID, int ammo, int ammo2)
 
 void	CLocalPlayer::ServerUpdateWeapon()
 {
-	g_CCore->GetLog()->AddLog("CLocalPlayer::ServerUpdateWeapon", LOG_ALL);
+	g_CCore->GetLog()->AddLog(L"CLocalPlayer::ServerUpdateWeapon", LOG_ALL);
 	PED* player = (PED*) this->GetEntity();
 	RakNet::BitStream bsOut;
 	bsOut.Write((RakNet::MessageID)ID_GAME_LHMP_PACKET);
@@ -418,7 +418,7 @@ void	CLocalPlayer::ServerUpdateWeapon()
 void	CLocalPlayer::OnDeath(int killer, int reason, int part)
 {
 	/*char buff[250];
-	sprintf(buff, "Attacker: %d Reason %d Part %d", killer, reason, part);
+	wsprintf(buff, L"Attacker: %d Reason %d Part %d", killer, reason, part);
 	g_CCore->GetChat()->AddMessage(buff);*/
 
 	// Send info to server

@@ -32,7 +32,7 @@ public:
 	void	OnLostDevice();
 	void	OnResetDevice();
 
-	char*	ZeroFormat(int,char*);
+	wchar_t*	ZeroFormat(int, wchar_t*);
 	char newsBuff[1024];
 };
 

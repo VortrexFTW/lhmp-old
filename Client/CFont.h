@@ -9,7 +9,7 @@ class CFont{
 private:
 	CD3DFont*	m_pFont;
 public:
-	CFont(char font[100],char font2[100], int size, DWORD flags = 0UL);
+	CFont(wchar_t font[100], wchar_t font2[100], int size, DWORD flags = 0UL);
 	~CFont();
 
 	// Dx callbacks
@@ -17,15 +17,15 @@ public:
 	void	OnReset();
 
 	// draw
-	void	DrawText(char text[], int x , int y, D3DCOLOR color, bool shadow = true);
+	void	DrawText(wchar_t text[], int x , int y, D3DCOLOR color, bool shadow = true);
 	void	DrawColoredText(CColoredText* text, int x, int y, bool shadow = true);
-	void	DrawColoredText(char* text, int x, int y,DWORD color, bool shadow = true);
+	void	DrawColoredText(wchar_t* text, int x, int y,DWORD color, bool shadow = true);
 
 	// calculations
 
-	__declspec(noinline) SIZE	GetFontWidth(char[], int len = -1);
-	int		GetColoredTextWidth(char[]);
-	int		GetStrlenForWidth(int, char*);
+	__declspec(noinline) SIZE	GetFontWidth(wchar_t[], int len = -1);
+	int		GetColoredTextWidth(wchar_t[]);
+	int		GetStrlenForWidth(int, wchar_t*);
 
 };
 #endif

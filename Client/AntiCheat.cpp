@@ -14,15 +14,15 @@ DWORD dwACBlacklist[] = {
 };
 
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
-	char title[80];
-	std::string str(title);
-	std::string stk("Cheat Engine");
+	wchar_t title[80];
+	std::wstring str(title);
+	std::wstring stk(L"Cheat Engine");
 
 	GetWindowText(hwnd, title, sizeof(title));
 	str = title;
 
 	std::size_t found = str.find(stk);
-	if (found != std::string::npos) {
+	if (found != std::wstring::npos) {
 		return false;
 	}
 

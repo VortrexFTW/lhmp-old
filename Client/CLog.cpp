@@ -15,9 +15,9 @@ CLog::CLog()
 //#else
 	this->SetDebugState(false);
 //#endif
-	this->AddLog("------------------------------------------");
+	this->AddLog(L"------------------------------------------");
 }
-void CLog::AddLog(char* str, unsigned char priority)
+void CLog::AddLog(wchar_t* str, unsigned char priority)
 {
 	// if message has enough priority 
 	if (priority <= this->logState)
@@ -33,8 +33,8 @@ void CLog::AddLog(char* str, unsigned char priority)
 		// if isDebug, print message in chat
 		if (this->isDebug == 1)
 		{
-			char buf[250];
-			sprintf_s(buf, "#aaaaaa%s", str);
+			wchar_t buf[250];
+			wsprintf(buf, L"#aaaaaa%s", str);
 			g_CCore->GetChat()->AddMessage(buf);
 		}
 	}

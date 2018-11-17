@@ -49,10 +49,11 @@ void GetAdressAsModule(DWORD addr, char* outbuffer)
 */
 LONG	HandleIt(struct _EXCEPTION_POINTERS * ExceptionInfo)
 {
-	char buff[500];
+	wchar_t buff[500];
 	char address[100];
 	GetAdressAsModule((DWORD)ExceptionInfo->ExceptionRecord->ExceptionAddress, address);
-	sprintf(buff, "Crash occured at address: %p Code: %x \nRegisters: \n"
+	wchar_t *waddress = Tools::charToWChar(address);
+	wsprintf(buff, L"Crash occured at address: %p Code: %x \nRegisters: \n"
 		"EAX: %p \tECX: %p \n"
 		"EDX: %p \tEBX: %p \n"
 		"ESP: %p \tEBP: %p \n"
@@ -62,22 +63,22 @@ LONG	HandleIt(struct _EXCEPTION_POINTERS * ExceptionInfo)
 		ExceptionInfo->ExceptionRecord->ExceptionCode, ExceptionInfo->ContextRecord->Eax,
 		ExceptionInfo->ContextRecord->Ecx, ExceptionInfo->ContextRecord->Edx, ExceptionInfo->ContextRecord->Ebx,
 		ExceptionInfo->ContextRecord->Esp, ExceptionInfo->ContextRecord->Ebp, ExceptionInfo->ContextRecord->Esi,
-		ExceptionInfo->ContextRecord->Edi,address);
+		ExceptionInfo->ContextRecord->Edi, waddress);
 	//g_CCore->GetCrashHandler()->SaveDumpOnDisk(buff);
 
-	STARTUPINFOA siStartupInfo;
+	STARTUPINFOW siStartupInfo;
 	PROCESS_INFORMATION piProcessInfo;
 	memset(&siStartupInfo, 0, sizeof(siStartupInfo));
 	memset(&piProcessInfo, 0, sizeof(piProcessInfo));
 	siStartupInfo.cb = sizeof(siStartupInfo);
 
-	sprintf(buff, "CrashHandler.exe %p|%p@%p@%p@%p@%p@%p@%p@%p|%s|%s",
+	wsprintf(buff, L"CrashHandler.exe %p|%p@%p@%p@%p@%p@%p@%p@%p|%s|%s",
 		ExceptionInfo->ExceptionRecord->ExceptionAddress,
 		ExceptionInfo->ContextRecord->Eax,
 		ExceptionInfo->ContextRecord->Ecx, ExceptionInfo->ContextRecord->Edx, ExceptionInfo->ContextRecord->Ebx,
 		ExceptionInfo->ContextRecord->Esp, ExceptionInfo->ContextRecord->Ebp, ExceptionInfo->ContextRecord->Esi,
 		ExceptionInfo->ContextRecord->Edi, address,LHMP_VERSION_TEST_HASH);
-	if (!CreateProcessA(NULL,
+	if (!CreateProcessW(NULL,
 		buff, 0, 0, false,
 		CREATE_SUSPENDED, 0, 0,
 		&siStartupInfo, &piProcessInfo)) {
