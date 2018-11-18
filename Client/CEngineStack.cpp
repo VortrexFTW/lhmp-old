@@ -59,14 +59,14 @@ void CEngineStack::DoMessage()
 			// delete all peds
 			for (unsigned int i = 0; i < MAX_PLAYERS; i++)
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(i);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 				if (ped)
 				{
 					if (ped->GetEntity())
 					{
 						g_CCore->GetGame()->DeletePed(ped->GetEntity());
 					}
-					g_CCore->GetPedPool()->Delete(i);
+					g_CCore->GetPlayerPool()->Delete(i);
 				}
 			}
 
@@ -80,7 +80,7 @@ void CEngineStack::DoMessage()
 					{
 						//g_CCore->GetGame()->frame
 					}
-					g_CCore->GetPedPool()->Delete(i);
+					g_CCore->GetPlayerPool()->Delete(i);
 				}
 			}
 		}
@@ -91,28 +91,28 @@ void CEngineStack::DoMessage()
 													sprintf(message,"CLIENT_ENGINESTACK::ES_CREATEPLAYER [ID:%d]", start->data);
 													g_CCore->GetLog()->AddLog(message, LOG_NORMAL);
 				//g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_CREATEPLAYER",LOG_NORMAL);
-				CPed* ped = g_CCore->GetPedPool()->Return(start->data);
-				if(ped != NULL)
+				CPlayer* player = g_CCore->GetPlayerPool()->Return(start->data);
+				if(player != NULL)
 				{
-					if(ped->GetEntity() != NULL)
+					if(player->GetEntity() != NULL)
 					{
 						
-						g_CCore->GetGame()->DeletePed(ped->GetEntity());
-						ped->SetEntity(NULL);
+						g_CCore->GetGame()->DeletePed(player->GetEntity());
+						player->SetEntity(NULL);
 					}
 					DWORD handle = g_CCore->GetGame()->CreatePED();
-					ped->SetEntity(handle);
+					player->SetEntity(handle);
 					
 					if (handle != NULL)
 					{
-						g_CCore->GetGame()->ChangeSkin(ped->GetEntity(),ped->GetSkin());
+						g_CCore->GetGame()->ChangeSkin(player->GetEntity(), player->GetSkin());
 					}
-					if (ped->InCar != -1)
+					if (player->InCar != -1)
 					{
-						CVehicle* veh = g_CCore->GetVehiclePool()->Return(ped->InCar);
-						if (veh != NULL)
+						CVehicle* pVehicle = g_CCore->GetVehiclePool()->Return(player->InCar);
+						if (pVehicle)
 						{
-							g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), ped->InCar, veh->GetPlayerSeat(start->data));
+							player->EnterVehicleFast(pVehicle, pVehicle->GetPlayerSeat(start->data));
 						}
 					}
 				}
@@ -121,7 +121,7 @@ void CEngineStack::DoMessage()
 		case CLIENT_ENGINESTACK::ES_DELETEPLAYER:
 		{
 			g_CCore->GetLog()->AddLog("CLIENT_ENGINESTACK::ES_DELETEPLAYER", LOG_NORMAL);
-			g_CCore->GetGame()->DeletePed(start->data);
+			g_CCore->GetGame()->DeletePlayer(start->data);
 		}
 			break;
 		case CLIENT_ENGINESTACK::ES_PLAYERSETPOS:
@@ -134,7 +134,7 @@ void CEngineStack::DoMessage()
 				g_CCore->GetGame()->SetPlayerPosition(g_CCore->GetLocalPlayer()->GetEntity(), pw->pos);
 			}
 			else {
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 				if (ped != NULL)
 				{
 					g_CCore->GetGame()->SetPlayerPosition(ped->GetEntity() , pw->pos);
@@ -154,7 +154,7 @@ void CEngineStack::DoMessage()
 					}
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(start->data);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(start->data);
 					if(ped != 0)
 					{
 						if(ped->GetEntity() != 0)
@@ -178,7 +178,7 @@ void CEngineStack::DoMessage()
 					g_CCore->GetGame()->PlayAnim(adr,g_CCore->GetLocalPlayer()->ourAnim);
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(start->data);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(start->data);
 					if(ped != 0)
 					{
 						if (ped->GetEntity() != 0)
@@ -200,7 +200,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 				if (ped != 0)
 				{
 					if (ped->GetEntity() != 0)
@@ -243,7 +243,7 @@ void CEngineStack::DoMessage()
 					g_CCore->GetLocalPlayer()->ServerUpdateWeapon();
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 					if(ped != 0)
 					{
 						if (ped->GetEntity() != 0)
@@ -268,7 +268,7 @@ void CEngineStack::DoMessage()
 					g_CCore->GetLocalPlayer()->ServerUpdateWeapon();
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 					if(ped != 0)
 					{
 						if (ped->GetEntity() != 0)
@@ -291,7 +291,7 @@ void CEngineStack::DoMessage()
 					g_CCore->GetLocalPlayer()->ServerUpdateWeapon();
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 					if(ped != 0)
 					{
 						if (ped->GetEntity() != 0)
@@ -311,7 +311,7 @@ void CEngineStack::DoMessage()
 					g_CCore->GetGame()->Shoot(adr,pw->pos);
 				} else
 				{	
-					CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 					if(ped != 0)
 					{
 						if (ped->GetEntity() != 0)
@@ -339,7 +339,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 				if (ped != 0)
 				{
 					if (ped->GetEntity() != 0)
@@ -361,7 +361,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(start->data);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(start->data);
 				if (ped != 0)
 				{
 					if (ped->GetEntity() != 0)
@@ -385,7 +385,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 				if (ped != 0)
 				{
 					if (ped->GetEntity() != 0)
@@ -410,7 +410,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(start->data);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(start->data);
 				if (ped != 0)
 				{
 					if (ped->GetEntity() != 0)
@@ -461,25 +461,21 @@ void CEngineStack::DoMessage()
 			ENGINE_STACK::VEH_DELETEVEH* pw = (ENGINE_STACK::VEH_DELETEVEH*) start->data;
 			for (int i = 0; i < MAX_PLAYERS; i++)
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(i);
+				CPlayer* ped = g_CCore->GetPlayerPool()->Return(i);
 				if (ped != NULL)
 				{
 					if (ped->GetEntity() != NULL)
 					{
 						if (ped->InCar == pw->vehID)
 						{
-							g_CCore->GetGame()->KickPlayerFromCarFast(ped->GetEntity());
-							ped->InCar = -1;
-							ped->SetIsOnFoot(true);
+							ped->RemoveFromVehicleFast();
 						}
 					}
 				}
 			}
 			if (g_CCore->GetLocalPlayer()->IDinCar == pw->vehID)
 			{
-				g_CCore->GetGame()->KickPlayerFromCarFast(g_CCore->GetLocalPlayer()->GetBase());
-				g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
-				g_CCore->GetLocalPlayer()->IDinCar = -1;
+				g_CCore->GetLocalPlayer()->RemoveFromVehicleFast();
 			}
 			g_CCore->GetGame()->DeleteCar(pw->base);
 
@@ -495,13 +491,14 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
-				if (ped != 0)
+				CPlayer* ped = g_CCore->GetPlayerPool()->Return(pw->pID);
+				if (ped)
 				{
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(false);
-						g_CCore->GetGame()->GivePlayerToCar(ped->GetEntity(), pw->vehID,pw->seatID);
+						CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(pw->vehID);
+						ped->EnterVehicle(pVehicle, pw->seatID);
 					}
 				}
 			}
@@ -519,18 +516,20 @@ void CEngineStack::DoMessage()
 				//g_CCore->GetGame()->SwitchWeapon(adr, pw->wepID);
 				g_CCore->GetLocalPlayer()->IDinCar = pw->vehID;
 				g_CCore->GetLocalPlayer()->SetIsOnFoot(false);
-				g_CCore->GetGame()->GivePlayerToCarFast(adr, pw->vehID, pw->seatID);
+				CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(pw->vehID);
+				g_CCore->GetLocalPlayer()->EnterVehicleFast(pVehicle, pw->seatID);
 			}
 			else
 			{
 				g_CCore->GetLog()->AddLog("ES_PLAYER_PUT_TO_VEH");
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
-				if (ped != 0)
+				CPlayer* ped = g_CCore->GetPlayerPool()->Return(pw->pID);
+				if (ped)
 				{
 					if (ped->GetEntity() != 0)
 					{
 						ped->SetIsOnFoot(false);
-						g_CCore->GetGame()->GivePlayerToCarFast(ped->GetEntity(), pw->vehID, pw->seatID);
+						CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(pw->vehID);
+						ped->EnterVehicleFast(pVehicle, pw->seatID);
 					}
 				}
 			}
@@ -541,21 +540,16 @@ void CEngineStack::DoMessage()
 			ENGINE_STACK::PLAYER_EXIT_VEH* pw = (ENGINE_STACK::PLAYER_EXIT_VEH*) start->data;
 			if (pw->pID == g_CCore->GetLocalPlayer()->GetOurID())
 			{
-				g_CCore->GetLocalPlayer()->IDinCar = -1;
-				g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
-				g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 4");
-				g_CCore->GetGame()->KickPlayerFromCarFast(g_CCore->GetLocalPlayer()->GetEntity());
+				g_CCore->GetLocalPlayer()->RemoveFromVehicleFast();
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
-				if (ped != 0)
+				CPlayer* ped = g_CCore->GetPlayerPool()->Return(pw->pID);
+				if (ped)
 				{
 					if (ped->GetEntity() != 0)
 					{
-						ped->SetIsOnFoot(true);
-						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 3");
-						g_CCore->GetGame()->KickPlayerFromCarFast(ped->GetEntity());
+						ped->RemoveFromVehicleFast();
 					}
 				}
 			}
@@ -572,14 +566,13 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
-				if (ped != 0)
+				CPlayer* pPlayer = g_CCore->GetPlayerPool()->Return(pw->pID);
+				if (pPlayer != 0)
 				{
-					if (ped->GetEntity() != 0)
+					if (pPlayer->GetEntity() != 0)
 					{
-						ped->SetIsOnFoot(true);
-						g_CCore->GetLog()->AddLog("KickPlayerFromCar 1");
-						g_CCore->GetGame()->KickPlayerFromCar(ped->GetEntity(), pw->vehID);
+						pPlayer->InCar = pw->vehID;
+						pPlayer->RemoveFromVehicle();
 					}
 				}
 			}
@@ -597,7 +590,7 @@ void CEngineStack::DoMessage()
 			}
 			else
 			{
-				CPed* ped = g_CCore->GetPedPool()->Return(pw->pID);
+				CPed* ped = g_CCore->GetPlayerPool()->Return(pw->pID);
 				CVehicle* veh = g_CCore->GetVehiclePool()->Return(pw->vehID);
 				if (ped != 0)
 				{
@@ -614,7 +607,7 @@ void CEngineStack::DoMessage()
 									g_CCore->GetLocalPlayer()->IDinCar = -1;
 									g_CCore->GetLocalPlayer()->SetIsOnFoot(true);
 								} else {
-									CPed* pedJacked = g_CCore->GetPedPool()->Return(jackedID);
+									CPed* pedJacked = g_CCore->GetPlayerPool()->Return(jackedID);
 									if (pedJacked != NULL)
 										pedJacked->SetIsOnFoot(true);
 									g_CCore->GetGame()->CarJack(ped->GetEntity(), veh->GetEntity(),pw->seatID);
@@ -678,7 +671,7 @@ void CEngineStack::DoMessage()
 				}
 				for (int i = 0; i < MAX_PLAYERS; i++)
 				{
-					CPed* ped = g_CCore->GetPedPool()->Return(i);
+					CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 					if (ped != NULL)
 					{
 						if (ped->GetEntity() != NULL)
@@ -732,7 +725,7 @@ void CEngineStack::DoMessage()
 						veh->PlayerExit(g_CCore->GetLocalPlayer()->GetOurID());
 						g_CCore->GetLocalPlayer()->IDinCar = -1;
 						g_CCore->GetLog()->AddLog("KickPlayerFromCarFast 2");
-						g_CCore->GetGame()->KickPlayerFromCarFast(veh->GetEntity());
+						g_CCore->GetLocalPlayer()->RemoveFromVehicleFast();
 					}
 					//g_CCore->GetGame()->ChangeSkin(veh->GetEntity(), veh->GetSkin());
 

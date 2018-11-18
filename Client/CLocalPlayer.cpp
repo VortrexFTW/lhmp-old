@@ -12,7 +12,7 @@ extern CCore *g_CCore;
 CLocalPlayer::CLocalPlayer()
 {
 	IDinCar			= -1;
-	bIsOnFoot		= true;
+	isOnFoot		= true;
 	ping			= -1;
 	this->ourSkin	= 0;
 }
@@ -138,11 +138,11 @@ bool CLocalPlayer::GetIsCarAnim()
 bool CLocalPlayer::IsOnFoot()
 {
 	g_CCore->GetLog()->AddLog("CLocalPlayer::IsOnFoot", LOG_ALL);
-		return bIsOnFoot;
+	return isOnFoot;
 }
 void CLocalPlayer::SetIsOnFoot(bool b)
 {
-	this->bIsOnFoot = b;
+	this->isOnFoot = b;
 	if (b)
 		g_CCore->GetLog()->AddLog("CLocalPlayer::SetIsOnFoot 1", LOG_ALL);
 	else
@@ -275,12 +275,12 @@ Vector3D CLocalPlayer::GetLocalPos()
 char*	CLocalPlayer::GetNickname()
 {
 	g_CCore->GetLog()->AddLog("CLocalPlayer::GetNickname", LOG_ALL);
-	return nickname;
+	return sName;
 }
 void	CLocalPlayer::SetNickname(char* nick)
 {
 	g_CCore->GetLog()->AddLog("CLocalPlayer::SetNickname", LOG_ALL);
-	sprintf(nickname,"%s",nick);
+	sprintf(sName,"%s",nick);
 }
 
 void	CLocalPlayer::SetPing(int p)

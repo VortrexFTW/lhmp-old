@@ -13,6 +13,7 @@
 #include "CGame.h"
 #include "CGraphics.h"
 #include "CEngineStack.h"
+#include "CPlayerPool.h"
 #include "CPedPool.h"
 #include "CVehiclePool.h"
 #include "CLog.h"
@@ -48,6 +49,7 @@ private:
 	CGame					m_cGame;
 	CGraphics				m_cGraphics;
 	CEngineStack			m_cEngineStack;
+	CPlayerPool				m_cPlayerPool;
 	CPedPool				m_cPedPool;
 	CVehiclePool			m_cVehPool;
 	CLog					m_cLog;
@@ -82,6 +84,7 @@ public:
 	CGraphics*				GetGraphics();
 	//CPlayerSync*			GetPlayerSync();
 	CEngineStack*			GetEngineStack();
+	CPlayerPool*			GetPlayerPool();
 	CPedPool*				GetPedPool();
 	CVehiclePool*			GetVehiclePool();
 	CLog*					GetLog();

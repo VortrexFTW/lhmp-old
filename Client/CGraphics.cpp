@@ -126,7 +126,7 @@ void DebugWeapons()
 {
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		if (ped)
 		{
 			if (ped->GetEntity())
@@ -299,7 +299,7 @@ void CGraphics::RenderNametags()
 		// for every player
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			CPed* ped = g_CCore->GetPedPool()->Return(i);
+			CPlayer* ped = g_CCore->GetPlayerPool()->Return(i);
 			if (ped == NULL) continue;					// free slot
 			if (ped->GetEntity() == 0) continue;
 			if (ped->IsActive() == 0)					// player after disconnect
@@ -1005,7 +1005,7 @@ void CGraphics::RenderMap()
 	D3DXMatrixScaling(&scale, 0.7f, 0.7f, 1.0f);
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		if (ped != NULL)
 		{
 			vehpos = ped->GetPosition();
@@ -1075,7 +1075,7 @@ void CGraphics::RenderScoreboard()
 	// Render content
 	for(int ID = 0; ID < MAX_PLAYERS;ID++)
 	{
-		CPed* ped =  g_CCore->GetPedPool()->Return(ID);
+		CPed* ped =  g_CCore->GetPlayerPool()->Return(ID);
 		if(ped == NULL) continue;
 		if(ped->IsActive() == 0) continue;
 		numLines++;
@@ -1095,7 +1095,7 @@ void CGraphics::RenderScoreboard()
 	//y = screen.y*0.4;
 	for(int ID = 0; ID < MAX_PLAYERS;ID++)
 	{
-		CPed* ped =  g_CCore->GetPedPool()->Return(ID);
+		CPlayer* ped =  g_CCore->GetPlayerPool()->Return(ID);
 		if(ped == NULL) continue;
 		if(ped->IsActive() == 1)
 		{

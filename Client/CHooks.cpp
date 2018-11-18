@@ -368,8 +368,8 @@ _declspec(naked) void Hook_OnShoot()
 }
 void	OnPlayerHit(DWORD attacker)
 {
-	unsigned int ID = g_CCore->GetPedPool()->GetPedIdByBase(attacker);
-	g_CCore->GetGameSync()->Engine_onPlayerGetHit(g_CCore->GetPedPool()->Return(ID));
+	unsigned int ID = g_CCore->GetPlayerPool()->GetPlayerIdByBase(attacker);
+	g_CCore->GetGameSync()->Engine_onPlayerGetHit(g_CCore->GetPlayerPool()->Return(ID));
 }
 
 _declspec(naked) void Hook_PreventHit()
@@ -411,13 +411,13 @@ _declspec(naked) void Hook_PreventHit()
 void OnDeath(DWORD killerBase, unsigned char hitbox)
 {
 	int playerID = 0;
-	playerID = g_CCore->GetPedPool()->GetPedIdByBase(killerBase);
+	playerID = g_CCore->GetPlayerPool()->GetPlayerIdByBase(killerBase);
 	if (playerID != -1)
 	{
 		char buff[255];
 		sprintf(buff, "Killed by 0x%i [Part %d]", playerID, hitbox);
 		g_CCore->GetLog()->AddLog(buff);
-		g_CCore->GetGameSync()->Engine_onPlayerDie(g_CCore->GetPedPool()->Return(playerID), hitbox);
+		g_CCore->GetGameSync()->Engine_onPlayerDie(g_CCore->GetPlayerPool()->Return(playerID), hitbox);
 	}
 }
 
@@ -698,7 +698,7 @@ void OnCarJack(int carBase, int seatId)
 	{
 		if (veh->GetSeat(seatId) != -1)
 		{
-			CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(seatId));
+			CPed* ped = g_CCore->GetPlayerPool()->Return(veh->GetSeat(seatId));
 			ped->InCar = -1;
 			veh->PlayerExit(veh->GetSeat(seatId));
 			ped->SetIsOnFoot(true);
@@ -1573,7 +1573,7 @@ bool OnHitCallback(DWORD victim,DWORD reason, DWORD unk1, DWORD unk2, DWORD unk3
 					if (anotherPed->object.objectType == OBJECT_ENEMY)
 					{
 						// killed by player
-						int ID = g_CCore->GetPedPool()->GetPedIdByBase(attacker);
+						int ID = g_CCore->GetPlayerPool()->GetPlayerIdByBase(attacker);
 						g_CCore->GetLocalPlayer()->OnDeath(ID, reason, playerPart);
 						return (result == 1);
 					}

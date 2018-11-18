@@ -4,14 +4,10 @@
 #define __LOCALPLAYER_H
 
 #include "lhmp_structures.h"
+#include "CPlayer.h"
 
-class CLocalPlayer
+class CLocalPlayer : public CPlayer
 {
-private:
-	bool			bIsOnFoot;
-	int				ourID;
-	char			nickname[80];
-	int				ping;
 public:
 	CLocalPlayer();
 	~CLocalPlayer();
