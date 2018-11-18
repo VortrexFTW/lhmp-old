@@ -335,6 +335,7 @@ void CSquirrel::HideChat(bool status)
 {
 	this->hideChat = status;
 }
+
 bool CSquirrel::isChatHidden()
 {
 	return this->hideChat;
@@ -342,6 +343,10 @@ bool CSquirrel::isChatHidden()
 
 void CSquirrel::onRender()
 {
+	CScriptingArguments EventArgs;
+	//EventArgs.AddNumber(key);
+	g_CCore->GetEventPool()->Trigger("OnRender", EventArgs);
+
 	//g_CCore->GetChat()->AddMessage("renderSTART");
 	/*unsigned int size = this->p_scriptPool.size();
 	for (int i = 0; i < size; i++) {
@@ -418,6 +423,10 @@ void CSquirrel::onRender()
 
 void CSquirrel::onKeyDown(unsigned int key)
 {
+	CScriptingArguments EventArgs;
+	EventArgs.AddNumber(key);
+	g_CCore->GetEventPool()->Trigger("OnKeyDown", EventArgs);
+
 	for (int i = 0; i < 100; i++) {
 		if (this->p_scriptPool[i] != NULL)
 		{
@@ -443,6 +452,9 @@ void CSquirrel::onKeyDown(unsigned int key)
 }
 void CSquirrel::onSpawn()
 {
+	CScriptingArguments EventArgs;
+	g_CCore->GetEventPool()->Trigger("OnSpawn", EventArgs);
+
 	for (int i = 0; i < 100; i++) {
 		if (this->p_scriptPool[i] != NULL)
 		{

@@ -9,6 +9,8 @@ void	CEventRegistrar::Init(void)
 	CEventPool *pEventPool = g_CCore->GetEventPool();
 	
 	pEventPool->AddEvent("OnServerInit");
+	//pEventPool->AddEvent("OnServerExit");
+	pEventPool->AddEvent("OnConsoleCommand");
 	
 	pEventPool->AddEvent("OnDoorChange");
 	
@@ -24,6 +26,8 @@ void	CEventRegistrar::Init(void)
 
 	pEventPool->AddEvent("OnPlayerConnect");
 	pEventPool->AddEvent("OnPlayerDisconnect");
+	pEventPool->AddEvent("OnPlayerStartedDownload");
+	pEventPool->AddEvent("OnPlayerFinishedDownload");
 	pEventPool->AddEvent("OnPlayerChangeWeapon");
 	pEventPool->AddEvent("OnPlayerDropWeapon");
 	pEventPool->AddEvent("OnPlayerAddWeapon");

@@ -248,6 +248,10 @@ void CGameSync::onPlayerUpdateOnFoot(RakNet::BitStream* bitInput, RakNet::TimeMS
 			}
 		}
 	}
+
+	//CScriptingArguments EventArgs;
+	//EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+	//g_CCore->GetEventPool()->Trigger("OnPlayerUpdate", EventArgs);
 }
 
 // TODO: use CGame structs to apply values instead of direct memory access
@@ -277,6 +281,10 @@ void CGameSync::onPlayerUpdateInCar(RakNet::BitStream* bitInput)
 			}
 		}
 	}
+
+	//CScriptingArguments EventArgs;
+	//EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+	//g_CCore->GetEventPool()->Trigger("OnPlayerVehicleUpdate", EventArgs);
 }
 
 

@@ -191,6 +191,10 @@ void	CNetworkManager::OnPlayerConnection(RakNet::Packet* packet)
 		peer->CloseConnection(packet->systemAddress, true);
 
 		g_CCore->GetLog()->AddNormalLog("Bad connection attempt. Version hash dismatch.");
+
+		CScriptingArguments EventArgs;
+		EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+		g_CCore->GetEventPool()->Trigger("OnPlayerConnectionRejected", EventArgs);
 		return;
 	}
 	// get network slot for him
@@ -202,6 +206,10 @@ void	CNetworkManager::OnPlayerConnection(RakNet::Packet* packet)
 	g_CCore->GetLog()->AddNormalLog("A connection is incoming. ID: %d", ID);
 	// he has the right version, so let's send him files needed for game / scripts
 	g_CCore->GetFileTransfer()->SendFiles(packet->systemAddress);
+	
+	CScriptingArguments EventArgs;
+	EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+	g_CCore->GetEventPool()->Trigger("OnPlayerStartedDownload", EventArgs);
 }
 
 void	CNetworkManager::OnPlayerFileTransferFinished(RakNet::SystemAddress)
@@ -217,6 +225,10 @@ void	CNetworkManager::OnPlayerFileTransferFinished(RakNet::SystemAddress)
 	bsOutR.Write(serInfo); // tu su data, struct
 	bsOutR.Write(g_CCore->GetDefaultMap());
 	peer->Send(&bsOutR, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+
+	CScriptingArguments EventArgs;
+	EventArgs.AddNumber(GetIDFromSystemAddress(packet->systemAddress));
+	g_CCore->GetEventPool()->Trigger("OnPlayerFinishedDownload", EventArgs);
 }
 
 
@@ -230,10 +242,11 @@ void	CNetworkManager::OnPlayerDisconnect(RakNet::Packet* packet)
 		CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
 		if (player != NULL)
 		{
-			g_CCore->GetScripts()->onPlayerDisconnect(ID);
+			//g_CCore->GetScripts()->onPlayerDisconnect(ID);
 
 			CScriptingArguments EventArgs;
 			EventArgs.AddNumber(ID);
+			EventArgs.AddNumber(packet->data[0]);
 			g_CCore->GetEventPool()->Trigger("OnPlayerDisconnect", EventArgs);
 
 			if (player->GetCurrentCar() != NO_CAR)

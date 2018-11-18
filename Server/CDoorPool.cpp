@@ -8,6 +8,7 @@ CDoorPool::CDoorPool()
 	start = 0;
 	end = 0;
 }
+
 void CDoorPool::Push(char* name, bool state,bool facing)
 {
 	// loop through the pool to find out if the same element exists
