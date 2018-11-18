@@ -103,6 +103,8 @@ typedef struct _PED {
 	float		health;				//	0644-0648
 } PED;
 
+class CPed;
+
 class CGame
 {
 private:
@@ -152,10 +154,6 @@ public:
 	static void	CarRepair(DWORD);
 	static void CarLock(DWORD, BYTE);
 	static void SetPlayerPosition(DWORD PED, Vector3D position);
-	static void GivePlayerToCarFast(DWORD, int, int);
-	static void GivePlayerToCar(DWORD, int, int);
-	static void KickPlayerFromCar(DWORD, int);
-	static void KickPlayerFromCarFast(DWORD);
 	static void CarJack(DWORD, DWORD, int);
 	static void ExplodeCar(DWORD);
 	static void LockCarDoor(DWORD, int, bool);
@@ -165,9 +163,10 @@ public:
 	static void PlayGameSound(char[]);
 	static void ToggleCityMusic(byte);
 	static DWORD CreatePED();
+	static void DeletePlayer(DWORD);
 	static void DeletePed(DWORD);
 	static void DeleteCar(DWORD);
-	static std::vector<_PED*> GetPedsInVehicle(_VEHICLE *pVehicle);
+	static std::vector<CPlayer*> GetPlayersInVehicle(_VEHICLE *pGameVehicle);
 	static void PlayAnim(DWORD, int);
 	static void PlayAnimString(DWORD, char*);
 	// Hooks

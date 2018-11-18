@@ -335,6 +335,11 @@ CEngineStack*		CCore::GetEngineStack()
 	return &m_cEngineStack;
 }
 
+CPlayerPool*			CCore::GetPlayerPool()
+{
+	return &m_cPlayerPool;
+}
+
 CPedPool*			CCore::GetPedPool()
 {
 	return &m_cPedPool;

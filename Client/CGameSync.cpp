@@ -44,7 +44,7 @@ void CGameSync::Engine_onPlayerGetHit(CPed* attacker)
 {
 	int playerID = 0;
 	for (playerID = 0; playerID < MAX_PLAYERS; playerID++)
-		if (g_CCore->GetPedPool()->Return(playerID) == attacker)
+		if (g_CCore->GetPlayerPool()->Return(playerID) == attacker)
 			break;
 
 	RakNet::BitStream bsOut;
@@ -58,7 +58,7 @@ void CGameSync::Engine_onPlayerDie(CPed* enemy, unsigned char hitbox)
 {
 	int playerID = 0;
 	for (playerID = 0; playerID < MAX_PLAYERS; playerID++)
-		if (g_CCore->GetPedPool()->Return(playerID) == enemy)
+		if (g_CCore->GetPlayerPool()->Return(playerID) == enemy)
 			break;
 
 	RakNet::BitStream bsOut;
@@ -223,7 +223,7 @@ void CGameSync::onPlayerUpdateOnFoot(RakNet::BitStream* bitInput, RakNet::TimeMS
 	// if packet have valid player ID
 	if (syncData.ID >= 0 && syncData.ID <= MAX_PLAYERS)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(syncData.ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(syncData.ID);
 		// if there is a ped with such an ID
 		if (ped)
 		{
@@ -258,7 +258,7 @@ void CGameSync::onPlayerUpdateInCar(RakNet::BitStream* bitInput)
 	//if player ID is of range <0,MAXPLAYERS>
 	if (syncData.ID >= 0 && syncData.ID <= MAX_PLAYERS)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(syncData.ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(syncData.ID);
 		// if there is a PED with such ID
 		if (ped)
 		{
@@ -292,14 +292,14 @@ void CGameSync::onPlayerConnect(RakNet::BitStream* bitInput)
 	bitInput->Read(color);
 
 	// creates new instance
-	g_CCore->GetPedPool()->New(PlayerID);
+	g_CCore->GetPlayerPool()->New(PlayerID);
 	g_CCore->GetLog()->AddLog("LHMP_CONNECTORCREATEPED");
-	CPed* ped = g_CCore->GetPedPool()->Return(PlayerID);
-	if (ped != 0)
+	CPlayer* player = g_CCore->GetPlayerPool()->Return(PlayerID);
+	if (player != 0)
 	{
-		ped->SetName(sz_nickname);
-		ped->SetSkinId(skinId);
-		ped->SetNickColor(color);
+		player->SetName(sz_nickname);
+		player->SetSkinId(skinId);
+		player->SetNickColor(color);
 	}
 	else {
 		// TODO: report error (couldn't create a new instace - WTF)
@@ -311,23 +311,23 @@ void CGameSync::onPlayerDisconnect(RakNet::BitStream* bitInput)
 {
 	int ID;
 	bitInput->Read(ID);
-	CPed* ped = g_CCore->GetPedPool()->Return(ID);
-	if (ped)
+	CPlayer* player = g_CCore->GetPlayerPool()->Return(ID);
+	if (player)
 	{
-		if (ped->InCar != -1)
+		if (player->InCar != -1)
 		{
-			CVehicle* veh = g_CCore->GetVehiclePool()->Return(ped->InCar);
+			CVehicle* veh = g_CCore->GetVehiclePool()->Return(player->InCar);
 			if (veh)
 			{
 				// TODO: create func onPlayerDisconnect at Vehicle
 				veh->SetSpeed(Vector3D(0.0f));
 			}
 		}
-		if (ped->GetEntity() != NULL)
+		if (player->GetEntity() != NULL)
 		{
-			g_CCore->GetEngineStack()->AddMessage(ES_DELETEPLAYER, ped->GetEntity());
+			g_CCore->GetEngineStack()->AddMessage(ES_DELETEPLAYER, player->GetEntity());
 		}
-		g_CCore->GetPedPool()->Delete(ID);
+		g_CCore->GetPlayerPool()->Delete(ID);
 	}
 }
 
@@ -344,7 +344,7 @@ void CGameSync::onPlayerChangeSkin(RakNet::BitStream* bitInput)
 	}
 	else
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 		if (ped != 0)
 		{
 			ped->SetSkinId(skinID);
@@ -369,7 +369,7 @@ void CGameSync::onPlayerRespawn(RakNet::BitStream* bitInput)
 {
 	int ID;
 	bitInput->Read(ID);
-	CPed* ped = g_CCore->GetPedPool()->Return(ID);
+	CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 	if (ped)
 	{
 		// TODO: incar
@@ -418,10 +418,10 @@ void CGameSync::onPlayerPingArrives(RakNet::BitStream* bitInput)
 	}
 	else
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
-		if (ped)
+		CPlayer *pPlayer = g_CCore->GetPlayerPool()->Return(ID);
+		if (pPlayer)
 		{
-			ped->SetPing(ping);
+			pPlayer->SetPing(ping);
 		}
 	}
 }
@@ -437,7 +437,7 @@ void CGameSync::onPlayerAddWeapon(RakNet::BitStream* bitInput)
 	ENGINE_STACK::PLAYER_ADDWEAPON* pw = new ENGINE_STACK::PLAYER_ADDWEAPON(ID, wepID, wepLoaded, wepHidden);
 	if (g_CCore->GetLocalPlayer()->GetOurID() != pw->ID)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 		if (ped != NULL)
 		{
 			ped->AddWeapon(pw->wepID, pw->wepLoaded, pw->wepHidden);
@@ -463,7 +463,7 @@ void CGameSync::onPlayerDeleteWeapon(RakNet::BitStream* bitInput)
 	ENGINE_STACK::PLAYER_DELETEWEAPON* pw = new ENGINE_STACK::PLAYER_DELETEWEAPON(ID, wepID);
 	if (g_CCore->GetLocalPlayer()->GetOurID() != pw->ID)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 		if (ped != NULL)
 			ped->DeleteWeapon(pw->wepID);
 	}
@@ -480,7 +480,7 @@ void CGameSync::onPlayerChangeWeapon(RakNet::BitStream* bitInput)
 	ENGINE_STACK::PLAYER_SWITCHWEAPON* pw = new ENGINE_STACK::PLAYER_SWITCHWEAPON(ID, wepID);
 	if (g_CCore->GetLocalPlayer()->GetOurID() != pw->ID)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 		if (ped != NULL)
 			ped->SwitchWeapon(pw->wepID);
 	}
@@ -502,7 +502,7 @@ void CGameSync::onPlayerShoot(RakNet::BitStream* bitInput)
 	sprintf(buff, "[NM] Shot %i %f %f %f %d", pw->ID, pw->pos.x, pw->pos.y, pw->pos.z, currentID);
 	if (g_CCore->GetLocalPlayer()->GetOurID() != pw->ID)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(pw->ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(pw->ID);
 		if (ped != NULL)
 		{
 			ped->SetCurrentWeapon(currentID);
@@ -575,7 +575,7 @@ void CGameSync::onPlayerIsPutToCar(RakNet::BitStream* bitInput)
 		}
 		else
 		{
-			CPed* ped = g_CCore->GetPedPool()->Return(ID);
+			CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 			if (ped)
 			{
 				ped->InCar = carID;
@@ -610,7 +610,7 @@ void CGameSync::onPlayerIsKickedFromCar(RakNet::BitStream* bitInput)
 		}
 		else
 		{
-			CPed* ped = g_CCore->GetPedPool()->Return(ID);
+			CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 			if (ped)
 			{
 				//TODO InCar
@@ -675,7 +675,7 @@ void CGameSync::onPlayerPositionChange(RakNet::BitStream* bitInput)
 	}
 	else
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 		if (ped != NULL)
 		{
 			ped->SetPosition(pos);
@@ -701,7 +701,7 @@ void CGameSync::onPlayerHealthChange(RakNet::BitStream* bitInput)
 	}
 	else
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 		if (ped != NULL)
 		{
 			ped->SetHealth(Health);
@@ -726,7 +726,7 @@ void CGameSync::onPlayerRotationChange(RakNet::BitStream* bitInput)
 	}
 	else
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(ID);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(ID);
 		ped->SetRotation(rot);
 	}
 }
@@ -999,7 +999,7 @@ void CGameSync::onVehicleIsEntered(RakNet::BitStream* bitInput)
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehId);
 	if (veh != NULL)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(Id);
+		CPlayer* ped = g_CCore->GetPlayerPool()->Return(Id);
 		if (ped != NULL)
 		{
 			ped->InCar = vehId;
@@ -1021,7 +1021,7 @@ void CGameSync::onVehicleIsExited(RakNet::BitStream* bitInput)
 	sprintf(buff, "EXIT VEHICLE %d %d", Id, vehId);
 	g_CCore->GetLog()->AddLog(buff);
 	CVehicle* veh = g_CCore->GetVehiclePool()->Return(vehId);
-	CPed* ped = g_CCore->GetPedPool()->Return(Id);
+	CPlayer* ped = g_CCore->GetPlayerPool()->Return(Id);
 	if (veh && ped)
 	{
 		ped->InCar = -1;
@@ -1082,7 +1082,7 @@ void CGameSync::onVehicleIsJacked(RakNet::BitStream* bitInput)
 		veh->PlayerExit(jackedID);
 		if (jackedID != g_CCore->GetLocalPlayer()->GetOurID())
 		{
-			CPed* pedJacked = g_CCore->GetPedPool()->Return(jackedID);
+			CPed* pedJacked = g_CCore->GetPlayerPool()->Return(jackedID);
 			if (pedJacked != NULL)
 			{
 				pedJacked->InCar = -1;

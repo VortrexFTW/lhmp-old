@@ -12,7 +12,7 @@ void CNametags::Tick()
 	// for every player
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		// if ped exists
 		if (ped != NULL)
 		{
@@ -127,7 +127,7 @@ void CNametags::Tick()
 
 void CNametags::RenderToTexture(int playerID)
 {
-	CPed* ped = g_CCore->GetPedPool()->Return(playerID);
+	CPlayer* ped = g_CCore->GetPlayerPool()->Return(playerID);
 	if (ped)
 	{
 		// at first, get size 
@@ -200,7 +200,7 @@ void CNametags::OnLostDevice()
 {
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		// if ped exists
 		if (ped != NULL)
 		{

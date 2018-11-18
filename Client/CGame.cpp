@@ -45,7 +45,7 @@ void CGame::UpdatePeds()
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
 		//int* myarray = new int[1000];
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		if (ped != NULL)
 		{
 			ped->Interpolate();
@@ -98,7 +98,7 @@ void CGame::LHMP_DeleteAllPeds()
 {
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		if (ped != NULL)
 		{
 			if (ped->GetEntity() != NULL)
@@ -825,7 +825,7 @@ void CGame::AfterRespawn()
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (i == g_CCore->GetLocalPlayer()->GetOurID()) continue;
-		CPed* ped = g_CCore->GetPedPool()->Return(i);
+		CPed* ped = g_CCore->GetPlayerPool()->Return(i);
 		if (ped != NULL)
 		{
 			char buff[250];
@@ -925,12 +925,12 @@ void CGame::CreateCarAndRestoreStatus(int e, CVehicle *veh)
 	{
 		if (veh->GetSeat(i) != -1)
 		{
-			CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(i));
+			CPlayer* ped = g_CCore->GetPlayerPool()->Return(veh->GetSeat(i));
 			if (ped != NULL)
 			{
 				if (ped->GetEntity() != NULL)
 				{
-					GivePlayerToCarFast(ped->GetEntity(), e, i);
+					ped->EnterVehicleFast(veh, i);
 				}
 				else
 				{
@@ -1114,7 +1114,7 @@ if (veh != NULL)
 {
 if (veh->GetSeat(seatId) != -1)
 {
-CPed* ped = g_CCore->GetPedPool()->Return(veh->GetSeat(seatId));
+CPed* ped = g_CCore->GetPlayerPool()->Return(veh->GetSeat(seatId));
 ped->InCar = -1;
 veh->PlayerExit(veh->GetSeat(seatId));
 ped->SetIsOnFoot(true);
@@ -1150,7 +1150,7 @@ void CGame::OnDeath()
 		mov eax, DWORD PTR SS : [ESP + 0x254]
 		mov killerBase, eax
 	}
-	killerId = g_CCore->GetPedPool()->GetPedIdByBase(killerBase);
+	killerId = g_CCore->GetPlayerPool()->GetPlayerIdByBase(killerBase);
 	if (killerId != -1)
 	{
 		char buff[255];
@@ -1693,6 +1693,11 @@ void CGame::SetFramePos(DWORD frame, float f1, float f2, float f3)
 	}
 }
 
+void CGame::DeletePlayer(DWORD player)
+{
+	DeletePed(player);
+}
+
 void CGame::DeletePed(DWORD PED)
 {
 	if (PED == NULL)
@@ -1797,11 +1802,10 @@ void CGame::DeletePed(DWORD PED)
 }
 void CGame::DeleteCar(DWORD uiVehicle)
 {
-	_VEHICLE *pVehicle = (_VEHICLE*)uiVehicle;
-
-	std::vector<_PED*> vecPedsInVehicle = GetPedsInVehicle(pVehicle);
-	for(_PED *pPed : vecPedsInVehicle)
-		KickPlayerFromCarFast((DWORD)pPed);
+	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(g_CCore->GetVehiclePool()->GetVehicleIdByBase(uiVehicle));
+	std::vector<CPlayer*> vecPedsInVehicle = pVehicle->GetPlayerOccupants();
+	for (CPlayer *pPed : vecPedsInVehicle)
+		pPed->RemoveFromVehicleFast();
 
 	// Testing part
 	/*_asm {
@@ -1830,25 +1834,6 @@ void CGame::DeleteCar(DWORD uiVehicle)
 		MOV EAX, 0x005E3400
 		CALL EAX; Game.005E3400
 	}
-}
-
-std::vector<_PED*> CGame::GetPedsInVehicle(_VEHICLE *pVehicle)
-{
-	int uiVehicle = (int)pVehicle;
-	std::vector<_PED*> vecPedsInVehicle;
-	for (int i = 0; i < MAX_PLAYERS; i++)
-	{
-		CPed *ped = g_CCore->GetPedPool()->Return(i);
-		if (ped != NULL)
-		{
-			_PED *pPed = (_PED*)(ped->GetEntity());
-			if (pPed->playersCar == pVehicle || pPed->carLeavingOrEntering == pVehicle)
-			{
-				vecPedsInVehicle.push_back(pPed);
-			}
-		}
-	}
-	return vecPedsInVehicle;
 }
 
 DWORD CGame::FindFrame(char* frame)
@@ -2581,65 +2566,7 @@ add ESP, 0x1000
 }
 }
 */
-void CGame::GivePlayerToCarFast(DWORD ped, int vehId, int seatId)
-{
-	char buff[255];
-	sprintf(buff, "GivePlayerToCarFast %x %d %d", ped, vehId, seatId);
-	g_CCore->GetLog()->AddLog(buff);
-	if (ped == NULL)
-		return;
-	CVehicle* carObject = g_CCore->GetVehiclePool()->Return(vehId);
-	if (carObject != NULL)
-	{
-		DWORD car = carObject->GetEntity();
-		if (car != NULL && seatId != -1)
-		{
-			_asm
-			{
-				MOV EAX, seatId
-				PUSH EAX; / Arg2 = 00000000
-				MOV EAX, car
-				PUSH EAX; | Arg1
-				MOV ESI, ped
-				MOV ECX, ESI; |
-				MOV EAX, 0x0049E580
-				CALL EAX;  Game.0049E580; \Game.0049E580
-			}
-		}
-	}
-}
 
-void CGame::GivePlayerToCar(DWORD ped, int vehId, int seatId)
-{
-	char buff[255];
-	sprintf(buff, "%x %d %d", ped, vehId, seatId);
-	g_CCore->GetLog()->AddLog(buff);
-	
-	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
-	if (!pVehicle)
-		return;
-	DWORD car = pVehicle->GetEntity();
-	if (!car)
-		return;
-	
-	/*	if (car == NULL)
-	g_CCore->GetLog()->AddLog("GivePTC - car doesnt exist");
-	return;*/
-	_asm
-	{
-		MOV ESI, car
-		//MOV EBP, obj
-		MOV EAX, seatId
-		PUSH 0; / Arg4 = 00000000
-		PUSH EAX; | Arg3
-		PUSH 1; | Arg2 = 00000001
-		PUSH ESI; | Arg1 = 0E830248	// auto
-									//MOV ECX, EBP; |	// ped
-									MOV ECX, ped
-									MOV EAX, 0x004A26D0
-									CALL EAX;  Game.004A26D0; \Game.004A26D0
-	}
-}
 
 void CGame::CarRepair(DWORD vehicle)
 {
@@ -2731,61 +2658,6 @@ void CGame::SetPlayerPosition(DWORD ped, Vector3D position)
 			PUSH EAX;  Frame
 			PUSH EDI;  that strange object(class or what)
 			CALL DWORD PTR DS : [EBX + 0xBC] // ebx class or what
-	}
-}
-
-
-void CGame::KickPlayerFromCar(DWORD ped, int vehId)
-{
-	char buff[255];
-	sprintf(buff, "%x %d", ped, vehId);
-	g_CCore->GetLog()->AddLog(buff);
-	CVehicle *pVehicle = g_CCore->GetVehiclePool()->Return(vehId);
-	if (!pVehicle)
-		return;
-	DWORD car = pVehicle->GetEntity();
-	if (!car)
-		return;
-	//if (car == NULL)
-	//	g_CCore->GetLog()->AddLog("KickPFC - car doesnt exist");
-	//return;
-	_asm
-	{
-		mov edi, ped
-		mov ecx, car
-		mov EBX, 0x0
-		PUSH EBX; / Arg4 = 00000000
-		PUSH EBX; | Arg3
-		PUSH 2; | Arg2 = 00000002
-		PUSH ECX; | Arg1	auto
-		MOV ECX, EDI; |
-		MOV EAX, 0x004A26D0
-		CALL EAX;  Game.004A26D0; \Game.004A26D0
-	}
-}
-
-void CGame::KickPlayerFromCarFast(DWORD ped)
-{
-	char buff[255];
-	sprintf(buff, "%x", ped);
-	DWORD car = NULL;
-	_asm {
-		mov ECX, ped
-		mov eax, DWORD PTR DS : [ECX + 0x98]
-		mov car, eax
-	}
-	if (car != NULL)
-	{
-		_asm
-		{
-			MOV ECX, ped
-			MOV EAX, 0x004A1770
-			CALL EAX
-		}
-	}
-	else
-	{
-		g_CCore->GetLog()->AddLog("[Err] Player is not in car");
 	}
 }
 

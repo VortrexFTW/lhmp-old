@@ -33,7 +33,6 @@ public:
 	void		SetEntity(DWORD);
 
 	void		SetPosition(Vector3D vect);
-	void		SetName(char[]);
 	void		SetHealth(float);
 	virtual void		SetRotation(Vector3D);
 	virtual Vector3D	GetRotation();
@@ -42,7 +41,6 @@ public:
 	void		SetActive(bool);
 
 	bool		IsActive();
-	char*		GetName();
 	float		GetHealth();
 	byte		GetState();
 	virtual	Vector3D	GetPosition();

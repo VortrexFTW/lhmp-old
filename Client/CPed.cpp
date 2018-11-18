@@ -10,7 +10,6 @@ CPed::CPed()
 	this->SetActive(true);
 	isActive = true;
 	this->SetIsOnFoot(true);
-	sprintf(sName, "Player");
 	playerPos.x = -1985.97f;
 	playerPos.y = -5.03f;
 	playerPos.z = 4.28f;
@@ -24,7 +23,6 @@ CPed::CPed()
 
 	fHealth = 200.0f;
 	animId = -1; // this mean that we dont use custom anim at the moment
-	ping = -1;
 	skinId = 0;
 
 	//timeDiff = timeGetTime();
@@ -71,10 +69,6 @@ bool CPed::IsOnFoot()
 	return this->isOnFoot;
 }
 
-void CPed::SetPing(int p)
-{
-	ping = p;
-}
 /*
 void CPed::SetEntity(DWORD address)
 {
@@ -92,11 +86,6 @@ void CPed::SetHealth(float ht)
 	this->fHealth = ht;
 }
 
-void CPed::SetName(char* nm)
-{
-	sprintf(this->sName, "%s", nm);
-}
-
 /*
 void CPed::SetRotation(float f1,float f2,float f3)
 {
@@ -110,11 +99,6 @@ void CPed::SetState(byte st)
 	state = st;
 }
 */
-
-char* CPed::GetName()
-{
-	return this->sName;
-}
 
 float CPed::GetHealth()
 {
@@ -149,11 +133,6 @@ void CPed::SetSkinId(int id)
 int CPed::GetSkin()
 {
 	return this->skinId;
-}
-
-int CPed::GetPing()
-{
-	return ping;
 }
 
 void CPed::UpdateGameObject()
@@ -471,21 +450,6 @@ Vector3D	CPed::GetPEDFramePosition()
 	return Vector3D();
 }
 
-
-void		CPed::SetNickColor(unsigned int color)
-{
-	this->nickColor = color;
-	if (this->nametag != NULL)
-	{
-		this->nametag->Release();
-		this->nametag = NULL;
-	}
-}
-unsigned int CPed::GetNickColor()
-{
-	return this->nickColor;
-}
-
 void CPed::OnThrowGranade()
 {
 	for (int i = 0; i < 8; i++)
@@ -535,4 +499,9 @@ void CPed::gCheckWeapons()
 		}
 		//}
 	}
+}
+
+CVehicle* CPed::GetVehicle(void)
+{
+	return g_CCore->GetVehiclePool()->Return(InCar);
 }

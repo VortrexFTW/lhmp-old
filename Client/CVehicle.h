@@ -2,8 +2,13 @@
 
 #ifndef __VEHICLE_H
 #define	__VEHICLE_H
+
+#include <vector>
 #include "CEntity.h"
 #include "lhmp_structures.h"
+
+class CPlayer;
+
 class CVehicle : public CEntity
 {
 private:
@@ -115,5 +120,7 @@ public:
 	void		SetExplodedCar(DWORD);
 
 	bool		m_bStreamedIn = false;
+
+	std::vector<CPlayer*>		GetPlayerOccupants(void);
 };
 #endif

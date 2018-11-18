@@ -603,3 +603,23 @@ void		CVehicle::SetExplodedCar(DWORD base)
 {
 	this->explodedCar = base;
 }
+
+std::vector<CPlayer*>		CVehicle::GetPlayerOccupants(void)
+{
+	_VEHICLE *pGameVehicle = (_VEHICLE*)GetEntity();
+	int uiVehicle = (int)pGameVehicle;
+	std::vector<CPlayer*> vecPlayersInVehicle;
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		CPlayer *pPlayer = g_CCore->GetPlayerPool()->Return(i);
+		if (pPlayer != NULL)
+		{
+			_PED *pGamePlayer = (_PED*)pPlayer->GetEntity();
+			if (pGamePlayer->playersCar == pGameVehicle || pGamePlayer->carLeavingOrEntering == pGameVehicle)
+			{
+				vecPlayersInVehicle.push_back(pPlayer);
+			}
+		}
+	}
+	return vecPlayersInVehicle;
+}
