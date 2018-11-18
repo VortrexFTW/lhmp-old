@@ -23,7 +23,7 @@ void	CEventRegistrar::Init(void)
 	pEventPool->AddEvent("OnOccupiedVehicleUpdate");
 
 	pEventPool->AddEvent("OnPlayerConnect");
-	pEventPool->AddEvent("OnPlayerDiscOnnect");
+	pEventPool->AddEvent("OnPlayerDisconnect");
 	pEventPool->AddEvent("OnPlayerChangeWeapon");
 	pEventPool->AddEvent("OnPlayerDropWeapon");
 	pEventPool->AddEvent("OnPlayerAddWeapon");
