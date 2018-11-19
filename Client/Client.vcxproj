@@ -121,6 +121,7 @@
     <ClCompile Include="CCrashHandler.cpp" />
     <ClCompile Include="CEngineStack.cpp" />
     <ClCompile Include="CEntity.cpp" />
+    <ClCompile Include="CEventRegistrar.cpp" />
     <ClCompile Include="CFileTransfer.cpp" />
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CNetwork.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sdks\cd3dfont\d3dfont.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="CDirectInput8Proxy.h" />
     <ClInclude Include="CEngineStack.h" />
     <ClInclude Include="CEntity.h" />
+    <ClInclude Include="CEventRegistrar.h" />
     <ClInclude Include="CFileSystem.h" />
     <ClInclude Include="CFileTransfer.h" />
     <ClInclude Include="CFont.h" />
