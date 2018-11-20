@@ -74,7 +74,7 @@ void CCore::Run()
 	// processes WM_ACTIVATE message
 	PatchBytes(0x1006A1F7, preventALTTABfocusloosing);
 	// Fix player leaving from car when engine's on
-	//PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
+	PatchBytes(0x004CC9F0, fixLeavingCarWhenEngineIsOn);
 
 	// TODO - probably unneeded since we are using DirectInput to block input
 	//PatchBytes(0x004CBC1B, disableImmortalModeWhenLockedControls);
@@ -89,7 +89,7 @@ void CCore::Run()
 	PatchBytes(0x004C99C8, disableInventoryInVehicle);
 
 	/*----------------- Prevent ESC menu trigger  ----------------------------*/
-	//PatchBytes(0x005F9709, disableESCmenu);
+	PatchBytes(0x005F9709, disableESCmenu);
 
 	/*----------------- Disable TAB ingame map -------------------------------*/
 	PatchBytes(0x0055131E, preventIngameMap);
@@ -104,8 +104,8 @@ void CCore::Run()
 	//--------------------------- Pausegame disable
 	//******************************
 	// Test if it changes something, looks useless
-	Tools::Nop(0x1005D1D0, 6);
-	Tools::Nop(0x1005D1DD, 7);
+	//Tools::Nop(0x1005D1D0, 6);
+	//Tools::Nop(0x1005D1DD, 7);
 	//******************************
 
 	//--------------------------- Skip intro
@@ -385,18 +385,15 @@ CFileSystem*	CCore::GetFileSystem()
 	return &this->m_cFileSystem;
 }
 
-
 CNametags*		CCore::GetNametags()
 {
 	return &this->m_cNametags;
 }
 
-
 CSquirrel*	CCore::GetSquirrel()
 {
 	return &this->m_cSquirrel;
 }
-
 
 CSQImages*	CCore::GetSquirrelImages()
 {
@@ -406,4 +403,14 @@ CSQImages*	CCore::GetSquirrelImages()
 CSQFonts*	CCore::GetSquirrelFonts()
 {
 	return &this->m_cSquirrelFonts;
+}
+
+CEventPool*			CCore::GetEventPool()
+{
+	return &this->m_cEventPool;
+}
+
+CEventRegistrar*	CCore::GetEventRegistrar()
+{
+	return &this->m_cEventRegistrar;
 }

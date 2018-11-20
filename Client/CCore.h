@@ -28,6 +28,8 @@
 #include "CSquirrel.h"
 #include "CSQImages.h"
 #include "CSQFonts.h"
+#include "Events/CEventPool.h"
+#include "CEventRegistrar.h"
 #include <time.h>
 
 #include "lhmp_tools.h"
@@ -61,6 +63,8 @@ private:
 	CSquirrel				m_cSquirrel;
 	CSQImages				m_cSquirrelImages;
 	CSQFonts				m_cSquirrelFonts;
+	CEventPool				m_cEventPool;
+	CEventRegistrar			m_cEventRegistrar;
 
 
 
@@ -98,6 +102,8 @@ public:
 	CSquirrel*				GetSquirrel();
 	CSQImages*				GetSquirrelImages();
 	CSQFonts*				GetSquirrelFonts();
+	CEventPool*				GetEventPool();
+	CEventRegistrar*		GetEventRegistrar();
 
 	bool					m_bIsGameLoaded;
 	bool					m_bIsRespawning;         

@@ -344,7 +344,7 @@ bool CSquirrel::isChatHidden()
 void CSquirrel::onRender()
 {
 	CScriptingArguments EventArgs;
-	//EventArgs.AddNumber(key);
+	EventArgs.AddNull();
 	g_CCore->GetEventPool()->Trigger("OnRender", EventArgs);
 
 	//g_CCore->GetChat()->AddMessage("renderSTART");
@@ -453,6 +453,7 @@ void CSquirrel::onKeyDown(unsigned int key)
 void CSquirrel::onSpawn()
 {
 	CScriptingArguments EventArgs;
+	EventArgs.AddNull();
 	g_CCore->GetEventPool()->Trigger("OnSpawn", EventArgs);
 
 	for (int i = 0; i < 100; i++) {
