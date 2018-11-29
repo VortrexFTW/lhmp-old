@@ -167,7 +167,7 @@ void CConsole::ProcessConsoleCommand(const char* command, const char* varlist) {
 	{
 		CScriptingArguments EventArgs;
 		EventArgs.AddString(command);
-		EventArgs.AddString(params);
+		EventArgs.AddString(varlist);
 		g_CCore->GetEventPool()->Trigger("OnConsoleCommand", EventArgs);
 		//g_CCore->GetScripts()->onConsoleCommand(command, varlist);
 	}
