@@ -2,7 +2,7 @@
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Performing Custom Build Tools
   Building and assembling rdrand.asm
-   Assembling: D:\abram\dev\git\lhmp-old\sdks\CryptoPP\rdrand.asm
+   Assembling: D:\abram\dev\git\vGIT\lhmp-old\sdks\CryptoPP\rdrand.asm
   pch.cpp
   cryptlib.cpp
   cpu.cpp
@@ -13,10 +13,10 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCT
   algparam.cpp
   arc4.cpp
   aria.cpp
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\aria.cpp(151): warning C4456: declaration of 'block' hides previous local declaration
-  d:\abram\dev\git\lhmp-old\sdks\cryptopp\aria.cpp(141): note: see declaration of 'block'
-d:\abram\dev\git\lhmp-old\sdks\cryptopp\aria.cpp(156): warning C4456: declaration of 'block' hides previous local declaration
-  d:\abram\dev\git\lhmp-old\sdks\cryptopp\aria.cpp(141): note: see declaration of 'block'
+d:\abram\dev\git\vgit\lhmp-old\sdks\cryptopp\aria.cpp(151): warning C4456: declaration of 'block' hides previous local declaration
+  d:\abram\dev\git\vgit\lhmp-old\sdks\cryptopp\aria.cpp(141): note: see declaration of 'block'
+d:\abram\dev\git\vgit\lhmp-old\sdks\cryptopp\aria.cpp(156): warning C4456: declaration of 'block' hides previous local declaration
+  d:\abram\dev\git\vgit\lhmp-old\sdks\cryptopp\aria.cpp(141): note: see declaration of 'block'
   aria-simd.cpp
   ariatab.cpp
   asn.cpp
@@ -173,4 +173,4 @@ d:\abram\dev\git\lhmp-old\sdks\cryptopp\aria.cpp(156): warning C4456: declaratio
 mqv.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 elgamal.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 dh.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  cryptlib.vcxproj -> D:\abram\dev\git\lhmp-old\sdks\CryptoPP\.\cryptlib.lib
+  cryptlib.vcxproj -> D:\abram\dev\git\vGIT\lhmp-old\sdks\cryptopp\cryptlib.lib

@@ -426,26 +426,24 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			Tools::GenerateColor(color, player->GetNicknameColour());
 			sprintf(output, "#%s%s#ffffff: %s", color, player->GetNickname(), buff);
 
+			BitStream bsOut;
+			bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
+			bsOut.Write((MessageID)LHMP_PLAYER_CHAT_MESSAGE);
+			bsOut.Write((unsigned short)strlen(output));
+			bsOut.Write(output);
+			g_CCore->GetLog()->AddNormalLog("[Chat][%s] %s \n", player->GetNickname(), buff);
+
+			for (int i = 0; i < m_pServerMaxPlayers; i++)
+			{
+				if (slot[i].isUsed == true)
+					peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_CHAT, slot[i].sa, false);
+			}
+
             CScriptingArguments EventArgs;
             EventArgs.AddNumber(ID);
             EventArgs.AddString(buff);
-			if (g_CCore->GetEventPool()->Trigger("OnPlayerChat", EventArgs) == true)
-			{
-				BitStream bsOut;
-				bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
-				bsOut.Write((MessageID)LHMP_PLAYER_CHAT_MESSAGE);
-				bsOut.Write((unsigned short)strlen(output));
-				bsOut.Write(output);
-				g_CCore->GetLog()->AddNormalLog("[Chat][%s] %s \n", player->GetNickname(), buff);
+            g_CCore->GetEventPool()->Trigger("OnPlayerChat", EventArgs);
 
-				for (int i = 0; i < m_pServerMaxPlayers; i++)
-				{
-					if (slot[i].isUsed == true)
-						peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_CHAT, slot[i].sa, false);
-				}
-
-
-			//}
 			delete[] buff;
 			delete[] output;
 		}

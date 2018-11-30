@@ -44,4 +44,12 @@ Win32/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.ilk
 Debug/client.ilk
+Debug/client.pdb
+sdks/CryptoPP/cryptlib.Build.CppClean.log
+sdks/CryptoPP/cryptlib.lib
+sdks/CryptoPP/cryptlib.log
+sdks/CryptoPP/cryptlib.pch
+sdks/ezsquirrel/build/sqstdlib.lib
+sdks/ezsquirrel/build/squirrel.lib
