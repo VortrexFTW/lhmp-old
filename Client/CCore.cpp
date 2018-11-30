@@ -84,12 +84,12 @@ void CCore::Run()
 	// TODO: seems to be useless as we have disabled ESC menu and any way to 
 	//PatchBytes(0x005FA171, nopEndGame);
 
-	/*------------------ DISAVLE INVENTORY ---------------*/
+	/*------------------ DISABLE INVENTORY ---------------*/
 	PatchBytes(0x004C7B04, disableInventoryOnFoot);
 	PatchBytes(0x004C99C8, disableInventoryInVehicle);
 
 	/*----------------- Prevent ESC menu trigger  ----------------------------*/
-	PatchBytes(0x005F9709, disableESCmenu);
+	//PatchBytes(0x005F9709, disableESCmenu);
 
 	/*----------------- Disable TAB ingame map -------------------------------*/
 	PatchBytes(0x0055131E, preventIngameMap);
@@ -104,8 +104,8 @@ void CCore::Run()
 	//--------------------------- Pausegame disable
 	//******************************
 	// Test if it changes something, looks useless
-	//Tools::Nop(0x1005D1D0, 6);
-	//Tools::Nop(0x1005D1DD, 7);
+	Tools::Nop(0x1005D1D0, 6);
+	Tools::Nop(0x1005D1DD, 7);
 	//******************************
 
 	//--------------------------- Skip intro
@@ -168,10 +168,10 @@ void CCore::Run()
 
 
 	//-------------------------	Disable damage from collision
-	//Tools::Nop(0x00518328, 23);
-	//Tools::Nop(0x00534C51, 28);
-	//Tools::Nop(0x00536723, 23);
-	//Tools::Nop(0x00536BA1, 23);
+	Tools::Nop(0x00518328, 23);
+	Tools::Nop(0x00534C51, 28);
+	Tools::Nop(0x00536723, 23);
+	Tools::Nop(0x00536BA1, 23);
 	//-------------------------
 
 	// Fix in-car remote player weapon rotation (drive-by shooting)

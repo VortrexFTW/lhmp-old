@@ -359,8 +359,8 @@ void CNetworkManager::Pulse()
 			EventArgs.AddNumber(ID);
 			g_CCore->GetEventPool()->Trigger("OnPlayerConnect", EventArgs);
 
-			g_CCore->GetScripts()->onPlayerConnect(ID);
-			g_CCore->GetScripts()->onPlayerSpawn(ID);
+			//g_CCore->GetScripts()->onPlayerConnect(ID);
+			//g_CCore->GetScripts()->onPlayerSpawn(ID);
 
 			// send all objects etc to client
 			SendHimOthers(ID);
@@ -425,7 +425,11 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			char color[10];
 			Tools::GenerateColor(color, player->GetNicknameColour());
 			sprintf(output, "#%s%s#ffffff: %s", color, player->GetNickname(), buff);
-			if (g_CCore->GetScripts()->onPlayerText(ID, buff) == true)
+
+            CScriptingArguments EventArgs;
+            EventArgs.AddNumber(ID);
+            EventArgs.AddString(buff);
+			if (g_CCore->GetEventPool()->Trigger("OnPlayerChat", EventArgs) == true)
 			{
 				BitStream bsOut;
 				bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
@@ -440,11 +444,8 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 						peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, LHMP_NETCHAN_CHAT, slot[i].sa, false);
 				}
 
-				CScriptingArguments EventArgs;
-				EventArgs.AddNumber(ID);
-				EventArgs.AddString(buff);
-				g_CCore->GetEventPool()->Trigger("OnPlayerChat", EventArgs);
-			}
+
+			//}
 			delete[] buff;
 			delete[] output;
 		}
@@ -460,7 +461,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 		char params[255];
 		bsIn.Read(buff);
 		bsIn.Read(params);
-		g_CCore->GetScripts()->onPlayerCommand(ID, buff, params);
+		//g_CCore->GetScripts()->onPlayerCommand(ID, buff, params);
 
 		CScriptingArguments EventArgs;
 		EventArgs.AddNumber(ID);
@@ -521,7 +522,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 			CScriptingArguments EventArgs;
 			EventArgs.AddNumber(ID);
 			EventArgs.AddNumber(skin);
-			g_CCore->GetEventPool()->Trigger("OnPlayerSkinChange", EventArgs);
+			g_CCore->GetEventPool()->Trigger("OnPlayerChangeSkin", EventArgs);
 		}
 	}
 	break;
@@ -669,7 +670,7 @@ void CNetworkManager::LHMPPacket(Packet* packet, RakNet::TimeMS timestamp)
 
 		if (killerID == -1)
 			killerID = ID;
-		g_CCore->GetScripts()->onPlayerIsKilled(ID, killerID, reason, part);
+		//g_CCore->GetScripts()->onPlayerIsKilled(ID, killerID, reason, part);
 		BitStream bsOut;
 		bsOut.Write((MessageID)ID_GAME_LHMP_PACKET);
 		bsOut.Write((MessageID)LHMP_PLAYER_DEATH);

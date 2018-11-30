@@ -25,13 +25,13 @@ void	CEventRegistrar::Init(void)
 	pEventPool->AddEvent("OnOccupiedVehicleUpdate");
 
 	pEventPool->AddEvent("OnPlayerConnect");
+    pEventPool->AddEvent("OnPlayerStartedDownload");
+    pEventPool->AddEvent("OnPlayerFinishedDownload");
+    pEventPool->AddEvent("OnPlayerRespawn");
 	pEventPool->AddEvent("OnPlayerDisconnect");
-	pEventPool->AddEvent("OnPlayerStartedDownload");
-	pEventPool->AddEvent("OnPlayerFinishedDownload");
 	pEventPool->AddEvent("OnPlayerChangeWeapon");
 	pEventPool->AddEvent("OnPlayerDropWeapon");
 	pEventPool->AddEvent("OnPlayerAddWeapon");
-	pEventPool->AddEvent("OnPlayerRespawn");
 	pEventPool->AddEvent("OnPlayerHit");
 	pEventPool->AddEvent("OnPlayerDeath");
 	pEventPool->AddEvent("OnPlayerThrowGrenade");
@@ -44,5 +44,5 @@ void	CEventRegistrar::Init(void)
 	pEventPool->AddEvent("OnPlayerKeyPress");
 	pEventPool->AddEvent("OnPlayerCommand");
 	pEventPool->AddEvent("OnPlayerChat");
-	pEventPool->AddEvent("OnPlayerSkinChange");
+	pEventPool->AddEvent("OnPlayerChangeSkin");
 }
