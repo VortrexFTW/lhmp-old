@@ -19,7 +19,8 @@ void CPlayerPool::New(int index)
 	{
 		CPlayer* pointer = new CPlayer;
 		playerpool[index] = pointer;
-		g_CCore->GetEngineStack()->AddMessage(ES_CREATEPLAYER,index);
+		g_CCore->GetEngineStack()->AddMessage(ES_CREATEPLAYER, index);
+		g_CCore->GetLog()->AddLog("Create player from CPlayerPool::New");
 	} else
 	{
 		CPed *ped = playerpool[index];

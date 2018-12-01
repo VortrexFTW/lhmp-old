@@ -211,24 +211,25 @@ void CGame::Tick()
 				_VEHICLE *veh2 = (_VEHICLE*)veh->GetEntity();
 				if (veh2)
 				{
+					// the vehicle is created locally, check if it has streamed out and needs destroying
 					Vector3D vecVehPos = veh2->position;
 					bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
-					if (bWithinStreamingDistance)
+					if (veh->m_bStreamedIn && !bWithinStreamingDistance)
 					{
-						if (!veh->m_bStreamedIn && veh->GetEntity() == NULL)
-						{
-							CreateCarAndRestoreStatus(e, veh);
-						}
+						DWORD uiEntity = veh->GetEntity();
+						DeleteCar(uiEntity);
+						veh->m_bStreamedIn = false;
+						veh->SetEntity(NULL);
 					}
-					else
+				}
+				else
+				{
+					// the vehicle is not created locally, check if it has streamed in and needs recreating
+					Vector3D vecVehPos = veh->GetPosition();
+					bool bWithinStreamingDistance = Tools::GetDistanceBetween3DPoints(vecVehPos, g_CCore->GetLocalPlayer()->GetLocalPos()) <= VEHICLE_STREAMING_DISTANCE;
+					if (!veh->m_bStreamedIn && bWithinStreamingDistance)
 					{
-						if (veh->m_bStreamedIn && veh->GetEntity() != NULL)
-						{
-							DWORD uiEntity = veh->GetEntity();
-							veh->SetEntity(NULL);
-							veh->m_bStreamedIn = false;
-							DeleteCar(uiEntity);
-						}
+						CreateCarAndRestoreStatus(e, veh);
 					}
 				}
 			}

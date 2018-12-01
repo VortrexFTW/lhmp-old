@@ -293,22 +293,36 @@ void CGameSync::onPlayerConnect(RakNet::BitStream* bitInput)
 	char sz_nickname[255];
 	int PlayerID, skinId;
 	unsigned int color;
+	int iPlayerVehicleId, iPlayerSeatId;
 
 	bitInput->Read(PlayerID);
 	bitInput->Read(sz_nickname); // nickname
 	bitInput->Read(skinId);
 	bitInput->Read(color);
+	bitInput->Read(iPlayerVehicleId);
+	if (iPlayerVehicleId != -1)
+	{
+		bitInput->Read(iPlayerSeatId);
+	}
 
 	// creates new instance
 	g_CCore->GetPlayerPool()->New(PlayerID);
 	g_CCore->GetLog()->AddLog("LHMP_CONNECTORCREATEPED");
 	CPlayer* player = g_CCore->GetPlayerPool()->Return(PlayerID);
 	if (player != 0)
-	{
-		player->SetName(sz_nickname);
-		player->SetSkinId(skinId);
-		player->SetNickColor(color);
-	}
+    {
+        player->SetName(sz_nickname);
+        player->SetSkinId(skinId);
+        player->SetNickColor(color);
+        if(iPlayerVehicleId != -1)
+        {
+            CVehicle *pPlayerVehicle = g_CCore->GetVehiclePool()->Return(iPlayerVehicleId);
+            if(pPlayerVehicle)
+            {
+                player->EnterVehicleFast(pPlayerVehicle, iPlayerSeatId);
+            }
+        }
+    }
 	else {
 		// TODO: report error (couldn't create a new instace - WTF)
 	}
@@ -402,6 +416,7 @@ void CGameSync::onPlayerRespawn(RakNet::BitStream* bitInput)
 		}
 		ped->ClearWeapons();
 		g_CCore->GetEngineStack()->AddMessage(ES_CREATEPLAYER, ID);
+		g_CCore->GetLog()->AddLog("Create player from CGameSync::onPlayerRespawn");
 	}
 }
 

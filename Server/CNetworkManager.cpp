@@ -363,8 +363,8 @@ void CNetworkManager::Pulse()
 			//g_CCore->GetScripts()->onPlayerSpawn(ID);
 
 			// send all objects etc to client
-			SendHimOthers(ID);
 			SendHimCars(ID);
+			SendHimOthers(ID);
 			SendHimDoors(ID);
 			SendHimPickups(ID);
 
@@ -1216,6 +1216,21 @@ void CNetworkManager::SendHimOthers(int he)
 			bsOut.Write(player->GetNickname());
 			bsOut.Write(player->GetSkin());
 			bsOut.Write(player->GetNicknameColour());
+			bsOut.Write(player->GetCurrentCar());
+			if (player->GetCurrentCar() != -1)
+			{
+				CVehicle* veh = g_CCore->GetVehiclePool()->Return(player->GetCurrentCar());
+				int iPlayerSeatId = 0;
+				for (int seatId = 0; seatId < 4; seatId++)
+				{
+					if (veh->GetSeat(seatId) == i)
+					{
+						iPlayerSeatId = seatId;
+						break;
+					}
+				}
+				bsOut.Write(iPlayerSeatId);
+			}
 			//bsOut.Write(actual->nickname);
 			//bsOut.Write(actual->skinID);
 			peer->Send(&bsOut, IMMEDIATE_PRIORITY, RELIABLE_ORDERED, 0, sa, false);
